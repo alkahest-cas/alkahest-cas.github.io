@@ -5,6 +5,7 @@
   --muted: #525252;
   --border: #e5e5e5;
   --code-bg: #f4f4f5;
+  --brand: #c41e3a;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -14,6 +15,7 @@
     --muted: #a3a3a3;
     --border: #262626;
     --code-bg: #171717;
+    --brand: #f87171;
   }
 }
 
@@ -35,18 +37,18 @@ body {
 }
 
 .shell {
-  max-width: 40rem;
+  max-width: 42rem;
   margin: 0 auto;
   padding: clamp(3rem, 10vh, 5rem) 1.5rem 4rem;
 }
 
 .kicker {
-  margin: 0 0 0.75rem;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
+  margin: 0 0 0.5rem;
+  font-size: clamp(2.25rem, 9vw, 3.25rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--brand);
 }
 
 .tagline {
@@ -108,6 +110,53 @@ body {
   margin: 0.5rem 0 0;
   font-size: 0.8125rem;
   color: var(--muted);
+}
+
+.examples {
+  margin: 0 0 2.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.example {
+  margin: 0 0 1.75rem;
+}
+
+.example:last-child {
+  margin-bottom: 0;
+}
+
+.example-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.example-desc {
+  margin: 0 0 0.6rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.code-block {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--code-bg);
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.code-block code {
+  font-family: inherit;
+  font-size: inherit;
+  white-space: pre;
 }
 
 .links {

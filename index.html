@@ -27,6 +27,54 @@
         <p id="copy-hint" class="hint" role="status" aria-live="polite" hidden></p>
       </section>
 
+      <section class="examples" aria-label="Code examples">
+        <article class="example">
+          <h3 class="example-title">Simplification you can audit</h3>
+          <p class="example-desc">
+            Every rewrite records the rule applied — not just the final expression.
+          </p>
+          <pre class="code-block" tabindex="0"><code>from alkahest import ExprPool, simplify
+
+pool = ExprPool()
+x = pool.symbol("x")
+r = simplify(x + pool.integer(0))
+print(r.value)   # x
+print(r.steps)   # e.g. [RewriteStep(rule='add_zero', ...)]</code></pre>
+        </article>
+
+        <article class="example">
+          <h3 class="example-title">Dense univariate polynomials (FLINT)</h3>
+          <p class="example-desc">
+            GCD and exact division stay in a FLINT-backed representation for heavy
+            polynomial work.
+          </p>
+          <pre class="code-block" tabindex="0"><code>from alkahest import ExprPool, UniPoly
+
+pool = ExprPool()
+x = pool.symbol("x")
+p = UniPoly.from_symbolic(x**3 + pool.integer(-1), x)
+q = UniPoly.from_symbolic(x + pool.integer(-1), x)
+print(p.gcd(q))   # x - 1
+print(p // q)     # x^2 + x + 1</code></pre>
+        </article>
+
+        <article class="example">
+          <h3 class="example-title">Compile once, evaluate millions of points</h3>
+          <p class="example-desc">
+            Build a callable from a symbolic expression, then feed NumPy arrays without a
+            Python loop over samples (JIT-enabled builds go further with native codegen).
+          </p>
+          <pre class="code-block" tabindex="0"><code>import numpy as np
+from alkahest import ExprPool, compile_expr, numpy_eval, sin, exp
+
+pool = ExprPool()
+x = pool.symbol("x")
+f = compile_expr(sin(x) * exp(pool.integer(-1) * x), [x])
+xs = np.linspace(0, 10, 1_000_000)
+ys = numpy_eval(f, xs)</code></pre>
+        </article>
+      </section>
+
       <nav class="links" aria-label="Project links">
         <a href="https://alkahest-cas.github.io/alkahest/">Documentation</a>
         <span class="dot" aria-hidden="true"></span>
