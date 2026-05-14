@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alkahest</title>
+    <meta
+      name="description"
+      content="A high-performance computer algebra system for Python."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <p class="kicker">Alkahest</p>
+      <h1 class="tagline">
+        A high-performance computer algebra system for Python.
+      </h1>
+
+      <section class="install" aria-label="Install with pip">
+        <div class="install-row">
+          <code id="pip-cmd">pip install alkahest</code>
+          <button type="button" class="copy" id="copy-btn" aria-label="Copy pip install command">
+            Copy
+          </button>
+        </div>
+        <p id="copy-hint" class="hint" role="status" aria-live="polite" hidden></p>
+      </section>
+
+      <nav class="links" aria-label="Project links">
+        <a href="https://alkahest-cas.github.io/alkahest/">Documentation</a>
+        <span class="dot" aria-hidden="true"></span>
+        <a href="https://github.com/alkahest-cas/alkahest">GitHub</a>
+      </nav>
+    </main>
+    <script>
+      const cmd = document.getElementById("pip-cmd").textContent;
+      const btn = document.getElementById("copy-btn");
+      const hint = document.getElementById("copy-hint");
+      btn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(cmd);
+          hint.hidden = false;
+          hint.textContent = "Copied to clipboard.";
+        } catch {
+          hint.hidden = false;
+          hint.textContent = "Copy failed — select and copy manually.";
+        }
+      });
+    </script>
+  </body>
+</html>
