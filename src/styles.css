@@ -122,6 +122,36 @@ body {
   color: var(--muted);
 }
 
+.install-meta {
+  margin: 0.65rem 0 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.install-meta a {
+  color: inherit;
+}
+
+.install-detail {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.install-detail code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
+  font-size: 0.8125rem;
+  background: var(--code-bg);
+  padding: 0.08em 0.35em;
+  border-radius: 4px;
+}
+
+.install-detail a {
+  color: inherit;
+}
+
 .install .links {
   margin-top: 0.875rem;
 }
