@@ -14,10 +14,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.13.0">
 
 <script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
-<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+<script defer src="/docs/assets/app.js?v=3.13.0"></script>
 </head>
 <body data-base="/docs/" data-section="api">
 <a class="skip" href="#content">Skip to content</a>
@@ -145,64 +145,64 @@ combining units with <code>*</code>, <code>/</code> and <code>**</code> (rationa
 may only stand alone and be converted (<code>E-UNIT-003</code> otherwise).</p>
 <p>Raises <code>UnitError</code> (<code>E-UNIT-002</code>) on an unknown or malformed unit.</p>
 <div class="members"><div class="members-title">Properties</div><div class="member" id="units.Unit.name">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">name</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.name" aria-label="Link to units.Unit.name">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L106" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">name</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.name" aria-label="Link to units.Unit.name">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L107" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The unit&#39;s spelling as a product, e.g. <code>&quot;mg*h/L&quot;</code>.</p>
 </div>
 </div>
 <div class="member" id="units.Unit.dimension">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dimension</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.dimension" aria-label="Link to units.Unit.dimension">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L112" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dimension</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.dimension" aria-label="Link to units.Unit.dimension">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L113" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The dimension, e.g. <code>&quot;mass/length^3&quot;</code> or <code>&quot;dimensionless&quot;</code>.</p>
 </div>
 </div>
 <div class="member" id="units.Unit.dimension_exponents">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dimension_exponents</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.dimension_exponents" aria-label="Link to units.Unit.dimension_exponents">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L118" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dimension_exponents</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.dimension_exponents" aria-label="Link to units.Unit.dimension_exponents">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L119" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>{base_dimension: Fraction}</code> for the non-zero exponents.</p>
 </div>
 </div>
 <div class="member" id="units.Unit.factors">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">factors</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.factors" aria-label="Link to units.Unit.factors">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L131" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">factors</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.factors" aria-label="Link to units.Unit.factors">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L132" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>[(name, Fraction exponent), …]</code> as written.</p>
 </div>
 </div>
 <div class="member" id="units.Unit.scale">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">scale</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.scale" aria-label="Link to units.Unit.scale">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L142" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">scale</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.scale" aria-label="Link to units.Unit.scale">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L143" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>(ratio, pi_power)</code>: one of this unit is <code>ratio · π**pi_power</code> of the
 coherent SI unit of the same dimension (both <code>Fraction</code>).</p>
 </div>
 </div>
 <div class="member" id="units.Unit.is_affine">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_affine</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.is_affine" aria-label="Link to units.Unit.is_affine">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L148" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_affine</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.is_affine" aria-label="Link to units.Unit.is_affine">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L149" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>True</code> for <code>degC</code> / <code>degF</code>.</p>
 </div>
 </div>
 <div class="member" id="units.Unit.is_pure_number">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_pure_number</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.is_pure_number" aria-label="Link to units.Unit.is_pure_number">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L154" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_pure_number</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.is_pure_number" aria-label="Link to units.Unit.is_pure_number">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L155" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>True</code> when dimensionless with scale 1 (<code>1</code>, <code>rad</code>, <code>m/m</code>).</p>
 </div>
 </div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="units.Unit.dimensionless">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dimensionless</span>()</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.dimensionless" aria-label="Link to units.Unit.dimensionless">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L100" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dimensionless</span>()</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.dimensionless" aria-label="Link to units.Unit.dimensionless">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L101" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The unit of a pure number, written <code>1</code>.</p>
 </div>
 </div>
 <div class="member" id="units.Unit.same_dimension">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">same_dimension</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.same_dimension" aria-label="Link to units.Unit.same_dimension">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L159" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">same_dimension</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.same_dimension" aria-label="Link to units.Unit.same_dimension">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L160" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>True</code> when <code>other</code> has the same dimension.</p>
 </div>
 </div>
 <div class="member" id="units.Unit.check_same_dimension">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">check_same_dimension</span>(<span class="sig-p">other</span>, <span class="sig-p">operation</span><span class="sig-def">=&quot;add&quot;</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.check_same_dimension" aria-label="Link to units.Unit.check_same_dimension">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L167" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">check_same_dimension</span>(<span class="sig-p">other</span>, <span class="sig-p">operation</span><span class="sig-def">=&quot;add&quot;</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.check_same_dimension" aria-label="Link to units.Unit.check_same_dimension">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L168" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Raise <code>UnitError</code> <code>E-UNIT-001</code> (naming both dimensions) unless
 <code>other</code> has the same dimension.</p>
 </div>
 </div>
 <div class="member" id="units.Unit.require_pure_number">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">require_pure_number</span>(<span class="sig-p">context</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.require_pure_number" aria-label="Link to units.Unit.require_pure_number">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L176" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">require_pure_number</span>(<span class="sig-p">context</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.require_pure_number" aria-label="Link to units.Unit.require_pure_number">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L177" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Raise <code>UnitError</code> <code>E-UNIT-004</code> unless this is a pure number;
 <code>context</code> names where the value is used (<code>&quot;argument of exp&quot;</code>).</p>
 </div>
 </div>
 <div class="member" id="units.Unit.conversion">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">conversion</span>(<span class="sig-p">target</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.conversion" aria-label="Link to units.Unit.conversion">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L197" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">conversion</span>(<span class="sig-p">target</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.conversion" aria-label="Link to units.Unit.conversion">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L198" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The exact map <code>x [self] = ratio·π**pi_power·x + shift [target]</code> as
 <code>(ratio, pi_power, shift)</code> (<code>Fraction</code>s; <code>shift</code> is <code>0</code> except
 between affine temperature scales). <code>E-UNIT-001</code> on a dimension
@@ -210,13 +210,13 @@ mismatch.</p>
 </div>
 </div>
 <div class="member" id="units.Unit.to_base">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_base</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.to_base" aria-label="Link to units.Unit.to_base">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L213" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_base</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.to_base" aria-label="Link to units.Unit.to_base">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L214" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The coherent SI unit of the same dimension in base units
 (<code>Unit(&quot;J&quot;).to_base()</code> is <code>kg*m^2/s^2</code>).</p>
 </div>
 </div>
 <div class="member" id="units.Unit.simplify">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">simplify</span>(<span class="sig-p">derived</span><span class="sig-def">=False</span>, <span class="sig-p">allowed</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.simplify" aria-label="Link to units.Unit.simplify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L224" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">simplify</span>(<span class="sig-p">derived</span><span class="sig-def">=False</span>, <span class="sig-p">allowed</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.simplify" aria-label="Link to units.Unit.simplify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L225" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Merge factors of equal dimension (<code>mg/kg*g → mg</code>); returns
 <code>(ratio, pi_power, unit)</code> with <code>x [self] = ratio·π**pi_power·x [unit]</code>.</p>
 <p>With <code>derived=True</code> the merged unit is also renamed to the named SI
@@ -225,7 +225,7 @@ derived unit it exactly equals (<code>kg*m/s^2 → N</code>), see
 </div>
 </div>
 <div class="member" id="units.Unit.to_derived">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_derived</span>(<span class="sig-p">allowed</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.to_derived" aria-label="Link to units.Unit.to_derived">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L260" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_derived</span>(<span class="sig-p">allowed</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#units.Unit.to_derived" aria-label="Link to units.Unit.to_derived">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L261" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The named SI derived unit this unit exactly equals, or <code>None</code>.</p>
 <p><code>Unit(&quot;kg*m/s^2&quot;).to_derived()</code> is <code>N</code>; <code>g*m/s^2</code> is <code>mN</code>
 (prefixes in steps of 1000 only); <code>kg*cm/s^2</code> is not renamed (its
@@ -300,7 +300,7 @@ number, an <code>Expr</code> or a pure-number <a href="/docs/api/units/#Quantity
 <section class="sym" id="units.dimension_of"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">units.</span><span class="sig-name">dimension_of</span>(<span class="sig-p">expr</span>, <span class="sig-p">units</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#units.dimension_of" aria-label="Link to units.dimension_of">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L422" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#units.dimension_of" aria-label="Link to units.dimension_of">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L423" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The unit of a symbolic formula, given the unit of each of its symbols.</p>
 <p>Checks the <strong>dimensional consistency</strong> of <code>expr</code> and returns the unit
 its value is in when every symbol is given in its listed unit.</p>
@@ -335,7 +335,7 @@ unknown.</p>
 <section class="sym" id="units.known_units"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">units.</span><span class="sig-name">known_units</span>()</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#units.known_units" aria-label="Link to units.known_units">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L384" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#units.known_units" aria-label="Link to units.known_units">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L385" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Every unit name the parser knows (without SI prefixes), sorted.</p>
 </div></section>
 <section class="sym" id="units.np_to_ratio"><div class="sym-head">
@@ -349,7 +349,7 @@ quantity (default) and <code>exp(2·np)</code> for a power quantity. Exact
 <section class="sym" id="units.parse_unit"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">units.</span><span class="sig-name">parse_unit</span>(<span class="sig-p">spec</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#units.parse_unit" aria-label="Link to units.parse_unit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L377" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#units.parse_unit" aria-label="Link to units.parse_unit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L378" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Parse a unit string into a <a href="/docs/api/units/#Unit"><code>Unit</code></a>.</p>
 <p>Accepts products and quotients (<code>&quot;mg*h/L&quot;</code>, <code>&quot;kg m s^-2&quot;</code>,
 <code>&quot;kg*m^2/(s^2*A)&quot;</code>), exponents with <code>^</code> or <code>**</code> (fractional ones in
@@ -486,7 +486,7 @@ as is. <code>Gy</code>, <code>Sv</code> and <code>Bq</code> are never produced.<
   <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/mod-smt/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">alkahest.smt</span></a><span></span></nav>
   <footer class="doc-foot">
     <a href="https://github.com/alkahest-cas/alkahest/blob/main/website/docs/scripts/extract_api.py" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
-    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+    <span class="foot-meta">Alkahest 3.13.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
   </footer>
 </main>
 <aside class="toc" aria-label="On this page">
