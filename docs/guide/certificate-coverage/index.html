@@ -1468,7 +1468,10 @@
 <span class="line"></span>
 <span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Fail loudly instead of degrading silently.</span></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">require_certificate</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">):</span></span>
-<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ak.diff(ak.log(ak.sin(x)), x)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># raises E-CERT-001</span></span></code></pre></div>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">        ak.diff(ak.log(ak.sin(x)), x)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.CertificateUnavailableError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">        print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e.code)             </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># E-CERT-001</span></span></code></pre></div>
   </article>
   <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/lean-certs/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Lean certificates</span></a><a class="pager-next" href="/docs/guide/errors/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Error handling</span></a></nav>
   <footer class="doc-foot">
