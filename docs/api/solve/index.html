@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solver API · Alkahest Docs</title>
+<meta name="description" content="Polynomial system solving via Gröbner bases. The groebner Cargo feature is included in all PyPI wheels by default since 2.3.1 — no special build flag needed.">
+<meta property="og:title" content="Solver API · Alkahest Docs">
+<meta property="og:description" content="Polynomial system solving via Gröbner bases. The groebner Cargo feature is included in all PyPI wheels by default since 2.3.1 — no special build flag needed.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/" class="active" aria-current="page">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>Solver API</h1>
+    <div class="prose-block"><p>Polynomial system solving via Gröbner bases. The <code>groebner</code> Cargo feature is <strong>included in all PyPI wheels</strong> by default since 2.3.1 — no special build flag needed.</p>
+</div>
+<section class="sym" id="solve"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">solve</span>(
+    <span class="sig-p">equations</span>,
+    <span class="sig-p">vars</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">numeric</span><span class="sig-def">=False</span>,
+    <span class="sig-p">method</span><span class="sig-def">=&quot;groebner&quot;</span>,
+    <span class="sig-p">interval</span><span class="sig-def">=None</span>,
+    <span class="sig-p">domain</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#solve" aria-label="Link to solve">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19809" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.solve(equations, vars, *, numeric=False, method=&quot;groebner&quot;)</code></p>
+<p>Solve a zero-dimensional polynomial — or <strong>rational</strong> — system.</p>
+
+<div class="doc-sub">Rational equations</div><p>An equation may be a ratio of polynomials in <em>vars</em>, which is the form nodal
+analysis produces: <code>solve([(Vo - Vin)/R1 + Vo*s*C], [Vo])</code> →
+<code>Vin/(1 + s*R1*C)</code>. Each equation is put over a common denominator and the
+numerator system is solved.</p>
+<p>Clearing a denominator is <strong>not</strong> an equivalence — <code>N/D = 0</code> means
+<code>N = 0 and D != 0</code> — so every root is re-tested against the denominators
+that were multiplied through, and one that makes any of them vanish is
+dropped: <code>solve([x/(x-1) - 1/(x-1)], [x])</code> returns <code>[]</code>, not <code>x = 1</code>.
+Where the denominator still mentions a free parameter the question is not
+decidable, and the root is returned under a <code>D != 0</code> hypothesis listed by
+<a href="/docs/api/solve/#solve_side_conditions"><code>solve_side_conditions()</code></a> rather than under a silent assumption.
+Surviving roots are also substituted into the equations <strong>as you wrote
+them</strong>, before anything was cleared.</p>
+<p>An equation whose denominator is identically zero (<code>1/(x - x)</code>) denotes no
+function at all and raises <code>SolverError</code> with <code>.code == &quot;E-SOLVE-005&quot;</code>.</p>
+
+<div class="doc-sub">Non-polynomial coefficients</div><p>Only the <em>unknowns</em> must appear polynomially: a sub-expression free of them
+(<code>sin(q1)</code>, <code>cos(q1 - q2)</code>, <code>sqrt(a)</code>) is a coefficient, so
+<code>solve(eom, [qdd1, qdd2])</code> solves equations of motion for the
+accelerations. Such sub-expressions are solved as opaque parameters and
+substituted back; every answer is then checked against the equations as
+written, and one that only exists because an identity between them was
+invisible (<code>sin**2 + cos**2 == 1</code>) is refused with <code>E-SOLVE-001</code>.</p>
+
+<div class="doc-sub">Transcendental equations</div><p>One equation in one unknown is solved in closed form, over the reals, when
+it reduces by taking logs (<code>ka*exp(-ka*t) - ke*exp(-ke*t)</code> →
+<code>log(ke/ka)/(ke - ka)</code>; <code>2**x - 5</code>), has a Lambert-W shape
+(<code>x*exp(a*x) - b</code>, <code>a*x + b*log(x) - c</code>, <code>x**x - c</code>), or is
+<code>sin</code>/<code>cos</code>/<code>tan</code> of an affine argument equal to a constant. A
+trigonometric equation returns the whole periodic family in an integer
+symbol <code>k</code> (<code>asin(c) + 2*pi*k</code> and <code>pi - asin(c) + 2*pi*k</code>), listed as
+<code>k ∈ Integer</code> by <a href="/docs/api/solve/#solve_side_conditions"><code>solve_side_conditions()</code></a>; with
+<code>numeric=True</code> the <code>k = 0</code> member of each family is returned and the
+side conditions say so. Hypotheses such as <code>ke/ka &gt; 0</code> are listed there
+too. A Lambert equation with two real roots returns both — <code>lambert_w</code>
+(<code>W₀</code>) and <code>lambert_wm1</code> (<code>W₋₁</code>): <code>x*exp(x) + 1/4</code> gives
+<code>W₀(-1/4)</code> and <code>W₋₁(-1/4)</code>; a symbolic argument known to be negative
+records <code>c + exp(-1) &gt; 0</code>. Anything else keeps refusing with
+<code>E-SOLVE-001</code> — with <code>numeric=True</code> the message points at
+<code>interval=(a, b)</code> and <a href="/docs/api/solve/#nsolve"><code>nsolve()</code></a>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">equations</code><span class="ptype">list[Expr]</span></dt><dd><p>Each expression represents <code>p(vars) = 0</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">vars</code><span class="ptype">list[Expr]</span></dt><dd><p>Variables to solve for (symbols). Free symbols that appear in
+<em>equations</em> but are omitted from <em>vars</em> are treated as parameters;
+solutions may be expressions in those symbols (e.g. <code>solve([x**2 - y], [x])` → `±sqrt(y)</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">numeric</code><span class="ptype">bool, default False</span></dt><dd><p>Used when <code>method=&quot;groebner&quot;</code>: symbolic <code>Expr</code> values vs numbers.
+The domain is ℂ, so a real value is a <code>float</code> and a non-real one a
+Python <code>complex</code> (<code>solve([s**2 + 1], [s], numeric=True)</code> →
+<code>±1j</code>). When Lex back-substitution refuses a degree ≥ 3 univariate
+(<code>E-SOLVE-002</code>, see below),
+<code>numeric=True</code> falls back to <em>complex</em> homotopy continuation, which
+returns every finite root or raises <code>HomotopyError</code> (E-HOMOTOPY-004)
+if a path is lost. A solution that depends on a free parameter has no
+numeric value, so it is returned as its exact symbolic <code>Expr</code>
+(<code>solve([x - y], [x], numeric=True)</code> → <code>[{x: y}]</code>) and
+<a href="/docs/api/solve/#solve_side_conditions"><code>solve_side_conditions()</code></a> says so; where no symbolic
+solution exists (the homotopy fallback) a free parameter still raises
+<code>SolverError</code> with <code>.code == &quot;E-SOLVE-006&quot;</code>. A parameter-free value
+that cannot be evaluated raises <code>E-SOLVE-007</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">method</code><span class="ptype">str, default <code>&quot;groebner&quot;</code></span></dt><dd><p><code>&quot;groebner&quot;</code> — Lex basis + triangular back-substitution.
+<code>&quot;homotopy&quot;</code> — total-degree homotopy continuation in <code>ℂⁿ</code> followed
+by Newton projection to real tuples (always <code>float</code> dict values).</p>
+</dd></div><div class="param"><dt><code class="pname">interval</code><span class="ptype">(float, float), optional</span></dt><dd><p>With <code>numeric=True</code> and one equation in one unknown: return every
+<strong>real</strong> root in <code>[a, b]</code>, found numerically and certified (see
+<a href="/docs/api/solve/#nsolve"><code>nsolve()</code></a> with <code>all_in</code>) — the route for equations
+with no closed form, e.g. <code>solve([sin(x) - x/10], [x], numeric=True, interval=(-12, 12))</code> → seven roots. Each root&#39;s enclosure is listed in
+<a href="/docs/api/solve/#solve_side_conditions"><code>solve_side_conditions()</code></a>. When the root list cannot be
+proved complete (a double root, a stretch outside the equation&#39;s
+domain) the call raises <code>E-SOLVE-012</code> instead.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">list[dict]</span></dt><dd><p>Each dict maps a variable <code>Expr</code> to <code>Expr</code> (symbolic Groebner),
+<code>float</code> or <code>complex</code> (Groebner with <code>numeric=True</code>), or <code>float</code>
+(<code>method=&quot;homotopy&quot;</code>, which reports real roots only).
+A univariate of degree ≥ 3 is factored over ℚ (or ℚ[params]) first;
+each irreducible factor is solved by formula, by an even / palindromic /
+pure-cubic reduction to radicals, or as exact <code>RootOf(f, k)</code> values
+(see <a href="/docs/api/solve/#root_of"><code>root_of()</code></a> for their order and evaluation). An
+irreducible factor of degree ≥ 3 that still involves a parameter, or has
+algebraic-number coefficients, raises <code>E-SOLVE-002</code>.
+Solutions are a <em>set</em>: a double root is one entry, not two. Every
+parameter-free tuple has been substituted back into the equations you
+passed and could not be shown to violate them. A tuple containing a free
+parameter is the <em>generic</em> solution: it has been substituted back and its
+residual is identically zero in the parameters (equations that factor
+are solved factor by factor, so equilibrium systems are complete). It
+holds under the non-vanishing hypotheses reported by
+<a href="/docs/api/solve/#solve_side_conditions"><code>solve_side_conditions()</code></a> — <code>solve([a*x - b], [x])</code> is
+<code>b/a</code> <em>for</em> <code>a ≠ 0</code>, and that condition is listed there. An unknown
+declared <code>Positive</code>, <code>NonNegative</code>, <code>NonZero</code> or <code>Integer</code> gets no
+value provably outside its domain.</p>
+</dd></div><div class="param"><dt><span class="ptype">GroebnerBasis</span></dt><dd><p>When <code>method=&quot;groebner&quot;</code> and no finite solution list could be
+produced — usually a positive-dimensional ideal, but also when the
+Lex basis admits no complete triangular elimination in <em>vars</em>. It is
+&quot;here is the ideal&quot; rather than a claim that the solutions are
+infinite.</p>
+</dd></div></dl></div></section>
+<section class="sym" id="nsolve"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">nsolve</span>(<span class="sig-p">equation</span>, <span class="sig-p">x</span>, <span class="sig-sep">*</span>, <span class="sig-p">bracket</span><span class="sig-def">=None</span>, <span class="sig-p">x0</span><span class="sig-def">=None</span>, <span class="sig-p">all_in</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#nsolve" aria-label="Link to nsolve">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20447" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.nsolve(equation, x, *, bracket=None, x0=None, all_in=None)</code></p>
+<p>Numeric real root(s) of <code>equation = 0</code> in the symbol <code>x</code>, for
+equations with no closed form — implied volatility <code>BS(sigma) - price</code>,
+<code>cos(x) - x</code>, <code>sin(x) - x/10</code>. Every other symbol must already have a
+value (substitute it first). Pass exactly one of:</p>
+<p>bracket : (float, float)
+    <code>(a, b)</code> with <code>f(a)</code>, <code>f(b)</code> of opposite sign. Brent&#39;s method;
+    always converges, to a root in <code>[a, b]</code>. Returns a <a href="/docs/api/solve/#NumericRoot"><code>NumericRoot</code></a>.
+x0 : float
+    A starting point. Damped Newton; which root it reaches depends on
+    <code>x0</code>. Returns a <a href="/docs/api/solve/#NumericRoot"><code>NumericRoot</code></a>.
+all_in : (float, float)
+    Every real root in <code>[a, b]</code>, by subdivision with ball-arithmetic
+    exclusion and an interval-derivative (monotonicity) test. Returns a
+    <a href="/docs/api/solve/#RootIsolation"><code>RootIsolation</code></a>; its <code>roots</code> are all <code>&quot;verified&quot;</code>, and it is
+    <code>complete</code> unless some sub-interval (a double root, a stretch outside
+    the domain) could not be settled — those are listed in <code>unresolved</code>,
+    never guessed at. Needs an equation built from smooth functions (no
+    <code>abs</code>/<code>floor</code>/<code>Piecewise</code> of <code>x</code>).</p>
+<p>Each root carries an enclosure <code>[lo, hi]</code> and a <code>status</code>: the search
+runs in <code>f64</code>, then the enclosure is <em>proved</em> in 128-bit outward-rounded
+ball arithmetic — <code>&quot;verified&quot;</code> means <code>f</code> changes sign across
+<code>[lo, hi]</code> and its derivative&#39;s enclosure excludes zero there, so exactly
+one root lies inside; <code>&quot;exists&quot;</code> drops uniqueness; <code>&quot;heuristic&quot;</code> is the
+bare iterate (a double root, a non-smooth equation). Loops honour an active
+<a href="/docs/api/workload/#Budget"><code>Budget</code></a>.</p>
+
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">SolverError</span></dt><dd><p><code>E-SOLVE-009</code> — a free parameter, an empty/non-finite interval, a
+bracket without a sign change, <code>all_in</code> on a non-smooth equation;
+<code>E-SOLVE-012</code> — Newton/Brent did not converge or the equation has no
+real value where the search needed one.</p>
+</dd></div><div class="param"><dt><span class="ptype">BudgetExceededError</span></dt><dd><p>The active budget stopped the search.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> r </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.nsolve(alkahest.cos(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x, x, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">bracket</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> r.value, r.status</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.7390851332151607</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'verified'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> len</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(alkahest.nsolve(alkahest.sin(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 10</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, x, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">all_in</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">12</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">12</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">7</span></span></code></pre></div></dd></div></dl></div></section>
+<section class="sym" id="NumericRoot"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">NumericRoot</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#NumericRoot" aria-label="Link to NumericRoot">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20209" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A numeric root returned by <a href="/docs/api/solve/#nsolve"><code>nsolve()</code></a>, with an enclosure and
+a statement of what the enclosure proves.</p>
+<p><code>status</code> is <code>&quot;verified&quot;</code> (exactly one root lies in <code>[lo, hi]</code>: a sign
+change proved in 128-bit ball arithmetic and an interval enclosure of the
+derivative that excludes zero), <code>&quot;exists&quot;</code> (a root lies in <code>[lo, hi]</code>,
+uniqueness not proved) or <code>&quot;heuristic&quot;</code> (the <code>f64</code> iterate only —
+<code>lo == hi == value</code>). <code>float(root)</code> is <code>root.value</code>.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="NumericRoot.value">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">value</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#NumericRoot.value" aria-label="Link to NumericRoot.value">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20218" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The <code>f64</code> approximation (inside the enclosure).</p>
+</div>
+</div>
+<div class="member" id="NumericRoot.lo">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">lo</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#NumericRoot.lo" aria-label="Link to NumericRoot.lo">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20224" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Lower end of the enclosure.</p>
+</div>
+</div>
+<div class="member" id="NumericRoot.hi">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">hi</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#NumericRoot.hi" aria-label="Link to NumericRoot.hi">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20230" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Upper end of the enclosure.</p>
+</div>
+</div>
+<div class="member" id="NumericRoot.enclosure">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">enclosure</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#NumericRoot.enclosure" aria-label="Link to NumericRoot.enclosure">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20236" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>(lo, hi)</code>.</p>
+</div>
+</div>
+<div class="member" id="NumericRoot.status">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">status</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#NumericRoot.status" aria-label="Link to NumericRoot.status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20242" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>&quot;verified&quot;</code>, <code>&quot;exists&quot;</code> or <code>&quot;heuristic&quot;</code>.</p>
+</div>
+</div>
+<div class="member" id="NumericRoot.verified">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verified</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#NumericRoot.verified" aria-label="Link to NumericRoot.verified">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20248" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>True</code> when <code>status == &quot;verified&quot;</code>.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="RootIsolation"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">RootIsolation</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#RootIsolation" aria-label="Link to RootIsolation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20279" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Every real root of an equation in an interval, from
+<code>alkahest.nsolve(eq, x, all_in=(a, b))</code>.</p>
+<p><code>roots</code> lists <a href="/docs/api/solve/#NumericRoot"><code>NumericRoot</code></a> values in increasing order, each
+<code>&quot;verified&quot;</code> with a disjoint enclosure. <code>unresolved</code> lists the
+sub-intervals <code>(lo, hi)</code> that could neither be excluded nor shown to hold
+exactly one root — a multiple root (<code>(x - 1)**2</code>), a tangency, a stretch
+outside the equation&#39;s domain. <code>complete</code> is <code>True</code> exactly when
+<code>unresolved</code> is empty, i.e. when <code>roots</code> is provably the whole list.
+Indexing, <code>len</code> and iteration go over <code>roots</code>.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="RootIsolation.roots">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">roots</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#RootIsolation.roots" aria-label="Link to RootIsolation.roots">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20287" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="RootIsolation.unresolved">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">unresolved</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#RootIsolation.unresolved" aria-label="Link to RootIsolation.unresolved">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20296" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="RootIsolation.complete">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">complete</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#RootIsolation.complete" aria-label="Link to RootIsolation.complete">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20301" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="root_of"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">root_of</span>(<span class="sig-p">poly</span>, <span class="sig-p">var</span>, <span class="sig-p">index</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#root_of" aria-label="Link to root_of">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15474" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>The <code>index</code>-th distinct root of the polynomial <code>poly</code> in <code>var</code>, exactly.</p>
+<p><code>solve</code> returns these for irreducible factors of degree ≥ 3 that have no
+radical form it uses (an irreducible quintic, a cubic with three real
+roots, …); this function builds the same objects directly.</p>
+<p>Roots are numbered in one fixed order: the <strong>real roots in ascending
+order</strong>, then the <strong>non-real roots by ascending real part</strong>, ties broken by
+ascending imaginary part (a conjugate pair is listed lower half-plane
+first). Repeated roots count once.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">poly</code><span class="ptype">Expr</span></dt><dd><p>A non-constant polynomial in <code>var</code> with rational coefficients.</p>
+</dd></div><div class="param"><dt><code class="pname">var</code><span class="ptype">Expr</span></dt><dd><p>The polynomial variable.</p>
+</dd></div><div class="param"><dt><code class="pname">index</code><span class="ptype">int</span></dt><dd><p><code>0 &lt;= index &lt; </code> number of distinct roots.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Expr</span></dt><dd><p>A rational number when the root is rational; otherwise
+<code>RootOf(f, k)</code>, where <code>f</code> is the irreducible factor of <code>poly</code> the
+root belongs to and <code>k</code> its index among <code>f</code>&#39;s roots. A <code>RootOf</code>
+has no free symbols; it is a number to <code>diff</code>, <code>subs</code> and
+<code>simplify</code>, and it evaluates with <code>eval_expr</code> (real roots),
+<code>evaluate(..., mode=&quot;complex&quot;)</code>, and to any precision with
+<code>interval_eval</code> / <code>evaluate(..., precision_bits=...)</code> (real roots,
+rigorous enclosures from FLINT&#39;s root isolation).</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">SolverError</span></dt><dd><p><code>E-SOLVE-008</code> when <code>poly</code> is not a non-constant polynomial in <code>var</code>
+over ℚ, or <code>index</code> is out of range.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><p>pool = ExprPool()
+x = pool.symbol(&quot;x&quot;)
+r = root_of(x**3 - x - 1, x, 0)     # RootOf(x^3 - x - 1, 0)
+eval_expr(r, {})                     # 1.3247179572447...</p>
+</dd></div></dl></div></section>
+<h2 id="groebnerbasis"><a class="hanchor" href="#groebnerbasis" aria-hidden="true" tabindex="-1">#</a>GroebnerBasis</h2>
+<section class="sym" id="GroebnerBasis"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">GroebnerBasis</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#GroebnerBasis" aria-label="Link to GroebnerBasis">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17519" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A computed Gröbner basis for a polynomial ideal.</p>
+<p>The basis is a <strong>sequence</strong>: it supports <code>len()</code>, integer indexing and
+iteration, yielding its generators as <a href="/docs/api/solve/#GbPoly"><code>GbPoly</code></a>.  Read the generators
+back as expressions with <code>to_exprs()</code>, or one at a time with
+<a href="/docs/api/solve/#GbPoly.to_expr"><code>GbPoly.to_expr()</code></a> — that is how an elimination ideal (a <code>&quot;lex&quot;</code> basis,
+or the differential elimination performed by <a href="/docs/api/ode/#rosenfeld_groebner"><code>rosenfeld_groebner()</code></a>) is
+turned into readable relations.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">order</code><span class="ptype">str</span></dt><dd><p>Monomial order the generators are reduced under: <code>&quot;lex&quot;</code>, <code>&quot;grlex&quot;</code>
+or <code>&quot;grevlex&quot;</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><p>gb = alkahest.GroebnerBasis.compute([x<strong>2 + y</strong>2 - one, x - y], [x, y])
+len(gb)                     # number of generators
+[g.to_expr() for g in gb]   # generators as Expr</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="GroebnerBasis.order">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">order</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#GroebnerBasis.order" aria-label="Link to GroebnerBasis.order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17742" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The monomial order the generators are reduced under.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="GroebnerBasis.compute">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">compute</span>(<span class="sig-p">polys</span>, <span class="sig-p">vars</span>, <span class="sig-p">order</span><span class="sig-def">=None</span>, <span class="sig-p">params</span><span class="sig-def">=None</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#GroebnerBasis.compute" aria-label="Link to GroebnerBasis.compute">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17594" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Compute a Gröbner basis for the polynomial system <code>polys = 0</code> in
+the given variables.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">polys</code><span class="ptype">list[Expr]</span></dt><dd><p>Polynomial expressions, each representing <code>p(vars) = 0</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">vars</code><span class="ptype">list[Expr]</span></dt><dd><p>Symbolic variables (must be <code>Symbol</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">order</code><span class="ptype">str, optional</span></dt><dd><p>Monomial order: <code>&quot;lex&quot;</code> (default), <code>&quot;grevlex&quot;</code>, or <code>&quot;grlex&quot;</code>.
+When <code>&quot;lex&quot;</code> is requested and the ideal is 0-dimensional, the
+grevlex-then-FGLM strategy is used automatically (much faster than
+direct lex Buchberger for 3+ variable systems).</p>
+</dd></div><div class="param"><dt><code class="pname">params</code><span class="ptype">list[Expr], optional</span></dt><dd><p>Symbols to put in the <strong>coefficient field</strong> rather than the ring
+(M9).  With <code>params</code> the computation runs in <code>Q(params)[vars]</code>
+instead of <code>Q[vars, params]</code>, and the return type is a
+<code>ParametricGroebnerBasis</code> — the same sequence protocol, plus
+<code>conditions()</code> and
+<code>specialize()</code>.  That class is
+experimental; <a href="/docs/api/solve/#GroebnerBasis"><code>GroebnerBasis</code></a> is unchanged when <code>params</code> is
+omitted or empty.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><p>gb = alkahest.GroebnerBasis.compute([a*x - y, x + y - one], [x, y, a])</p>
+<h3 id="parameters-in-the-coefficient-field"><a class="hanchor" href="#parameters-in-the-coefficient-field" aria-hidden="true" tabindex="-1">#</a>parameters in the coefficient field</h3>
+<p>gb = alkahest.GroebnerBasis.compute([a*x - y, x + y - one], [x, y], params=[a])</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="GroebnerBasis.compute_f5">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">compute_f5</span>(<span class="sig-p">polys</span>, <span class="sig-p">vars</span>, <span class="sig-p">order</span><span class="sig-def">=None</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#GroebnerBasis.compute_f5" aria-label="Link to GroebnerBasis.compute_f5">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17657" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Gröbner basis via Faugère&#39;s F5 (signature-based reduction, V2-8).</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">polys, vars</code></dt><dd><p>Same as <code>compute()</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">order</code><span class="ptype">str, optional</span></dt><dd><p>Monomial order: <code>&quot;lex&quot;</code> (default), <code>&quot;grevlex&quot;</code>, or <code>&quot;grlex&quot;</code>.</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="GroebnerBasis.compute_raw">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">compute_raw</span>(<span class="sig-p">gb_polys</span>, <span class="sig-p">order</span><span class="sig-def">=None</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#GroebnerBasis.compute_raw" aria-label="Link to GroebnerBasis.compute_raw">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17711" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Low-level entry point that accepts already-converted <code>GbPoly</code> objects,
+bypassing the <a href="/docs/api/solve/#expr_to_gbpoly"><code>expr_to_gbpoly()</code></a> conversion. Useful when the
+polynomial representation is already known (e.g., from <code>MultiPoly</code>
+reconstruction).</p>
+<p>The variable context of the <em>first</em> input polynomial, if it has one, is
+carried onto the resulting basis, so a basis built from
+<a href="/docs/api/solve/#expr_to_gbpoly"><code>expr_to_gbpoly()</code></a> output stays readable via <code>to_exprs()</code>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">gb_polys</code><span class="ptype">list[GbPoly]</span></dt><dd><p>Already-converted polynomial objects.</p>
+</dd></div><div class="param"><dt><code class="pname">order</code><span class="ptype">str, optional</span></dt><dd><p>Monomial order: <code>&quot;lex&quot;</code> (default), <code>&quot;grevlex&quot;</code>, or <code>&quot;grlex&quot;</code>.
+The same grevlex-then-FGLM strategy is applied for <code>&quot;lex&quot;</code>.</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="GroebnerBasis.eliminate">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">eliminate</span>(<span class="sig-p">vars</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#GroebnerBasis.eliminate" aria-label="Link to GroebnerBasis.eliminate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17764" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The elimination ideal <code>I ∩ k[remaining vars]</code>, as a <code>GroebnerBasis</code>.</p>
+<p>Drops every generator whose support mentions one of <em>vars</em>.  Under a
+<code>&quot;lex&quot;</code> basis with the eliminated variables ordered <strong>first</strong>, what is
+left is a Gröbner basis for the elimination ideal — the relations among
+the remaining variables alone.  Read them with <code>to_exprs()</code>.</p>
+<p>The basis must know its variable ordering; <em>vars</em> must be among
+<code>variables()</code>.</p>
+<p>This is the implicitization move: parametrize a curve or surface, then
+eliminate the parameters.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Implicitize (t, t**2): eliminate t from {x - t, y - t**2}</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">gb </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.GroebnerBasis.compute([x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> t, y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> t</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], [t, x, y])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">gb.eliminate([t]).to_exprs()   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [((y * -1) + x^2)]  i.e. y = x**2</span></span></code></pre></div></div>
+</div>
+<div class="member" id="GroebnerBasis.variables">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">variables</span>()<span class="sig-ret"> → list[Expr]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#GroebnerBasis.variables" aria-label="Link to GroebnerBasis.variables">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17794" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The variables naming exponent slots 0, 1, … of the generators.</p>
+<p>Empty when the basis carries no variable context (a basis built by
+<code>compute_raw()</code> from context-free polynomials).</p>
+</div>
+</div>
+<div class="member" id="GroebnerBasis.polynomials">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">polynomials</span>()<span class="sig-ret"> → list[GbPoly]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#GroebnerBasis.polynomials" aria-label="Link to GroebnerBasis.polynomials">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17811" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The basis generators as <a href="/docs/api/solve/#GbPoly"><code>GbPoly</code></a>, interreduced and monic.</p>
+<p>Equivalent to <code>list(basis)</code>.</p>
+</div>
+</div>
+<div class="member" id="GroebnerBasis.to_exprs">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_exprs</span>(<span class="sig-p">vars</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#GroebnerBasis.to_exprs" aria-label="Link to GroebnerBasis.to_exprs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17835" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The basis generators as <a href="/docs/api/core/#Expr"><code>Expr</code></a>, each meaning <code>g = 0</code>.</p>
+<p>This is the read path for elimination: with a <code>&quot;lex&quot;</code> basis, the
+generators free of the eliminated variables are the eliminated
+relations.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">vars</code><span class="ptype">list[Expr], optional</span></dt><dd><p>Override the stored variable ordering — see <a href="/docs/api/solve/#GbPoly.to_expr"><code>GbPoly.to_expr()</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><p>gb = alkahest.GroebnerBasis.compute([x<strong>2 + y</strong>2 - one, x - y], [x, y])
+gb.to_exprs()</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="GroebnerBasis.reduce">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">reduce</span>(<span class="sig-p">p</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#GroebnerBasis.reduce" aria-label="Link to GroebnerBasis.reduce">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17870" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Reduce a polynomial modulo this basis and return the remainder.</p>
+<p>Accepts a <a href="/docs/api/solve/#GbPoly"><code>GbPoly</code></a> or an <a href="/docs/api/core/#Expr"><code>Expr</code></a>; passing an <code>Expr</code>
+requires the basis to know its variable ordering (see
+<code>variables()</code>).  The remainder is a <a href="/docs/api/solve/#GbPoly"><code>GbPoly</code></a> — call
+<a href="/docs/api/solve/#GbPoly.to_expr"><code>GbPoly.to_expr()</code></a> on it to read it back.  It is zero exactly when
+<code>contains()</code> is true.</p>
+</div>
+</div>
+<div class="member" id="GroebnerBasis.contains">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">contains</span>(<span class="sig-p">p</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#GroebnerBasis.contains" aria-label="Link to GroebnerBasis.contains">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17878" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Test membership.  Accepts either a <code>GbPoly</code> or an <code>Expr</code>; when
+passing an <code>Expr</code> the basis must have been created via <code>compute()</code>
+so that the variable order is known.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="GbPoly"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">GbPoly</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#GbPoly" aria-label="Link to GbPoly">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17303" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A sparse multivariate polynomial over ℚ, as used by the Gröbner machinery.</p>
+<p>A <code>GbPoly</code> stores exponent <em>vectors</em>, not variable names, so reading one
+back needs the variable list its exponent slots refer to.  Polynomials
+handed out by Alkahest carry that list with them (see <code>variables()</code>),
+so <code>to_expr()</code> normally takes no arguments; pass <code>vars</code> explicitly only
+for a polynomial built against a different list.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">is_zero</code><span class="ptype">bool</span></dt></div><div class="param"><dt><code class="pname">n_vars</code><span class="ptype">int</span></dt></div><div class="param"><dt><code class="pname">n_terms</code><span class="ptype">int</span></dt></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="GbPoly.is_zero">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_zero</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#GbPoly.is_zero" aria-label="Link to GbPoly.is_zero">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17355" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>True if this is the zero polynomial.</p>
+</div>
+</div>
+<div class="member" id="GbPoly.n_vars">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_vars</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#GbPoly.n_vars" aria-label="Link to GbPoly.n_vars">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17361" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of variables in the ambient ring.</p>
+</div>
+</div>
+<div class="member" id="GbPoly.n_terms">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_terms</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#GbPoly.n_terms" aria-label="Link to GbPoly.n_terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17367" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of non-zero terms.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="GbPoly.variables">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">variables</span>()<span class="sig-ret"> → list[Expr]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#GbPoly.variables" aria-label="Link to GbPoly.variables">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17375" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The variables naming this polynomial&#39;s exponent slots, in order.</p>
+<p>Empty when the polynomial carries no variable context — see
+<code>to_expr()</code>.</p>
+</div>
+</div>
+<div class="member" id="GbPoly.terms">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">terms</span>()<span class="sig-ret"> → list[tuple[tuple[int, ...], int | Fraction]]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#GbPoly.terms" aria-label="Link to GbPoly.terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17399" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The terms as <code>(exponents, coefficient)</code> pairs.</p>
+<p><code>exponents</code> is a tuple of <code>int</code> parallel to <code>variables()</code>;
+<code>coefficient</code> is an exact Python <code>int</code> or <code>fractions.Fraction</code>.
+Terms come in ascending exponent-vector order.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.expr_to_gbpoly(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 3</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">y, [x, y])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p.terms()   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [((0, 1), -3), ((2, 0), 1)]</span></span></code></pre></div></div>
+</div>
+<div class="member" id="GbPoly.to_expr">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_expr</span>(<span class="sig-p">vars</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#GbPoly.to_expr" aria-label="Link to GbPoly.to_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17429" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Convert back to an <a href="/docs/api/core/#Expr"><code>Expr</code></a>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">vars</code><span class="ptype">list[Expr], optional</span></dt><dd><p>Variables naming exponent slots 0, 1, ….  Defaults to
+<code>variables()</code>, which is what you want for a polynomial that came
+out of a <a href="/docs/api/solve/#GroebnerBasis"><code>GroebnerBasis</code></a>, a <a href="/docs/api/solve/#RegularChain"><code>RegularChain</code></a> or
+<a href="/docs/api/ode/#rosenfeld_groebner"><code>rosenfeld_groebner()</code></a>.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">ValueError</span></dt><dd><p>If no variable context is available, or <code>vars</code> names fewer variables
+than the polynomial actually uses.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><p>gb = alkahest.GroebnerBasis.compute([x**2 - y, x - y], [x, y])
+[g.to_expr() for g in gb]</p>
+</dd></div></dl></div>
+</div></div></div></section>
+<section class="sym" id="expr_to_gbpoly"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">expr_to_gbpoly</span>(<span class="sig-p">expr</span>, <span class="sig-p">vars</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#expr_to_gbpoly" aria-label="Link to expr_to_gbpoly">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17471" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.expr_to_gbpoly(expr, vars)</code> — convert a polynomial <a href="/docs/api/core/#Expr"><code>Expr</code></a>
+into the <a href="/docs/api/solve/#GbPoly"><code>GbPoly</code></a> representation.</p>
+<p>The inverse of <a href="/docs/api/solve/#GbPoly.to_expr"><code>GbPoly.to_expr()</code></a>.  Exponent slot <code>i</code> of the result
+refers to <code>vars[i]</code>, and the polynomial remembers <code>vars</code>, so it can be fed
+straight to <a href="/docs/api/solve/#GroebnerBasis.reduce"><code>GroebnerBasis.reduce()</code></a>, <a href="/docs/api/solve/#GroebnerBasis.contains"><code>GroebnerBasis.contains()</code></a> or
+<a href="/docs/api/solve/#GroebnerBasis.compute_raw"><code>GroebnerBasis.compute_raw()</code></a>.</p>
+<p>Raises <code>ValueError</code> if <em>expr</em> is not polynomial in <em>vars</em> — a free symbol
+outside <em>vars</em>, a negative or symbolic exponent, or a transcendental call.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.expr_to_gbpoly(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), [x, y])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">gb </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.GroebnerBasis.compute_raw([p])</span></span></code></pre></div></div></section>
+<h2 id="more-solving"><a class="hanchor" href="#more-solving" aria-hidden="true" tabindex="-1">#</a>More solving</h2>
+<section class="sym" id="solve_numerical"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">solve_numerical</span>(
+    <span class="sig-p">equations</span>,
+    <span class="sig-p">vars</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">max_bezout_paths</span><span class="sig-def">=None</span>,
+    <span class="sig-p">certify_prec_bits</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#solve_numerical" aria-label="Link to solve_numerical">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19645" rel="noopener">source</a></div>
+</div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="solve_side_conditions"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">solve_side_conditions</span>()</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#solve_side_conditions" aria-label="Link to solve_side_conditions">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20195" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.solve_side_conditions() -&gt; list[str]</code></p>
+<p>The hypotheses the most recent <a href="/docs/api/solve/#solve"><code>solve()</code></a> on this thread
+<strong>assumed</strong> in order to return the solutions it did — one string per
+condition, e.g. <code>&quot;a ≠ 0&quot;</code>.</p>
+<p>Two things land here. A leading coefficient the back-substitution divided by
+without being able to decide it, and — for a rational equation — a
+denominator that was cleared and whose vanishing at the returned root could
+not be decided either. <code>solve([(Vo - Vin)/R1 + Vo*s*C], [Vo])</code> lists
+<code>R1 ≠ 0</code>: at <code>R1 = 0</code> the equation you wrote has no value at all, so the
+answer is the answer <em>for</em> <code>R1 ≠ 0</code>. Declaring the symbol positive
+(<code>pool.symbol(&quot;R1&quot;, &quot;positive&quot;)</code>) discharges that condition instead of
+reporting it.</p>
+<p><code>solve([a*x - b], [x])</code> returns <code>b/a</code>, which is the solution <em>for
+<code>a ≠ 0</code></em>: at <code>a = 0</code> the equation reads <code>-b = 0</code>, so there is either no
+solution (<code>b ≠ 0</code>) or every <code>x</code> (<code>b = 0</code>), and neither of those is
+<code>b/a</code>. That generic-parameter reading is deliberate and useful: the tuple
+is checked to be a solution for generic parameter values, and the
+hypotheses listed here — those of the branches that were kept, factored —
+say where it stops being one. A value of an unknown declared <code>Positive</code>
+(etc.) whose membership depends on a parameter is listed too (<code>a &gt; 0</code>).</p>
+<p>This mirrors <code>DerivedResult.verification[&quot;side_conditions&quot;]</code> and
+<a href="/docs/api/diff/#ZeilbergerCertificate.side_conditions"><code>ZeilbergerCertificate.side_conditions</code></a>; <code>solve</code> returns
+plain <code>dict</code> s, which cannot carry the attribute, so it is reported beside
+the result instead.</p>
+<p>An empty list means the solver <em>proved</em> every coefficient it divided by to
+be non-zero — not that it did not look. Reset by each <code>solve</code> call, so
+read it before the next one; repeated reads of the same call agree.</p>
+</div></section>
+<section class="sym" id="CertifiedSolution"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">CertifiedSolution</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#CertifiedSolution" aria-label="Link to CertifiedSolution">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19397" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>One homotopy endpoint with optional Smale diagnostics.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="CertifiedSolution.coordinates">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coordinates</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CertifiedSolution.coordinates" aria-label="Link to CertifiedSolution.coordinates">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19407" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="CertifiedSolution.max_residual">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">max_residual</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CertifiedSolution.max_residual" aria-label="Link to CertifiedSolution.max_residual">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19412" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="CertifiedSolution.smale_alpha">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">smale_alpha</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CertifiedSolution.smale_alpha" aria-label="Link to CertifiedSolution.smale_alpha">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19417" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="CertifiedSolution.smale_certified">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">smale_certified</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CertifiedSolution.smale_certified" aria-label="Link to CertifiedSolution.smale_certified">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19422" rel="noopener">source</a></div></div>
+  
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="CertifiedSolution.to_dict">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_dict</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CertifiedSolution.to_dict" aria-label="Link to CertifiedSolution.to_dict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19427" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Map each variable <code>Expr</code> to its coordinate <code>float</code> (same <code>vars</code> order as <code>solve</code>).</p>
+</div>
+</div>
+<div class="member" id="CertifiedSolution.enclosures">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">enclosures</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CertifiedSolution.enclosures" aria-label="Link to CertifiedSolution.enclosures">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19439" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="triangularize"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">triangularize</span>(<span class="sig-p">equations</span>, <span class="sig-p">vars</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#triangularize" aria-label="Link to triangularize">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20746" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Lex-basis triangular decomposition (possibly split on factored univariates).</p>
+</div></section>
+<section class="sym" id="RegularChain"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">RegularChain</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#RegularChain" aria-label="Link to RegularChain">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20660" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>One triangular component of a decomposition, as returned by
+<a href="/docs/api/solve/#triangularize"><code>triangularize()</code></a>.</p>
+<p>The component&#39;s polynomials are <a href="/docs/api/solve/#GbPoly"><code>GbPoly</code></a>; each carries the variable
+ordering <a href="/docs/api/solve/#triangularize"><code>triangularize()</code></a> was called with, so <code>p.to_expr()</code> reads it
+back as an <a href="/docs/api/core/#Expr"><code>Expr</code></a>.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="RegularChain.n_vars">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_vars</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#RegularChain.n_vars" aria-label="Link to RegularChain.n_vars">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20670" rel="noopener">source</a></div></div>
+  
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="RegularChain.polys">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">polys</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#RegularChain.polys" aria-label="Link to RegularChain.polys">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20679" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Gröbner-style polynomial tiles (<code>GbPoly</code>), ascending by main variable.</p>
+<p>Each tile knows the variables it is written over, so
+<code>[p.to_expr() for p in chain.polys()]</code> gives the triangular system as
+<a href="/docs/api/core/#Expr"><code>Expr</code></a> (see <code>to_exprs()</code>).</p>
+</div>
+</div>
+<div class="member" id="RegularChain.variables">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">variables</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#RegularChain.variables" aria-label="Link to RegularChain.variables">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20688" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The variables the chain is written over, in exponent-slot order.</p>
+</div>
+</div>
+<div class="member" id="RegularChain.to_exprs">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_exprs</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#RegularChain.to_exprs" aria-label="Link to RegularChain.to_exprs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20703" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The triangular system as <a href="/docs/api/core/#Expr"><code>Expr</code></a>, each meaning <code>p = 0</code>.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="primary_decomposition"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">primary_decomposition</span>(<span class="sig-p">polys</span>, <span class="sig-p">vars</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#primary_decomposition" aria-label="Link to primary_decomposition">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19258" rel="noopener">source</a></div>
+</div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="PrimaryComponent"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">PrimaryComponent</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#PrimaryComponent" aria-label="Link to PrimaryComponent">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19210" rel="noopener">source</a></div>
+</div><div class="sym-body"><p class="muted nodoc">No docstring.</p><div class="members"><div class="members-title">Methods</div><div class="member" id="PrimaryComponent.primary">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">primary</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#PrimaryComponent.primary" aria-label="Link to PrimaryComponent.primary">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19222" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Gröbner basis of the primary component.</p>
+</div>
+</div>
+<div class="member" id="PrimaryComponent.associated_prime">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">associated_prime</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#PrimaryComponent.associated_prime" aria-label="Link to PrimaryComponent.associated_prime">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19235" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Gröbner basis of the associated prime (√Q).</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="radical"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">radical</span>(<span class="sig-p">polys</span>, <span class="sig-p">vars</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#radical" aria-label="Link to radical">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19303" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Radical √I of the ideal generated by <code>polys</code>.</p>
+<p>If <em>vars</em> is omitted, free symbols across all <em>polys</em> are used (sorted by
+internal id). At least one free symbol must be present.</p>
+</div></section>
+<section class="sym" id="diophantine"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">diophantine</span>(<span class="sig-p">equation</span>, <span class="sig-p">vars</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#diophantine" aria-label="Link to diophantine">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19614" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.diophantine(equation, vars)</code> — integer solutions of a binary
+Diophantine equation.</p>
+<p>Solves <code>equation = 0</code> over the integers in exactly two unknowns.
+Supported patterns:</p>
+<ul>
+<li><strong>Linear</strong> — returns a parametric family <code>x(t), y(t)</code>
+(<code>kind == &quot;parametric_linear&quot;</code>).</li>
+<li><strong>Sum of two squares</strong> — <code>x² + y² = n</code> (finite list of points).</li>
+<li><strong>Pell / generalized Pell</strong> — <code>x² − D·y² = 1</code> or <code>= N</code>.</li>
+</ul>
+<p>Raises <code>DiophantineError</code> when the equation is not a polynomial in
+<em>vars</em>, has non-integer coefficients, is an unsupported pattern, or has
+no integer solution.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">sol </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> diophantine(x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 5</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [x, y])</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># sol.kind == "parametric_linear"; sol.parametric = [x(t), y(t)]</span></span></code></pre></div></div></section>
+<section class="sym" id="DiophantineSolution"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">DiophantineSolution</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#DiophantineSolution" aria-label="Link to DiophantineSolution">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19459" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Result of <a href="https://github.com/alkahest-cas/alkahest/blob/main/docs/mdbook/src/py_diophantine" rel="noopener"><code>diophantine</code></a>: a parametric linear family,
+a finite list of integer points, or a Pell-type description.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="DiophantineSolution.kind">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">kind</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DiophantineSolution.kind" aria-label="Link to DiophantineSolution.kind">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19461" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="DiophantineSolution.parameter">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">parameter</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DiophantineSolution.parameter" aria-label="Link to DiophantineSolution.parameter">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19463" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="DiophantineSolution.parametric">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">parametric</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DiophantineSolution.parametric" aria-label="Link to DiophantineSolution.parametric">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19466" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>x(t), y(t), …</code> when <code>kind == &quot;parametric_linear&quot;</code>.</p>
+</div>
+</div>
+<div class="member" id="DiophantineSolution.points">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">points</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DiophantineSolution.points" aria-label="Link to DiophantineSolution.points">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19469" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>List of coordinate tuples when <code>kind == &quot;finite&quot;</code>.</p>
+</div>
+</div>
+<div class="member" id="DiophantineSolution.pell_d">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pell_d</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DiophantineSolution.pell_d" aria-label="Link to DiophantineSolution.pell_d">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19472" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Coefficient <code>D</code> in <code>x² - D·y² = 1</code> or <code>x² - D·y² = N</code>.</p>
+</div>
+</div>
+<div class="member" id="DiophantineSolution.fundamental">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">fundamental</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DiophantineSolution.fundamental" aria-label="Link to DiophantineSolution.fundamental">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19475" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Fundamental unit <code>(x0, y0)</code> when <code>kind == &quot;pell_fundamental&quot;</code>.</p>
+</div>
+</div>
+<div class="member" id="DiophantineSolution.pell_n">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pell_n</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DiophantineSolution.pell_n" aria-label="Link to DiophantineSolution.pell_n">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19478" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Right-hand <code>N</code> in <code>x² - D·y² = N</code> when <code>kind == &quot;pell_generalized&quot;</code>.</p>
+</div>
+</div>
+<div class="member" id="DiophantineSolution.pell_particular">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pell_particular</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DiophantineSolution.pell_particular" aria-label="Link to DiophantineSolution.pell_particular">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19481" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>A particular solution <code>(x0, y0)</code> when <code>kind == &quot;pell_generalized&quot;</code>.</p>
+</div>
+</div>
+<div class="member" id="DiophantineSolution.pell_unit">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pell_unit</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DiophantineSolution.pell_unit" aria-label="Link to DiophantineSolution.pell_unit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19484" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Unit <code>(ux, uy)</code> with <code>ux² - D·uy² = 1</code> when <code>kind == &quot;pell_generalized&quot;</code>.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="pell_classes"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">pell_classes</span>(<span class="sig-p">d</span>, <span class="sig-p">n</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#pell_classes" aria-label="Link to pell_classes">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L1933" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.pell_classes(d, n)</code> — every solution class of <code>x² − d·y² = n</code>.</p>
+<p><code>diophantine</code> reports one particular solution of a generalized Pell
+equation, but <code>n</code> can have several fundamental solutions (inequivalent
+under the unit group).  This returns all of them.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">d</code></dt><dd><p>positive non-square integer.</p>
+</dd></div><div class="param"><dt><code class="pname">n</code></dt><dd><p>nonzero integer.</p>
+</dd></div></dl>
+<p>Returns a <code>dict</code> with <code>d</code>, <code>n</code>, <code>unit</code> (the fundamental solution
+<code>(ux, uy)</code> of <code>x² − d·y² = 1</code>), <code>negative_unit</code> (fundamental solution
+of <code>x² − d·y² = −1</code> or <code>None</code>) and <code>classes</code> — a list of <code>(x, y)</code>,
+one per class, sorted by <code>(y, x)</code>; empty when the equation has no
+solution.  Every integer solution is
+<code>x + y√d = ±(x_c + y_c√d)·(ux + uy√d)^k</code> for exactly one class <code>c</code> and
+one <code>k ∈ ℤ</code>.</p>
+<p>Raises <code>DiophantineError</code> (<code>E-DIOPH-003</code>) for a square or
+non-positive <code>d</code>, <code>n = 0</code>, or an instance whose complete search bound is
+too large; <code>BudgetExceededError</code> when the active budget runs out.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pell_classes(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">9</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"classes"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [(3, 0), (7, 2), (13, 4)]</span></span></code></pre></div></div></section>
+<h2 id="quantifier-elimination"><a class="hanchor" href="#quantifier-elimination" aria-hidden="true" tabindex="-1">#</a>Quantifier elimination</h2>
+<section class="sym" id="Exists"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">Exists</span>(<span class="sig-p">var</span>, <span class="sig-p">body</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Exists" aria-label="Link to Exists">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15924" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>∃ var . body</code> (same pool).</p>
+</div></section>
+<section class="sym" id="Forall"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">Forall</span>(<span class="sig-p">var</span>, <span class="sig-p">body</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Forall" aria-label="Link to Forall">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15915" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>∀ var . body</code> (same pool).</p>
+</div></section>
+<section class="sym" id="decide"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">decide</span>(<span class="sig-p">formula</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#decide" aria-label="Link to decide">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15946" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Decide a closed polynomial sentence over ℝ (one outer <code>\forall</code>/<code>\exists</code>; purely
+polynomial body in the bound symbol with integer coefficients).</p>
+<p>Returns <code>(truth, witness_or_none)</code> where <code>witness</code> maps symbol names to
+rational decimal strings when an existential sentence is deduced satisfied.</p>
+</div></section>
+<section class="sym" id="cad_project"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">cad_project</span>(<span class="sig-p">polys</span>, <span class="sig-p">elim_var</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#cad_project" aria-label="Link to cad_project">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16845" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Brown-style CAD projection polynomials after eliminating <code>elim_var</code>.</p>
+</div></section>
+<section class="sym" id="cad_lift"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">cad_lift</span>(<span class="sig-p">polys</span>, <span class="sig-p">main_var</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#cad_lift" aria-label="Link to cad_lift">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16873" rel="noopener">source</a></div>
+</div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
+<h2 id="positivity"><a class="hanchor" href="#positivity" aria-hidden="true" tabindex="-1">#</a>Positivity</h2>
+<section class="sym" id="prove_nonneg"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">prove_nonneg</span>(
+    <span class="sig-p">expr</span>,
+    <span class="sig-p">vars</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">constraints</span><span class="sig-def">=None</span>,
+    <span class="sig-p">basis_degree</span><span class="sig-def">=None</span>,
+    <span class="sig-p">level</span><span class="sig-def">=2</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#prove_nonneg" aria-label="Link to prove_nonneg">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16717" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.prove_nonneg(expr, vars, *, constraints=(), basis_degree=None, level=2)</code></p>
+<p>Prove <code>p ≥ 0</code> on <code>{x : g_i(x) ≥ 0}</code> with a Handelman-style certificate
+<code>p = Σ_α c_α·Π g_i^{α_i}</code> (<code>c_α ≥ 0</code>). With no constraints this is
+<a href="/docs/api/solve/#sos_decompose"><code>sos_decompose()</code></a>.</p>
+</div></section>
+<section class="sym" id="sos_decompose"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">sos_decompose</span>(<span class="sig-p">expr</span>, <span class="sig-p">vars</span>, <span class="sig-sep">*</span>, <span class="sig-p">basis_degree</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#sos_decompose" aria-label="Link to sos_decompose">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16686" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.sos_decompose(expr, vars, *, basis_degree=None) -&gt; PositivityCertificate</code></p>
+<p>Exact rational sum-of-squares decomposition <code>p = Σ_j σ_j·q_j²</code>.</p>
+<p>Raises <a href="/docs/api/errors/#SosError"><code>SosError</code></a> rather than guessing: <code>E-SOS-003</code> with a
+witness point when <code>p</code> is negative somewhere, <code>E-SOS-002</code> when no
+certificate of the searched shape exists at this basis degree (which is
+<em>not</em> a proof that none exists — see the docs).</p>
+</div></section>
+<section class="sym" id="PositivityCertificate"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">PositivityCertificate</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#PositivityCertificate" aria-label="Link to PositivityCertificate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16049" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>An exact, re-checkable proof that a polynomial is non-negative.</p>
+<p>Returned by <a href="/docs/api/solve/#sos_decompose"><code>sos_decompose()</code></a> and <a href="/docs/api/solve/#prove_nonneg"><code>prove_nonneg()</code></a>.
+The identity it carries has already been re-expanded and compared against
+the target exactly; <code>verify()</code> re-runs that check on demand, so a
+downstream consumer never has to trust the search that produced it.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="PositivityCertificate.kind">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">kind</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#PositivityCertificate.kind" aria-label="Link to PositivityCertificate.kind">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16058" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>&quot;sos&quot;</code>, <code>&quot;handelman&quot;</code> or <code>&quot;putinar&quot;</code>.</p>
+</div>
+</div>
+<div class="member" id="PositivityCertificate.degree">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">degree</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#PositivityCertificate.degree" aria-label="Link to PositivityCertificate.degree">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16064" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The basis degree (unconstrained) or Handelman level actually used.</p>
+</div>
+</div>
+<div class="member" id="PositivityCertificate.num_squares">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">num_squares</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#PositivityCertificate.num_squares" aria-label="Link to PositivityCertificate.num_squares">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16070" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of squares in the decomposition.</p>
+</div>
+</div>
+<div class="member" id="PositivityCertificate.identity">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">identity</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#PositivityCertificate.identity" aria-label="Link to PositivityCertificate.identity">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16076" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The certificate identity, e.g. <code>p = 1*(x - y)^2 + 2*(y)^2</code>.</p>
+</div>
+</div>
+<div class="member" id="PositivityCertificate.claim">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">claim</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#PositivityCertificate.claim" aria-label="Link to PositivityCertificate.claim">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16082" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The claim being certified, e.g. <code>p &gt;= 0 on {g_0 &gt;= 0, g_1 &gt;= 0}</code>.</p>
+</div>
+</div>
+<div class="member" id="PositivityCertificate.log">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">log</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#PositivityCertificate.log" aria-label="Link to PositivityCertificate.log">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16088" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>How the search proceeded — the audit trail.</p>
+</div>
+</div>
+<div class="member" id="PositivityCertificate.expression">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">expression</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#PositivityCertificate.expression" aria-label="Link to PositivityCertificate.expression">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16094" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The right-hand side of the identity as an <a href="/docs/api/core/#Expr"><code>Expr</code></a>.</p>
+</div>
+</div>
+<div class="member" id="PositivityCertificate.multipliers">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">multipliers</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#PositivityCertificate.multipliers" aria-label="Link to PositivityCertificate.multipliers">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16114" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The certificate&#39;s summands, as <code>[(weight, [(c, q), ...]), ...]</code>.</p>
+<p>Each entry is one multiplier term <code>weight · Σ c·q²</code>: <code>weight</code> is the
+product of the constraints it multiplies (the integer <code>1</code> for the
+unconstrained <code>σ₀</code>), and every <code>(c, q)</code> is a positive rational
+<code>c</code> and a rational polynomial <code>q</code>. Summing <code>weight·c·q**2</code> over
+everything re-expands exactly to the target (or to <code>target·σ</code> for a
+Reznick multiplier certificate).</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="PositivityCertificate.verify">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verify</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#PositivityCertificate.verify" aria-label="Link to PositivityCertificate.verify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16155" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Re-run the exact verification. Always <code>True</code> for a certificate that
+was returned (the search refuses rather than returning an unverified
+one); exposed so a caller can check independently.</p>
+</div>
+</div>
+<div class="member" id="PositivityCertificate.to_lean">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_lean</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#PositivityCertificate.to_lean" aria-label="Link to PositivityCertificate.to_lean">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16164" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Lean 4 rendering of the identity, or <code>None</code> when it cannot be emitted
+soundly.</p>
+</div>
+</div></div></div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/ode/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">ODE and DAE</span></a><a class="pager-next" href="/docs/api/linprog/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Linear and integer programming</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/solve.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d3"><a href="#solve">solve</a></li><li class="d3"><a href="#nsolve">nsolve</a></li><li class="d3"><a href="#NumericRoot">NumericRoot</a></li><li class="d3"><a href="#RootIsolation">RootIsolation</a></li><li class="d3"><a href="#root_of">root_of</a></li><li class="d2"><a href="#groebnerbasis">GroebnerBasis</a></li><li class="d3"><a href="#GbPoly">GbPoly</a></li><li class="d3"><a href="#expr_to_gbpoly">expr_to_gbpoly</a></li><li class="d2"><a href="#more-solving">More solving</a></li><li class="d3"><a href="#solve_numerical">solve_numerical</a></li><li class="d3"><a href="#solve_side_conditions">solve_side_conditions</a></li><li class="d3"><a href="#CertifiedSolution">CertifiedSolution</a></li><li class="d3"><a href="#triangularize">triangularize</a></li><li class="d3"><a href="#RegularChain">RegularChain</a></li><li class="d3"><a href="#primary_decomposition">primary_decomposition</a></li><li class="d3"><a href="#PrimaryComponent">PrimaryComponent</a></li><li class="d3"><a href="#radical">radical</a></li><li class="d3"><a href="#diophantine">diophantine</a></li><li class="d3"><a href="#DiophantineSolution">DiophantineSolution</a></li><li class="d3"><a href="#pell_classes">pell_classes</a></li><li class="d2"><a href="#quantifier-elimination">Quantifier elimination</a></li><li class="d3"><a href="#Exists">Exists</a></li><li class="d3"><a href="#Forall">Forall</a></li><li class="d3"><a href="#decide">decide</a></li><li class="d3"><a href="#cad_project">cad_project</a></li><li class="d3"><a href="#cad_lift">cad_lift</a></li><li class="d2"><a href="#positivity">Positivity</a></li><li class="d3"><a href="#prove_nonneg">prove_nonneg</a></li><li class="d3"><a href="#sos_decompose">sos_decompose</a></li><li class="d3"><a href="#PositivityCertificate">PositivityCertificate</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/solve.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

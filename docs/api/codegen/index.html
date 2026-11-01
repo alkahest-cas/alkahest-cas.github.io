@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code generation API · Alkahest Docs</title>
+<meta name="description" content="MLIR dialect emission and C code export.">
+<meta property="og:title" content="Code generation API · Alkahest Docs">
+<meta property="og:description" content="MLIR dialect emission and C code export.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/" class="active" aria-current="page">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>Code generation API</h1>
+    <div class="prose-block"><p>MLIR dialect emission and C code export.</p>
+</div>
+<h2 id="mlir--stablehlo"><a class="hanchor" href="#mlir--stablehlo" aria-hidden="true" tabindex="-1">#</a>MLIR / StableHLO</h2>
+<section class="sym" id="to_stablehlo"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">to_stablehlo</span>(<span class="sig-p">expr</span>, <span class="sig-p">inputs</span>, <span class="sig-p">fn_name</span><span class="sig-def">=&quot;alkahest_fn&quot;</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#to_stablehlo" aria-label="Link to to_stablehlo">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17103" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.to_stablehlo(expr, inputs) -&gt; str</code></p>
+<p>Lower a symbolic expression to a StableHLO MLIR text module.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr</span></dt><dd><p>The expression to lower.</p>
+</dd></div><div class="param"><dt><code class="pname">inputs</code><span class="ptype">list[Expr]</span></dt><dd><p>The input variables (become function arguments in order).</p>
+</dd></div><div class="param"><dt><code class="pname">fn_name</code><span class="ptype">str, optional</span></dt><dd><p>The MLIR function name (default &quot;alkahest_fn&quot;).</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">str</span></dt><dd><p>Complete MLIR text module, using only <code>stablehlo</code> ops.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">AlkahestError</span></dt><dd><p><code>E-STABLEHLO-001</code> for a function with no exact StableHLO lowering
+(<code>erf</code>, <code>gamma</code>, <code>lambert_w</code>, <code>asinh</code>, a user function …),
+<code>E-STABLEHLO-002</code> for a node with no numeric value (<code>O(x)</code>),
+<code>E-STABLEHLO-003</code> for a symbol missing from <code>inputs</code>,
+<code>E-STABLEHLO-004</code> for an infinite/NaN constant, and
+<code>E-STABLEHLO-005</code> for a <code>fn_name</code> that is not an MLIR identifier.
+No module is ever returned partially or with a stand-in.</p>
+</dd></div></dl></div></section>
+<h2 id="c-code-emission"><a class="hanchor" href="#c-code-emission" aria-hidden="true" tabindex="-1">#</a>C code emission</h2>
+<section class="sym" id="emit_c_expr"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">emit_c_expr</span>(<span class="sig-p">expr</span>, <span class="sig-p">vars</span>, <span class="sig-p">var_names</span><span class="sig-def">=None</span>, <span class="sig-p">fn_name</span><span class="sig-def">=&quot;f&quot;</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#emit_c_expr" aria-label="Link to emit_c_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14788" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Emit a C function that evaluates a symbolic expression including
+transcendental functions.</p>
+<p>Unlike <a href="/docs/api/numerics/#emit_c"><code>emit_c()</code></a> (which is restricted to univariate polynomials and
+uses Horner form), <code>emit_c_expr</code> supports arbitrary expressions including
+<code>sin</code>, <code>cos</code>, <code>exp</code>, <code>log</code>, <code>sqrt</code>, <code>tan</code>, <code>atan2</code>, <code>erf</code>,
+<code>floor</code>, <code>ceil</code>, and more.  The emitted code requires <code>#include &lt;math.h&gt;</code>
+and is ISO C99.</p>
+<p>Every sub-expression used more than once is computed once into a
+<code>const double</code> temporary; <code>x**2</code> … <code>x**4</code>, <code>x**-1</code> and half-integer
+powers are strength-reduced to products, divisions and one <code>sqrt</code>.
+<code>pi</code> (unless listed in <em>vars</em>) and <code>exp(1)</code> are emitted as the nearest
+<code>double</code>; rationals as the correctly rounded <code>double</code>.</p>
+<p>Supported functions: <code>sin cos tan asin acos atan sinh cosh tanh asinh acosh atanh exp log sqrt abs erf erfc gamma floor ceil round atan2 min max` (C99 `&lt;math.h&gt;`), `sign` / `heaviside` / `Piecewise</code> (as
+ternaries, with the interpreter&#39;s values at 0), and <code>lambert_w</code> through
+an emitted <code>static</code> helper (relative error ≤ 1e-15 for
+<code>x ≥ -1/e + 1e-3</code>; guarded by <code>#ifndef</code> so several emitted functions can
+share a file).</p>
+<p>Special functions lower to <code>static</code> ISO C99 helpers emitted ahead of the
+function (only the ones the expression calls; no POSIX <code>jn</code>/<code>yn</code>, no
+complex type): <code>bessel_j</code>/<code>bessel_y</code>/<code>bessel_i</code>/<code>bessel_k</code> of
+<strong>integer</strong> order <code>|n| ≤ 10000</code> (<code>bessel_j0</code>/<code>bessel_j1</code> too),
+<code>digamma</code>, <code>trigamma</code>, <code>polygamma</code> of order 0 or 1, <code>dilog</code> (real,
+<code>x ≤ 1</code>), complete <code>EllipticK</code>/<code>EllipticE</code> (parameter <code>m = k²</code>),
+<code>fresnels</code>/<code>fresnelc</code> (<code>π/2</code> normalisation), and <code>Ei</code>, <code>li</code>,
+<code>Si</code>, <code>Ci</code>, <code>Shi</code>, <code>Chi</code>.  Each helper is tested against mpmath to
+about 1e-15 relative error (absolute near a zero of the function) over its
+documented domain, listed in the comment above it in the emitted source;
+outside the real domain it returns <code>NAN</code> or the function&#39;s infinity.
+A Bessel order that is a symbol (not a literal) must be an integer when the
+C runs, else the result is <code>NAN</code>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr</span></dt><dd><p>The symbolic expression to compile.</p>
+</dd></div><div class="param"><dt><code class="pname">vars</code><span class="ptype">Expr | list[Expr]</span></dt><dd><p>The symbolic variables (in argument order).  A single <code>Expr</code> is treated
+as a one-element list.</p>
+</dd></div><div class="param"><dt><code class="pname">var_names</code><span class="ptype">str | list[str], optional</span></dt><dd><p>C parameter names for each variable.  If omitted, defaults to the
+symbolic name of each variable.  Must have the same length as <em>vars</em>.</p>
+</dd></div><div class="param"><dt><code class="pname">fn_name</code><span class="ptype">str, optional</span></dt><dd><p>The C function name (default <code>&quot;f&quot;</code>).</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">str</span></dt><dd><p>A complete C function definition.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">AlkahestError</span></dt><dd><p>A <code>ValueError</code> subclass.  <code>E-CODEGEN-001</code>: a function with no C
+lowering (<code>diracdelta</code>, Airy, <code>zeta</code>, <code>polylog</code>, <code>hyper</code>,
+spherical Bessel, incomplete elliptic integrals, a Bessel function of a
+literal non-integer order, <code>polygamma</code> of order &gt; 1, a user function;
+the message names it).  <code>E-CODEGEN-002</code>: a node with no straight-line C
+form (<code>O(x)</code>, quantifiers, root sums).  <code>E-CODEGEN-003</code>: a free
+symbol not listed in <em>vars</em>.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool, sin, emit_c_expr</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool(); x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(emit_c_expr(sin(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, x))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">double f(double x) {</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    return</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (sin(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x));</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">}</span></span></code></pre></div></div></section>
+<section class="sym" id="emit_c_vec"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">emit_c_vec</span>(<span class="sig-p">exprs</span>, <span class="sig-p">vars</span>, <span class="sig-p">var_names</span><span class="sig-def">=None</span>, <span class="sig-p">fn_name</span><span class="sig-def">=&quot;eval_vec&quot;</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#emit_c_vec" aria-label="Link to emit_c_vec">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14894" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Emit a C function that writes multiple symbolic expressions into an output
+array.</p>
+<p>Computes <code>len(exprs)</code> values and writes them to <code>double *out</code>:</p>
+<div class="code" data-lang="c"><span class="code-lang">C</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">void</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> fn_name</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">double</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50"> x</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">double</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50"> y</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, …, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">double</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> *</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">out</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">);</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">/* out[0] = exprs[0], out[1] = exprs[1], … */</span></span></code></pre></div><p>All expressions share the same input variables and the same <code>&lt;math.h&gt;</code>
+support as <a href="/docs/api/codegen/#emit_c_expr"><code>emit_c_expr()</code></a>.  Common sub-expressions are shared across
+<strong>all</strong> outputs, so a gradient and Hessian emitted together reuse the
+price&#39;s <code>log</code>, <code>sqrt</code> and <code>erf</code> calls rather than recomputing them.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">exprs</code><span class="ptype">list[Expr]</span></dt><dd><p>The symbolic expressions to evaluate (one per output component).</p>
+</dd></div><div class="param"><dt><code class="pname">vars</code><span class="ptype">Expr | list[Expr]</span></dt><dd><p>The symbolic variables (in argument order).</p>
+</dd></div><div class="param"><dt><code class="pname">var_names</code><span class="ptype">str | list[str], optional</span></dt><dd><p>C parameter names for each variable.  Defaults to the symbolic names.</p>
+</dd></div><div class="param"><dt><code class="pname">fn_name</code><span class="ptype">str, optional</span></dt><dd><p>The C function name (default <code>&quot;eval_vec&quot;</code>).</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">str</span></dt><dd><p>A complete C function definition with a <code>void</code> return type.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">AlkahestError</span></dt><dd><p><code>E-CODEGEN-001</code> … <code>E-CODEGEN-003</code>, as for <a href="/docs/api/codegen/#emit_c_expr"><code>emit_c_expr()</code></a>.
+<code>ValueError</code> for an empty <em>exprs</em>.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool, sin, cos, emit_c_vec</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool(); x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(emit_c_vec([sin(x), cos(x)], x))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">void eval_vec(double x, double </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">out) {</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    out[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">] = sin(x);</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    out[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">] = cos(x);</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">}</span></span></code></pre></div></div></section>
+<h2 id="horner-form"><a class="hanchor" href="#horner-form" aria-hidden="true" tabindex="-1">#</a>Horner form</h2>
+<h2 id="primitive-registry"><a class="hanchor" href="#primitive-registry" aria-hidden="true" tabindex="-1">#</a>Primitive registry</h2>
+<section class="sym" id="PrimitiveRegistry"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">PrimitiveRegistry</span>()</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry" aria-label="Link to PrimitiveRegistry">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16955" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Python-visible wrapper around [<code>PrimitiveRegistry</code>].</p>
+<div class="members"><div class="members-title">Methods</div><div class="member" id="PrimitiveRegistry.default_registry">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">default_registry</span>()</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.default_registry" aria-label="Link to PrimitiveRegistry.default_registry">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16971" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Return a registry pre-populated with Alkahest&#39;s built-in primitives.</p>
+</div>
+</div>
+<div class="member" id="PrimitiveRegistry.capabilities">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">capabilities</span>(<span class="sig-p">name</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.capabilities" aria-label="Link to PrimitiveRegistry.capabilities">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16978" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Return the capability bitfield for a named primitive as a dict.</p>
+</div>
+</div>
+<div class="member" id="PrimitiveRegistry.is_registered">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_registered</span>(<span class="sig-p">name</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.is_registered" aria-label="Link to PrimitiveRegistry.is_registered">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16996" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Return True if a primitive with this name is registered.</p>
+</div>
+</div>
+<div class="member" id="PrimitiveRegistry.coverage_report_markdown">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coverage_report_markdown</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.coverage_report_markdown" aria-label="Link to PrimitiveRegistry.coverage_report_markdown">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17001" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Return the coverage report as a Markdown string.</p>
+</div>
+</div>
+<div class="member" id="PrimitiveRegistry.coverage_report">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coverage_report</span>()<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.coverage_report" aria-label="Link to PrimitiveRegistry.coverage_report">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17006" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Return the coverage report as a list of dicts.</p>
+</div>
+</div></div></div></section>
+<h2 id="compilation"><a class="hanchor" href="#compilation" aria-hidden="true" tabindex="-1">#</a>Compilation</h2>
+<section class="sym" id="CompileCache"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">CompileCache</span>()</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#CompileCache" aria-label="Link to CompileCache">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13761" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Content-addressed cache of JIT-compiled functions.</p>
+<p>Because Alkahest hash-conses expressions, the same expression tree always
+produces the same <code>ExprId</code>.  <code>CompileCache</code> exploits this to skip
+recompilation: the first <code>compile()</code> call JIT-compiles the expression;
+subsequent calls with the same <code>(expr, inputs)</code> pair return the cached
+result in O(1) time.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cache </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.CompileCache()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">expr </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 2</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">f </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> cache.compile(expr, [x])   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># compiles</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">g </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> cache.compile(expr, [x])   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># cache hit — same CompiledFn</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">assert</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> f(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">==</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 9.0</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(cache.stats())           </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># {'len': 1, 'compiles': 1, 'hits': 1, 'hit_rate': 0.5}</span></span></code></pre></div><div class="members"><div class="members-title">Properties</div><div class="member" id="CompileCache.len">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">len</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.len" aria-label="Link to CompileCache.len">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13840" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of <code>(expr, inputs)</code> pairs currently cached.</p>
+</div>
+</div>
+<div class="member" id="CompileCache.is_empty">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_empty</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.is_empty" aria-label="Link to CompileCache.is_empty">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13846" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>True</code> if the cache contains no entries.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="CompileCache.compile">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">compile</span>(<span class="sig-p">expr</span>, <span class="sig-p">inputs</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.compile" aria-label="Link to CompileCache.compile">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13798" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Compile <code>expr</code> with the given <code>inputs</code>, returning a cached <a href="/docs/api/numerics/#CompiledFn"><code>CompiledFn</code></a>.</p>
+<p>The first call for a given <code>(expr, inputs)</code> pair JIT-compiles the
+expression.  Subsequent calls return the same <a href="/docs/api/numerics/#CompiledFn"><code>CompiledFn</code></a>
+without recompilation.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr</span></dt><dd><p>The expression to compile.</p>
+</dd></div><div class="param"><dt><code class="pname">inputs</code><span class="ptype">list[Expr]</span></dt><dd><p>Ordered list of symbolic input variables.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">CompiledFn</span></dt></div></dl></div>
+</div>
+<div class="member" id="CompileCache.clear">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">clear</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.clear" aria-label="Link to CompileCache.clear">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13854" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Remove all cached entries.</p>
+<p>Live <a href="/docs/api/numerics/#CompiledFn"><code>CompiledFn</code></a> objects already returned to Python callers
+remain valid — they hold an independent reference to the compiled code.</p>
+</div>
+</div>
+<div class="member" id="CompileCache.contains">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">contains</span>(<span class="sig-p">expr</span>, <span class="sig-p">inputs</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.contains" aria-label="Link to CompileCache.contains">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13860" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>True</code> if a compiled function for <code>(expr, inputs)</code> is in the cache.</p>
+</div>
+</div>
+<div class="member" id="CompileCache.stats">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">stats</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.stats" aria-label="Link to CompileCache.stats">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13882" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Return a dict with cache statistics.</p>
+<p>Keys: <code>len</code>, <code>compiles</code>, <code>hits</code>, <code>hit_rate</code>.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="CompiledGradTracedFn"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">CompiledGradTracedFn</span>(<span class="sig-p">grad</span><span class="sig-ann">: GradTracedFn</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#CompiledGradTracedFn" aria-label="Link to CompiledGradTracedFn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_transform.py#L227" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A <a href="/docs/api/transform/#GradTracedFn"><code>GradTracedFn</code></a> with one <a href="/docs/api/numerics/#CompiledFn"><code>CompiledFn</code></a> per
+partial derivative.</p>
+<p>Created via <a href="/docs/api/transform/#jit"><code>jit()</code></a> applied to a <a href="/docs/api/transform/#GradTracedFn"><code>GradTracedFn</code></a> (for example
+<code>jit(grad(f))</code>).  Reuses the same LLVM / interpreter backends as
+<a href="/docs/api/transform/#CompiledTracedFn"><code>CompiledTracedFn</code></a>.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="CompiledGradTracedFn.symbols">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">symbols</span><span class="sig-ann">: list[Expr]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledGradTracedFn.symbols" aria-label="Link to CompiledGradTracedFn.symbols">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L242" rel="noopener">source</a></div></div>
+  
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="CompiledGradTracedFn.__call__">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">__call__</span>(<span class="sig-p">*values</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledGradTracedFn.__call__" aria-label="Link to CompiledGradTracedFn.__call__">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L245" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="CudaCompiledFn"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">CudaCompiledFn</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn" aria-label="Link to CudaCompiledFn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17129" rel="noopener">source</a></div>
+</div><div class="sym-body"><p class="muted nodoc">No docstring.</p><div class="members"><div class="members-title">Properties</div><div class="member" id="CudaCompiledFn.ptx">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ptx</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn.ptx" aria-label="Link to CudaCompiledFn.ptx">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17137" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="CudaCompiledFn.n_inputs">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_inputs</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn.n_inputs" aria-label="Link to CudaCompiledFn.n_inputs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17142" rel="noopener">source</a></div></div>
+  
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="CudaCompiledFn.call_batch">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">call_batch</span>(<span class="sig-p">inputs</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn.call_batch" aria-label="Link to CudaCompiledFn.call_batch">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17162" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Evaluate the compiled kernel on CUDA device 0 for <code>N</code> independent points.</p>
+<p><code>inputs</code> is a list of length <code>n_inputs</code>.  Each entry is a 1-D sequence
+of <code>N</code> values for that variable (column-major / SoA: one array per
+symbolic input).  Returns a Python <code>list</code> of <code>N</code> outputs.</p>
+<p>Equivalent to <code>call_batch_on(0, inputs)</code>.</p>
+</div>
+</div>
+<div class="member" id="CudaCompiledFn.call_batch_on">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">call_batch_on</span>(<span class="sig-p">device</span>, <span class="sig-p">inputs</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn.call_batch_on" aria-label="Link to CudaCompiledFn.call_batch_on">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17182" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Evaluate the compiled kernel on a specific CUDA device ordinal.</p>
+<p>Same contract as <code>call_batch()</code>, which is this method with
+<code>device = 0</code>. The PTX is device-independent — it is generated once and
+each device gets its own lazily-loaded module — so the same
+<code>CudaCompiledFn</code> can be driven across every device on the host.</p>
+<p><code>alkahest-core</code> has always been able to target a chosen device
+(<code>CudaCompiledFn::call_batch_on</code>, exercised by
+<code>nvptx_gpu::nvptx_multi_device_both_3090s</code>), but the binding only ever
+exposed device 0, so on a multi-GPU host every device but the first was
+unreachable from Python.</p>
+<p>Raises <a href="/docs/api/errors/#CudaError"><code>CudaError</code></a> if <em>device</em> is not a valid ordinal on this
+host.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="cuda_device_count"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">cuda_device_count</span>()</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#cuda_device_count" aria-label="Link to cuda_device_count">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17272" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.cuda_device_count() -&gt; int</code></p>
+<p>Number of CUDA devices visible to this process; <code>0</code> when none are.</p>
+<p>The valid arguments to <a href="/docs/api/codegen/#CudaCompiledFn.call_batch_on"><code>CudaCompiledFn.call_batch_on()</code></a> are exactly
+<code>range(cuda_device_count())</code>. Without this, the only way to discover the
+range was to launch on an ordinal and catch <code>E-CUDA-003</code> — the workaround
+<code>docs/mdbook/src/gpu.md</code> had to document while no verified implementation
+existed.</p>
+<p>Never raises: every &quot;no GPU here&quot; shape (no driver, no device, driver too
+old) reports <code>0</code>, which is the single answer a caller acts on.</p>
+</div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/logic/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Propositional logic</span></a><a class="pager-next" href="/docs/api/workload/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Search / workload</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/codegen.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#mlir--stablehlo">MLIR / StableHLO</a></li><li class="d3"><a href="#to_stablehlo">to_stablehlo</a></li><li class="d2"><a href="#c-code-emission">C code emission</a></li><li class="d3"><a href="#emit_c_expr">emit_c_expr</a></li><li class="d3"><a href="#emit_c_vec">emit_c_vec</a></li><li class="d2"><a href="#horner-form">Horner form</a></li><li class="d2"><a href="#primitive-registry">Primitive registry</a></li><li class="d3"><a href="#PrimitiveRegistry">PrimitiveRegistry</a></li><li class="d2"><a href="#compilation">Compilation</a></li><li class="d3"><a href="#CompileCache">CompileCache</a></li><li class="d3"><a href="#CompiledGradTracedFn">CompiledGradTracedFn</a></li><li class="d3"><a href="#CudaCompiledFn">CudaCompiledFn</a></li><li class="d3"><a href="#cuda_device_count">cuda_device_count</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/codegen.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

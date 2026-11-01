@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Probability and information theory · Alkahest Docs</title>
+<meta name="description" content="Experimental. Everything on this page lives in alkahest.experimental and may change in a minor release — see Stability policy.">
+<meta property="og:title" content="Probability and information theory · Alkahest Docs">
+<meta property="og:description" content="Experimental. Everything on this page lives in alkahest.experimental and may change in a minor release — see Stability policy.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/" class="active" aria-current="page">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <div class="eyebrow">Mathematics</div>
+    <h1>Probability and information theory</h1>
+    <p><strong>Experimental.</strong> Everything on this page lives in <code>alkahest.experimental</code> and may
+change in a minor release — see <a href="/docs/guide/stability/">Stability policy</a>.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> experimental </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ex</span></span></code></pre></div><h2 id="a-law-is-a-name-plus-symbolic-parameters"><a class="hanchor" href="#a-law-is-a-name-plus-symbolic-parameters" aria-hidden="true" tabindex="-1">#</a>A law is a name plus symbolic parameters</h2>
+<p>A <code>Distribution</code> is not a sampler and not a table lookup. It carries its density,
+its support, and the constraints that make it a distribution at all:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">mu, sigma, x, t </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (pool.symbol(n) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"mu"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"sigma"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"t"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">N </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ex.Normal(mu, sigma)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">N.kind            </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'Normal'</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">N.params()        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># the symbolic parameters, in constructor order</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">N.support()       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># ('real', None)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">N.constraints()   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [sigma > 0]</span></span></code></pre></div><p>The nine constructors are <code>Normal</code>, <code>LogNormal</code>, <code>Uniform</code>, <code>Exponential</code>,
+<code>Gamma</code>, <code>Beta</code> (continuous) and <code>Bernoulli</code>, <code>Binomial</code>, <code>Poisson</code> (discrete).</p>
+<p>A parameter that is a <strong>number</strong> outside its constraint raises <code>E-PROB-001</code>
+immediately. A <strong>symbolic</strong> one cannot be decided, so it is not decided: it stays
+on <code>constraints()</code> for the caller to discharge. That split — decide what is
+decidable, publish what is not, assume nothing — is the pattern for the whole
+module.</p>
+<h2 id="everything-is-a-method-on-the-law"><a class="hanchor" href="#everything-is-a-method-on-the-law" aria-hidden="true" tabindex="-1">#</a>Everything is a method on the law</h2>
+<p>There is one way to ask each question, and it is <code>dist.method(...)</code>, never
+<code>method(dist, ...)</code>:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Method</th>
+<th>Returns</th>
+</tr>
+</thead><tbody><tr>
+<td><code>mean()</code>, <code>variance()</code></td>
+<td><code>E[X]</code> (the first <em>raw</em> moment — the first central moment is identically zero) and the second <em>central</em> moment</td>
+</tr>
+<tr>
+<td><code>moment(k)</code></td>
+<td>raw <code>E[X^k]</code></td>
+</tr>
+<tr>
+<td><code>pdf(x)</code>, <code>cdf(x)</code>, <code>quantile(p)</code></td>
+<td>density, distribution function, inverse</td>
+</tr>
+<tr>
+<td><code>characteristic_function(t)</code></td>
+<td><code>E[e^{itX}]</code> — <strong>complex-valued</strong>, see below</td>
+</tr>
+<tr>
+<td><code>moment_generating_function(t)</code></td>
+<td><code>M_X(t) = E[e^{tX}]</code></td>
+</tr>
+<tr>
+<td><code>cumulant_generating_function(t)</code></td>
+<td><code>K_X = log M_X</code></td>
+</tr>
+<tr>
+<td><code>probability_generating_function(z)</code></td>
+<td><code>G_X(z) = E[z^X]</code> — lattice laws only</td>
+</tr>
+<tr>
+<td><code>cumulant(n)</code>, <code>factorial_moment(n)</code></td>
+<td><code>κ_n = K^{(n)}(0)</code>, <code>E[X(X−1)…]</code></td>
+</tr>
+<tr>
+<td><code>skewness()</code>, <code>excess_kurtosis()</code></td>
+<td>from <strong>central</strong> moments; the kurtosis is the <em>excess</em> one (<code>0</code> for a normal, not <code>3</code>)</td>
+</tr>
+<tr>
+<td><code>entropy(base=None)</code></td>
+<td>Shannon or differential, see below</td>
+</tr>
+</tbody></table></div>
+<p><strong>Every derived quantity is checked against numerical quadrature of its own
+defining integral before it is returned.</strong> One the checker cannot confirm raises
+<code>E-PROB-005</code> rather than arriving with a caveat. See
+<a href="/docs/guide/errors/#probability-four-ways-not-to-answer">Error handling</a> for the four
+distinct ways this surface declines.</p>
+<h3 id="the-characteristic-function-is-complex"><a class="hanchor" href="#the-characteristic-function-is-complex" aria-hidden="true" tabindex="-1">#</a>The characteristic function is complex</h3>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">phi </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> N.characteristic_function(t)          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># exp(i·mu·t − sigma²t²/2)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.evaluate(phi, {mu: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, sigma: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, t: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">}, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">mode</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"complex"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div><p>The real evaluation modes return <code>value=None</code> with <code>status=&quot;unsupported&quot;</code> rather
+than dropping the imaginary part.</p>
+<h2 id="generating-functions-report-their-convergence-strip"><a class="hanchor" href="#generating-functions-report-their-convergence-strip" aria-hidden="true" tabindex="-1">#</a>Generating functions report their convergence strip</h2>
+<p><code>M_X(t) = lambda/(lambda − t)</code> for an <code>Exponential</code> is true <strong>only</strong> on
+<code>t &lt; lambda</code>. Outside that strip the expression is still finite, still plausible
+and still wrong. So:</p>
+<ul>
+<li>a decidable argument outside the strip raises <code>E-PROB-006</code>;</li>
+<li>an undecidable one is answered, with the strip published on
+<code>ex.prob_side_conditions()</code>;</li>
+<li>a law whose MGF is entire leaves that list empty — so <strong>empty means checked</strong>.</li>
+</ul>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">lam </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"lam"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ex.Exponential(lam).moment_generating_function(t)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ex.prob_side_conditions()      </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># ['lam - t > 0', 'lam > 0']</span></span></code></pre></div><p>A <code>LogNormal</code> has no MGF at all: <code>E[e^{tX}]</code> is <code>+inf</code> for every <code>t &gt; 0</code>. Asking
+raises <code>E-PROB-006</code>, because a CAS that completes the square anyway returns a
+clean closed form that is the value of no integral. <code>cumulant(n)</code> refuses there
+for the same reason — <code>κ_n = K^{(n)}(0)</code> and there is no <code>K</code> — while <code>skewness()</code>
+and <code>excess_kurtosis()</code>, which are built from <em>central</em> moments, are returned as
+usual.</p>
+<p><code>G_X(z) = Σ_k z^k P(X = k)</code> is defined only for a law on the non-negative
+integers. Asking a <code>Normal</code> for one raises <code>E-PROB-002</code> rather than returning the
+formal <code>E[exp(X log z)]</code>, which is the <em>moment</em> generating function at <code>log z</code>
+and says nothing about any <code>P(X = k)</code>.</p>
+<h2 id="expectations"><a class="hanchor" href="#expectations" aria-hidden="true" tabindex="-1">#</a>Expectations</h2>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">S, K </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"S"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"K"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ex.expectation(ak.exp(S), S, ex.Normal(mu, sigma))</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># exp(mu + sigma²/2)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ex.expectation(ak.max(S </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> K, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)), S, ex.LogNormal(mu, sigma))</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Black–Scholes: e^{mu+sigma²/2}·Φ(d₁) − K·Φ(d₂)</span></span></code></pre></div><p><code>expectation(f, var, dist)</code> reduces <code>E[f(X)]</code> to integrals the existing
+integrator attempts. A divergence the convergence gate can see is reported as
+<code>E-PROB-006</code> <em>before</em> the symbolic work, so the answer is &quot;no value exists&quot;
+rather than &quot;the integrator declined&quot;; an integral that does not close raises
+<code>E-PROB-003</code> <strong>naming it</strong>, never an unevaluated object dressed as an answer.</p>
+<p>Two combination rules, and their names say what they need:</p>
+<ul>
+<li><code>expectation_affine(expr, [(var, dist), …])</code> — linearity, which holds for any
+joint law, dependent or not;</li>
+<li><code>variance_affine_independent(expr, [(var, dist), …])</code> — which does need
+independence, and says so.</li>
+</ul>
+<p><code>expectation_affine</code> still raises <code>E-PROB-002</code> on a product of two variates: a
+list of marginals says nothing about their dependence. A joint law is declared
+explicitly instead — see <a href="#joint-laws">Joint laws</a> below.</p>
+<h3 id="closed-form-expectations-of-common-functions"><a class="hanchor" href="#closed-form-expectations-of-common-functions" aria-hidden="true" tabindex="-1">#</a>Closed-form expectations of common functions</h3>
+<p>Before the integrator runs, <code>expectation</code> tries a table of textbook
+expectations, term by term after expansion. Every term must be in the table or
+the general route runs instead; either way the answer is gated by quadrature.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>law</th>
+<th>term</th>
+<th><code>E[term]</code></th>
+</tr>
+</thead><tbody><tr>
+<td>any</td>
+<td><code>x**k</code>, <code>k</code> a non-negative integer</td>
+<td>the raw-moment table</td>
+</tr>
+<tr>
+<td><code>Normal(mu, sigma)</code></td>
+<td><code>x**k * exp(a*x)</code></td>
+<td><code>exp(a*mu + a²sigma²/2)·E[Y**k]</code>, <code>Y ~ Normal(mu + a·sigma², sigma)</code></td>
+</tr>
+<tr>
+<td><code>Normal(mu, sigma)</code></td>
+<td><code>exp(a*x) * cos(w*x + phi)</code>, <code>sin</code></td>
+<td><code>exp(a*mu + (a² − w²)sigma²/2)·cos(w(mu + a·sigma²) + phi)</code></td>
+</tr>
+<tr>
+<td><code>Gamma(k, theta)</code>, <code>Exponential</code></td>
+<td><code>x**s * exp(a*x) * log(x)**{0,1}</code></td>
+<td><code>theta**s Γ(k+s)/Γ(k)·(1 − a·theta)**−(k+s)</code>, times <code>digamma(k+s) + log theta − log(1 − a·theta)</code></td>
+</tr>
+<tr>
+<td><code>Beta(alpha, beta)</code></td>
+<td><code>x**s * log(x)**{0,1}</code></td>
+<td><code>Γ(alpha+s)Γ(alpha+beta)/(Γ(alpha)Γ(alpha+beta+s))</code>, times <code>digamma(alpha+s) − digamma(alpha+beta+s)</code></td>
+</tr>
+<tr>
+<td><code>LogNormal(mu, sigma)</code></td>
+<td><code>x**s * log(x)**{0,1}</code></td>
+<td><code>exp(s·mu + s²sigma²/2)</code>, times <code>mu + s·sigma²</code></td>
+</tr>
+</tbody></table></div>
+<p>Each entry has a hypothesis (<code>k + s &gt; 0</code>, <code>1 − a·theta &gt; 0</code>, <code>alpha + s &gt; 0</code>).
+Decidably false is <code>E-PROB-006</code> — <code>E[1/X]</code> under <code>Gamma(1, theta)</code> is <code>+inf</code>;
+undecidable is published on <code>prob_side_conditions()</code>.</p>
+<h3 id="binomial-with-a-symbolic-n-and-the-negative-binomial"><a class="hanchor" href="#binomial-with-a-symbolic-n-and-the-negative-binomial" aria-hidden="true" tabindex="-1">#</a>Binomial with a symbolic <code>n</code>, and the negative binomial</h3>
+<p><code>Binomial(n, p)</code> accepts a symbolic <code>n</code>. It carries <code>n ≥ 0</code> on <code>constraints()</code>
+and <code>n</code> integer on <code>prob_side_conditions()</code>; moments, generating functions,
+cumulants, skewness and kurtosis come from closed forms in <code>n</code>, checked against
+the finite defining sum at integer <code>n</code>. What needs to enumerate <code>{0…n}</code> — the
+CDF, the entropy, a non-polynomial <code>expectation</code> — refuses.</p>
+<p><code>NegativeBinomial(r, p)</code> counts failures before the <code>r</code>-th success (SciPy&#39;s
+<code>nbinom(r, p)</code>), <code>r &gt; 0</code> real, <code>0 &lt; p ≤ 1</code>; mean <code>r(1−p)/p</code>. Its MGF converges
+for <code>t &lt; −log(1 − p)</code> and its PGF for <code>|z| &lt; 1/(1 − p)</code>, both reported like the
+Exponential&#39;s strip.</p>
+<h2 id="joint-laws"><a class="hanchor" href="#joint-laws" aria-hidden="true" tabindex="-1">#</a>Joint laws</h2>
+<p>A joint law is a list of <strong>mutually independent blocks</strong>: <code>(var, Distribution)</code>
+or <code>([vars], MultivariateNormal)</code>. Dependence exists only inside a
+multivariate-normal block, through its covariance matrix.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">X, Y, Z </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (pool.symbol(n) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "XYZ"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">mvn </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ex.MultivariateNormal([m1, m2], [[s11, s12], [s12, s22]])</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">mvn.pdf([x1, x2])                       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># (2π)^{-1} det(Σ)^{-1/2} exp(-½ qᵀΣ⁻¹q)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">mvn.moment_generating_function([t1, t2])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">mvn.linear_transform(A, b)              </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># N(Aμ + b, AΣAᵀ)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">mvn.marginal([</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">mvn.conditional([</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], [a]).mean()        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [m1 + s12*(a - m2)/s22]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">mvn.quadratic_form_expectation(A)       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># tr(AΣ) + μᵀAμ</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">blocks </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [([X, Y], mvn), (Z, ex.Exponential(lam))]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ex.joint_expectation(X</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> Y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> Z, blocks)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ex.covariance(X </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> Y, X </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> Y, blocks)     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># s11 - s22</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ex.joint_variance(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">X </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 3</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">Y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> Z, blocks)</span></span></code></pre></div><ul>
+<li><code>MultivariateNormal(mean, cov)</code> checks that <code>cov</code> is symmetric and, by
+Sylvester&#39;s criterion, that no leading principal minor is a number <code>≤ 0</code>
+(<code>E-PROB-001</code>); a symbolic minor is carried as a side condition. A linear map
+whose image is degenerate (<code>A</code> without full row rank) is refused the same way.</li>
+<li><code>joint_expectation</code> expands the expression and splits each term into
+per-block factors (<code>E[g(X)h(Z)] = E[g(X)]E[h(Z)]</code>). A univariate factor goes
+through <code>expectation</code>; a Gaussian factor must be a polynomial times <code>exp</code> of
+an affine form and is computed exactly by <strong>Stein&#39;s identity</strong>
+<code>E[X_i g(X)] = μ_i E[g] + Σ_j Σ_ij E[∂_j g]</code> and exponential tilting. A factor
+coupling two independent blocks non-separably (<code>sin(X + Z)</code>) is <code>E-PROB-002</code>.</li>
+<li><code>covariance(e1, e2, blocks)</code> is <code>E[e1·e2] − E[e1]E[e2]</code>, and <code>joint_variance</code>
+is its diagonal — the correlated counterpart of <code>variance_affine_independent</code>.</li>
+</ul>
+<p><code>sum_independent([d1, d2, …])</code> returns the law of a sum of <strong>independent</strong>
+variates where it stays in a closed family: Normals (means and variances add),
+Gammas/Exponentials with a common scale, Poissons, Binomials/Bernoullis with a
+common <code>p</code> (symbolic <code>n</code> allowed), negative binomials with a common <code>p</code>. A
+&quot;common&quot; parameter is the same expression; anything else is <code>E-PROB-002</code>.</p>
+<p><code>order_statistic(dist, n, kind=&quot;max&quot;)</code> is the law of the maximum (or minimum)
+of <code>n</code> iid copies, <code>n</code> literal or symbolic: <code>cdf</code>, <code>pdf</code>, a verified <code>mean</code> and
+<code>variance</code> (tabled in closed form for <code>Uniform</code> and <code>Exponential</code>:
+<code>E[max]</code> of exponentials is <code>(digamma(n+1) − digamma(1))/lam = H_n/lam</code>), and
+<code>distribution()</code> where it is a named law (<code>min</code> of <code>Exponential(lam)</code> is
+<code>Exponential(n·lam)</code>; the extremes of <code>Uniform(0, 1)</code> are <code>Beta(n, 1)</code>,
+<code>Beta(1, n)</code>).</p>
+<p><code>order_statistic(dist, n, k=k)</code> is the <strong><code>k</code>-th smallest</strong> (1-based) for <em>any</em>
+continuous law with a closed-form CDF — <code>Normal</code>, <code>LogNormal</code>, <code>Uniform</code>,
+<code>Exponential</code>, <code>Gamma</code> with an integer shape, <code>Beta</code> with integer parameters:</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>f_(k)(x) = n!/((k−1)!(n−k)!) · F(x)^{k−1} (1−F(x))^{n−k} · f(x)
+F_(k)(x) = Σ_{j=k}^{n} C(n,j) F(x)^j (1−F(x))^{n−j}        (literal n)</code></pre></div><p><code>n</code> and <code>k</code> may be symbolic for the density (a Gamma ratio, with <code>n &gt; 0</code>,
+<code>k</code>, <code>n</code> integer and <code>n − k + 1 &gt; 0</code> published on <code>prob_side_conditions()</code>);
+the CDF needs a literal <code>n</code> (otherwise it is an incomplete beta: <code>E-PROB-004</code>).
+<code>U_(k:n)</code> of <code>Uniform(0, 1)</code> is <code>Beta(k, n − k + 1)</code>. The <strong>moments</strong> are the
+expectation of <code>x · f_(k)(x)/f(x)</code> under the base law, computed by the
+integrator and checked against quadrature: exact rationals for integer <code>Beta</code>
+and <code>Gamma</code>, Rényi-type closed forms for <code>Exponential</code> (<code>E[X_(2:3)] = 5/(6λ)</code>),
+<code>μ + σ·3/(2√π)</code> for the maximum of three Normals. Where the integrator declines
+(a <code>Normal</code> with <code>n ≥ 4</code>, whose mean involves <code>arctan</code> constants) the moment is
+<code>E-PROB-003</code>, never a guess; a symbolic <code>n</code> outside the <code>Uniform</code>/<code>Exponential</code>
+extremes is <code>E-PROB-002</code>. A <strong>discrete</strong> base law is refused (<code>E-PROB-002</code>):
+ties change the density formula.</p>
+<h2 id="entropy-kl-divergence-cross-entropy"><a class="hanchor" href="#entropy-kl-divergence-cross-entropy" aria-hidden="true" tabindex="-1">#</a>Entropy, KL divergence, cross-entropy</h2>
+<p><code>Distribution.entropy()</code> is Shannon <code>H = −Σ p log p</code> on a discrete support and
+<strong>differential</strong> <code>h = −∫ f log f</code> on a continuous one. They are not the same
+quantity and are not unified behind one formula:</p>
+<ul>
+<li><code>h</code> is not the limit of <code>H</code>;</li>
+<li><code>h</code> is <strong>not non-negative</strong> — <code>Uniform(0, 1/2).entropy()</code> is <code>log(1/2) &lt; 0</code>,
+returned rather than clamped;</li>
+<li><code>h</code> is <strong>not invariant under a change of variables</strong> — it shifts by
+<code>E[log|dx/dy|]</code>, which is exactly the <code>mu</code> by which a <code>LogNormal</code>&#39;s entropy
+exceeds the underlying <code>Normal</code>&#39;s.</li>
+</ul>
+<p><code>base=None</code> is nats, the right default for symbolic work; <code>base=2</code> is bits.</p>
+<p><code>kl_divergence(p, q, base=None)</code> is <code>D(P‖Q)</code>, and it is <strong>not a distance</strong>: not
+symmetric, no triangle inequality, and <code>+inf</code> whenever <code>P</code> charges a set <code>Q</code>
+gives probability zero. That last case is <em>gated</em>, because the closed form does
+not fail there — substituting <code>Uniform(0,1)</code> against <code>Uniform(0,1/2)</code> into
+<code>log((b₂−a₂)/(b₁−a₁))</code> gives <code>−0.693</code>, a finite <strong>negative</strong> KL divergence, which
+Gibbs&#39; inequality forbids. Decidably non-nested supports raise <code>E-PROB-006</code>
+naming the value as <code>+inf</code>; an undecidable containment is published on
+<code>prob_side_conditions()</code> instead of assumed. <code>P</code> and <code>Q</code> must be the same family.</p>
+<p><code>cross_entropy(p, q)</code> is <code>H(P, Q)</code>, assembled as <code>H(P) + D(P‖Q)</code> from the two
+tables and then checked against <code>−E_P[log q]</code>, which is neither of them — so the
+identity is falsifiable rather than definitional.</p>
+<p><code>mutual_information_independent(p, q)</code> is <code>0</code>, under an independence the caller
+asserts by choosing the name. The dependent case lives on the joint law:</p>
+<ul>
+<li><code>MultivariateNormal.mutual_information(a, b)</code> is
+<code>−½ log det(I − Σ_AA⁻¹Σ_AB Σ_BB⁻¹Σ_BA)</code> between two disjoint index groups;
+for two scalar components with correlation <code>ρ</code> it is <code>−½ log(1 − ρ²)</code>, and
+the standard deviations cancel symbolically.</li>
+<li><code>MultivariateNormal.entropy(base=None)</code> is <code>½ log((2πe)^d det Σ)</code> (differential,
+mean-free), and <code>MultivariateNormal.kl_divergence(other)</code> is
+<code>½[tr(Σ₁⁻¹Σ₀) + (μ₁−μ₀)ᵀΣ₁⁻¹(μ₁−μ₀) − d + log(det Σ₁/det Σ₀)]</code>.</li>
+</ul>
+<p>These are exact algebra (a <code>d</code>-dimensional integral is outside the one-variable
+quadrature gate); the tests check them against numpy/scipy, Monte-Carlo and a
+2-D numerical integral, and against the quadrature-gated univariate
+<code>kl_divergence</code> at <code>d = 1</code>.</p>
+<h3 id="entropy-with-no-closed-form-entropy_asymptotic"><a class="hanchor" href="#entropy-with-no-closed-form-entropy_asymptotic" aria-hidden="true" tabindex="-1">#</a>Entropy with no closed form: <code>entropy_asymptotic</code></h3>
+<p><code>Binomial(n, p).entropy()</code> with a symbolic <code>n</code>, <code>NegativeBinomial</code> and <code>Poisson</code>
+have no closed form and <code>entropy</code> refuses them (<code>E-PROB-004</code>). <code>entropy_asymptotic(dist)</code>
+returns the <strong>labelled approximation</strong> <code>½ log(2πe σ²) − γ₁²/12</code> (variance <code>σ²</code>,
+skewness <code>γ₁</code>; error <code>O(σ⁻⁴)</code>), recorded under the derivation rule
+<code>prob_entropy_asymptotic_edgeworth</code>. It is a separate function on purpose, so an
+approximation is never returned in place of an exact value; use it where
+<code>np(1−p)</code>, <code>r(1−p)/p²</code> or <code>λ</code> is large. Any other law is <code>E-PROB-002</code>.</p>
+<p><code>expectation</code> also closes <code>E[xᵏ e^{ax} cos(ωx+φ)]</code> and the <code>sin</code> version under a
+<code>Normal</code> for <code>k ≤ 12</code>: the raw moment polynomial (the Hermite expansion) at the
+complex tilted mean <code>μ + (a+iω)σ²</code>, split into real and imaginary parts.</p>
+<h2 id="see-also"><a class="hanchor" href="#see-also" aria-hidden="true" tabindex="-1">#</a>See also</h2>
+<ul>
+<li><a href="/docs/guide/errors/#probability-four-ways-not-to-answer">Error handling</a> — the six
+<code>E-PROB-*</code> codes and which of them are verdicts</li>
+<li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a> — the other surface
+added in the same cycle</li>
+<li><a href="/docs/guide/stability/">Stability policy</a> — what <code>experimental</code> commits to</li>
+</ul>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/transformations/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Transformations</span></a><a class="pager-next" href="/docs/guide/vector-quaternion/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Vector calculus and quaternions</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/probability.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#a-law-is-a-name-plus-symbolic-parameters">A law is a name plus symbolic parameters</a></li><li class="d2"><a href="#everything-is-a-method-on-the-law">Everything is a method on the law</a></li><li class="d3"><a href="#the-characteristic-function-is-complex">The characteristic function is complex</a></li><li class="d2"><a href="#generating-functions-report-their-convergence-strip">Generating functions report their convergence strip</a></li><li class="d2"><a href="#expectations">Expectations</a></li><li class="d3"><a href="#closed-form-expectations-of-common-functions">Closed-form expectations of common functions</a></li><li class="d3"><a href="#binomial-with-a-symbolic-n-and-the-negative-binomial">Binomial with a symbolic n, and the negative binomial</a></li><li class="d2"><a href="#joint-laws">Joint laws</a></li><li class="d2"><a href="#entropy-kl-divergence-cross-entropy">Entropy, KL divergence, cross-entropy</a></li><li class="d3"><a href="#entropy-with-no-closed-form-entropy_asymptotic">Entropy with no closed form: entropy_asymptotic</a></li><li class="d2"><a href="#see-also">See also</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/probability.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

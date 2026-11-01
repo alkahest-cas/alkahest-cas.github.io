@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kernel design · Alkahest Docs</title>
+<meta name="description" content="The expression kernel is the foundation everything else builds on. It lives in alkahest-core/src/kernel/.">
+<meta property="og:title" content="Kernel design · Alkahest Docs">
+<meta property="og:description" content="The expression kernel is the foundation everything else builds on. It lives in alkahest-core/src/kernel/.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/" class="active" aria-current="page">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <div class="eyebrow">Core concepts</div>
+    <h1>Kernel design</h1>
+    <p>The expression kernel is the foundation everything else builds on. It lives in <code>alkahest-core/src/kernel/</code>.</p>
+<h2 id="hash-consed-dag"><a class="hanchor" href="#hash-consed-dag" aria-hidden="true" tabindex="-1">#</a>Hash-consed DAG</h2>
+<p>Every expression is represented as a directed acyclic graph stored in an <code>ExprPool</code>. Nodes are interned: before inserting a new node, the pool checks whether a structurally identical node already exists. If it does, the existing <code>ExprId</code> is returned instead of allocating a new node.</p>
+<p>This gives three properties:</p>
+<ol>
+<li><strong>Structural equality is a pointer comparison.</strong> <code>id_a == id_b</code> iff the expressions are structurally identical. No tree traversal required.</li>
+<li><strong>Automatic subexpression sharing.</strong> If <code>sin(x²)</code> appears in ten different expressions, there is only one <code>sin(x²)</code> node in memory.</li>
+<li><strong>Hash-based memoization is cheap.</strong> Caching the result of a transformation keyed by <code>ExprId</code> is O(1) and correct. Hot recursive paths (simplify, differentiation, integration guards, JIT interpreter) use per-call <code>HashMap&lt;ExprId, T&gt;</code> memo tables so shared DAG nodes are processed once, not once per tree occurrence.</li>
+</ol>
+<h3 id="exprpool"><a class="hanchor" href="#exprpool" aria-hidden="true" tabindex="-1">#</a>ExprPool</h3>
+<p><code>ExprPool</code> is the intern table. It owns all expressions in a session.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># intern a Symbol node</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">42</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># intern an Integer node</span></span></code></pre></div><p>Multiple pools are independent. An <code>ExprId</code> from one pool must not be mixed into another — the pool validates this in debug builds. From Python, an <code>Expr</code> carries its pool: equality and hashing are by (pool, id), so expressions from two pools never compare equal, and the operators, the pool constructors and every function taking more than one expression raise <code>PoolError</code> (<code>E-POOL-001</code>) when handed an expression from another pool.</p>
+<h3 id="building-large-sums-and-products"><a class="hanchor" href="#building-large-sums-and-products" aria-hidden="true" tabindex="-1">#</a>Building large sums and products</h3>
+<p><code>pool.add(terms)</code> and <code>pool.mul(factors)</code> are the bulk constructors: one call interns one flat node, linear in the number of operands.</p>
+<p>Accumulating with an operator is not. <code>Add</code> is flat, so <code>s = s + t</code> interns a new node one child wider than the last at every step — quadratic time, and quadratic pool memory that the pool never returns (see <a href="#exprid-and-memory">ExprId and memory</a>). Builtin <code>sum()</code> is the same loop:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">terms </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">i </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> i </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> range</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10_000</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">s </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.add(terms)      </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># ~30 ms, one node</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">s </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> sum</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(terms[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:], terms[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># ~2 s and ~400 MB of dead intermediate sums</span></span></code></pre></div><p>The two give the same expression. <code>alkahest.parse</code> gathers each run of <code>+</code>/<code>-</code> (and of <code>*</code>) and uses the bulk constructors, so parsing a long sum is linear too.</p>
+<p><strong>Persistent pool (V1-14).</strong> A pool can be serialized to disk and reopened, preserving all <code>ExprId</code>s across sessions:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool.save_to(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"session.alkp"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool2 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool.load_from(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"session.alkp"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div><p><strong>Pickling.</strong> <code>Expr</code> and <code>ExprPool</code> support <code>pickle</code> (and so <code>copy.deepcopy</code>, <code>multiprocessing</code>, <code>concurrent.futures</code>, <code>joblib</code>):</p>
+<ul>
+<li>An expression pickles as <strong>its own DAG</strong> — the nodes reachable from it, not the pool&#39;s whole intern table — plus a reference to its pool.</li>
+<li>A pool pickles as a <strong>token</strong> naming it, not as its node table. Unpickling the token gives the live pool with that token in the current process if there is one, otherwise a new empty pool that takes the token.</li>
+<li>So expressions pickled together (one <code>pickle.dumps</code> of a list, tuple, dict, …) share one pool on the other side; expressions from the same pool pickled separately also share one pool when loaded into the same process; and results a <code>multiprocessing</code> worker sends back land in the <strong>original</strong> pool, where they combine with expressions that never left. In one process, <code>pickle.loads(pickle.dumps(e)) == e</code>.</li>
+<li><code>pickle.loads(pickle.dumps(pool))</code> in a new process is an empty pool: to persist a whole pool, use <code>save_to</code> / <code>load_from</code>.</li>
+</ul>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> concurrent.futures, operator</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> concurrent.futures.ProcessPoolExecutor() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ex:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    products </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> list</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(ex.map(operator.mul, [x, y], [y, y]))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">products[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">] </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># fine: the result is back in x's pool</span></span></code></pre></div><p><strong>Sharded pool.</strong> Each node is stored once, in an append-only array; the intern index holds only ids (and hash bits) that compare through that array. With <code>--features parallel</code> the index is split into lock-striped shards, so threads interning unrelated expressions rarely contend, and two threads interning the same expression still receive the same id.</p>
+<h2 id="exprdata-variants"><a class="hanchor" href="#exprdata-variants" aria-hidden="true" tabindex="-1">#</a>ExprData variants</h2>
+<p>Each interned node is one of:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Variant</th>
+<th>Description</th>
+</tr>
+</thead><tbody><tr>
+<td><code>Symbol(name, domain)</code></td>
+<td>Named variable with a domain annotation</td>
+</tr>
+<tr>
+<td><code>Integer(n)</code></td>
+<td>Exact arbitrary-precision integer</td>
+</tr>
+<tr>
+<td><code>Rational(p, q)</code></td>
+<td>Exact rational number</td>
+</tr>
+<tr>
+<td><code>Add(children)</code></td>
+<td>N-ary addition</td>
+</tr>
+<tr>
+<td><code>Mul(children)</code></td>
+<td>N-ary multiplication</td>
+</tr>
+<tr>
+<td><code>Pow(base, exp)</code></td>
+<td>Exponentiation</td>
+</tr>
+<tr>
+<td><code>Call(primitive, args)</code></td>
+<td>Application of a registered primitive</td>
+</tr>
+<tr>
+<td><code>Piecewise(cases)</code></td>
+<td>Conditional expression</td>
+</tr>
+<tr>
+<td><code>Predicate(kind, args)</code></td>
+<td>Boolean condition (inequality, equality)</td>
+</tr>
+</tbody></table></div>
+<p><code>Add</code> and <code>Mul</code> are n-ary: <code>a + b + c</code> is one <code>Add</code> node with three children, not two nested <code>Add</code> nodes. Children are sorted at construction time so that commutativity is structural — <code>a + b</code> and <code>b + a</code> produce the same interned node.</p>
+<h2 id="domains"><a class="hanchor" href="#domains" aria-hidden="true" tabindex="-1">#</a>Domains</h2>
+<p>Every symbol carries a domain as part of its structural identity:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x_real </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"real"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x_complex </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"complex"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># x_real and x_complex are distinct expressions — different ExprIds</span></span></code></pre></div><p>The domain is not a global assumption; it is part of what the symbol <em>is</em>. Simplification rules can query a symbol&#39;s domain to decide whether a rewrite is valid (e.g. <code>sqrt(x²) → x</code> requires <code>x</code> to be non-negative).</p>
+<p>Available domains: <code>real</code>, <code>positive</code>, <code>nonnegative</code>, <code>integer</code>, <code>complex</code>. The default when no domain is specified is <code>real</code>.</p>
+<h2 id="exprid-and-memory"><a class="hanchor" href="#exprid-and-memory" aria-hidden="true" tabindex="-1">#</a>ExprId and memory</h2>
+<p><code>ExprId</code> is a 32-bit index into the pool&#39;s internal arena. It is <code>Copy</code>, <code>Send</code>, and <code>Sync</code>. Cloning an <code>ExprId</code> is free. No reference counting is needed because the pool owns all nodes; expressions are not freed until the pool is dropped.</p>
+<blockquote><p><strong>That last clause is a hard limit, not an implementation detail.</strong> The arena is
+<strong>append-only</strong>: there is no <code>clear</code>, no <code>truncate</code>, no refcount and no GC, so nothing
+is ever reclaimed while the pool is alive, and the storage cannot shrink. A distinct
+expression costs roughly 115 bytes of resident memory per node, permanently. A loop
+that builds a module-scope pool once and then calls into it forever grows linearly and
+without bound, at flat per-call latency — so it OOMs with no slowdown to warn you
+first. Every <code>Expr</code>, <code>Matrix</code>, <code>Series</code> and <code>DerivedResult</code> holds a strong reference to
+its pool, so retaining one result retains the whole history.</p>
+<p>The supported pattern for unattended work is <strong>one pool per problem</strong>, dropped when the
+problem is done: see
+<a href="/docs/guide/budgets/#exprpool-never-reclaims">Budgets → <code>ExprPool</code> never reclaims</a>.</p>
+</blockquote>
+<p>The kernel is designed with parallelism as a first-class property. All kernel types are <code>Send + Sync</code>. The simplification and differentiation passes can run concurrently on disjoint <code>ExprId</code>s from the same pool.</p>
+<h2 id="interning-cost-model"><a class="hanchor" href="#interning-cost-model" aria-hidden="true" tabindex="-1">#</a>Interning cost model</h2>
+<p>Interning a new node requires:</p>
+<ol>
+<li>Hash the <code>ExprData</code>.</li>
+<li>Look up in the concurrent hash map.</li>
+<li>On miss: allocate the node in the arena and insert into the map.</li>
+<li>On hit: return the existing <code>ExprId</code>.</li>
+</ol>
+<p>Step 4 (the common case in a running computation) is a single hash lookup plus a pointer load. The arena uses bump allocation, so step 3 is also fast.</p>
+<p>The memory benchmark group in <code>alkahest-core/benches/alkahest_bench.rs</code> verifies that rebuilding an <em>identical</em> expression tree does not grow the pool. Note the scope of that guarantee: it covers repeated work, not new work. A stream of <em>distinct</em> inputs grows the pool by every node it interns, and none of it comes back — see the warning under <a href="#exprid-and-memory">ExprId and memory</a>.</p>
+<p>One documented exception to &quot;identical input does not grow the pool&quot;: <code>Matrix.eigenvals()</code> interns a fresh gensym per call, so it grows by about 1.9 KB per call even on the same matrix. Cache its result rather than recomputing.</p>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Python API reference</span></a><a class="pager-next" href="/docs/guide/representations/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Expression representations</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/kernel.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#hash-consed-dag">Hash-consed DAG</a></li><li class="d3"><a href="#exprpool">ExprPool</a></li><li class="d3"><a href="#building-large-sums-and-products">Building large sums and products</a></li><li class="d2"><a href="#exprdata-variants">ExprData variants</a></li><li class="d2"><a href="#domains">Domains</a></li><li class="d2"><a href="#exprid-and-memory">ExprId and memory</a></li><li class="d2"><a href="#interning-cost-model">Interning cost model</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/kernel.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

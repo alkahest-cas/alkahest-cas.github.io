@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Creative telescoping (Zeilberger's algorithm) · Alkahest Docs</title>
+<meta name="description" content="zeilberger decides combinatorial identities over a well-defined class and hands back a certificate you can re-check independently. That combination — a…">
+<meta property="og:title" content="Creative telescoping (Zeilberger's algorithm) · Alkahest Docs">
+<meta property="og:description" content="zeilberger decides combinatorial identities over a well-defined class and hands back a certificate you can re-check independently. That combination — a…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li class="open"><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/" class="active" aria-current="page">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <div class="eyebrow">Agent loops</div>
+    <h1>Creative telescoping (Zeilberger's algorithm)</h1>
+    <p><code>zeilberger</code> decides combinatorial identities over a well-defined class and
+hands back a <strong>certificate</strong> you can re-check independently. That combination —
+a decision procedure whose output is a short, verifiable algebraic object — is
+why it matters for an autoresearch loop: it turns &quot;this identity survived a
+numeric sweep&quot; into &quot;this identity is proved&quot;, without a human in the loop.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">n, k </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"n"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"k"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">one </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># F(n, k) = C(n, k), written as the ratio of gammas the engine recognises.</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">F </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.gamma(n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> one) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (ak.gamma(k </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> one) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.gamma(n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> k </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> one))</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.zeilberger(F, n, k)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.order          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.coeffs         </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [a_0(n), a_1(n)] — here proportional to [-2, 1]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.certificate    </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># R(n, k)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.boundary       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "vanishes" — so the recurrence holds for the *sum*</span></span></code></pre></div><p>The result says: with <code>S(n) = Σ_{k=k_lo}^{k_hi} F(n,k)</code>,</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>Σ_i a_i(n)·S(n+i) = b(n)</code></pre></div><p>where <code>b(n)</code> is a boundary term that the summand-level identity does not by
+itself make zero. Here it <em>is</em> zero — <code>cert.boundary</code> says so, and says it after
+computing it — so the recurrence reads <code>S(n+1) − 2·S(n) = 0</code>, which together
+with <code>S(0) = 1</code> gives <code>Σ_k C(n,k) = 2^n</code>. When it is not zero the inhomogeneous
+recurrence is returned instead, and when neither can be proved nothing is
+claimed about the sum at all. That three-way verdict is the subject of
+<a href="#the-boundary-hypothesis-and-the-verdict-on-it">its own section</a> below, and it
+is the difference between a certificate and a theorem.</p>
+<h2 id="what-the-certificate-asserts"><a class="hanchor" href="#what-the-certificate-asserts" aria-hidden="true" tabindex="-1">#</a>What the certificate asserts</h2>
+<p>The returned <code>certificate</code> is a rational function <code>R(n, k)</code> such that, with
+<code>G(n,k) = R(n,k)·F(n,k)</code>,</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>Σ_i a_i(n)·F(n+i, k) = G(n, k+1) − G(n, k)</code></pre></div><p>holds <strong>identically</strong>. That identity in <code>k</code> is the whole of what is verified.
+Because it is a rational-function identity, a reader — or a referee, or another
+CAS — can check it by clearing denominators and expanding, with no reference to
+how it was found.</p>
+<h2 id="the-boundary-hypothesis-and-the-verdict-on-it"><a class="hanchor" href="#the-boundary-hypothesis-and-the-verdict-on-it" aria-hidden="true" tabindex="-1">#</a>The boundary hypothesis, and the verdict on it</h2>
+<p>Summing that identity over <code>k = k_lo .. k_hi</code> telescopes the right-hand side to
+<code>G(n, k_hi+1) − G(n, k_lo)</code> — a <em>boundary difference</em>, not zero. The familiar
+homogeneous recurrence for <code>S(n)</code> therefore holds only when that difference
+vanishes: the <strong>natural boundary</strong> hypothesis, which Zeilberger&#39;s algorithm does
+not establish.</p>
+<p>It holds in the usual case, where <code>F</code> vanishes outside <code>0 ≤ k ≤ n</code>, and that
+covers every classical identity in this chapter. It fails, for instance, for
+<code>F(n,k) = C(n,k)/(k+1)</code>: there <code>G(n,0) = −1</code>, and the true relation is
+<code>(n+2)·S(n+1) − (2n+2)·S(n) = 1</code>, not <code>0</code>. Reading the homogeneous recurrence
+off the certificate there gives a false lemma.</p>
+<p><strong><code>zeilberger</code> decides it</strong> rather than leaving it stated. <code>cert.boundary</code> is
+one of three values:</p>
+<div class="table-wrap"><table><thead><tr>
+<th><code>cert.boundary</code></th>
+<th>what may be claimed about <code>S(n)</code></th>
+</tr>
+</thead><tbody><tr>
+<td><code>&quot;vanishes&quot;</code></td>
+<td>proved: <code>Σ_i a_i(n)·S(n+i) = 0</code></td>
+</tr>
+<tr>
+<td><code>&quot;nonzero&quot;</code></td>
+<td>proved: <code>Σ_i a_i(n)·S(n+i) = b(n)</code>, with <code>b(n)</code> in <code>cert.boundary_rhs</code></td>
+</tr>
+<tr>
+<td><code>&quot;unknown&quot;</code></td>
+<td><strong>nothing.</strong> The certificate is still a true statement about the summand</td>
+</tr>
+</tbody></table></div>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.zeilberger(F, n, k)          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># limits default to k = 0..n</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.boundary            </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "vanishes"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.boundary_rhs        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># None — the right-hand side is 0</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.limits              </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># (0, n), echoed back so the assumption is on the record</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.boundary_reason     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># why the verdict came out this way</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.implies_sum_recurrence   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># True for "vanishes" and "nonzero"</span></span></code></pre></div><p><code>&quot;nonzero&quot;</code> is a <strong>result, not a refusal</strong>. OEIS A279013,
+<code>a(n) = Σ_{k=0}^{n} C(2k,k)/(k+1)·C(2n−1,n−k)</code>, gets a verified order-2
+certificate in a tenth of a second; the homogeneous recurrence read off it fails
+against the sequence at the very first term. The engine now returns the
+inhomogeneous recurrence, which does hold:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.boundary       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "nonzero"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.boundary_rhs   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># b(n), an explicit hypergeometric term in n</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Σ_i a_i(n)·S(n+i) = b(n) — checked exactly against 2, 8, 35, 161, 768, 3773</span></span></code></pre></div><h3 id="the-summation-range-is-part-of-the-claim"><a class="hanchor" href="#the-summation-range-is-part-of-the-claim" aria-hidden="true" tabindex="-1">#</a>The summation range is part of the claim</h3>
+<p>The verdict is about the range in <code>cert.limits</code>, and it <em>changes with it</em> —
+truncating a sum by one term generally turns <code>&quot;vanishes&quot;</code> into <code>&quot;nonzero&quot;</code>. Pass
+<code>limits=(k_lo, k_hi)</code> (each an <code>Expr</code> or an <code>int</code>) to say what you are summing:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.zeilberger(F, n, k, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">limits</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.boundary                         </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "nonzero" — the k = n term was dropped</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Or ask the same certificate about another range, without re-running the search:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.boundary_at(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, n)[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"boundary"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]    </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "vanishes"</span></span></code></pre></div><p>Two things this design does deliberately. The default <code>(0, n)</code> is <em>stated and
+echoed back</em>, not inferred from the summand, so a caller summing over something
+else can see the mismatch. And a range the analysis cannot place — endpoints
+that are not integer-affine in <code>n</code> — is <code>&quot;unknown&quot;</code>, never <code>&quot;vanishes&quot;</code>.</p>
+<h3 id="the-range-is-not-a-range-at-every-n"><a class="hanchor" href="#the-range-is-not-a-range-at-every-n" aria-hidden="true" tabindex="-1">#</a>The range is not a range at every <code>n</code></h3>
+<p>A declared range can be <em>empty</em>, and an empty range is where a verdict most
+easily stops being true. <code>k = 3..n−3</code> runs backwards at <code>n = 3</code> and <code>n = 4</code>: a
+sum over it is <code>0</code> under the &quot;empty sum&quot; reading and a signed sum under the
+reversed-sum one, and a <code>b(n)</code> that is correct from <code>n = 5</code> on is simply wrong
+below it. A loop that declares a range which happens to be empty for its first
+few <code>n</code> is an ordinary thing to write.</p>
+<p>So a verdict carries the <code>n</code> it is claimed for:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.zeilberger(F, n, k, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">limits</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.boundary               </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "nonzero"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.boundary_valid_from    </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 5 — the relation is FALSE at n = 3, 4</span></span></code></pre></div><p><code>boundary_valid_from</code> is <code>None</code> when nothing is excluded on that ground, and the
+range that is backwards at <em>every</em> <code>n</code> — <code>k = 5..3</code> — is <code>&quot;unknown&quot;</code>: there is
+no domain left to claim it on. The one empty range that keeps a verdict is
+<code>k_hi = k_lo − 1</code> (<code>k = n+1..n</code>), which both readings agree is <code>0</code>.</p>
+<h3 id="the-telescoping-has-to-survive-the-interior"><a class="hanchor" href="#the-telescoping-has-to-survive-the-interior" aria-hidden="true" tabindex="-1">#</a>The telescoping has to survive the interior</h3>
+<p><code>Σ_k (G(n,k+1) − G(n,k))</code> collapses to the two endpoints only if <code>G = R·F</code> is
+finite at every integer <code>k</code> in between. A pole of the <em>certificate</em> at an
+interior point breaks it in the middle of the sum, where no boundary value can
+see it. <code>cert.certificate_poles</code> reports those points, as expressions in <code>n</code>:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.zeilberger(C(n, k) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">k </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> one), n, k)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># k = 0..n</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.boundary            </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "unknown"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">str</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(p) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> cert.certificate_poles]</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># k = (n+1)/2 — a pole of the summand, so S(n) is undefined for odd n — and</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># k = (n+3)/2, a pole of the certificate strictly inside the range</span></span></code></pre></div><p>A non-empty <code>certificate_poles</code> always means <code>&quot;unknown&quot;</code>. An empty one is not a
+proof that there are none: the search covers locations <code>k = (p·n + q)/c</code> with
+<code>c ≤ 4</code> that are inside the range for large <code>n</code>.</p>
+<h3 id="what-vanishes-is-worth"><a class="hanchor" href="#what-vanishes-is-worth" aria-hidden="true" tabindex="-1">#</a>What <code>&quot;vanishes&quot;</code> is worth</h3>
+<p>It is a proof, not a numeric check. Each endpoint of <code>G</code> is evaluated by exact
+<strong>order counting</strong> in <code>Q(n)</code>: the multiplicity of the endpoint as a root of the
+certificate&#39;s numerator and denominator, plus <code>−e</code> for every <code>Γ(a·n+b·k+c)^e</code>
+factor whose argument lands on a non-positive integer there (a pole of <code>Γ</code>, or a
+zero of <code>1/Γ</code>). A strictly positive total order <em>is</em> an exact zero. A negative
+one means <code>G</code> is unbounded at the endpoint, and that is reported as <code>&quot;unknown&quot;</code>.
+Nothing that merely looks like zero can produce <code>&quot;vanishes&quot;</code>.</p>
+<p>That order count is an expansion in <code>k</code>, so it leaves behind the factors that no
+longer move with <code>k</code> at the endpoint — a <code>Γ(a·n + c)^e</code> list. A <strong>zero</strong> has to
+be weighed against those before it is a zero, because <code>0 · ∞</code> is not <code>0</code> and a
+verdict carries an implied &quot;for every <code>n</code>&quot;. <code>Σ_{k=0}^{10} C(10,k)·(n−k)!/n!</code> is
+the shape: at <code>k = 11</code> the <code>1/Γ(11−k) = 1/Γ(0)</code> zero is real, and so is the
+<code>Γ(n−k+1) = Γ(n−10)</code> pole left behind with it. <code>G(9,11)</code> is <code>1/9!</code>, and the
+<code>&quot;vanishes&quot;</code> this used to return licensed a recurrence whose <code>n = 9</code> instance —
+where the leading coefficient <code>9−n</code> is zero — reads <code>110·S(11) = 100·S(10)</code>
+about two perfectly well-defined numbers that differ by exactly <code>1/9!</code>.</p>
+<p>The test is on where the pole <em>is</em>, not on the shape of the factor. <code>Γ</code> is
+infinite exactly at the non-positive integers and every coefficient is an
+integer, so a fractional constant term is out of reach entirely, a positive <code>a</code>
+puts the last pole at <code>n = ⌊−c/a⌋</code>, and a negative <code>a</code> puts one at every large
+<code>n</code>. A binomial&#39;s <code>Γ(n+1)</code> has its poles at <code>n ≤ −1</code>, which is why every
+classical natural boundary is untouched: <code>C(n,k)</code>, <code>C(n,k)²</code>, Franel, Dixon,
+Apéry, <code>2^k·C(n,k)</code>, <code>C(n,k)·C(m,k)</code> and the Pochhammer family
+<code>C(10,k)·(n+1)_k</code> all still vanish, and <code>C(n,k)/(k+1)</code> is still <code>&quot;nonzero&quot;</code>.
+What it costs is the summands whose endpoint zero really is multiplied by
+something that blows up on the domain — <code>Γ(n−k+1+d)/Γ(n+1)</code> against a
+fixed-length range, <code>Γ(n−k−m)</code>, <code>C(n−m,k)</code> for <code>m &gt; 0</code> — which were <code>&quot;vanishes&quot;</code>
+and are now <code>&quot;unknown&quot;</code>. Note this is a <em>refusal</em>, not a narrowed domain:
+<code>Σ_{k=0}^{n} C(n−3,k)</code> does satisfy <code>S(n+1) = 2·S(n)</code> from <code>n = 3</code> on, and that
+verdict is lost rather than reported with <code>n ≥ 3</code> attached.</p>
+<p>The verdict also accounts for a subtlety that is easy to miss: when the limits
+move with <code>n</code>, <code>Σ_{k=0}^{n} F(n+i,k)</code> is <strong>not</strong> <code>S(n+i)</code>. For <code>Σ_{k=0}^{n} C(n,k)</code> the telescoped difference alone is <code>−1</code>, and it is the missing term
+<code>C(n+1,n+1) = 1</code> that cancels it. The full statement is</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>b(n) = G(n, k_hi+1) − G(n, k_lo) + Σ_i a_i(n)·D_i(n)</code></pre></div><p>with <code>D_i</code> the finitely many values of <code>F</code> between the range at <code>n</code> and the range
+at <code>n+i</code>, and it is <code>b(n)</code> that the verdict is about.</p>
+<h3 id="the-sum-has-to-exist-before-a-verdict-is-worth-anything"><a class="hanchor" href="#the-sum-has-to-exist-before-a-verdict-is-worth-anything" aria-hidden="true" tabindex="-1">#</a>The sum has to exist before a verdict is worth anything</h3>
+<p>Everything above assumes <code>S(n)</code> is a finite sum of finite terms. That is a
+statement about the <strong>summand</strong>, and it is checked rather than assumed: a pole of
+<code>F(n,k)</code> at an integer <code>k</code> inside <code>[k_lo, k_hi]</code> is <code>&quot;unknown&quot;</code>, naming the
+index.</p>
+<p>The check is not decorative. <code>F(n,k) = C(n,k)/(k−3)</code> has a certificate that
+verifies exactly in <code>Q(n)(k)</code>, finite <code>G</code> at both endpoints, and used to come
+back <code>&quot;vanishes&quot;</code> with coefficients <code>(2n+2)</code>, <code>(2−3n)</code>, <code>(n−1)</code> — for a sum whose
+<code>k = 3</code> term divides by zero, so that <code>S(n)</code> does not exist for any <code>n ≥ 3</code>. At
+<code>n = 1</code> the last coefficient is <code>0</code>, so the &quot;proved&quot; recurrence reads
+<code>4·S(1) − S(2) = 0</code> with both quantities defined: <code>S(1) = −5/6</code> and
+<code>S(2) = −7/3</code>, which is <code>−1</code>, and solving it for <code>S(2)</code> gives <code>−10/3</code>. This is
+the same lesson as <code>sum_definite</code>&#39;s interior-pole guard and the definite-integral
+one — the guard has to look at the summand, because <code>G(k_hi+1) − G(k_lo)</code> is
+precisely the object that has forgotten the interior.</p>
+<p>A pole <em>outside</em> the range is not this defect and is left alone:
+<code>Σ_{k=0}^{n} C(n,k)/(k+1)</code> still gets its <code>&quot;nonzero&quot;</code> verdict.</p>
+<p>Symmetrically, <code>&quot;nonzero&quot;</code> needs a <em>witness</em>: an integer <code>n₀</code> at which <code>b(n₀)</code>
+is nonzero in exact rational arithmetic. Sampling that finds only zeros proves
+nothing and yields <code>&quot;unknown&quot;</code>.</p>
+<p><code>cert.boundary_term</code> still returns <code>G(n,k) = R(n,k)·F(n,k)</code> if you want to
+discharge the hypothesis yourself.</p>
+<p><code>side_conditions</code> is a <code>list[str]</code>, the same shape as
+<code>DerivedResult.verification[&quot;side_conditions&quot;]</code>: things the result depends on
+that were assumed rather than proved. It <strong>tracks the verdict</strong> — a discharged
+hypothesis, a refuted one and an open one read differently, so a loop that only
+reads this list still cannot mistake the three. It is never empty: even a proved
+boundary is a statement about the <code>n</code> at which everything involved is defined,
+and a permanent record of which range was assumed.</p>
+<h2 id="verification-is-not-optional"><a class="hanchor" href="#verification-is-not-optional" aria-hidden="true" tabindex="-1">#</a>Verification is not optional</h2>
+<p>Every certificate is re-checked as an exact identity in <code>Q(n)(k)</code> before it is
+returned. A candidate that fails verification is discarded and the search
+continues; it is never returned with a caveat. This is the same
+withhold-rather-than-lie discipline as the Lean certificate exporter: in a loop,
+one unverified certificate becomes a false lemma that every downstream
+derivation inherits.</p>
+<p>Verification runs in exact rational arithmetic — no floating point is involved
+at any stage of the algorithm.</p>
+<h2 id="the-class-it-decides-and-where-it-refuses"><a class="hanchor" href="#the-class-it-decides-and-where-it-refuses" aria-hidden="true" tabindex="-1">#</a>The class it decides, and where it refuses</h2>
+<p>The supported class is <strong>proper hypergeometric terms</strong>:</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>F(n, k) = R(n, k) · z^k · w^n · ∏_j Γ(a_j·n + b_j·k + c_j)^(e_j)</code></pre></div><p>with <code>R</code> a rational function, <code>z, w</code> nonzero rationals, <code>a_j, b_j</code> integers and
+<code>c_j</code> rational. Factorials, binomials and Pochhammer symbols are recognised and
+normalised into this form.</p>
+<p>Everything else is refused, with a structured error rather than a guess:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Meaning</th>
+<th>What a loop should do</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-HOLO-001</code></td>
+<td>Not a proper hypergeometric term</td>
+<td>Close this branch — Zeilberger does not apply</td>
+</tr>
+<tr>
+<td><code>E-HOLO-002</code></td>
+<td>Search bounds exhausted</td>
+<td>Retry with larger <code>max_order</code> / <code>max_degree</code>, or deprioritise</td>
+</tr>
+<tr>
+<td><code>E-HOLO-003</code></td>
+<td>A candidate failed exact verification</td>
+<td>Report as a bug with the term</td>
+</tr>
+<tr>
+<td><code>E-HOLO-004</code></td>
+<td>Malformed call (<code>n</code> and <code>k</code> not distinct, non-positive bounds)</td>
+<td>Fix the call</td>
+</tr>
+</tbody></table></div>
+<p><code>E-HOLO-002</code> is worth dwelling on. It does <strong>not</strong> mean &quot;no recurrence exists&quot; —
+it means none was found within the bounds you set. The distinction matters: an
+agent can raise the bounds and retry, whereas <code>E-HOLO-001</code> is a permanent answer
+about the input and the branch can be closed for good.</p>
+<h2 id="cost-and-bounds"><a class="hanchor" href="#cost-and-bounds" aria-hidden="true" tabindex="-1">#</a>Cost and bounds</h2>
+<p><code>max_order</code> (default 4) and <code>max_degree</code> (default 16) bound the search. Solving
+the linear system over <code>Q(n)</code> at one <code>(J, d)</code> pair gets rapidly more expensive as
+either grows — measured on <code>Σ (−1)^k C(n,k)³</code> at order 1, a single probe goes
+from 0.7 ms at <code>d = 0</code> to 0.6 s at <code>d = 7</code> to 84 s at <code>d = 12</code>, and one extra
+order costs about what three extra degrees cost.</p>
+<p><strong>Both are upper bounds, not starting points.</strong> The <code>(J, d)</code> pairs are visited by
+iterative deepening, cheapest estimated candidate first, and the first relation
+that passes exact verification is returned. Raising a bound therefore widens the
+reach without moving where the search starts — <code>Σ (−1)^k C(n,k)³</code> is decided at
+order 2 in 0.8 s at the defaults and 0.6 s at <code>max_order=6, max_degree=64</code>
+(a hand-tuned <code>max_order=2, max_degree=4</code> costs 0.2 s, because a tight bound
+also truncates the cheap probes the deepening would interleave first):</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Same answer, same order of magnitude — the bounds are not a starting point.</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.zeilberger(F, n, k)                            </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># defaults</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.zeilberger(F, n, k, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">max_order</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">6</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">max_degree</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">64</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div><p>What the bounds <em>do</em> control is the price of a refusal: a term with no recurrence
+inside them pays the full grid before raising <code>E-HOLO-002</code>. Set them to the
+largest search you are willing to wait through when the answer is &quot;no&quot;.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.zeilberger(F, n, k, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">max_order</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">max_degree</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">6</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div><h2 id="is-the-order-minimal"><a class="hanchor" href="#is-the-order-minimal" aria-hidden="true" tabindex="-1">#</a>Is the order minimal?</h2>
+<p>Usually the interesting part of a certified recurrence is not that it exists but
+that it is <em>short</em>: an order-4 relation where the literature records a guessed
+order-5 is a result, and an order-4 relation that might have been order 3 is a
+coincidence. So the question has to be asked explicitly, and the answer is on
+the certificate:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.order_is_minimal   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># True only when the search established it</span></span></code></pre></div><p><strong>Cheapest-first is not order-ascending.</strong> The deepening above orders probes by
+estimated cost, <code>3·(J−1) + d</code>, so it can reach a cheap order-2 probe long before
+an expensive order-1 one — which is exactly what makes Dixon, Franel and Apéry
+decidable at the default bounds. A returned order 2 therefore does <em>not</em>
+establish that no order-1 relation exists, and <code>order_is_minimal</code> is <code>False</code> to
+say so. <code>False</code> means <strong>not established</strong>, never &quot;a lower order exists&quot;: a
+lower-order relation that had been found would have been the one returned.</p>
+<p>It is <code>True</code> for free at order 1, and <code>True</code> whenever the cost-ordered plan
+happened to spend every lower order before the probe that succeeded — which it
+does at narrow <code>max_degree</code>, since the plan interleaves less there. To get the
+claim in general, ask for it:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.zeilberger(F, n, k, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">max_degree</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">6</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">minimal</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.order_is_minimal   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># True — every degree ≤ 6 at every lower order was refused</span></span></code></pre></div><p><code>minimal=True</code> walks the grid order-major: every degree <code>0..max_degree</code> at order
+<code>J</code> is probed and refused before order <code>J+1</code> is tried at all. Same bounds, same
+exact verification, same certificate — only what was ruled out along the way
+differs. The flag is computed from the probes that actually happened rather than
+from the mode, so it cannot drift away from what the search did.</p>
+<p><strong>What it establishes is minimality at certificate degree <code>≤ max_degree</code></strong>, not
+minimality outright. A lower-order relation whose certificate needs a higher
+degree than the bound was never probed, and order–degree trade-offs are a real
+phenomenon in creative telescoping — so quote the bound alongside the claim, and
+raise it when minimality is the result being published.</p>
+<p>The price is the whole hopeless low-order sweep the default plan exists to
+avoid, and it is charged against <code>max_degree</code> because that is the bound
+minimality is claimed relative to. Measured on this machine at <code>max_order=4</code>:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Summand</th>
+<th><code>max_degree</code></th>
+<th>default</th>
+<th><code>minimal=True</code></th>
+</tr>
+</thead><tbody><tr>
+<td><code>Σ C(n,k)³</code> (Franel)</td>
+<td>4</td>
+<td>0.15 s</td>
+<td>0.14 s — default already minimal</td>
+</tr>
+<tr>
+<td><code>Σ C(n,k)³</code> (Franel)</td>
+<td>6</td>
+<td>0.23 s</td>
+<td>0.23 s — default already minimal</td>
+</tr>
+<tr>
+<td><code>Σ C(n,k)³</code> (Franel)</td>
+<td>8</td>
+<td>0.23 s</td>
+<td>0.56 s</td>
+</tr>
+<tr>
+<td><code>Σ C(n,k)³</code> (Franel)</td>
+<td>16</td>
+<td>0.23 s</td>
+<td><strong>9.7 s</strong></td>
+</tr>
+<tr>
+<td><code>Σ C(n,k)²C(n+k,k)²</code> (Apéry)</td>
+<td>4</td>
+<td>0.07 s</td>
+<td>0.07 s — default already minimal</td>
+</tr>
+<tr>
+<td><code>Σ C(n,k)²C(n+k,k)²</code> (Apéry)</td>
+<td>6</td>
+<td>0.08 s</td>
+<td>0.11 s</td>
+</tr>
+<tr>
+<td><code>Σ C(n,k)²C(n+k,k)²</code> (Apéry)</td>
+<td>8</td>
+<td>0.08 s</td>
+<td>0.29 s</td>
+</tr>
+<tr>
+<td><code>Σ C(n,k)²C(n+k,k)²</code> (Apéry)</td>
+<td>16</td>
+<td>0.08 s</td>
+<td><strong>13.1 s</strong></td>
+</tr>
+</tbody></table></div>
+<p>The default column is flat in <code>max_degree</code> — that is the deepening doing its job
+— and the <code>minimal=True</code> column is not, because it is the column that has to
+sweep.</p>
+<p>The default is unchanged, deliberately — the cost-ordered plan is what makes
+these terms decidable at all, and <code>minimal=True</code> is an opt-in for when
+minimality is the result you intend to publish. Note the shape of the table: the
+sweep grows like <code>3^d</code>, so the honest move is usually to claim minimality
+against the smallest <code>max_degree</code> you are willing to state rather than against
+the default 16.</p>
+<h2 id="guessing-the-recurrence-first"><a class="hanchor" href="#guessing-the-recurrence-first" aria-hidden="true" tabindex="-1">#</a>Guessing the recurrence first</h2>
+<p>The other half of the loop is <code>guess_holonomic</code>, which fits a P-recursive
+recurrence to the first terms of a sequence in exact rational arithmetic — the
+<em>guess</em> in guess-then-prove, with <code>zeilberger</code> supplying the proof:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">motzkin </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">4</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">9</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">21</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">51</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">127</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">323</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">835</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2188</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5798</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">15511</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">           41835</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">113634</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">310572</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">853467</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2356779</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">6536382</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">18199284</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">50852019</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">guess </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.guess_holonomic(motzkin)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">guess.order, guess.degree   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># (2, 1)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">guess.surplus_terms         </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 14 equations confirmed it without being needed</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">guess.confirmed             </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># True</span></span></code></pre></div><p>A fitted recurrence is a conjecture, and the number that says how much of one is
+<code>surplus_terms</code>. See <a href="/docs/guide/guessing/">Guessing recurrences</a> for the guard and what
+it refuses.</p>
+<h2 id="the-q-analogue-alkahestexperimentalq_zeilberger"><a class="hanchor" href="#the-q-analogue-alkahestexperimentalq_zeilberger" aria-hidden="true" tabindex="-1">#</a>The <code>q</code>-analogue (<code>alkahest.experimental.q_zeilberger</code>)</h2>
+<p><code>q</code>-hypergeometric sums — Gaussian binomials <code>[n;k]_q</code>, <code>q</code>-Pochhammer symbols
+<code>(a;q)_n</code> — are not proper hypergeometric terms in <code>(n,k)</code>, so <code>zeilberger</code>
+refuses them (correctly) with <code>E-HOLO-001</code>. <code>q_zeilberger</code> is the <code>q</code>-shifted
+twin of the same algorithm, and the same discipline: the certificate is
+re-checked as an exact identity in <code>Q(q)(qⁿ)(q^k)</code> before it is returned.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.experimental </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> q_zeilberger, qbinomial</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">q, n, k </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"q"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"n"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"k"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Σ_k [n;k]_q² · q^{k²} = [2n;n]_q  — the q-analogue of Σ_k C(n,k)² = C(2n,n).</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">b </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> qbinomial(pool, n, k)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> q_zeilberger(b </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> b </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> q </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (k </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> k), q, n, k)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.order            </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.boundary         </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "vanishes"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.support          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># ("0", "n") — where the summand is proved to live</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.sum_term(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)      </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># the exact q-series value S(3), a polynomial in q</span></span></code></pre></div><p><code>sum_term(n0)</code> is the part worth reaching for. It evaluates the sum from the
+<em>definition</em> of the <code>q</code>-Pochhammer symbol, not through the shift quotients the
+search used, so checking <code>Σ_i a_i(qⁿ)·S(n+i) = 0</code> against it is an independent
+check of the returned recurrence rather than a restatement of the certificate.</p>
+<h3 id="what-it-accepts"><a class="hanchor" href="#what-it-accepts" aria-hidden="true" tabindex="-1">#</a>What it accepts</h3>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>F(n,k) = R(qⁿ, q^k) · z^k · w^n · q^{A·k² + B·n·k + C·n² + D·k + E·n}
+         · Π_j (q^{u_j}; q^{d_j})_{v_j}^{e_j}</code></pre></div><p>with <code>u_j</code>, <code>v_j</code> integer-affine in <code>n, k</code>. Written as an expression: the heads
+<code>qbinomial(N, K)</code> and <code>qpochhammer(u, d, v)</code> (meaning <code>(q^u; q^d)_v</code>), powers of
+<code>q</code> whose exponent is a degree-≤2 polynomial in <code>n</code> and <code>k</code>, powers with a base
+free of <code>n</code> and <code>k</code>, and any rational function of <code>q</code>, <code>qⁿ</code>, <code>q^k</code>. Half-integer
+quadratic coefficients are fine — <code>q^{k(k−1)/2}</code> is not rational in <code>q^k</code> but
+all of its shift quotients are, which is the property the algorithm needs.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Meaning</th>
+<th>What a loop should do</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-HOLO-020</code></td>
+<td>Not a <code>q</code>-hypergeometric term</td>
+<td>Close this branch</td>
+</tr>
+<tr>
+<td><code>E-HOLO-021</code></td>
+<td>Search bounds exhausted</td>
+<td>Raise <code>max_order</code> / <code>max_degree</code> and retry</td>
+</tr>
+<tr>
+<td><code>E-HOLO-022</code></td>
+<td>A candidate failed exact verification</td>
+<td>Report as a bug with the term</td>
+</tr>
+<tr>
+<td><code>E-HOLO-023</code></td>
+<td>Malformed call (<code>q</code>, <code>n</code>, <code>k</code> not distinct; non-positive bounds)</td>
+<td>Fix the call</td>
+</tr>
+<tr>
+<td><code>E-HOLO-024</code></td>
+<td>In the shape of the class, outside it in substance</td>
+<td>Close this branch</td>
+</tr>
+</tbody></table></div>
+<p><code>E-HOLO-024</code> is the interesting one. <code>(q^k; q²)_n</code> shifted in <code>k</code> moves its
+first argument by <code>1</code>, which the base <code>q²</code> does not divide, so the shift
+quotient is an <em>infinite</em> product and no algorithm in this family applies. That
+is a permanent answer about the input, like <code>E-HOLO-020</code>, not a budget problem.</p>
+<h3 id="the-boundary-verdict-is-two-valued-here"><a class="hanchor" href="#the-boundary-verdict-is-two-valued-here" aria-hidden="true" tabindex="-1">#</a>The boundary verdict is two-valued here</h3>
+<p><code>cert.boundary</code> is <code>&quot;vanishes&quot;</code> or <code>&quot;unknown&quot;</code> — there is no <code>&quot;nonzero&quot;</code> arm.
+The sum it is about is <code>S(n) = Σ_{k ∈ Z} F(n,k)</code>, which the analysis also proves
+is a <em>finite</em> sum, over the window in <code>cert.support</code>. Fixing the range at all of
+<code>Z</code> is what makes the proof short: the range does not move with <code>n</code>, so there are
+no <code>D_i</code> correction terms, and <code>&quot;vanishes&quot;</code> follows from two structural facts
+about the summand alone — that it vanishes outside an affine window in <code>k</code>, and
+that it is finite at every integer <code>k</code>.</p>
+<p>The certificate is <strong>not</strong> evaluated at an endpoint, and that is deliberate
+rather than lucky: <code>R</code> genuinely has poles at integer <code>k</code> — on the summand above
+it has a double pole exactly where the summand has a double zero, and
+<code>G(n, n+1)</code> is a finite <em>non-zero</em> limit of <code>0·∞</code>. What the proof does instead is
+find one <code>k</code> far to the right that is past both the window and the (finitely
+many) poles, where <code>G = R·0 = 0</code> with no indeterminacy, and then induct
+downwards on <code>G(n,k) = G(n,k+1) − Σ_i a_i(qⁿ)·F(n+i,k)</code>, whose right-hand side
+the support analysis has already shown is finite everywhere. That gives every
+<code>G</code> a finite value, poles included, without evaluating the product at one; <code>G</code>
+is then constant and zero beyond the window at both ends, and the sum over <code>Z</code>
+telescopes to zero. (Read analytically at generic <code>q</code> with <code>0 &lt; |q| &lt; 1</code>; the
+conclusion is an identity between rational functions of <code>q</code> that holds on an
+open set, so it holds in <code>Q(q)</code>.)</p>
+<p>What is <em>not</em> implemented is the inhomogeneous arm: computing <code>b(n)</code> for a
+<code>q</code>-sum needs endpoint values of <code>G</code> that are not rational in <code>qⁿ</code>, so a
+summand whose support the analysis cannot bound gets <code>&quot;unknown&quot;</code> and <strong>no</strong>
+claim about its sum, not a guessed inhomogeneity.</p>
+<p>One more caveat, and it is on every verdict&#39;s <code>side_conditions</code>: <code>q</code> is treated
+as <strong>transcendental</strong>. Everything here is an identity in <code>Q(q)</code>. Specialising
+<code>q</code> to a root of unity — which is what the <code>q</code>-supercongruence literature does —
+is a separate step with its own hypotheses.</p>
+<h3 id="specialising-at-a-root-of-unity-specialize_at_root_of_unity"><a class="hanchor" href="#specialising-at-a-root-of-unity-specialize_at_root_of_unity" aria-hidden="true" tabindex="-1">#</a>Specialising at a root of unity (<code>specialize_at_root_of_unity</code>)</h3>
+<p>A proved <code>Q(q)</code> recurrence does not, by itself, license setting <code>q = ζ_d</code> for a
+primitive <code>d</code>-th root of unity: a coefficient or a sum value can have a pole
+there, and specialising anyway is exactly the <code>q</code>-analogue of the A279013
+failure mode — a certificate that re-checks perfectly while the specialised
+claim is false. <code>QZeilbergerCertificate.specialize_at_root_of_unity(d, n)</code>
+takes that step as a <strong>decision</strong>, not an assumption:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.experimental </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> cyclotomic_polynomial, q_zeilberger, qbinomial</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">q, n, k </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"q"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"n"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"k"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">b </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> qbinomial(pool, n, k)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> q_zeilberger(b </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> b </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> q </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (k </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> k), q, n, k)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">spec </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> cert.specialize_at_root_of_unity(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># q = zeta_3, at n = 2</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">spec.status                       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "specializes" / "obstructed" / "unknown"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">spec.sum_value(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)                 </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># S_zeta(2), the canonical rep in Q[q]/(Phi_3)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">spec.sum_valuation(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)             </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># the exact Phi_3-adic valuation of S(2)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">spec.modulus()                    </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Phi_3(q) = q^2 + q + 1, exposed for a by-hand check</span></span></code></pre></div><p>The hypotheses — no pole in any coefficient <code>a_i(qⁿ)</code> or sum value <code>S(n+i)</code> at
+<code>ζ_d</code> — are decided <strong>exactly</strong>, by polynomial divisibility by <code>Φ_d(q)</code> over
+<code>Q</code> in the cyclotomic field <code>Q(ζ_d) = Q[q]/(Φ_d(q))</code>; nothing is evaluated
+numerically at any stage. <code>Φ_d</code> is irreducible over <code>Q</code>, so &quot;does <code>p</code> vanish at
+<code>ζ_d</code>&quot; is exactly &quot;does <code>Φ_d</code> divide <code>p</code>&quot;, which is what makes the valuation —
+and therefore the decision — exact rather than approximate. <code>cyclotomic_polynomial(pool, d)</code>
+returns <code>Φ_d(q)</code> directly, so a caller can redo the whole check by hand.</p>
+<p><code>status</code> is three-valued, and the three are not interchangeable:</p>
+<ul>
+<li><strong><code>&quot;specializes&quot;</code></strong> — proved: every coefficient and every sum value has
+non-negative <code>Φ_d</code>-adic valuation, so the specialisation map is defined on
+all of them, and the specialised identity was re-checked as an exact
+statement in <code>Q(ζ_d)</code> before being returned. Three further things are
+reported on this verdict rather than folded into it, because each of them
+makes a true verdict mean less than it looks:<ul>
+<li><code>is_vacuous</code> — every coefficient died at <code>ζ_d</code> (the <code>q → 1</code> limit at
+<code>d = 1</code> is always like this), so the recurrence is <code>0 = 0</code>. Still a
+theorem; it constrains nothing.</li>
+<li><code>leading_coefficient_survives</code> — <code>False</code> means the specialised recurrence
+no longer determines the last value from the earlier ones, even though it
+is not vacuous.</li>
+<li><code>support_shrinks</code> / <code>effective_support</code> — the <code>q</code>-Lucas phenomenon:
+<code>[2;1]_q = 1 + q</code> is non-zero in <code>Q(q)</code> and zero at <code>ζ_2</code>, so the
+surviving window at a root of unity can be a strict subset of the generic
+one. It can never grow.</li>
+</ul>
+</li>
+<li><strong><code>&quot;obstructed&quot;</code></strong> — a pole at <code>ζ_d</code> was <strong>exhibited</strong>: some coefficient or
+sum value has negative <code>Φ_d</code>-adic valuation (available via <code>sum_valuation</code>
+even on this verdict, since a negative valuation <em>is</em> the obstruction).
+Nothing is offered — <code>sum_value</code> and <code>coefficient</code> raise — and this is not a
+claim that the specialised identity is false, only that this route to it is
+blocked.</li>
+<li><strong><code>&quot;unknown&quot;</code></strong> — the generic boundary verdict was already <code>&quot;unknown&quot;</code>, so
+there is no proved <code>Q(q)</code> statement to specialise in the first place.</li>
+</ul>
+<p><code>sum_valuation(i)</code> is the <code>q</code>-supercongruence content in its exact form: it is
+the integer <code>v</code> with <code>Φ_d(q)^v</code> dividing <code>S(n+i)</code> and <code>Φ_d(q)^{v+1}</code> not — so
+<code>v ≥ r</code> is precisely the divisibility statement <code>Φ_d(q)^r | S(n)</code> that a
+<code>q</code>-supercongruence asserts, decided exactly rather than checked at finitely
+many numeric points.</p>
+<h2 id="double-sum-telescoping-alkahestexperimentaltelescope2d"><a class="hanchor" href="#double-sum-telescoping-alkahestexperimentaltelescope2d" aria-hidden="true" tabindex="-1">#</a>Double-sum telescoping (<code>alkahest.experimental.telescope2d</code>)</h2>
+<p>Everything above is a single sum over one index <code>k</code>. <code>telescope2d</code> is the
+Apagodu–Zeilberger generalization to <strong>two</strong> bound indices: given a proper
+hypergeometric <code>F(n, j, k)</code> — hypergeometric in each of <code>n</code>, <code>j</code>, <code>k</code>
+individually, the direct generalization of the class <code>zeilberger</code> decides —
+it finds <code>a_0(n), …, a_J(n)</code> (not all zero) and <em>two</em> rational certificates
+<code>c_1, c_2 ∈ Q(n,j,k)</code> such that</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>Σ_i a_i(n)·F(n+i,j,k) = Δ_j(c_1·F) + Δ_k(c_2·F)</code></pre></div><p>checked as an exact identity in <code>Q(n,j,k)</code> before it is ever returned, the
+same non-negotiable discipline as the single-sum engine.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.experimental </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> telescope2d</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">n, j, k </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"n"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"j"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"k"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">def</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> binom</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(top, bot):</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    one </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    return</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.gamma(top </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> one) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (ak.gamma(bot </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> one) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.gamma(top </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> bot </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> one))</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># F(n,j,k) = C(n,j)*C(j,k) — a genuinely non-separable double sum:</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># C(j,k) couples to the *outer* sum's own index j.</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">f </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> binom(n, j) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> binom(j, k)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> telescope2d(f, n, j, k)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.order          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.coeffs          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [3, -1]  ->  S(n+1) = 3*S(n)</span></span></code></pre></div><p><code>Σ_k C(j,k) = 2^j</code>, so <code>S(n) = Σ_j C(n,j)·2^j = 3ⁿ</code> by the binomial
+theorem — exactly what the order-1 relation says, and this is checked in
+the test suite by direct exact summation (<code>Fraction</code>/<code>Rational</code>, never
+floats) against the actual double sum, not just against the telescoping
+identity.</p>
+<h3 id="method-undetermined-coefficients-not-a-2-d-gosper-reduction"><a class="hanchor" href="#method-undetermined-coefficients-not-a-2-d-gosper-reduction" aria-hidden="true" tabindex="-1">#</a>Method: undetermined coefficients, not a 2-D Gosper reduction</h3>
+<p>There is no standard two-dimensional analogue of Gosper&#39;s normal form for a
+general proper hypergeometric <code>F(n,j,k)</code>, so unlike the single-sum engine
+this does not attempt one. It follows Apagodu–Zeilberger directly: posit a
+certificate ansatz of bounded polynomial degree over a <em>fixed</em>,
+search-independent denominator built from <code>F</code>&#39;s own shift-ratio
+denominators, clear it, and solve the resulting linear system by Gaussian
+elimination over <code>Q</code>. The denominator is <strong>not</strong> just the raw denominator of
+the ratio being telescoped in that direction — a certificate built from a
+product of two single-sum WZ pairs needs a factor from the <em>other</em>
+direction&#39;s <code>n</code>-shift ratio too (<code>c_1 ∝ R_A(n,j)·B(n+1,k)/B(n,k)</code> for
+<code>F = A(n,j)·B(n,k)</code>) — which is why the ansatz denominator for <code>c_1</code> is
+<code>D_j·∏_i D_{n,i}</code>, not just <code>D_j</code>.</p>
+<h3 id="the-boundary-is-four-strip-sums-not-four-corner-evaluations"><a class="hanchor" href="#the-boundary-is-four-strip-sums-not-four-corner-evaluations" aria-hidden="true" tabindex="-1">#</a>The boundary is four strip sums, not four corner evaluations</h3>
+<p><code>cert.boundary_status(j_lo, j_hi, k_lo, k_hi)</code> decides whether the
+telescoping identity above implies a recurrence for
+<code>S(n) = Σ_{j=j_lo}^{j_hi} Σ_{k=k_lo}^{k_hi} F(n,j,k)</code>. Telescoping each
+difference operator over its own index gives</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>Σ_i a_i(n)·S(n+i)
+  = Σ_k [G_1(n,j_hi+1,k) − G_1(n,j_lo,k)]
+  + Σ_j [G_2(n,j,k_hi+1) − G_2(n,j,k_lo)]</code></pre></div><p><strong>four one-dimensional sums along the rectangle&#39;s edges</strong>, not four
+corner-point evaluations — the naive generalisation of the 1-D endpoint
+story is simply the wrong formula. Summing a strip in closed form is in
+general its own creative-telescoping problem, so this version proves the
+<strong>sufficient</strong> (not necessary) condition that each strip is identically the
+zero function of its remaining free variable, via the same <code>1/Γ</code>
+non-positive-integer-argument identity the single-sum boundary analysis
+uses — checked on <code>F</code>&#39;s own gamma factors (the natural-boundary case) or on
+the certificate&#39;s own numerator (the classical-WZ-certificate case, e.g. a
+certificate proportional to <code>k</code> that vanishes at <code>k = 0</code> even though <code>F</code>
+itself does not).</p>
+<p>Three restrictions are real, not unfinished polish:</p>
+<ul>
+<li><strong><code>F</code> has to be provably defined on the whole rectangle, faces
+included.</strong> A <code>1/Γ</code> zero is a statement about a <em>value</em> of <code>F</code>, so it
+says nothing where <code>F</code> has none. Two things take that away, and neither
+is visible to the four strip evaluations: a pole strictly inside the
+rectangle, which leaves <code>S(n)</code> with no value at all while the certificate
+identity — living in <code>Q(n,j,k)</code>, where a pole in <code>j</code> or <code>k</code> is harmless —
+verifies happily; and a <code>Γ(·)^e</code> factor with <code>e &gt; 0</code> whose argument still
+moves with <code>n</code>, which is not a constant along a strip and so is not
+weighed against the <code>1/Γ</code> zero there, even though <code>0 · ∞</code> is not <code>0</code>.
+Both are refused as <code>&quot;unknown&quot;</code>. Factors are weighed one at a time, which
+is blunt: <code>Γ(n+k+1)/Γ(n+1)</code> is a Pochhammer with no pole anywhere, and is
+refused on its numerator alone.</li>
+<li><strong>Only constant (not <code>n</code>-dependent) rectangles are supported.</strong> The
+single-sum engine&#39;s <code>b(n)</code> formula has a <code>D_i(n)</code> correction term
+precisely because summing <code>F(n+i, k)</code> over <code>k</code>&#39;s range <em>at <code>n</code></em> is not
+what <code>S(n+i)</code> means when the range moves with <code>n</code>; the 2-D case needs the
+same correction, doubled for two independently moving bounds, and this
+version does not implement it. For a natural <code>n</code>-dependent range like
+<code>j = 0..n</code>, pick a fixed bound safely larger than any <code>n</code> you check and
+let <code>F</code>&#39;s own combinatorial vanishing do the rest — exactly what the
+example above does with <code>boundary_status(0, 40, 0, 40)</code>.</li>
+<li><strong>No inhomogeneous boundary term.</strong> <code>boundary_status</code> is three-valued in
+shape (<code>&quot;vanishes&quot;</code> / <code>&quot;nonzero&quot;</code> / <code>&quot;unknown&quot;</code>, matching the single-sum
+engine), but this version never produces <code>&quot;nonzero&quot;</code>: an unresolved strip
+is always <code>&quot;unknown&quot;</code>, never guessed as zero and never resolved to an
+explicit <code>b(n)</code>.</li>
+</ul>
+<h2 id="multi-sum-telescoping-for-m--1-bound-indices-alkahestexperimentaltelescope_md"><a class="hanchor" href="#multi-sum-telescoping-for-m--1-bound-indices-alkahestexperimentaltelescope_md" aria-hidden="true" tabindex="-1">#</a>Multi-sum telescoping for <code>m ≥ 1</code> bound indices (<code>alkahest.experimental.telescope_md</code>)</h2>
+<p><code>telescope2d</code> reaches exactly two bound indices. <code>telescope_md</code> is the same
+engine generalized to an arbitrary number <code>m ≥ 1</code> — <code>m = 1</code> degenerates
+cleanly to a single-sum-shaped search, <code>m = 2</code> behaves identically to
+<code>telescope2d</code> (which is now a thin wrapper over the general engine, not a
+separate implementation), and <code>m ≥ 3</code> is genuinely new capability. Given a
+proper hypergeometric <code>F(n, x_1, …, x_m)</code>, it finds <code>a_0(n), …, a_J(n)</code> and
+<code>m</code> rational certificates <code>c_1, …, c_m</code> such that</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>Σ_i a_i(n)·F(n+i,x) = Σ_t Δ_t(c_t·F)</code></pre></div><p>checked as an exact identity in <code>Q(n,x_1,…,x_m)</code> before it is ever returned —
+same discipline, same fixed (non-minimal) denominator ansatz, generalized
+from two axes to <code>m + 1</code>.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.experimental </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> telescope_md</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">n, x, y, z </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"n"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"y"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"z"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">def</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> factorial</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e):</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    return</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.gamma(e </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># F(n,x,y,z) = n! / (x! y! z! (n-x-y-z)!) — the 4-category multinomial</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># coefficient, genuinely non-separable: all three bound indices interact</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># through the shared (n-x-y-z) term.</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">rest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> z</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">f </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> factorial(n) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (factorial(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> factorial(y) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> factorial(z) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> factorial(rest))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> telescope_md(f, n, [x, y, z])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.order          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.coeffs()        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [-4, 1]  ->  S(n+1) = 4*S(n)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.certs()          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [c_1, c_2, c_3]</span></span></code></pre></div><p><code>Σ_{x,y,z} F = 4ⁿ</code> by the multinomial theorem (the number of length-<code>n</code>
+strings over a 4-letter alphabet, grouped by letter counts) — exactly what
+the order-1 relation says, checked in the test suite by direct exact
+summation against the actual sum, not just against the telescoping identity.</p>
+<h3 id="the-boundary-is-2m-face-sums-not-2m-corner-evaluations"><a class="hanchor" href="#the-boundary-is-2m-face-sums-not-2m-corner-evaluations" aria-hidden="true" tabindex="-1">#</a>The boundary is <code>2m</code> face sums, not <code>2^m</code> corner evaluations</h3>
+<p><code>cert.boundary_status([(lo_1, hi_1), …, (lo_m, hi_m)])</code> generalizes
+<code>telescope2d</code>&#39;s &quot;four strip sums, not four corners&quot; result: telescoping an
+<code>m</code>-dimensional box gives <code>2m</code> sums, each over an <code>(m − 1)</code>-dimensional
+<strong>face</strong> where one bound index is fixed to a boundary value — not <code>2^m</code>
+point evaluations at the box&#39;s corners. The same sufficient (not necessary)
+pointwise-vanishing criterion applies, generalized mechanically: fix one axis
+to a constant and check that a gamma factor&#39;s argument no longer depends on
+<code>n</code> or on any <em>other</em> bound index. The same precondition applies too — <code>F</code>
+has to be provably defined at every integer point of the box and its <code>2m</code>
+faces before any face verdict means anything, and a box that cannot be shown
+to be free of poles is <code>&quot;unknown&quot;</code>.</p>
+<h3 id="a-real-scaling-cliff-and-the-resource-ceilings-that-bound-it"><a class="hanchor" href="#a-real-scaling-cliff-and-the-resource-ceilings-that-bound-it" aria-hidden="true" tabindex="-1">#</a>A real scaling cliff, and the resource ceilings that bound it</h3>
+<p>Raising <code>m</code> or the certificate degree bound grows the ansatz search space far
+faster than the numbers suggest: a certificate numerator spans a box of
+<code>(max_cert_degree + 1)^(m+1)</code> unknowns, and there are <code>m</code> certificates. Worse,
+the underlying exact linear solve (<code>rational_nullspace</code>) is a plain dense
+<code>O(rows · cols²)</code> Gaussian elimination over unbounded-precision rationals,
+and both dimensions grow with <code>m</code> and the degree bound well past what the box
+size alone implies. Measured directly: at <code>m = 3</code>, certificate degree 2 means
+a ≈10,000-row, 245-unknown system whose elimination step alone took ≈47
+seconds <em>per probe</em>; certificate degree 3 (770 unknowns) was still running
+after several minutes. This is genuine arithmetic cost on a real,
+correctly-posed linear system — not a bug, an infinite loop, or unbounded
+coefficient blowup — but a caller still needs protection from it, since the
+search tries every <code>(order, a_degree, cert_degree)</code> combination within the
+stated bounds and would otherwise pay that same cost repeatedly. Two ceilings
+apply: a single probe above 400 total unknowns is refused outright, and the
+total work spent on probes at or above 150 unknowns is capped to 300 across
+one whole search call — capping the number of genuinely expensive
+elimination attempts to about one, regardless of how large <code>max_order</code> /
+<code>max_a_degree</code> / <code>max_cert_degree</code> are. Neither ceiling touches the <code>m = 2</code>
+search, whose default probes never exceed ≈140 unknowns. A search that hits
+a ceiling still reports <code>SearchExhausted</code>, exactly like one that genuinely
+found nothing — except the message says explicitly when a ceiling, not
+genuine non-existence, is the reason, so raising the bounds further is not
+silently misrepresented as a path to success.</p>
+<h2 id="method"><a class="hanchor" href="#method" aria-hidden="true" tabindex="-1">#</a>Method</h2>
+<p>The implementation is the standard Gosper-style reduction (Petkovšek–Wilf–
+Zeilberger, <em>A=B</em>, ch. 6; Koepf, <em>Hypergeometric Summation</em>, ch. 7), carried out
+over the field <code>Q(n)</code> rather than <code>Q</code>:</p>
+<ol>
+<li>Compute the exact shift quotients <code>p(k) = F(n,k+1)/F(n,k)</code> and
+<code>c_i(k) = F(n+i,k)/F(n,k)</code> — both rational functions, which is precisely the
+property that defines the proper hypergeometric class.</li>
+<li>Take <code>D(k)</code>, a common denominator of the <code>c_i</code>, and work with
+<code>W(n,k) = F(n,k)/D(k)</code>, so that <code>Σ_i a_i·F(n+i,k) = N(k)·W(n,k)</code> with
+<code>N(k) = Σ_i a_i·D(k)·c_i(k)</code> polynomial and linear in the unknowns.</li>
+<li>Decompose the shift ratio of <code>W</code>, <code>ρ(k) = p(k)·D(k)/D(k+1)</code>, into Gosper
+normal form <code>ρ = A(k)·C(k+1)/(B(k)·C(k))</code>.</li>
+<li>Gosper&#39;s key equation is then the polynomial identity
+<code>A(k)·X(k+1) − B(k−1)·X(k) = C(k)·N(k)</code>. Comparing coefficients of each power
+of <code>k</code> gives a linear system over <code>Q(n)</code>; solving it yields both the <code>a_i</code> and
+the certificate <code>R = B(k−1)·X(k) / (C(k)·D(k))</code>.</li>
+<li>The solved pair is substituted back and checked exactly. Only then is it
+returned.</li>
+</ol>
+<h2 id="scope-of-this-release"><a class="hanchor" href="#scope-of-this-release" aria-hidden="true" tabindex="-1">#</a>Scope of this release</h2>
+<p>Shipped: Zeilberger&#39;s algorithm with exact certificate verification, the
+<code>Q(n)</code> / <code>Q(n)(k)</code> arithmetic tower it rests on, proper-hypergeometric
+recognition, the three-valued boundary verdict over a stated summation range,
+explicit minimal-order certification, <code>guess_holonomic</code> — recurrence guessing
+from finite data — the <code>q</code>-analogue <code>q_zeilberger</code> over <code>Q(q)(qⁿ)(q^k)</code> with
+its own two-valued boundary verdict, <code>specialize_at_root_of_unity</code> — the
+step from a <code>Q(q)</code> identity to <code>q = ζ_d</code>, decided exactly in the cyclotomic
+field <code>Q(ζ_d)</code> with its own three-valued verdict — <code>telescope2d</code>, the
+Apagodu–Zeilberger generalization to <strong>two</strong> bound indices, with its own
+2-D boundary analysis (four strip sums, not four corner evaluations) — and
+<code>telescope_md</code>, the further generalization to an arbitrary number <code>m ≥ 1</code> of
+bound indices, with the <code>m</code>-dimensional boundary analysis (<code>2m</code> face sums,
+not <code>2^m</code> corner evaluations) and the two resource ceilings that keep a
+search with no certificate in reach a fast, honest refusal rather than an
+unbounded computation as <code>m</code> or the certificate degree bound grow.</p>
+<p>Not shipped on the <code>q</code> side: multivariate (<code>q</code>-)telescoping and an
+inhomogeneous boundary arm. A <code>q</code>-sum whose support cannot be bounded is
+answered <code>&quot;unknown&quot;</code>, never guessed. Root-of-unity specialisation covers a
+single certificate at a single <code>(d, n)</code> pair — it is the mechanical step the
+<code>q</code>-supercongruence literature needs, not a search over <code>d</code> or a prover for
+the wider congruence statements (e.g. uniform-in-<code>n</code> supercongruences, or
+<code>p</code>-adic statements not phrased as <code>Φ_d</code>-adic valuations) that literature
+contains.</p>
+<p>Not shipped on the multi-sum side: arbitrary rational (not proper
+hypergeometric) summands, or a sum of several proper hypergeometric terms —
+i.e. no general Wegschaider reduction — a minimal multivariate Gosper
+certificate denominator (the ansatz uses a fixed, larger-than-necessary one
+built from <code>F</code>&#39;s own shift ratios), an <code>n</code>-dependent box in the boundary
+analysis, and an inhomogeneous (<code>&quot;nonzero&quot;</code>) boundary verdict. The bound-index
+count itself is no longer capped at two (<code>telescope_md</code> reaches any <code>m ≥ 1</code>),
+but the search&#39;s two resource ceilings mean a caller cannot simply raise <code>m</code>
+or the certificate degree bound without limit and expect the search to keep
+running longer — past a point it refuses fast instead.</p>
+<p>Not yet shipped, and tracked as follow-up work: Ore-operator closure properties
+for D-finite functions (sums and products of holonomic objects) and the
+differential half of the guessing front-end (fitting a linear ODE to a power
+series).
+<code>sum_indefinite</code> (Gosper) and <code>verify_wz_pair</code> remain the neighbouring tools for
+the indefinite and WZ-pair cases respectively. <code>verify_wz_pair</code> is exact for
+proper hypergeometric <code>F</code>, <code>G</code> (it divides by <code>F</code> and decides the identity in
+<code>Q(n)(k)</code>): <code>True</code> means proved, <code>False</code> refuted, and an undecidable pair raises
+<code>SumError</code> (<code>E-SUM-001</code>).</p>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/batch/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Batch and streaming evaluation</span></a><a class="pager-next" href="/docs/guide/guessing/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Guessing recurrences</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/telescoping.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#what-the-certificate-asserts">What the certificate asserts</a></li><li class="d2"><a href="#the-boundary-hypothesis-and-the-verdict-on-it">The boundary hypothesis, and the verdict on it</a></li><li class="d3"><a href="#the-summation-range-is-part-of-the-claim">The summation range is part of the claim</a></li><li class="d3"><a href="#the-range-is-not-a-range-at-every-n">The range is not a range at every n</a></li><li class="d3"><a href="#the-telescoping-has-to-survive-the-interior">The telescoping has to survive the interior</a></li><li class="d3"><a href="#what-vanishes-is-worth">What &quot;vanishes&quot; is worth</a></li><li class="d3"><a href="#the-sum-has-to-exist-before-a-verdict-is-worth-anything">The sum has to exist before a verdict is worth anything</a></li><li class="d2"><a href="#verification-is-not-optional">Verification is not optional</a></li><li class="d2"><a href="#the-class-it-decides-and-where-it-refuses">The class it decides, and where it refuses</a></li><li class="d2"><a href="#cost-and-bounds">Cost and bounds</a></li><li class="d2"><a href="#is-the-order-minimal">Is the order minimal?</a></li><li class="d2"><a href="#guessing-the-recurrence-first">Guessing the recurrence first</a></li><li class="d2"><a href="#the-q-analogue-alkahestexperimentalq_zeilberger">The q-analogue (alkahest.experimental.q_zeilberger)</a></li><li class="d3"><a href="#what-it-accepts">What it accepts</a></li><li class="d3"><a href="#the-boundary-verdict-is-two-valued-here">The boundary verdict is two-valued here</a></li><li class="d3"><a href="#specialising-at-a-root-of-unity-specialize_at_root_of_unity">Specialising at a root of unity (specialize_at_root_of_unity)</a></li><li class="d2"><a href="#double-sum-telescoping-alkahestexperimentaltelescope2d">Double-sum telescoping (alkahest.experimental.telescope2d)</a></li><li class="d3"><a href="#method-undetermined-coefficients-not-a-2-d-gosper-reduction">Method: undetermined coefficients, not a 2-D Gosper reduction</a></li><li class="d3"><a href="#the-boundary-is-four-strip-sums-not-four-corner-evaluations">The boundary is four strip sums, not four corner evaluations</a></li><li class="d2"><a href="#multi-sum-telescoping-for-m--1-bound-indices-alkahestexperimentaltelescope_md">Multi-sum telescoping for m ≥ 1 bound indices (alkahest.experimental.telescope_md)</a></li><li class="d3"><a href="#the-boundary-is-2m-face-sums-not-2m-corner-evaluations">The boundary is 2m face sums, not 2^m corner evaluations</a></li><li class="d3"><a href="#a-real-scaling-cliff-and-the-resource-ceilings-that-bound-it">A real scaling cliff, and the resource ceilings that bound it</a></li><li class="d2"><a href="#method">Method</a></li><li class="d2"><a href="#scope-of-this-release">Scope of this release</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/telescoping.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

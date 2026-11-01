@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>alkahest.crosscheck · Alkahest Docs</title>
+<meta name="description" content="Cross-CAS differential testing — ask a second CAS the same question.">
+<meta property="og:title" content="alkahest.crosscheck · Alkahest Docs">
+<meta property="og:description" content="Cross-CAS differential testing — ask a second CAS the same question.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/" class="active" aria-current="page">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API · Submodule</div>
+    <h1>alkahest.crosscheck</h1>
+    <div class="prose-block"><p>Cross-CAS differential testing — ask a second CAS the same question.</p>
+<p>Certificates cover the fragment where Alkahest can <em>prove</em> its answer. Outside
+that fragment there is nothing checking the answer at all, and the failure that
+matters for a search loop is not a crash but a <strong>silent error</strong>: a confident,
+plausible, wrong result that the loop then builds a hundred derived claims on
+top of (see <code>tests/silent_errors/README.md</code>). An independent implementation
+is the cheapest instrument that catches exactly those.</p>
+<p>This module runs one query through Alkahest and through an oracle and reports
+whether they agree — as a four-valued outcome, never a boolean:</p>
+<p><code>agree</code>
+    Both systems answered, and a named comparison rung settled it.
+<code>diverge</code>
+    Both systems answered and the answers are not the same. The record names
+    <strong>two suspects</strong>, carries the witness point and both values, and never
+    words itself as &quot;Alkahest is right&quot;.
+<code>incomparable</code>
+    The question could not be posed identically to both systems (an
+    untranslatable node, an assumption context with no faithful mapping, an
+    operation one side refused). <strong>Never</strong> collapsed into <code>agree</code>.
+<code>unavailable</code>
+    No oracle is installed. Also never <code>agree</code> — a loop that believes it is
+    cross-checking and is not is worse off than one that knows it isn&#39;t.</p>
+<h4 id="quick-start"><a class="hanchor" href="#quick-start" aria-hidden="true" tabindex="-1">#</a>Quick start</h4>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.crosscheck </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> check, oracles</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "sympy"</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> oracles()          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># None when SymPy is not installed</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> out </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> check(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"integrate"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, ak.sin(x), x)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> out.outcome </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> {</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"agree"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"unavailable"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">}</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span></code></pre></div><h4 id="design-notes"><a class="hanchor" href="#design-notes" aria-hidden="true" tabindex="-1">#</a>Design notes</h4>
+<p><em>One translator, not four.</em> <code>tests/</code> already carries four hand-rolled
+<code>_expr_to_sympy</code> helpers, each covering a different subset. <code>Translator</code>
+is the one implementation; the tests are meant to migrate onto it. Building the
+QA harness and the runtime mode separately would produce two translators that
+disagree, which is the worst possible outcome for a tool whose entire job is
+detecting disagreement.</p>
+<p><em>Total-or-refuse.</em> Every tag <a href="/docs/api/core/#Expr.node"><code>Expr.node()</code></a> can emit appears in
+<code>Translator._DISPATCH</code>; an unknown tag, an unmapped primitive, or an
+assumption context with no faithful counterpart raises
+<a href="/docs/api/errors/#CrossCheckError"><code>CrossCheckError</code></a> (<code>E-XCHECK-001</code>), which <code>check()</code> turns
+into <code>incomparable</code>. <strong>False divergences are worse than no signal</strong> — they
+train both the loop and the team to ignore the alarm, and a best-effort
+translator manufactures them by construction.</p>
+<p><em>Opt-in per call site.</em> There is deliberately no <code>context(crosscheck=True)</code>:
+that would put an oracle round-trip on every call, and stage-2 falsification
+runs millions of times. Call <code>check()</code> where you want it — at stage-5
+recording frequency, hundreds of times, not millions.</p>
+<p>See <code>docs/mdbook/src/crosscheck.md</code>.</p>
+</div>
+<section class="sym" id="crosscheck.CrossCheck"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">crosscheck.</span><span class="sig-name">CrossCheck</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck" aria-label="Link to crosscheck.CrossCheck">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1393" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>The outcome of one differential check.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">operation</code><span class="ptype">str</span></dt><dd><p>Operation checked.</p>
+</dd></div><div class="param"><dt><code class="pname">outcome</code><span class="ptype">{&quot;agree&quot;, &quot;diverge&quot;, &quot;incomparable&quot;, &quot;unavailable&quot;}</span></dt><dd><p>See the module docstring. Truthiness is deliberately <strong>not</strong> defined on
+this class: <code>if check(...)</code> would read as &quot;it agreed&quot; and would be
+true for three of the four outcomes under any obvious convention.</p>
+</dd></div><div class="param"><dt><code class="pname">rung</code><span class="ptype">int or None</span></dt><dd><p>Which rung settled it (see <code>RUNG_NAMES</code>); <code>None</code> when nothing
+did.</p>
+</dd></div><div class="param"><dt><code class="pname">reason</code><span class="ptype">str</span></dt><dd><p>Stable short code for <em>why</em> — <code>&quot;invariant_holds&quot;</code>,
+<code>&quot;no_oracle&quot;</code>, <code>&quot;untranslatable&quot;</code>, <code>&quot;alkahest_refused&quot;</code>,
+<code>&quot;oracle_refused&quot;</code>, <code>&quot;ladder_exhausted&quot;</code>, and so on. Machine
+triage should switch on this, not on <code>detail</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">detail</code><span class="ptype">str</span></dt><dd><p>One human sentence.</p>
+</dd></div><div class="param"><dt><code class="pname">oracle, oracle_version</code><span class="ptype">str or None</span></dt><dd><p>Which system answered, at which version.</p>
+</dd></div><div class="param"><dt><code class="pname">alkahest_value, oracle_value</code><span class="ptype">str or None</span></dt><dd><p>Both answers, rendered.</p>
+</dd></div><div class="param"><dt><code class="pname">witness</code><span class="ptype">dict or None</span></dt><dd><p><code>{&quot;point&quot;, &quot;alkahest&quot;, &quot;oracle&quot;, &quot;enclosure&quot;}</code> when a pointwise
+witness exists.</p>
+</dd></div><div class="param"><dt><code class="pname">divergence</code><span class="ptype">Divergence or None</span></dt><dd><p>Populated iff <code>outcome == &quot;diverge&quot;</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">conclusive</code><span class="ptype">bool</span></dt><dd><p>Whether the settling rung <em>proves</em> what it reports. Rung 3 agreement is
+sampled, so it is reported as agreement with <code>conclusive=False</code>
+rather than being silently promoted or silently discarded.</p>
+</dd></div><div class="param"><dt><code class="pname">elapsed_ms</code><span class="ptype">float</span></dt><dd><p>Wall-clock cost of the check, oracle round trip included.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="crosscheck.CrossCheck.operation">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">operation</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.operation" aria-label="Link to crosscheck.CrossCheck.operation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1431" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.CrossCheck.outcome">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">outcome</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.outcome" aria-label="Link to crosscheck.CrossCheck.outcome">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1432" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.CrossCheck.rung">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rung</span><span class="sig-ann">: int | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.rung" aria-label="Link to crosscheck.CrossCheck.rung">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1433" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.CrossCheck.reason">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">reason</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.reason" aria-label="Link to crosscheck.CrossCheck.reason">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1434" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.CrossCheck.detail">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">detail</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.detail" aria-label="Link to crosscheck.CrossCheck.detail">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1435" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.CrossCheck.oracle">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">oracle</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.oracle" aria-label="Link to crosscheck.CrossCheck.oracle">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1436" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.CrossCheck.oracle_version">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">oracle_version</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.oracle_version" aria-label="Link to crosscheck.CrossCheck.oracle_version">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1437" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.CrossCheck.alkahest_value">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">alkahest_value</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.alkahest_value" aria-label="Link to crosscheck.CrossCheck.alkahest_value">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1438" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.CrossCheck.oracle_value">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">oracle_value</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.oracle_value" aria-label="Link to crosscheck.CrossCheck.oracle_value">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1439" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.CrossCheck.witness">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">witness</span><span class="sig-ann">: dict[str, Any] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.witness" aria-label="Link to crosscheck.CrossCheck.witness">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1440" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.CrossCheck.divergence">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">divergence</span><span class="sig-ann">: Divergence | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.divergence" aria-label="Link to crosscheck.CrossCheck.divergence">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1441" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.CrossCheck.conclusive">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">conclusive</span><span class="sig-ann">: bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.conclusive" aria-label="Link to crosscheck.CrossCheck.conclusive">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1442" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.CrossCheck.elapsed_ms">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">elapsed_ms</span><span class="sig-ann">: float</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.elapsed_ms" aria-label="Link to crosscheck.CrossCheck.elapsed_ms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1443" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.CrossCheck.rung_name">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rung_name</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.rung_name" aria-label="Link to crosscheck.CrossCheck.rung_name">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1446" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Human name of <code>rung</code> (see <code>RUNG_NAMES</code>).</p>
+</div>
+</div>
+<div class="member" id="crosscheck.CrossCheck.checked">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">checked</span><span class="sig-ann">: bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.checked" aria-label="Link to crosscheck.CrossCheck.checked">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1451" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Did a comparison actually happen?</p>
+<p><code>False</code> for <code>incomparable</code> and <code>unavailable</code>. Provided so the
+common mistake — treating &quot;no signal&quot; as &quot;clean&quot; — has to be written
+out explicitly.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="crosscheck.CrossCheck.as_dict">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">as_dict</span>()<span class="sig-ret"> → dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.CrossCheck.as_dict" aria-label="Link to crosscheck.CrossCheck.as_dict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1460" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>JSON-serialisable view.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="crosscheck.Divergence"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">crosscheck.</span><span class="sig-name">Divergence</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Divergence" aria-label="Link to crosscheck.Divergence">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1302" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Two systems answered, and the answers are not the same.</p>
+<p>The wording is constrained on purpose. A divergence names <strong>two suspects</strong>:
+it is evidence that one of the two is wrong, and on its own it is never
+evidence about <em>which</em>. <code>support</code> carries whatever the rigorous
+escalation could establish, and its default is <code>&quot;unresolved&quot;</code>.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">operation</code><span class="ptype">str</span></dt><dd><p>Operation that diverged.</p>
+</dd></div><div class="param"><dt><code class="pname">oracle, oracle_version</code><span class="ptype">str</span></dt><dd><p>Which independent system, at which version. Without the version a
+recorded divergence rots the first time the oracle changes an answer.</p>
+</dd></div><div class="param"><dt><code class="pname">point</code><span class="ptype">dict</span></dt><dd><p>Witness: symbol name -&gt; value at which the two disagree. Empty when
+the divergence is symbolic rather than pointwise.</p>
+</dd></div><div class="param"><dt><code class="pname">alkahest_value, oracle_value</code><span class="ptype">str</span></dt><dd><p>Both values, rendered. Never one without the other.</p>
+</dd></div><div class="param"><dt><code class="pname">alkahest_enclosure</code><span class="ptype">tuple of float, optional</span></dt><dd><p>Rigorous ball-arithmetic enclosure computed on the Alkahest side.</p>
+</dd></div><div class="param"><dt><code class="pname">support</code><span class="ptype">{&quot;unresolved&quot;, &quot;alkahest_supported&quot;, &quot;oracle_supported&quot;}</span></dt><dd><p>What the rigorous escalation established. <code>&quot;oracle_supported&quot;</code> means
+an operation invariant was <strong>rigorously refuted on the Alkahest side</strong>
+— a silent-error finding, and the case that should be routed into
+<code>tests/silent_errors/corpus/</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">region</code><span class="ptype">dict or None</span></dt><dd><p>When <a href="/docs/api/numerics/#verified_sign"><code>verified_sign()</code></a> certified that the failing
+invariant residual keeps one sign across the whole sampling box, the
+box: <code>{&quot;x&quot;: [0.35, 2.65]}</code>. That upgrades a finding from &quot;wrong at
+this point&quot; to &quot;wrong on this interval&quot;, which is a much shorter
+argument to hand a reviewer.</p>
+</dd></div><div class="param"><dt><code class="pname">detail</code><span class="ptype">str</span></dt><dd><p>One sentence, phrased symmetrically.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="crosscheck.Divergence.operation">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">operation</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Divergence.operation" aria-label="Link to crosscheck.Divergence.operation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1339" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Divergence.oracle">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">oracle</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Divergence.oracle" aria-label="Link to crosscheck.Divergence.oracle">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1340" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Divergence.oracle_version">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">oracle_version</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Divergence.oracle_version" aria-label="Link to crosscheck.Divergence.oracle_version">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1341" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Divergence.point">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">point</span><span class="sig-ann">: dict[str, float]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Divergence.point" aria-label="Link to crosscheck.Divergence.point">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1342" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Divergence.alkahest_value">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">alkahest_value</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Divergence.alkahest_value" aria-label="Link to crosscheck.Divergence.alkahest_value">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1343" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Divergence.oracle_value">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">oracle_value</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Divergence.oracle_value" aria-label="Link to crosscheck.Divergence.oracle_value">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1344" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Divergence.alkahest_enclosure">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">alkahest_enclosure</span><span class="sig-ann">: tuple[float, float] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Divergence.alkahest_enclosure" aria-label="Link to crosscheck.Divergence.alkahest_enclosure">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1345" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Divergence.support">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">support</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Divergence.support" aria-label="Link to crosscheck.Divergence.support">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1346" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Divergence.region">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">region</span><span class="sig-ann">: dict[str, list[float]] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Divergence.region" aria-label="Link to crosscheck.Divergence.region">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1347" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Divergence.detail">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">detail</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Divergence.detail" aria-label="Link to crosscheck.Divergence.detail">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1348" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Divergence.silent_error_candidate">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">silent_error_candidate</span><span class="sig-ann">: bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Divergence.silent_error_candidate" aria-label="Link to crosscheck.Divergence.silent_error_candidate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1351" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Is this a case for <code>tests/silent_errors/corpus/</code>?</p>
+<p>True exactly when rigorous ball arithmetic refuted the <em>Alkahest</em> side
+of an operation invariant. That is the finding worth converting into a
+permanent regression gate; everything else is a lead.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="crosscheck.Divergence.statement">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">statement</span>()<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Divergence.statement" aria-label="Link to crosscheck.Divergence.statement">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1360" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>One-line rendering that attributes blame to neither system.</p>
+</div>
+</div>
+<div class="member" id="crosscheck.Divergence.as_dict">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">as_dict</span>()<span class="sig-ret"> → dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Divergence.as_dict" aria-label="Link to crosscheck.Divergence.as_dict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1373" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>JSON-serialisable view.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="crosscheck.FrozenCase"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">crosscheck.</span><span class="sig-name">FrozenCase</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.FrozenCase" aria-label="Link to crosscheck.FrozenCase">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2778" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>One previously-observed comparison, pinned to an oracle version range.</p>
+<p>The per-PR half of the two-tier arrangement. Every case records the oracle
+version range its expectation was established against: without that the
+corpus rots silently the first time the oracle changes an answer, which it
+will, and a red gate would then be indistinguishable from a real regression.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">id</code><span class="ptype">str</span></dt><dd><p>Stable, never reused.</p>
+</dd></div><div class="param"><dt><code class="pname">operation</code><span class="ptype">str</span></dt><dd><p>An <code>OPERATIONS</code> key.</p>
+</dd></div><div class="param"><dt><code class="pname">build</code><span class="ptype">callable</span></dt><dd><p><code>pool -&gt; tuple</code> of arguments for <code>check()</code>. Takes the pool so each
+run gets a fresh one.</p>
+</dd></div><div class="param"><dt><code class="pname">expected</code><span class="ptype">str</span></dt><dd><p>Expected <code>CrossCheck.outcome</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">expected_reason</code><span class="ptype">str or None</span></dt><dd><p>Expected <code>CrossCheck.reason</code>, when the case is pinning <em>why</em>.</p>
+</dd></div><div class="param"><dt><code class="pname">oracle</code><span class="ptype">str</span></dt><dd><p>Oracle name the expectation belongs to.</p>
+</dd></div><div class="param"><dt><code class="pname">oracle_versions</code><span class="ptype">str</span></dt><dd><p>Comma-separated PEP-440-ish range, e.g. <code>&quot;&gt;=1.12,&lt;2&quot;</code>. A case whose
+range excludes the installed version is skipped, not failed.</p>
+</dd></div><div class="param"><dt><code class="pname">found_by</code><span class="ptype">str</span></dt><dd><p><code>&quot;seeded sweep, seed=...&quot;</code> or a hand-written provenance note. The
+ratchet: a divergence the nightly finds must land here.</p>
+</dd></div><div class="param"><dt><code class="pname">note</code><span class="ptype">str</span></dt><dd><p>What this case is protecting.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="crosscheck.FrozenCase.id">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">id</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.FrozenCase.id" aria-label="Link to crosscheck.FrozenCase.id">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2811" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.FrozenCase.operation">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">operation</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.FrozenCase.operation" aria-label="Link to crosscheck.FrozenCase.operation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2812" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.FrozenCase.build">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">build</span><span class="sig-ann">: Callable[[Any], tuple[Any, ...]]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.FrozenCase.build" aria-label="Link to crosscheck.FrozenCase.build">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2813" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.FrozenCase.expected">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">expected</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.FrozenCase.expected" aria-label="Link to crosscheck.FrozenCase.expected">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2814" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.FrozenCase.oracle">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">oracle</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.FrozenCase.oracle" aria-label="Link to crosscheck.FrozenCase.oracle">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2815" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.FrozenCase.oracle_versions">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">oracle_versions</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.FrozenCase.oracle_versions" aria-label="Link to crosscheck.FrozenCase.oracle_versions">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2816" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.FrozenCase.found_by">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">found_by</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.FrozenCase.found_by" aria-label="Link to crosscheck.FrozenCase.found_by">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2817" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.FrozenCase.note">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">note</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.FrozenCase.note" aria-label="Link to crosscheck.FrozenCase.note">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2818" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.FrozenCase.expected_reason">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">expected_reason</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.FrozenCase.expected_reason" aria-label="Link to crosscheck.FrozenCase.expected_reason">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2819" rel="noopener">source</a></div></div>
+  
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="crosscheck.FrozenCase.applies_to">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">applies_to</span>(<span class="sig-p">version</span><span class="sig-ann">: str</span>)<span class="sig-ret"> → bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.FrozenCase.applies_to" aria-label="Link to crosscheck.FrozenCase.applies_to">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2821" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Does this case&#39;s expectation cover <em>version</em> of its oracle?</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="crosscheck.Operation"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">crosscheck.</span><span class="sig-name">Operation</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Operation" aria-label="Link to crosscheck.Operation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1233" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>How one operation is posed to both systems, and how it is compared.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">name</code><span class="ptype">str</span></dt><dd><p>Matches the <code>alkahest</code> module attribute of the same name.</p>
+</dd></div><div class="param"><dt><code class="pname">rungs</code><span class="ptype">tuple of int</span></dt><dd><p>Ladder rungs to attempt, <strong>in order</strong>. Rung 4 leads wherever it exists,
+because it sidesteps equal-up-to-a-constant, up-to-ordering and
+up-to-a-unit entirely — the three things that make naive comparison of
+antiderivatives, solution sets and factorisations produce nothing but
+noise.</p>
+</dd></div><div class="param"><dt><code class="pname">invariant</code><span class="ptype">str or None</span></dt><dd><p>Name of the rung-4 invariant, or <code>None</code> when the operation has none.</p>
+</dd></div><div class="param"><dt><code class="pname">result</code><span class="ptype">{&quot;expr&quot;, &quot;solutions&quot;}</span></dt><dd><p>Shape of the answer, which decides how it is compared and rendered.</p>
+</dd></div><div class="param"><dt><code class="pname">normalize</code><span class="ptype">str or None</span></dt><dd><p>Operation-specific normalisation applied to the Alkahest answer before
+the ladder runs — currently only <code>&quot;strip_big_o&quot;</code>. This is <em>not</em> a
+rung: it removes a difference in how the two systems spell the same
+answer, and it must never remove a difference in the answer itself.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="crosscheck.Operation.name">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">name</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Operation.name" aria-label="Link to crosscheck.Operation.name">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1257" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Operation.rungs">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rungs</span><span class="sig-ann">: tuple[int, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Operation.rungs" aria-label="Link to crosscheck.Operation.rungs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1258" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Operation.invariant">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">invariant</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Operation.invariant" aria-label="Link to crosscheck.Operation.invariant">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1259" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Operation.result">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">result</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Operation.result" aria-label="Link to crosscheck.Operation.result">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1260" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Operation.normalize">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">normalize</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Operation.normalize" aria-label="Link to crosscheck.Operation.normalize">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1261" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="crosscheck.Oracle"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">crosscheck.</span><span class="sig-name">Oracle</span><span class="sig-bases">(ABC)</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle" aria-label="Link to crosscheck.Oracle">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L748" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>An independent CAS the comparator can interrogate.</p>
+<p>The comparator talks to oracles <strong>only</strong> through this interface, so a
+second implementation (Wolfram, Maxima, a pinned older Alkahest) drops in
+without the ladder changing. Two consequences worth stating:</p>
+<ul>
+<li>every method may answer &quot;I don&#39;t know&quot; — <a href="/docs/api/simplify/#is_zero"><code>is_zero()</code></a> returns <code>None</code>,
+<code>run()</code> raises — and the comparator turns that into <code>incomparable</code>
+rather than guessing;</li>
+<li><code>lift()</code> is optional in effect but not in signature: it is what lets
+rung 2 be attempted <em>independently in both systems</em>, which is what makes
+&quot;either one proved it&quot; a defensible notion of agreement.</li>
+</ul>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">name</code><span class="ptype">str</span></dt><dd><p>Stable short identifier, used as the key in <code>oracles()</code>.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="crosscheck.Oracle.name">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">name</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle.name" aria-label="Link to crosscheck.Oracle.name">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L768" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.Oracle.version">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">version</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle.version" aria-label="Link to crosscheck.Oracle.version">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L779" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Version string of the backing system. Recorded on every result.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="crosscheck.Oracle.available">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">available</span>()<span class="sig-ret"> → bool</span></code></pre><span class="kind kind-small">classmethod</span><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle.available" aria-label="Link to crosscheck.Oracle.available">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L774" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Is this oracle usable in this process right now?</p>
+</div>
+</div>
+<div class="member" id="crosscheck.Oracle.translate">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">translate</span>(<span class="sig-p">expr</span><span class="sig-ann">: Any</span>, <span class="sig-sep">*</span>, <span class="sig-p">assumptions</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle.translate" aria-label="Link to crosscheck.Oracle.translate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L785" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Alkahest <a href="/docs/api/core/#Expr"><code>Expr</code></a> -&gt; a term in this oracle&#39;s language.</p>
+</div>
+</div>
+<div class="member" id="crosscheck.Oracle.lift">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">lift</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>, <span class="sig-p">pool</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle.lift" aria-label="Link to crosscheck.Oracle.lift">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L789" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>This oracle&#39;s term -&gt; an Alkahest <a href="/docs/api/core/#Expr"><code>Expr</code></a>, or refuse.</p>
+</div>
+</div>
+<div class="member" id="crosscheck.Oracle.render">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">render</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle.render" aria-label="Link to crosscheck.Oracle.render">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L793" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Human-readable rendering, for witnesses and reports.</p>
+</div>
+</div>
+<div class="member" id="crosscheck.Oracle.canonical">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">canonical</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle.canonical" aria-label="Link to crosscheck.Oracle.canonical">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L797" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Canonical string form, for rung 1.</p>
+</div>
+</div>
+<div class="member" id="crosscheck.Oracle.supports">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">supports</span>(<span class="sig-p">operation</span><span class="sig-ann">: str</span>)<span class="sig-ret"> → bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle.supports" aria-label="Link to crosscheck.Oracle.supports">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L803" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Can this oracle answer <em>operation</em> at all?</p>
+</div>
+</div>
+<div class="member" id="crosscheck.Oracle.run">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">run</span>(<span class="sig-p">operation</span><span class="sig-ann">: str</span>, <span class="sig-p">args</span><span class="sig-ann">: Mapping[str, Any]</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle.run" aria-label="Link to crosscheck.Oracle.run">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L807" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Perform <em>operation</em> in this oracle&#39;s own engine.</p>
+
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">CrossCheckError</span></dt><dd><p><code>E-XCHECK-004</code> when the oracle declines or returns an
+unevaluated form; a refusal is not a divergence.</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="crosscheck.Oracle.is_zero">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_zero</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → bool | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle.is_zero" aria-label="Link to crosscheck.Oracle.is_zero">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L820" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>True</code>/<code>False</code> if decided, <code>None</code> if the oracle could not.</p>
+</div>
+</div>
+<div class="member" id="crosscheck.Oracle.diff">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">diff</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>, <span class="sig-p">var</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle.diff" aria-label="Link to crosscheck.Oracle.diff">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L824" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Derivative of <em>obj</em> with respect to the translated variable <em>var</em>.</p>
+</div>
+</div>
+<div class="member" id="crosscheck.Oracle.subs">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">subs</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>, <span class="sig-p">bindings</span><span class="sig-ann">: Mapping[Any, Any]</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle.subs" aria-label="Link to crosscheck.Oracle.subs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L828" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Substitute translated terms for translated symbols.</p>
+</div>
+</div>
+<div class="member" id="crosscheck.Oracle.subs_by_name">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">subs_by_name</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>, <span class="sig-p">point</span><span class="sig-ann">: Mapping[str, float]</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle.subs_by_name" aria-label="Link to crosscheck.Oracle.subs_by_name">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L832" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Substitute numbers for free symbols matched <strong>by name</strong>.</p>
+<p>Distinct from <a href="/docs/api/simplify/#subs"><code>subs()</code></a> because the comparator only ever knows the
+Alkahest symbol <em>names</em> at a witness point, and rebuilding an oracle
+symbol from a name would have to re-derive its assumption flags — get
+that wrong and the substitution silently misses.</p>
+</div>
+</div>
+<div class="member" id="crosscheck.Oracle.to_float">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_float</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → float | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Oracle.to_float" aria-label="Link to crosscheck.Oracle.to_float">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L842" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Numeric value of <em>obj</em>, or <code>None</code> when it has none.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="crosscheck.SweepReport"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">crosscheck.</span><span class="sig-name">SweepReport</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SweepReport" aria-label="Link to crosscheck.SweepReport">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2590" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Result of a seeded differential sweep.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">seed</code><span class="ptype">int</span></dt><dd><p><strong>Print this.</strong> A sweep is only useful as a bug report if the run that
+found something can be reproduced exactly.</p>
+</dd></div><div class="param"><dt><code class="pname">oracle, oracle_version</code><span class="ptype">str or None</span></dt><dd><p>Which system, at which version. A sweep that turns red after a SymPy
+upgrade is a different event from one that turns red after an Alkahest
+change, and only the recorded version tells them apart.</p>
+</dd></div><div class="param"><dt><code class="pname">checks</code><span class="ptype">tuple of CrossCheck</span></dt><dd><p>Every check run, in order.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="crosscheck.SweepReport.seed">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">seed</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SweepReport.seed" aria-label="Link to crosscheck.SweepReport.seed">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2606" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.SweepReport.oracle">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">oracle</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SweepReport.oracle" aria-label="Link to crosscheck.SweepReport.oracle">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2607" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.SweepReport.oracle_version">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">oracle_version</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SweepReport.oracle_version" aria-label="Link to crosscheck.SweepReport.oracle_version">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2608" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.SweepReport.checks">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">checks</span><span class="sig-ann">: tuple[CrossCheck, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SweepReport.checks" aria-label="Link to crosscheck.SweepReport.checks">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2609" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.SweepReport.findings">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">findings</span><span class="sig-ann">: tuple[CrossCheck, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SweepReport.findings" aria-label="Link to crosscheck.SweepReport.findings">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2612" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Checks whose outcome was <code>diverge</code>.</p>
+</div>
+</div>
+<div class="member" id="crosscheck.SweepReport.silent_error_candidates">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">silent_error_candidates</span><span class="sig-ann">: tuple[CrossCheck, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SweepReport.silent_error_candidates" aria-label="Link to crosscheck.SweepReport.silent_error_candidates">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2617" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Findings where Alkahest&#39;s side was rigorously refuted.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="crosscheck.SweepReport.counts">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">counts</span>()<span class="sig-ret"> → dict[str, int]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SweepReport.counts" aria-label="Link to crosscheck.SweepReport.counts">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2623" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Outcome histogram, total over <code>OUTCOMES</code>.</p>
+</div>
+</div>
+<div class="member" id="crosscheck.SweepReport.to_dict">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_dict</span>()<span class="sig-ret"> → dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SweepReport.to_dict" aria-label="Link to crosscheck.SweepReport.to_dict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2630" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>JSON-serialisable view, suitable for filing as a CI artifact.</p>
+</div>
+</div>
+<div class="member" id="crosscheck.SweepReport.summary">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">summary</span>()<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SweepReport.summary" aria-label="Link to crosscheck.SweepReport.summary">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2640" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>One-screen report; print it from the nightly job.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="crosscheck.SymPyOracle"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">crosscheck.</span><span class="sig-name">SymPyOracle</span>()</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyOracle" aria-label="Link to crosscheck.SymPyOracle">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L846" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>SymPy as the reference implementation.</p>
+<p>The first oracle, and the one the frozen corpus is pinned against. Its
+version is recorded on <strong>every</strong> record: without that the corpus rots
+silently the first time SymPy changes an answer, which it will.</p>
+
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">CrossCheckError</span></dt><dd><p><code>E-XCHECK-002</code> on construction when SymPy is not importable. The
+absence is loud by construction — there is no code path in which a
+missing SymPy yields agreement.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="crosscheck.SymPyOracle.version">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">version</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyOracle.version" aria-label="Link to crosscheck.SymPyOracle.version">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L878" rel="noopener">source</a></div></div>
+  
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="crosscheck.SymPyOracle.available">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">available</span>()<span class="sig-ret"> → bool</span></code></pre><span class="kind kind-small">classmethod</span><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyOracle.available" aria-label="Link to crosscheck.SymPyOracle.available">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L870" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.SymPyOracle.translate">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">translate</span>(<span class="sig-p">expr</span><span class="sig-ann">: Any</span>, <span class="sig-sep">*</span>, <span class="sig-p">assumptions</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyOracle.translate" aria-label="Link to crosscheck.SymPyOracle.translate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L883" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.SymPyOracle.lift">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">lift</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>, <span class="sig-p">pool</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyOracle.lift" aria-label="Link to crosscheck.SymPyOracle.lift">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L886" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>SymPy term -&gt; Alkahest <code>Expr</code>, refusing anything not exactly representable.</p>
+<p>Deliberately narrow. A lift that &quot;mostly works&quot; would put an
+approximated value into the Alkahest-side rung-2 attempt, and a wrong
+answer there is indistinguishable from the divergence the module exists
+to find.</p>
+</div>
+</div>
+<div class="member" id="crosscheck.SymPyOracle.render">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">render</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyOracle.render" aria-label="Link to crosscheck.SymPyOracle.render">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L942" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.SymPyOracle.canonical">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">canonical</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyOracle.canonical" aria-label="Link to crosscheck.SymPyOracle.canonical">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L945" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.SymPyOracle.supports">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">supports</span>(<span class="sig-p">operation</span><span class="sig-ann">: str</span>)<span class="sig-ret"> → bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyOracle.supports" aria-label="Link to crosscheck.SymPyOracle.supports">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L950" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.SymPyOracle.run">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">run</span>(<span class="sig-p">operation</span><span class="sig-ann">: str</span>, <span class="sig-p">args</span><span class="sig-ann">: Mapping[str, Any]</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyOracle.run" aria-label="Link to crosscheck.SymPyOracle.run">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L953" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.SymPyOracle.is_zero">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_zero</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → bool | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyOracle.is_zero" aria-label="Link to crosscheck.SymPyOracle.is_zero">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1006" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.SymPyOracle.diff">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">diff</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>, <span class="sig-p">var</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyOracle.diff" aria-label="Link to crosscheck.SymPyOracle.diff">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1020" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.SymPyOracle.subs">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">subs</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>, <span class="sig-p">bindings</span><span class="sig-ann">: Mapping[Any, Any]</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyOracle.subs" aria-label="Link to crosscheck.SymPyOracle.subs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1023" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.SymPyOracle.subs_by_name">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">subs_by_name</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>, <span class="sig-p">point</span><span class="sig-ann">: Mapping[str, float]</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyOracle.subs_by_name" aria-label="Link to crosscheck.SymPyOracle.subs_by_name">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1026" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="crosscheck.SymPyOracle.to_float">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_float</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → float | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyOracle.to_float" aria-label="Link to crosscheck.SymPyOracle.to_float">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1031" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="crosscheck.SymPyTranslator"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">crosscheck.</span><span class="sig-name">SymPyTranslator</span>(<span class="sig-p">sympy_module</span><span class="sig-ann">: Any</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SymPyTranslator" aria-label="Link to crosscheck.SymPyTranslator">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L546" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>Translator</code> into SymPy&#39;s expression language.</p>
+</div></section>
+<section class="sym" id="crosscheck.Translator"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">crosscheck.</span><span class="sig-name">Translator</span>()</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Translator" aria-label="Link to crosscheck.Translator">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L335" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Walk an <a href="/docs/api/core/#Expr"><code>Expr</code></a> into another CAS&#39;s term language.</p>
+<p>Subclass once per oracle. The walk, the dispatch table, and the refusal
+discipline live here; a subclass supplies only the leaf and node
+constructors of its target language.</p>
+<p>The dispatch table is <strong>total over</strong> <code>NODE_TAGS</code> — that is the
+property that makes a divergence informative, and
+<code>tests/test_crosscheck.py</code> asserts it against the tags the Rust binding
+can actually emit rather than against this list, so a new node kind fails
+the build instead of quietly translating to nothing.</p>
+
+<div class="doc-sub">Assumptions</div><p><code>translate()</code> accepts the governing <a href="/docs/api/core/#Assumptions"><code>Assumptions</code></a> and
+maps its predicates onto per-symbol flags. A predicate with no faithful
+counterpart (a relation between two symbols, a disjunction, a bound on a
+composite expression) raises rather than being dropped: dropping it asks
+the oracle a <em>weaker</em> question and any divergence that follows is an
+artefact of the harness.</p>
+<div class="members"><div class="members-title">Methods</div><div class="member" id="crosscheck.Translator.translate">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">translate</span>(<span class="sig-p">expr</span><span class="sig-ann">: Any</span>, <span class="sig-sep">*</span>, <span class="sig-p">assumptions</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Translator.translate" aria-label="Link to crosscheck.Translator.translate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L381" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Translate <em>expr</em>, honouring <em>assumptions</em>, or refuse.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt><dd><p>The expression to translate.</p>
+</dd></div><div class="param"><dt><code class="pname">assumptions</code><span class="ptype">Assumptions, optional</span></dt><dd><p>Governing assumption context. When <code>None</code>, the ambient
+<a href="/docs/api/core/#active_assumptions"><code>active_assumptions()</code></a> context is used, so a check run
+inside <code>with alkahest.context(assumptions=...)</code> asks the oracle
+the same conditioned question the caller asked Alkahest.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">object</span></dt><dd><p>A term in the oracle&#39;s language.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">CrossCheckError</span></dt><dd><p><code>E-XCHECK-001</code> for an unknown node tag, an unmapped primitive, or
+an assumption with no faithful counterpart.</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="crosscheck.Translator.assumption_flags">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">assumption_flags</span>(<span class="sig-p">assumptions</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → dict[str, dict[str, bool]]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#crosscheck.Translator.assumption_flags" aria-label="Link to crosscheck.Translator.assumption_flags">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L413" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Public view of the symbol-flag mapping derived from <em>assumptions</em>.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="crosscheck.FROZEN_CORPUS"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">FROZEN_CORPUS</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.FROZEN_CORPUS" aria-label="Link to crosscheck.FROZEN_CORPUS">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2926" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>FROZEN_CORPUS = (FrozenCase(id='integrate_polynomial', operation='integrate', build=_case_polynomial_antiderivative, expected='agree', expected_reason='invariant_holds', fou…</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="crosscheck.FUNCTION_MAP"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">FUNCTION_MAP</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.FUNCTION_MAP" aria-label="Link to crosscheck.FUNCTION_MAP">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L163" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>FUNCTION_MAP = {'abs': 'Abs', 'acos': 'acos', 'acosh': 'acosh', 'arg': 'arg', 'asin': 'asin', 'asinh': 'asinh', 'atan': 'atan', 'atan2': 'atan2', 'atanh': 'atanh', 'ceil': …</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="crosscheck.NODE_TAGS"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">NODE_TAGS</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.NODE_TAGS" aria-label="Link to crosscheck.NODE_TAGS">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L135" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>NODE_TAGS = frozenset({'symbol', 'integer', 'rational', 'float', 'add', 'mul', 'pow', 'func', 'piecewise', 'predicate', 'forall', 'exists', 'big_o', 'root_sum'})</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="crosscheck.OPERATIONS"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">OPERATIONS</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.OPERATIONS" aria-label="Link to crosscheck.OPERATIONS">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1268" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>OPERATIONS = {'diff': Operation('diff', (1, 2, 3), None), 'integrate': Operation('integrate', (4, 1, 2, 3), 'antiderivative'), 'simplify': Operation('simplify', (4, 1, 2,…</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="crosscheck.OUTCOMES"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">OUTCOMES</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.OUTCOMES" aria-label="Link to crosscheck.OUTCOMES">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L114" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>OUTCOMES = ('agree', 'diverge', 'incomparable', 'unavailable')</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="crosscheck.PREDICATE_KINDS"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">PREDICATE_KINDS</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.PREDICATE_KINDS" aria-label="Link to crosscheck.PREDICATE_KINDS">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L155" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>PREDICATE_KINDS = frozenset({'lt', 'le', 'gt', 'ge', 'eq', 'ne', 'and', 'or', 'not', 'true', 'false'})</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="crosscheck.REFUSED_FUNCTIONS"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">REFUSED_FUNCTIONS</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.REFUSED_FUNCTIONS" aria-label="Link to crosscheck.REFUSED_FUNCTIONS">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L277" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>REFUSED_FUNCTIONS = {'zeta_prime': 'SymPy has no `zeta_prime` function: it spells the derivative `Derivative(zeta(s), s)`, an unevaluated form a name-for-name table cannot expre…</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="crosscheck.RUNG_NAMES"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">RUNG_NAMES</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.RUNG_NAMES" aria-label="Link to crosscheck.RUNG_NAMES">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L119" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>RUNG_NAMES = {1: 'syntactic', 2: 'symbolic', 3: 'rigorous_numeric', 4: 'invariant'}</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="crosscheck.SAMPLE_BOX"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">SAMPLE_BOX</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SAMPLE_BOX" aria-label="Link to crosscheck.SAMPLE_BOX">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1604" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>SAMPLE_BOX = (0.35, 2.65)</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="crosscheck.SWEEP_OPERATIONS"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">SWEEP_OPERATIONS</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.SWEEP_OPERATIONS" aria-label="Link to crosscheck.SWEEP_OPERATIONS">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2663" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>SWEEP_OPERATIONS = ('diff', 'integrate', 'simplify')</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/mod-controls/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">alkahest.controls</span></a><a class="pager-next" href="/docs/api/mod-lattice/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">alkahest.lattice</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/blob/main/website/docs/scripts/extract_api.py" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d3"><a href="#crosscheck.CrossCheck">crosscheck.CrossCheck</a></li><li class="d3"><a href="#crosscheck.Divergence">crosscheck.Divergence</a></li><li class="d3"><a href="#crosscheck.FrozenCase">crosscheck.FrozenCase</a></li><li class="d3"><a href="#crosscheck.Operation">crosscheck.Operation</a></li><li class="d3"><a href="#crosscheck.Oracle">crosscheck.Oracle</a></li><li class="d3"><a href="#crosscheck.SweepReport">crosscheck.SweepReport</a></li><li class="d3"><a href="#crosscheck.SymPyOracle">crosscheck.SymPyOracle</a></li><li class="d3"><a href="#crosscheck.SymPyTranslator">crosscheck.SymPyTranslator</a></li><li class="d3"><a href="#crosscheck.Translator">crosscheck.Translator</a></li><li class="d3"><a href="#crosscheck.FROZEN_CORPUS">crosscheck.FROZEN_CORPUS</a></li><li class="d3"><a href="#crosscheck.FUNCTION_MAP">crosscheck.FUNCTION_MAP</a></li><li class="d3"><a href="#crosscheck.NODE_TAGS">crosscheck.NODE_TAGS</a></li><li class="d3"><a href="#crosscheck.OPERATIONS">crosscheck.OPERATIONS</a></li><li class="d3"><a href="#crosscheck.OUTCOMES">crosscheck.OUTCOMES</a></li><li class="d3"><a href="#crosscheck.PREDICATE_KINDS">crosscheck.PREDICATE_KINDS</a></li><li class="d3"><a href="#crosscheck.REFUSED_FUNCTIONS">crosscheck.REFUSED_FUNCTIONS</a></li><li class="d3"><a href="#crosscheck.RUNG_NAMES">crosscheck.RUNG_NAMES</a></li><li class="d3"><a href="#crosscheck.SAMPLE_BOX">crosscheck.SAMPLE_BOX</a></li><li class="d3"><a href="#crosscheck.SWEEP_OPERATIONS">crosscheck.SWEEP_OPERATIONS</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/blob/main/website/docs/scripts/extract_api.py" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

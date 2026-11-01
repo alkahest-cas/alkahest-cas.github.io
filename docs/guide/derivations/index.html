@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Derivation logs · Alkahest Docs</title>
+<meta name="description" content="Most transformations in Alkahest return a DerivedResult that records the exact sequence of rewrite steps applied. This log is the foundation for both human…">
+<meta property="og:title" content="Derivation logs · Alkahest Docs">
+<meta property="og:description" content="Most transformations in Alkahest return a DerivedResult that records the exact sequence of rewrite steps applied. This log is the foundation for both human…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/" class="active" aria-current="page">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <div class="eyebrow">Trust and verification</div>
+    <h1>Derivation logs</h1>
+    <p>Most transformations in Alkahest return a <code>DerivedResult</code> that records the exact sequence of rewrite steps applied. This log is the foundation for both human inspection and Lean proof export.</p>
+<h2 id="derivedresult"><a class="hanchor" href="#derivedresult" aria-hidden="true" tabindex="-1">#</a>DerivedResult</h2>
+<p><code>DerivedResult</code> is the return type of <code>diff</code>, <code>simplify</code>, <code>integrate</code>, <code>limit</code>, <code>sum_*</code>, and most other transforming operations. Notable exception: <code>series</code> returns a <code>Series</code>.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> diff, sin</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">dr </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> diff(sin(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), x)</span></span></code></pre></div><h3 id="attributes"><a class="hanchor" href="#attributes" aria-hidden="true" tabindex="-1">#</a>Attributes</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody><tr>
+<td><code>.value</code></td>
+<td><code>Expr</code></td>
+<td>The result expression</td>
+</tr>
+<tr>
+<td><code>.steps</code></td>
+<td><code>list[dict]</code></td>
+<td>Ordered list of rewrite steps</td>
+</tr>
+<tr>
+<td><code>.verification</code></td>
+<td><code>dict</code></td>
+<td>Evidence status, artifact format, external-check status, and side conditions</td>
+</tr>
+<tr>
+<td><code>.certificate</code></td>
+<td><code>str | None</code></td>
+<td>Generated Lean 4 source, when a derivation log, FTC integral, or recognised <code>Filter.Tendsto</code> limit can be certified without <code>sorry</code></td>
+</tr>
+</tbody></table></div>
+<h3 id="methods"><a class="hanchor" href="#methods" aria-hidden="true" tabindex="-1">#</a>Methods</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead><tbody><tr>
+<td><code>.to_dict(mode=&quot;full&quot;)</code></td>
+<td>Versioned dict envelope combining <code>.value</code>/<code>.verification</code>/<code>.certificate_status</code>/<code>.steps</code>; see <a href="#machine-parseable-output-to_dict--to_json">Machine-parseable output</a> below</td>
+</tr>
+<tr>
+<td><code>.to_json(mode=&quot;full&quot;)</code></td>
+<td><code>json.dumps(self.to_dict(mode=mode))</code></td>
+</tr>
+</tbody></table></div>
+<h2 id="rewrite-steps"><a class="hanchor" href="#rewrite-steps" aria-hidden="true" tabindex="-1">#</a>Rewrite steps</h2>
+<p>Each step in <code>.steps</code> is a dict with:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead><tbody><tr>
+<td><code>rule</code></td>
+<td>Rule name (string)</td>
+</tr>
+<tr>
+<td><code>before</code></td>
+<td>Expression before the rewrite</td>
+</tr>
+<tr>
+<td><code>after</code></td>
+<td>Expression after the rewrite</td>
+</tr>
+<tr>
+<td><code>side_conditions</code></td>
+<td>Side conditions recorded for the rewrite</td>
+</tr>
+</tbody></table></div>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> step </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> dr.steps:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">f</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"  </span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">{</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">step[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'rule'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">:25s</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">}</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">  {</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">step[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'before'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">}</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">  →  </span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">{</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">step[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'after'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">}</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div><h2 id="side-conditions"><a class="hanchor" href="#side-conditions" aria-hidden="true" tabindex="-1">#</a>Side conditions</h2>
+<p>A side condition is a predicate that must hold for a rewrite to be sound:</p>
+<ul>
+<li><code>Positive(x)</code> — <code>x</code> must be positive (e.g. for <code>sqrt(x²) → x</code>)</li>
+<li><code>NonZero(x)</code> — <code>x</code> must be non-zero (e.g. for <code>x/x → 1</code>). For a <em>symbolic</em> <code>x</code> the rewrite fires and the condition is recorded; for a <strong>literal</strong> zero base it does not fire at all, since <code>0 · 0⁻¹</code> has no value (<a href="/docs/guide/simplification/#the-literal-zero-carve-out">literal-zero carve-out</a>)</li>
+<li><code>Integer(n)</code> — <code>n</code> must be an integer (e.g. for some power rules)</li>
+<li><code>BranchCut(f, x)</code> — records that <code>f</code> may have a branch cut at <code>x</code></li>
+</ul>
+<p>Side conditions propagate into the derivation log as <code>SideCondition</code> entries and are aggregated in <code>dr.verification[&quot;side_conditions&quot;]</code>. A generated Lean source artifact is evidence that can be checked; it is not a claim that the project has checked the artifact with Lean.</p>
+<p>For antiderivatives, <code>exactly_verified</code> means that the in-kernel symbolic
+residual <code>d/dx(F) - f</code> simplified to zero. <code>numerically_checked</code> means only
+that the integration soundness gate found agreement at several floating-point
+samples; it is useful evidence, but it is not an exact proof. <code>lean_checked</code>
+remains reserved for an actual completed external Lean check.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">evidence </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> dr.verification</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">if</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> evidence[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"status"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">] </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">==</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "certificate_available"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    assert</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> not</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> evidence[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"externally_verified"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    lean_source </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> dr.certificate</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">    # Invoke a pinned Lean/Mathlib checker before treating this as lean_checked.</span></span></code></pre></div><h2 id="inspecting-a-derivation"><a class="hanchor" href="#inspecting-a-derivation" aria-hidden="true" tabindex="-1">#</a>Inspecting a derivation</h2>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">dr </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> diff(sin(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), x)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">f</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"Result: </span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">{</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">dr.value</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">}</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">f</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"Steps (</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">{</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">len</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(dr.steps)</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">}</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">):"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> step </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> dr.steps[:</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    rule </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> step[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'rule'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    before </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> step[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'before'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    after </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> step[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'after'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">f</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"  [</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">{</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">rule</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">}</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">]: </span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">{</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">before</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">}</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> → </span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">{</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">after</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">}</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> condition </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> step[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"side_conditions"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">        print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">f</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"    side condition: </span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">{</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">condition</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">}</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div><h2 id="derivationlog-overhead"><a class="hanchor" href="#derivationlog-overhead" aria-hidden="true" tabindex="-1">#</a>DerivationLog overhead</h2>
+<p>Logging is always on and is cheap — a <code>Vec&lt;RewriteStep&gt;</code> appended to during traversal. The benchmark group <code>log_overhead</code> in <code>alkahest-core/benches/alkahest_bench.rs</code> measures logging cost separately from computation.</p>
+<p>For production workloads where you only need <code>.value</code>, the steps list is still populated but you can ignore it. There is no way to disable logging in the current API (disabling it would compromise the Lean certificate pipeline).</p>
+<h2 id="combining-logs"><a class="hanchor" href="#combining-logs" aria-hidden="true" tabindex="-1">#</a>Combining logs</h2>
+<p>When you chain operations, the logs are separate:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">simplified </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> simplify(expr)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">derived </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> diff(simplified.value, x)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Full derivation: simplify steps first, then diff steps</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">all_steps </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> simplified.steps </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> derived.steps</span></span></code></pre></div><p>For operations like <code>integrate</code> that internally call <code>simplify</code>, the log includes the simplification sub-steps interleaved with the integration steps.</p>
+<h2 id="machine-parseable-output-to_dict--to_json"><a class="hanchor" href="#machine-parseable-output-to_dict--to_json" aria-hidden="true" tabindex="-1">#</a>Machine-parseable output: <code>to_dict</code> / <code>to_json</code></h2>
+<p>Agents pay for every character a call returns. <code>.steps</code>, <code>.verification</code>, and
+<code>.certificate_status</code> are convenient to poke at interactively, but stitching
+them into one payload for logging, RPC, or a context window means writing
+that glue yourself, on every call site, forever. <code>DerivedResult.to_dict()</code>
+and <code>DerivedResult.to_json()</code> give you the stitched, versioned envelope
+directly:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">dr </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> diff(sin(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), x)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">full </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> dr.to_dict()                     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># mode="full" is the default</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">compact </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> dr.to_dict(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">mode</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"compact"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)    </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># short keys, token-efficient</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">json_str </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> dr.to_json(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">mode</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"compact"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># json.dumps(dr.to_dict(mode="compact"))</span></span></code></pre></div><h3 id="envelope-shape-modefull"><a class="hanchor" href="#envelope-shape-modefull" aria-hidden="true" tabindex="-1">#</a>Envelope shape (<code>mode=&quot;full&quot;</code>)</h3>
+<div class="code" data-lang="json"><span class="code-lang">JSON</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">{</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">  "kind"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"alkahest.derived_result"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">  "schema_version"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">  "steps_schema_version"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">  "value"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"&#x3C;display string>"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">  "verification"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: { </span><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">"status"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"..."</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">"evidence"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"..."</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">"externally_verified"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">false</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">"artifact_format"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"..."</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">"side_conditions"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: [</span><span style="--shiki-light:#B31D28;--shiki-light-font-style:italic;--shiki-dark:#FF938A;--shiki-dark-font-style:italic">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">"method"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"..."</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> },</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">  "certificate_status"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: { </span><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">"certifiable"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">true</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">"reason"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"..."</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">"blocking_steps"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: [] },</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">  "steps"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: [ {</span><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">"rule"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"..."</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">"before"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"..."</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">"after"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"..."</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">"side_conditions"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: [</span><span style="--shiki-light:#B31D28;--shiki-light-font-style:italic;--shiki-dark:#FF938A;--shiki-dark-font-style:italic">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]}, </span><span style="--shiki-light:#B31D28;--shiki-light-font-style:italic;--shiki-dark:#FF938A;--shiki-dark-font-style:italic">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ],</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#8DDB8C">  "has_certificate"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">true</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">}</span></span></code></pre></div><p><code>verification</code> and <code>certificate_status</code> are exactly the dicts returned by the
+<code>.verification</code> and <code>.certificate_status</code> getters; <code>steps</code> is exactly <code>.steps</code>.
+<code>kind</code> is a stable discriminator string — useful when logs or RPC payloads
+mix <code>DerivedResult</code> envelopes with other structured outputs (e.g. error
+envelopes carrying <code>E-SUBSYSTEM-NNN</code> codes).</p>
+<h3 id="schema-versions"><a class="hanchor" href="#schema-versions" aria-hidden="true" tabindex="-1">#</a>Schema versions</h3>
+<p>Two independent version constants, both starting at <code>1</code>:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Constant</th>
+<th>Governs</th>
+</tr>
+</thead><tbody><tr>
+<td><code>alkahest.RESULT_SCHEMA_VERSION</code></td>
+<td>The envelope: the set of top-level keys (<code>kind</code>, <code>value</code>, <code>verification</code>, <code>certificate_status</code>, <code>steps</code>, <code>has_certificate</code>, ...)</td>
+</tr>
+<tr>
+<td><code>alkahest.STEPS_SCHEMA_VERSION</code></td>
+<td>One entry of <code>steps</code>: full-mode field names and the compact-mode short-key mapping</td>
+</tr>
+</tbody></table></div>
+<p>Also available as <code>DerivedResult.SCHEMA_VERSION</code> / <code>DerivedResult.STEPS_SCHEMA_VERSION</code>
+class attributes, and documented alongside the field-name contract in
+<code>alkahest._result_schema</code> (<code>STEP_FIELDS</code>, <code>STEP_FIELDS_COMPACT</code>). Either
+constant is bumped independently if its shape ever changes, so pinning
+<code>schema_version</code>/<code>steps_schema_version</code> in your own parsing code is safe
+across upgrades that don&#39;t touch the piece you depend on.</p>
+<h3 id="compact-mode"><a class="hanchor" href="#compact-mode" aria-hidden="true" tabindex="-1">#</a>Compact mode</h3>
+<p><code>mode=&quot;compact&quot;</code> keeps the same top-level envelope shape but shrinks the
+biggest token costs:</p>
+<ul>
+<li><strong>Steps</strong> use short keys — <code>r</code> for <code>rule</code>, <code>s</code> for <code>side_conditions</code> — and
+<strong>omit <code>before</code>/<code>after</code> entirely</strong>. Those two expression strings are
+usually the largest part of a multi-step derivation and the single
+biggest win for token budget. <code>s</code> is itself omitted from a step&#39;s dict
+when that step has no side conditions (the common case).</li>
+<li><strong><code>verification</code></strong> is pruned to <code>status</code> and <code>externally_verified</code> only.
+These are the two fields that carry the honesty signal — whether the
+result is verified, and whether that verification happened out-of-process
+— so they are never renamed, abbreviated, or dropped in compact mode.</li>
+<li><strong><code>certificate_status</code></strong> is pruned to <code>certifiable</code> and <code>reason</code>; the
+<code>blocking_steps</code> diagnostic list (which repeats <code>before</code>/<code>after</code> text) is
+dropped.</li>
+<li><strong>No mode ever includes Lean certificate source text.</strong> <code>has_certificate</code>
+(bool) plus <code>certificate_status[&quot;reason&quot;]</code> is enough to know whether a
+certificate exists and, if not, why — without paying for the source. Use
+the <code>.certificate</code> getter when you actually need the Lean source.</li>
+</ul>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">dr.to_dict(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">mode</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"compact"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># {</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">#   "kind": "alkahest.derived_result",</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">#   "schema_version": 1,</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">#   "steps_schema_version": 1,</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">#   "value": "...",</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">#   "verification": {"status": "certificate_available", "externally_verified": false},</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">#   "certificate_status": {"certifiable": true, "reason": "emitted"},</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">#   "steps": [{"r": "diff_sin"}, {"r": "sqrt_of_square_positive", "s": ["x > 0"]}],</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">#   "has_certificate": true</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># }</span></span></code></pre></div><p>Prefer <code>to_dict(mode=&quot;compact&quot;)</code> / <code>to_json(mode=&quot;compact&quot;)</code> over reading
+<code>.steps</code> directly in hot loops — batch derivations, autoresearch search
+plumbing, or anywhere you&#39;re serialising many <code>DerivedResult</code>s and only need
+the rule names, side conditions, and verification status rather than full
+before/after expression text.</p>
+<p>An invalid <code>mode</code> (anything other than <code>&quot;full&quot;</code>/<code>&quot;compact&quot;</code>) raises
+<code>ValueError</code>.</p>
+<h2 id="beyond-one-call"><a class="hanchor" href="#beyond-one-call" aria-hidden="true" tabindex="-1">#</a>Beyond one call</h2>
+<p><code>DerivedResult</code> is per-call. To accumulate many results into a citable, serialisable,
+re-verifiable artifact — a DAG of claims with stable IDs, hypotheses, and certificate
+status — see <a href="/docs/guide/claim-graphs/">claim graphs</a>.</p>
+<h2 id="see-also"><a class="hanchor" href="#see-also" aria-hidden="true" tabindex="-1">#</a>See also</h2>
+<ul>
+<li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a></li>
+<li><a href="/docs/guide/batch/">Batch</a> — produce many <code>DerivedResult</code>s without aborting on one failure</li>
+<li><a href="/docs/guide/budgets/">Budgets</a> — bound the call that produced the derivation</li>
+<li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a> — <code>certificate_status</code> in the envelope</li>
+</ul>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/rl/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Reinforcement learning</span></a><a class="pager-next" href="/docs/guide/claim-graphs/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Claim graphs</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/derivations.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#derivedresult">DerivedResult</a></li><li class="d3"><a href="#attributes">Attributes</a></li><li class="d3"><a href="#methods">Methods</a></li><li class="d2"><a href="#rewrite-steps">Rewrite steps</a></li><li class="d2"><a href="#side-conditions">Side conditions</a></li><li class="d2"><a href="#inspecting-a-derivation">Inspecting a derivation</a></li><li class="d2"><a href="#derivationlog-overhead">DerivationLog overhead</a></li><li class="d2"><a href="#combining-logs">Combining logs</a></li><li class="d2"><a href="#machine-parseable-output-to_dict--to_json">Machine-parseable output: to_dict / to_json</a></li><li class="d3"><a href="#envelope-shape-modefull">Envelope shape (mode=&quot;full&quot;)</a></li><li class="d3"><a href="#schema-versions">Schema versions</a></li><li class="d3"><a href="#compact-mode">Compact mode</a></li><li class="d2"><a href="#beyond-one-call">Beyond one call</a></li><li class="d2"><a href="#see-also">See also</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/derivations.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

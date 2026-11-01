@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Core API · Alkahest Docs</title>
+<meta name="description" content="The core API provides the expression pool, expression type, and result object.">
+<meta property="og:title" content="Core API · Alkahest Docs">
+<meta property="og:description" content="The core API provides the expression pool, expression type, and result object.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/" class="active" aria-current="page">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>Core API</h1>
+    <div class="prose-block"><p>The core API provides the expression pool, expression type, and result object.</p>
+</div>
+<h2 id="exprpool"><a class="hanchor" href="#exprpool" aria-hidden="true" tabindex="-1">#</a>ExprPool</h2>
+<section class="sym" id="ExprPool"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">ExprPool</span>()</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ExprPool" aria-label="Link to ExprPool">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2254" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>An intern table that owns all expressions in a session.</p>
+<p>Every symbol, integer, and composite expression is stored in an
+<code>ExprPool</code>. Expressions from different pools must not be mixed.</p>
+<div class="members"><div class="members-title">Methods</div><div class="member" id="ExprPool.symbol">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">symbol</span>(<span class="sig-p">name</span>, <span class="sig-p">domain</span><span class="sig-def">=None</span>, <span class="sig-p">commutative</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.symbol" aria-label="Link to ExprPool.symbol">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2284" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Free symbol. <code>domain</code> defaults to the ambient
+<code>alkahest.context(domain=...)</code> and only then to <code>Domain.Real</code>.</p>
+<p>The fallback exists because the domain is not decoration: it picks the
+SMT-LIB sort (<code>Int</code> vs <code>Real</code>) and hence the logic (<code>QF_NIA</code> vs
+<code>QF_NRA</code>), so a pool symbol built inside a <code>domain=Domain.Integer</code>
+block used to change the question being asked without changing any
+status a caller reads. Pass <code>domain=&quot;real&quot;</code> explicitly to opt out.</p>
+</div>
+</div>
+<div class="member" id="ExprPool.pi">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pi</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.pi" aria-label="Link to ExprPool.pi">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2311" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The constant <code>π</code> (<code>parse(&quot;pi&quot;)</code>). <code>pool.symbol(&quot;pi&quot;)</code> is an
+ordinary variable that merely prints as <code>pi</code>.</p>
+</div>
+</div>
+<div class="member" id="ExprPool.E">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">E</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.E" aria-label="Link to ExprPool.E">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2319" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Euler&#39;s number <code>e = exp(1)</code> (<code>parse(&quot;E&quot;)</code>).</p>
+</div>
+</div>
+<div class="member" id="ExprPool.euler_gamma">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">euler_gamma</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.euler_gamma" aria-label="Link to ExprPool.euler_gamma">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2327" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The Euler–Mascheroni constant <code>γ ≈ 0.5772</code> (<code>parse(&quot;EulerGamma&quot;)</code>).</p>
+</div>
+</div>
+<div class="member" id="ExprPool.catalan">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">catalan</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.catalan" aria-label="Link to ExprPool.catalan">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2334" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Catalan&#39;s constant <code>G ≈ 0.9160</code> (<code>parse(&quot;Catalan&quot;)</code>).</p>
+</div>
+</div>
+<div class="member" id="ExprPool.golden_ratio">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">golden_ratio</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.golden_ratio" aria-label="Link to ExprPool.golden_ratio">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2341" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The golden ratio <code>φ = (1 + √5)/2</code> (<code>parse(&quot;GoldenRatio&quot;)</code>).</p>
+</div>
+</div>
+<div class="member" id="ExprPool.glaisher">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">glaisher</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.glaisher" aria-label="Link to ExprPool.glaisher">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2348" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The Glaisher–Kinkelin constant <code>A ≈ 1.2824</code> (<code>parse(&quot;Glaisher&quot;)</code>).</p>
+</div>
+</div>
+<div class="member" id="ExprPool.imaginary_unit">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">imaginary_unit</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.imaginary_unit" aria-label="Link to ExprPool.imaginary_unit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2358" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Canonical imaginary unit <code>I</code> (<code>Domain.Complex</code> symbol named <code>&quot;I&quot;</code>).</p>
+<p>In <code>evaluate(..., mode=&quot;complex&quot;)</code> this auto-binds to <code>1j</code> when
+unbound. Symbolic simplification folds <code>I**2 → -1</code>, etc.</p>
+</div>
+</div>
+<div class="member" id="ExprPool.integer">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">integer</span>(<span class="sig-p">n</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.integer" aria-label="Link to ExprPool.integer">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2364" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Intern an exact integer constant.</p>
+</div>
+</div>
+<div class="member" id="ExprPool.rational">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rational</span>(<span class="sig-p">p</span>, <span class="sig-p">q</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.rational" aria-label="Link to ExprPool.rational">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2372" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Exact rational <code>p/q</code>. Both take Python ints of any size, as
+[<code>integer</code>] does — see <code>big_integer_from_py</code>.</p>
+</div>
+</div>
+<div class="member" id="ExprPool.func">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">func</span>(<span class="sig-p">name</span>, <span class="sig-p">args</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.func" aria-label="Link to ExprPool.func">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2394" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Apply a named primitive or symbolic function: <code>pool.func(&quot;sin&quot;, [x])</code>, <code>pool.func(&quot;f&quot;, [n])</code>.</p>
+<p>A built-in name at the wrong number of arguments (<code>pool.func(&quot;sqrt&quot;, [])`, `pool.func(&quot;EllipticPi&quot;, [x])`) raises `PoolError</code>
+(<code>E-POOL-002</code>); a name that is not built in takes any number.</p>
+</div>
+</div>
+<div class="member" id="ExprPool.add">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">add</span>(<span class="sig-p">args</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.add" aria-label="Link to ExprPool.add">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2447" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Build an addition node: <code>pool.add([x, y, z])</code> → <code>x + y + z</code>.</p>
+<p>Children are sorted canonically so <code>pool.add([b, a]) == pool.add([a, b])</code>.</p>
+<p>This is the bulk path for a large sum: one call interns one node, so
+it is linear in <code>len(args)</code>.  Accumulating with <code>s = s + t</code> (or the
+builtin <code>sum()</code>) interns a new, one-wider <code>Add</code> at every step —
+quadratic in time and in pool memory, which the pool never gives back.</p>
+<p>Every argument must come from this pool; one from another pool raises
+<code>PoolError</code> (<code>E-POOL-001</code>).</p>
+</div>
+</div>
+<div class="member" id="ExprPool.mul">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">mul</span>(<span class="sig-p">args</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.mul" aria-label="Link to ExprPool.mul">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2458" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Build a multiplication node: <code>pool.mul([x, y, z])</code> → <code>x * y * z</code>.</p>
+<p>The bulk path for a large product, as <code>add</code> is for a sum.  Every
+argument must come from this pool (<code>PoolError</code>, <code>E-POOL-001</code>).</p>
+</div>
+</div>
+<div class="member" id="ExprPool.float">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">float</span>(<span class="sig-p">value</span>, <span class="sig-p">prec</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.float" aria-label="Link to ExprPool.float">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2465" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ExprPool.big_o">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">big_o</span>(<span class="sig-p">arg</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.big_o" aria-label="Link to ExprPool.big_o">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2503" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>O(arg)</code> — Landau remainder bound (V2-15 series API).</p>
+</div>
+</div>
+<div class="member" id="ExprPool.pos_infinity">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pos_infinity</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.pos_infinity" aria-label="Link to ExprPool.pos_infinity">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2511" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Canonical <code>+∞</code> for <code>limit(..., oo)</code> (Unicode ∞, V2-16).</p>
+</div>
+</div>
+<div class="member" id="ExprPool.neg_infinity">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">neg_infinity</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.neg_infinity" aria-label="Link to ExprPool.neg_infinity">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2518" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Canonical <code>-∞</code> (<code>-1 · ∞</code>), the same expression as <code>-pool.pos_infinity()</code>.</p>
+</div>
+</div>
+<div class="member" id="ExprPool.lt">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">lt</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.lt" aria-label="Link to ExprPool.lt">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2526" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ExprPool.le">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">le</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.le" aria-label="Link to ExprPool.le">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2532" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ExprPool.gt">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">gt</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.gt" aria-label="Link to ExprPool.gt">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2538" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ExprPool.ge">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ge</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.ge" aria-label="Link to ExprPool.ge">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2544" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ExprPool.pred_eq">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pred_eq</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.pred_eq" aria-label="Link to ExprPool.pred_eq">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2550" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ExprPool.pred_ne">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pred_ne</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.pred_ne" aria-label="Link to ExprPool.pred_ne">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2556" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ExprPool.pred_and">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pred_and</span>(<span class="sig-p">args</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.pred_and" aria-label="Link to ExprPool.pred_and">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2562" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ExprPool.pred_or">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pred_or</span>(<span class="sig-p">args</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.pred_or" aria-label="Link to ExprPool.pred_or">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2569" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ExprPool.pred_not">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pred_not</span>(<span class="sig-p">a</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.pred_not" aria-label="Link to ExprPool.pred_not">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2576" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ExprPool.pred_true">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pred_true</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.pred_true" aria-label="Link to ExprPool.pred_true">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2582" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ExprPool.pred_false">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pred_false</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.pred_false" aria-label="Link to ExprPool.pred_false">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2587" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ExprPool.forall">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">forall</span>(<span class="sig-p">var</span>, <span class="sig-p">body</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.forall" aria-label="Link to ExprPool.forall">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2594" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Universal quantifier: <code>∀ var . body</code> (first-order logic).</p>
+</div>
+</div>
+<div class="member" id="ExprPool.exists">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exists</span>(<span class="sig-p">var</span>, <span class="sig-p">body</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.exists" aria-label="Link to ExprPool.exists">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2602" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Existential quantifier: <code>∃ var . body</code>.</p>
+</div>
+</div>
+<div class="member" id="ExprPool.save_to">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">save_to</span>(<span class="sig-p">path</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.save_to" aria-label="Link to ExprPool.save_to">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2612" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Write the pool to <code>path</code> atomically (temp + rename).  Raises <code>IoError</code>
+on any filesystem failure.</p>
+</div>
+</div>
+<div class="member" id="ExprPool.load_from">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">load_from</span>(<span class="sig-p">path</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#ExprPool.load_from" aria-label="Link to ExprPool.load_from">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2649" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Load a persisted pool from <code>path</code>.  Returns a new <code>ExprPool</code>.
+Raises <code>FileNotFoundError</code> if <code>path</code> does not exist, <code>IoError</code> for
+other failures.</p>
+</div>
+</div></div></div></section>
+<h2 id="expr"><a class="hanchor" href="#expr" aria-hidden="true" tabindex="-1">#</a>Expr</h2>
+<section class="sym" id="Expr"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">Expr</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Expr" aria-label="Link to Expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2666" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A handle to an interned expression node. <code>Expr</code> objects support
+Python arithmetic operators which build new expressions in the same pool.</p>
+<p><code>+</code>, <code>-</code>, <code>*</code>, <code>**</code>, <code>/</code> all produce new <code>Expr</code> objects:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">expr </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div><p><code>Symbol(&quot;x&quot;, &quot;real&quot;)</code> and <code>Symbol(&quot;x&quot;, &quot;complex&quot;)</code> are
+distinct expressions with different <code>ExprId</code>s. Domains are part of
+structural identity, not a global assumption.</p>
+<div class="members"><div class="members-title">Methods</div><div class="member" id="Expr.display_latex">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">display_latex</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Expr.display_latex" aria-label="Link to Expr.display_latex">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2859" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Expr.display_unicode">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">display_unicode</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Expr.display_unicode" aria-label="Link to Expr.display_unicode">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2865" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Expr.pow_expr">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pow_expr</span>(<span class="sig-p">exp</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Expr.pow_expr" aria-label="Link to Expr.pow_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2995" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Expr.node_tag">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">node_tag</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Expr.node_tag" aria-label="Link to Expr.node_tag">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3016" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Expr.node">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">node</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Expr.node" aria-label="Link to Expr.node">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3038" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<h2 id="derivedresult"><a class="hanchor" href="#derivedresult" aria-hidden="true" tabindex="-1">#</a>DerivedResult</h2>
+<section class="sym" id="DerivedResult"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">DerivedResult</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#DerivedResult" aria-label="Link to DerivedResult">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3670" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>The return type of <code>diff</code>, <code>simplify</code>, <code>integrate</code>, and all
+top-level operations.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">dr </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> diff(sin(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), x)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(dr.value)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 2*x*cos(x^2)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> step </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> dr.steps:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(step[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'rule'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], step[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'before'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"→"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, step[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'after'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(dr.to_dict(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">mode</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"compact"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"verification"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">][</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"status"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])</span></span></code></pre></div><div class="members"><div class="members-title">Properties</div><div class="member" id="DerivedResult.value">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">value</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.value" aria-label="Link to DerivedResult.value">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3724" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The result expression (<code>Expr</code>).</p>
+</div>
+</div>
+<div class="member" id="DerivedResult.derivation">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">derivation</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.derivation" aria-label="Link to DerivedResult.derivation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3879" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="DerivedResult.steps">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">steps</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.steps" aria-label="Link to DerivedResult.steps">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3887" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>List of rewrite steps. Each step is a <code>dict</code> with keys:</p>
+<ul>
+<li><code>rule</code> (str) — rule name</li>
+<li><code>before</code> (str) — expression before the rewrite</li>
+<li><code>after</code> (str) — expression after the rewrite</li>
+<li><code>side_conditions</code> (list[str]) — conditions recorded for the rewrite</li>
+</ul>
+</div>
+</div>
+<div class="member" id="DerivedResult.side_conditions">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">side_conditions</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.side_conditions" aria-label="Link to DerivedResult.side_conditions">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3908" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Every side condition recorded by the derivation, flattened and
+de-duplicated (<code>[&quot;x != 0&quot;, ...]</code>).</p>
+<p>For <a href="/docs/api/diff/#diff"><code>diff()</code></a> / <a href="/docs/api/diff/#diff_forward"><code>diff_forward()</code></a> of <code>abs</code>, <code>sign</code>,
+<code>floor</code>, <code>ceil</code>, <code>round</code>, <code>min</code> or <code>max</code> these are the points
+where the almost-everywhere derivative returned does not hold (the
+kinks and jumps); empty for a smooth expression.</p>
+</div>
+</div>
+<div class="member" id="DerivedResult.certificate">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certificate</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.certificate" aria-label="Link to DerivedResult.certificate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3928" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Lean 4 proof certificate (<code>.lean</code> source), when the derivation log is
+certifiable without <code>sorry</code> and without false unwrapped equalities.</p>
+<p>Returns <code>None</code> when the log is empty, records an integration (where
+<code>integrand = F</code> would be false), the Tendsto emitter does not
+recognise the limit pattern, or the proof would require an admission
+(B3).</p>
+</div>
+</div>
+<div class="member" id="DerivedResult.certificate_status">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certificate_status</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.certificate_status" aria-label="Link to DerivedResult.certificate_status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4020" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Why this result does (or does not) carry a Lean certificate.</p>
+<p>Returns a dict with:</p>
+<ul>
+<li><code>certifiable</code> — <code>True</code> iff <code>certificate</code> is not <code>None</code>.</li>
+<li><code>reason</code> — stable reason code: <code>&quot;emitted&quot;</code>,
+<code>&quot;withheld_no_derivation&quot;</code> (nothing was rewritten, so there is
+nothing to prove), <code>&quot;withheld_integration_shape&quot;</code> (the integral
+falls outside the FTC fragment the emitter can encode),
+<code>&quot;withheld_tendsto_shape&quot;</code> (the limit falls outside the
+<code>Filter.Tendsto</code> fragment the emitter can encode),
+<code>&quot;withheld_gosper_shape&quot;</code> (the sum falls outside the Finset
+telescope fragment), <code>&quot;withheld_product_shape&quot;</code> (the product is
+not the <code>∏ k = n!</code> identity), <code>&quot;withheld_resultant_shape&quot;</code> (the
+Sylvester matrix is larger than 7×7 or a coefficient is too large), or
+<code>&quot;withheld_uncertifiable_step&quot;</code>.</li>
+<li><code>blocking_steps</code> — for <code>withheld_uncertifiable_step</code>, the list of
+<code>{&quot;index&quot;, &quot;rule&quot;, &quot;before&quot;, &quot;after&quot;}</code> records whose rewrite rule has
+no sound Lean encoding today. This is a <em>diagnostic</em>: an empty list
+with <code>certifiable=False</code> means the whole-derivation gate withheld
+for a reason not attributable to a single step.</li>
+</ul>
+<p>The certifiability boundary this reports is exactly the one tabulated by
+<a href="/docs/api/certificates/#certificate_coverage"><code>certificate_coverage()</code></a>.</p>
+</div>
+</div>
+<div class="member" id="DerivedResult.verification">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.verification" aria-label="Link to DerivedResult.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4074" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Machine-readable evidence metadata for this derived result.</p>
+<p>A generated Lean source artifact is not a statement that Lean has
+checked it. An indefinite integration result is <code>exactly_verified</code>
+only when its symbolic derivative residual simplifies to zero.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="DerivedResult.to_dict">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_dict</span>(<span class="sig-p">mode</span><span class="sig-def">=&quot;full&quot;</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.to_dict" aria-label="Link to DerivedResult.to_dict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4221" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Stable, versioned dict envelope for machine/agent consumers.</p>
+<p><code>mode=&quot;full&quot;</code> (default) carries the same information as
+<code>.steps</code> / <code>.verification</code> / <code>.certificate_status</code> combined
+under one discriminated envelope (<code>kind=&quot;alkahest.derived_result&quot;</code>,
+versioned by <code>SCHEMA_VERSION</code> / <a href="/docs/api/workload/#STEPS_SCHEMA_VERSION"><code>STEPS_SCHEMA_VERSION</code></a>).</p>
+<p><code>mode=&quot;compact&quot;</code> is strictly smaller and intended for hot loops /
+tight agent context budgets:</p>
+<ul>
+<li><code>steps</code> entries drop <code>before</code>/<code>after</code> (usually the largest
+strings in a derivation — the single biggest token cost) and use
+short keys: <code>r</code> (rule name) and <code>s</code> (<code>side_conditions</code>,
+<em>omitted entirely</em> when the list is empty).</li>
+<li><code>verification</code> is pruned to <code>status</code> and
+<code>externally_verified</code> only — the two fields that carry the
+honesty signal (whether this result is verified, and whether that
+verification happened out-of-process). <code>verification[&quot;status&quot;]</code>
+is <strong>never</strong> renamed, abbreviated, or omitted in compact mode.</li>
+<li><code>certificate_status</code> is pruned to <code>certifiable</code> and
+<code>reason</code>; the <code>blocking_steps</code> diagnostic list (which repeats
+<code>before</code>/<code>after</code> expression text) is dropped.</li>
+</ul>
+<p>Neither mode ever includes the Lean certificate source text — use
+the <code>certificate</code> getter for that. <code>has_certificate</code> (a
+bool) plus <code>certificate_status.reason</code> is enough to know whether a
+certificate exists and why not, without paying for the source.</p>
+<p>Raises <code>ValueError</code> for any <code>mode</code> other than <code>&quot;full&quot;</code> /
+<code>&quot;compact&quot;</code>.</p>
+</div>
+</div>
+<div class="member" id="DerivedResult.to_json">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_json</span>(<span class="sig-p">mode</span><span class="sig-def">=&quot;full&quot;</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.to_json" aria-label="Link to DerivedResult.to_json">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4278" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>json.dumps(self.to_dict(mode=mode))</code>, via Python&#39;s own <code>json</code>
+module so the output matches what an agent&#39;s own <code>json.dumps</code>
+would produce. See <code>to_dict()</code> for the schema.</p>
+</div>
+</div></div></div></section>
+<h2 id="context-manager"><a class="hanchor" href="#context-manager" aria-hidden="true" tabindex="-1">#</a>Context manager</h2>
+<section class="sym" id="context"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">context</span>(
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">pool</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">domain</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">simplify</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>,
+    <span class="sig-p">precision</span><span class="sig-ann">: int | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">assumptions</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">require_certificate</span><span class="sig-ann">: bool | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">budget</span><span class="sig-ann">: Budget | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">**extra</span><span class="sig-ann">: Any</span>
+)<span class="sig-ret"> → Generator[None, None, None]</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#context" aria-label="Link to context">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_context.py#L121" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Thread-local context for Alkahest calls.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">pool</code><span class="ptype">ExprPool, optional</span></dt><dd><p>Default expression pool used by <code>alkahest.symbol</code> and other
+pool-aware helpers when called without an explicit <code>pool</code> argument.</p>
+</dd></div><div class="param"><dt><code class="pname">domain</code><span class="ptype">str or Domain, optional</span></dt><dd><p>Default domain for symbol construction that omits <code>domain</code> — both
+<code>alkahest.symbol(name)</code> and <code>pool.symbol(name)</code> (e.g. <code>&quot;real&quot;</code>,
+<code>Domain.Integer</code>).  The two agree deliberately: the domain picks the
+SMT-LIB sort (<code>Int</code> vs <code>Real</code>), so a constructor that ignored it
+would change the question <code>alkahest.smt.solve</code> answers without
+changing any status a caller reads.  Pass an explicit <code>domain=</code> to
+either constructor to override the block.</p>
+</dd></div><div class="param"><dt><code class="pname">simplify</code><span class="ptype">bool</span></dt><dd><p>When <code>True</code>, <a href="/docs/api/diff/#diff"><code>diff()</code></a>, <a href="/docs/api/diff/#integrate"><code>integrate()</code></a>, <a href="/docs/api/diff/#sum_indefinite"><code>sum_indefinite()</code></a>,
+<a href="/docs/api/diff/#sum_definite"><code>sum_definite()</code></a>, <a href="/docs/api/diff/#product_indefinite"><code>product_indefinite()</code></a>, and
+<a href="/docs/api/diff/#product_definite"><code>product_definite()</code></a> post-process their <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> with
+<a href="/docs/api/simplify/#simplify"><code>simplify()</code></a> (see <a href="/docs/api/core/#simplify_enabled"><code>simplify_enabled()</code></a>).  Explicit
+<a href="/docs/api/simplify/#simplify"><code>simplify()</code></a> / <a href="/docs/api/simplify/#simplify_trig"><code>simplify_trig()</code></a> calls are unchanged.</p>
+</dd></div><div class="param"><dt><code class="pname">precision</code><span class="ptype">int, optional</span></dt><dd><p>Default MPFR precision in bits for ball-arithmetic operations.</p>
+</dd></div><div class="param"><dt><code class="pname">assumptions</code><span class="ptype">Assumptions, optional</span></dt><dd><p>Default <a href="/docs/api/core/#Assumptions"><code>Assumptions</code></a> context, scoped to <em>pool</em>.
+<a href="/docs/api/simplify/#simplify"><code>simplify()</code></a>, <a href="/docs/api/simplify/#simplify_log_exp"><code>simplify_log_exp()</code></a>, and
+<a href="/docs/api/solve/#solve"><code>solve()</code></a> pick this up automatically when called without
+an explicit <code>assumptions</code>/<code>domain</code> argument of their own (see
+<a href="/docs/api/core/#active_assumptions"><code>active_assumptions()</code></a>). Explicit arguments to those functions
+always take precedence over the context.</p>
+<p>The block additionally installs the facts on the Rust side for the
+engines that consult them indirectly. <a href="/docs/api/diff/#limit"><code>limit()</code></a> reads
+stated signs of free parameters, and <a href="/docs/api/diff/#integrate"><code>integrate()</code></a> reaches
+it for any bound of <code>±∞</code>, so <code>∫₀^∞ e^{-ke·t} dt</code> returns <code>1/ke</code>
+under <code>ke &gt; 0</code> and refuses with <code>E-LIMIT-006</code> — naming <code>ke</code> —
+when nothing is stated. A symbol declared <code>Domain.Positive</code> carries
+the same fact without a context.</p>
+</dd></div><div class="param"><dt><code class="pname">require_certificate</code><span class="ptype">bool, optional</span></dt><dd><p>When <code>True</code>, every derivation-producing call in the block
+(<a href="/docs/api/diff/#diff"><code>diff()</code></a>, <a href="/docs/api/diff/#integrate"><code>integrate()</code></a>, the <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a> family, the
+sum/product solvers) must yield a Lean certificate, or it raises
+<a href="/docs/api/errors/#CertificateUnavailableError"><code>CertificateUnavailableError</code></a> (<code>E-CERT-001</code>) instead
+of returning an uncertified result. This is the ambient form of
+<a href="/docs/api/certificates/#require_certificate"><code>require_certificate()</code></a>; use it to stop a research loop
+from silently accumulating claims it cannot back up. Pass <code>False</code> in
+an inner block to opt back out.</p>
+</dd></div><div class="param"><dt><code class="pname">budget</code><span class="ptype">Budget, optional</span></dt><dd><p>P1 search plumbing item 4. When set, pushes a wall-clock / step
+budget and a determinism seed into the Rust-side cooperative
+checkpoint (<code>alkahest_core::budget</code>) for the scope of this block.
+<a href="/docs/api/diff/#integrate"><code>integrate()</code></a> raises <a href="/docs/api/errors/#BudgetExceededError"><code>BudgetExceededError</code></a>
+(<code>E-BUDGET-*</code>) if the budget trips; <a href="/docs/api/workload/#request_cancel"><code>request_cancel()</code></a>
+trips it from another thread. Like every other context key, a nested
+<code>context(budget=...)</code> shadows this one rather than merging with it —
+see <a href="/docs/api/workload/#Budget"><code>Budget</code></a> and <code>docs/mdbook/src/budgets.md</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">**extra</code></dt><dd><p>Additional key-value pairs stored in the context and accessible via
+<a href="/docs/api/core/#get_context_value"><code>get_context_value()</code></a>.</p>
+</dd></div></dl>
+<div class="doc-sub">Notes</div><p>Contexts are thread-local and nest — inner contexts shadow outer ones
+for any keys they define.  The kernel remains fully stateless; this
+module is an ergonomic Python wrapper only.</p>
+
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">domain</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"real"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">):</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">     x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">     y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"y"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">     expr </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 2</span></span></code></pre></div><p>Contexts nest (inner keys shadow outer ones):</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p):</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">domain</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"integer"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">):</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">        # pool from outer context; domain overridden here.</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">        ...</span></span></code></pre></div><p>Assumptions flow through to assumption-aware simplifiers:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> assumptions </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.Assumptions(p)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> assumptions.refine(p.gt(x, p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">assumptions</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">assumptions):</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">     alkahest.simplify_log_exp(alkahest.exp(alkahest.log(x))).value  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># x</span></span></code></pre></div></div></section>
+<section class="sym" id="symbol"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">symbol</span>(
+    <span class="sig-p">name</span><span class="sig-ann">: str</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">pool</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">domain</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">commutative</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>
+)<span class="sig-ret"> → Any</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#symbol" aria-label="Link to symbol">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_context.py#L310" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Create a symbol, inferring <em>pool</em> and <em>domain</em> from the active context.</p>
+<p><code>pool.symbol(name)</code> infers the domain from the same context, so the two
+constructors agree; this one additionally infers the <em>pool</em>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">name</code><span class="ptype">str</span></dt><dd><p>Symbol name.</p>
+</dd></div><div class="param"><dt><code class="pname">pool</code><span class="ptype">ExprPool, optional</span></dt><dd><p>Explicit pool; overrides the context pool.</p>
+</dd></div><div class="param"><dt><code class="pname">domain</code><span class="ptype">str or Domain, optional</span></dt><dd><p>Explicit domain; overrides the context domain.</p>
+</dd></div><div class="param"><dt><code class="pname">commutative</code><span class="ptype">bool</span></dt><dd><p>When <code>False</code>, the symbol does not commute under multiplication (V3-2).</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Expr</span></dt><dd><p>The interned symbol expression.</p>
+</dd></div></dl>
+<div class="doc-sub">Notes</div><p>With no <em>pool</em> and no <code>alkahest.context(pool=...)</code> block open, the
+symbol is created in <a href="/docs/api/more/#default_pool"><code>default_pool()</code></a> — the same pool
+<code>alkahest.parse(text)</code> and <code>alkahest.sin(2)</code> use — so
+<code>x = alkahest.symbol(&quot;x&quot;)</code> works on its own.</p>
+</div></section>
+<section class="sym" id="active_pool"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">active_pool</span>()<span class="sig-ret"> → Any | None</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#active_pool" aria-label="Link to active_pool">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_context.py#L350" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return the pool from the innermost active context, or <code>None</code>.</p>
+</div></section>
+<section class="sym" id="simplify_enabled"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_enabled</span>()<span class="sig-ret"> → bool</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_enabled" aria-label="Link to simplify_enabled">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_context.py#L360" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return <code>True</code> if the active context has <code>simplify=True</code>.</p>
+</div></section>
+<h2 id="parsing"><a class="hanchor" href="#parsing" aria-hidden="true" tabindex="-1">#</a>Parsing</h2>
+<section class="sym" id="parse"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">parse</span>(
+    <span class="sig-p">source</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">pool</span><span class="sig-def">=None</span>,
+    <span class="sig-p">symbols</span><span class="sig-ann">: dict[str, object] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#parse" aria-label="Link to parse">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_parse.py#L922" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Parse a mathematical expression string into an <a href="/docs/api/core/#Expr"><code>Expr</code></a>.</p>
+<p>Uses a Pratt (top-down operator precedence) recursive-descent parser.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">source</code><span class="ptype">str</span></dt><dd><p>Expression string, e.g. <code>&quot;sin(x)^2 + cos(x)^2&quot;</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">pool</code><span class="ptype">ExprPool, optional</span></dt><dd><p>Expression pool used to intern new symbols and constants.  Defaults to
+the pool of the active <code>alkahest.context(pool=...)</code> block, else
+<a href="/docs/api/more/#default_pool"><code>default_pool()</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">symbols</code><span class="ptype">dict[str, Expr] | None</span></dt><dd><p>Optional pre-bound symbol map.  Identifiers not in the map are
+created via <code>pool.symbol(name)</code> and added to the map so they are
+reused within the same call.</p>
+<p>Reserved names, read as constants when <em>not</em> in the map (so that
+<code>parse(str(e)) == e</code>): <code>I</code> is <a href="/docs/api/core/#ExprPool.imaginary_unit"><code>ExprPool.imaginary_unit()</code></a>,
+<code>E</code> is <code>exp(1)</code>, <code>oo</code> and <code>∞</code> are
+<a href="/docs/api/core/#ExprPool.pos_infinity"><code>ExprPool.pos_infinity()</code></a>; <code>pi</code>, <code>EulerGamma</code>, <code>Catalan</code>,
+<code>Glaisher</code> and <code>GoldenRatio</code> are the constants
+<a href="/docs/api/core/#ExprPool.pi"><code>ExprPool.pi()</code></a>, <a href="/docs/api/core/#ExprPool.euler_gamma"><code>ExprPool.euler_gamma()</code></a>, … that every
+evaluator knows the value of.  To use one of these names as a
+<em>variable</em>, bind it: <code>parse(&quot;E*x&quot;, pool, {&quot;E&quot;: pool.symbol(&quot;E&quot;)})</code>
+(<code>pool.symbol(&quot;pi&quot;)</code> is such a variable — it prints as <code>pi</code> but is
+not <code>π</code>).
+<code>3/4</code> between integer literals is the exact rational <code>3/4</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Expr</span></dt><dd><p>The parsed expression.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">ParseError</span></dt><dd><p>On a lexical or syntax error, with <code>.span</code> set to the byte range
+of the offending token.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.parse(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x^2 + 2*x + 1"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, pool, {</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: x})</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.parse(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"sin(x)^2 + cos(x)^2"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, pool, {</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: x})</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">sin(x)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">^</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> cos(x)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">^</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span></span></code></pre></div></div></section>
+<h2 id="assumptions-and-context"><a class="hanchor" href="#assumptions-and-context" aria-hidden="true" tabindex="-1">#</a>Assumptions and context</h2>
+<section class="sym" id="Assumptions"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">Assumptions</span>(<span class="sig-p">pool</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Assumptions" aria-label="Link to Assumptions">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3458" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Pool-scoped assumptions for conservative simplification (stable top-level).</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="Assumptions.predicates">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">predicates</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Assumptions.predicates" aria-label="Link to Assumptions.predicates">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3552" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Predicates explicitly asserted in this context.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="Assumptions.refine">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">refine</span>(<span class="sig-p">predicate</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Assumptions.refine" aria-label="Link to Assumptions.refine">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3477" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Add a predicate to this context.</p>
+<p>Only positive and non-zero facts authorize conditional rewrites. Other
+predicates remain provenance for contradiction detection.</p>
+</div>
+</div>
+<div class="member" id="Assumptions.simplify">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">simplify</span>(<span class="sig-p">expr</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Assumptions.simplify" aria-label="Link to Assumptions.simplify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3494" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Simplify an expression under this explicit assumption context.</p>
+<p>Takes <code>slf</code> rather than <code>&amp;self</code> so the borrow of this object is released
+before the GIL is: the core call runs on a copy of the context (a couple
+of small vectors), and a <code>refine</code> on another thread meanwhile neither
+waits on this call nor meets a held borrow.</p>
+</div>
+</div>
+<div class="member" id="Assumptions.is_positive">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_positive</span>(<span class="sig-p">expr</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Assumptions.is_positive" aria-label="Link to Assumptions.is_positive">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3527" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>True when this context has a strict-positivity fact for <code>expr</code> —
+either an explicit <code>refine(x &gt; 0)</code> or <code>expr</code> itself being declared
+with <code>Domain.Positive</code>.</p>
+<p>Agent-facing helper for composing assumptions with other APIs (e.g.
+filtering <code>solve</code> roots) without exposing the internal <code>SideCondition</code>
+representation.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="Domain"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">Domain</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Domain" aria-label="Link to Domain">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L1249" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Python-visible symbol domain (matches <code>alkahest_core::kernel::Domain</code>).</p>
+</div></section>
+<section class="sym" id="active_assumptions"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">active_assumptions</span>()<span class="sig-ret"> → Any | None</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#active_assumptions" aria-label="Link to active_assumptions">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_context.py#L377" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return the <a href="/docs/api/core/#Assumptions"><code>Assumptions</code></a> from the innermost active
+context, or <code>None</code> if no context set one.</p>
+<p>Used by <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a>, <a href="/docs/api/simplify/#simplify_log_exp"><code>simplify_log_exp()</code></a>, and
+<a href="/docs/api/solve/#solve"><code>solve()</code></a> to fall back to a caller-established assumption
+context when they&#39;re invoked without their own <code>assumptions</code> argument.</p>
+</div></section>
+<section class="sym" id="active_domain"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">active_domain</span>()<span class="sig-ret"> → Any | None</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#active_domain" aria-label="Link to active_domain">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_context.py#L355" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return the domain from the innermost active context, or <code>None</code>.</p>
+</div></section>
+<section class="sym" id="get_context_value"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">get_context_value</span>(<span class="sig-p">key</span><span class="sig-ann">: str</span>, <span class="sig-p">default</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>)<span class="sig-ret"> → Any</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#get_context_value" aria-label="Link to get_context_value">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_context.py#L110" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return the value of <em>key</em> from the innermost active context, or <em>default</em>.</p>
+</div></section>
+<h2 id="version-and-capabilities"><a class="hanchor" href="#version-and-capabilities" aria-hidden="true" tabindex="-1">#</a>Version and capabilities</h2>
+<section class="sym" id="version"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">version</span>()</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#version" aria-label="Link to version">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10711" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Returns the alkahest-core version string.</p>
+</div></section>
+<section class="sym" id="__version__"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-name">__version__</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#__version__" aria-label="Link to __version__">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L673" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>__version__ = _meta_version('alkahest')</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="capabilities"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">capabilities</span>()<span class="sig-ret"> → dict</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#capabilities" aria-label="Link to capabilities">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L3100" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return the versioned agent contract for this installed build.</p>
+<p>Agents should call this once at session start before selecting an
+operation. The <code>features</code> mapping is authoritative for the installed
+extension; it does not infer availability from project defaults or Python
+fallback functions.</p>
+<blockquote><p><strong>Note</strong> 
+<code>verification[&quot;oracles&quot;]</code> and <code>verification[&quot;smt_solvers&quot;]</code> probe
+the environment: detecting an oracle imports it, and detecting a solver
+runs its binary to read a version. Both are cached for the life of the
+process, so the cost lands on the first call and not on later ones —
+but the first call is not free, and it is not a pure read of build
+metadata like the rest of this contract.</p>
+<p>Because they are cached, these two keys are a <em>session-start snapshot</em>.
+A tool installed later in the same process will not appear here.
+<a href="/docs/api/autoresearch/#smt.solvers"><code>smt.solvers()</code></a> and <a href="/docs/api/autoresearch/#crosscheck.oracles"><code>crosscheck.oracles()</code></a>
+re-probe on every call and are the live view.</p>
+</blockquote>
+
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">dict</span></dt><dd><p><code>contract_version</code> identifies this schema. <code>groebner</code>, <code>jit</code>,
+<code>egraph</code>, and <code>parallel</code> are compatibility feature booleans.
+<code>features</code> contains installed Cargo features and explicit
+<code>llvm_jit</code> / <code>cranelift_jit</code> backend flags — every key names
+something a caller can actually reach, which is why v3 drops
+<code>groebner_cuda</code> and <code>numpy</code> (see below); <code>primitives</code> is
+deterministic per-primitive implementation coverage, and
+<code>verification</code> describes available evidence artifacts and checkers.
+<code>verification[&quot;coverage&quot;]</code> summarises the generated certificate
+ledger (<a href="/docs/api/certificates/#certificate_coverage"><code>certificate_coverage()</code></a>), which is also where each
+primitive&#39;s <code>lean_theorem</code> bit comes from — so the capability bits
+and the coverage table cannot disagree.</p>
+<p>Each <code>primitives</code> row also carries <code>taylor_model</code>: whether the
+validated-bounds subsystem (<a href="/docs/api/numerics/#bound_on_box"><code>bound_on_box()</code></a>,
+<a href="/docs/api/numerics/#verified_integral"><code>verified_integral()</code></a>, <a href="/docs/api/numerics/#verified_no_roots"><code>verified_no_roots()</code></a>,
+<a href="/docs/api/numerics/#verified_sign"><code>verified_sign()</code></a>) has a rigorous Taylor-model rule for it, i.e.
+whether those entry points can bound it at all. <strong>It is a different
+question from <code>numeric_ball</code></strong>, which is pointwise ball arithmetic:
+it is <code>True</code> for <code>floor</code> and <code>ceil</code>, neither of which can be bounded
+over a box, and it was <code>True</code> for <code>erf</code>, <code>bessel_j0</code>, <code>digamma</code> and
+six more before 3.9.0 gave them Taylor-model rules. Reading the latter
+as coverage is what made the boundary invisible. The bit is
+derived by running the Taylor evaluator, so it cannot drift from what
+<code>bound_on_box</code> accepts; <a href="/docs/api/numerics/#bounds_supported"><code>bounds_supported()</code></a> asks the same
+question for a whole expression.</p>
+<p>Symbolic linear algebra (<code>Matrix.rref</code>, <code>rank</code>, <code>nullspace</code>,
+<code>jordan_form</code>, <code>minimal_polynomial</code>, LU/QR/Cholesky, etc.) is available
+on <a href="/docs/api/matrix/#Matrix"><code>Matrix</code></a>; unsupported inputs raise <a href="/docs/api/errors/#LinearAlgebraError"><code>LinearAlgebraError</code></a>
+with stable <code>E-LINALG-*</code> codes.</p>
+</dd></div></dl>
+<div class="doc-sub">Notes</div><p><strong>Contract v3 removed two <code>features</code> keys.</strong> Code that indexes
+<code>caps[&quot;features&quot;][&quot;groebner_cuda&quot;]</code> or <code>[&quot;numpy&quot;]</code> now raises
+<code>KeyError</code>; use <code>.get(name, False)</code> if you must span versions, and
+gate on <code>contract_version</code> when the distinction matters.</p>
+<p>Both were removed rather than wired up because neither was <em>falsifiable</em>.
+<code>groebner_cuda</code> reported that the GPU Gröbner kernel was compiled in,
+but that kernel has no Python binding at all — <code>GroebnerBasis.compute</code>,
+<a href="/docs/api/solve/#solve"><code>solve()</code></a> and <a href="/docs/api/solve/#triangularize"><code>triangularize()</code></a> run on the CPU whatever it said,
+so no observation a caller could make distinguished <code>True</code> from
+<code>False</code>. <code>numpy</code> reported a Cargo feature gating a crate the
+extension never used; <a href="/docs/api/numerics/#numpy_eval"><code>numpy_eval()</code></a> goes through the buffer
+protocol and works identically with the bit <code>False</code>, which is its value
+on every build ever shipped. A bit that reads <code>False</code> honestly is
+better than one that reads <code>True</code> and lies, and a bit that correlates
+with nothing is better removed than left to be misread.</p>
+<p><code>features</code> also carries two bits that are <strong>not</strong> Cargo features:
+<code>arb_backend</code> and <code>riemann_theta</code>. <code>alkahest-core/build.rs</code> probes
+<code>libflint</code>&#39;s symbol table for them, because FLINT absorbed Arb in 3.0 but
+rewrote the <code>acb_theta</code> API in 3.2 — so the same Cargo invocation against
+an older FLINT produces a build whose <code>theta</code> module is entirely stubbed.
+Both bits satisfy the falsifiability rule above: <code>False</code> guarantees every
+entry point behind them raises <code>E-THETA-001</code> instead of computing, so the
+two states are distinguishable by observation rather than by trust. Check
+<code>caps[&quot;features&quot;][&quot;riemann_theta&quot;]</code> before calling
+<code>riemann_theta()</code>. <code>contract_version</code> stays
+<code>3</code>: the row gained keys and lost none.</p>
+
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> caps </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.capabilities()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> if</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> caps[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"groebner"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">     result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.solve([x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], [x])</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> if</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> not</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> caps[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"jit"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">     print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"JIT unavailable; compile_expr will run in interpreter mode"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div></div></section>
+<section class="sym" id="HAS_EGRAPH"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-name">HAS_EGRAPH</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#HAS_EGRAPH" aria-label="Link to HAS_EGRAPH">#</a></div>
+</div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="jit_is_available"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">jit_is_available</span>()</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#jit_is_available" aria-label="Link to jit_is_available">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12927" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return True if any native JIT backend is available in this build.</p>
+<p>When False, <code>compile_expr</code> falls back to the tree-walking interpreter and
+emits a RuntimeWarning.</p>
+</div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Python API</span></a><a class="pager-next" href="/docs/api/simplify/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Simplification</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/core.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#exprpool">ExprPool</a></li><li class="d2"><a href="#expr">Expr</a></li><li class="d2"><a href="#derivedresult">DerivedResult</a></li><li class="d2"><a href="#context-manager">Context manager</a></li><li class="d3"><a href="#context">context</a></li><li class="d3"><a href="#symbol">symbol</a></li><li class="d3"><a href="#active_pool">active_pool</a></li><li class="d3"><a href="#simplify_enabled">simplify_enabled</a></li><li class="d2"><a href="#parsing">Parsing</a></li><li class="d3"><a href="#parse">parse</a></li><li class="d2"><a href="#assumptions-and-context">Assumptions and context</a></li><li class="d3"><a href="#Assumptions">Assumptions</a></li><li class="d3"><a href="#Domain">Domain</a></li><li class="d3"><a href="#active_assumptions">active_assumptions</a></li><li class="d3"><a href="#active_domain">active_domain</a></li><li class="d3"><a href="#get_context_value">get_context_value</a></li><li class="d2"><a href="#version-and-capabilities">Version and capabilities</a></li><li class="d3"><a href="#version">version</a></li><li class="d3"><a href="#__version__">__version__</a></li><li class="d3"><a href="#capabilities">capabilities</a></li><li class="d3"><a href="#HAS_EGRAPH">HAS_EGRAPH</a></li><li class="d3"><a href="#jit_is_available">jit_is_available</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/core.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

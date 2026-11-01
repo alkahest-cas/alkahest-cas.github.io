@@ -1,0 +1,1022 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Numerics and evaluation API · Alkahest Docs</title>
+<meta name="description" content="Compiled evaluation, batch evaluation, and ball arithmetic.">
+<meta property="og:title" content="Numerics and evaluation API · Alkahest Docs">
+<meta property="og:description" content="Compiled evaluation, batch evaluation, and ball arithmetic.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/" class="active" aria-current="page">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>Numerics and evaluation API</h1>
+    <div class="prose-block"><p>Compiled evaluation, batch evaluation, and ball arithmetic.</p>
+</div>
+<h2 id="compiled-evaluation"><a class="hanchor" href="#compiled-evaluation" aria-hidden="true" tabindex="-1">#</a>Compiled evaluation</h2>
+<section class="sym" id="compile_expr"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">compile_expr</span>(<span class="sig-p">expr</span>, <span class="sig-p">inputs</span>, <span class="sig-p">expected_evals</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#compile_expr" aria-label="Link to compile_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12820" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Compile a symbolic expression to a fast native function.</p>
+<p>Returns a callable Python object (PyCompiledFn).</p>
+<p><code>expected_evals</code>, when given, is the number of evaluations the caller plans
+(e.g. the length of the arrays it will pass to <code>numpy_eval</code>); it lets a
+small expression that would otherwise get the interpreter be compiled
+natively up front. Without it, the first large batch call upgrades the
+function on its own (see <code>PyCompiledFn::batch_fn</code>).</p>
+<p>Given a list (or tuple) of expressions instead of one, returns a
+<code>CompiledVecFn</code> evaluating all of them in one pass per point, with the
+subexpressions they share computed once — the shape of a gradient or a
+Jacobian. <code>numpy_eval</code> on it returns an array with one row per output.</p>
+</div></section>
+<section class="sym" id="eval_expr"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">eval_expr</span>(<span class="sig-p">expr</span>, <span class="sig-p">bindings</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#eval_expr" aria-label="Link to eval_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2738" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Numerically evaluate <em>expr</em>; accepts <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> as <em>expr</em>.</p>
+<p>Raises <a href="/docs/api/errors/#DomainError"><code>DomainError</code></a> (a <code>ValueError</code>) if <em>expr</em> is
+mathematically undefined at <em>bindings</em> — e.g. a removable singularity
+such as <code>(x**2 - 1) / (x - 1)</code> evaluated as written at <code>x = 1</code>
+reduces to <code>0/0</code> and raises, rather than silently returning the limit
+(<code>2</code>). Call <a href="/docs/api/simplify/#cancel"><code>cancel()</code></a> first to evaluate the simplified,
+everywhere-defined form instead.</p>
+</div></section>
+<section class="sym" id="numpy_eval"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">numpy_eval</span>(<span class="sig-p">compiled_fn</span>, <span class="sig-p">*arrays</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#numpy_eval" aria-label="Link to numpy_eval">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L742" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Vectorised evaluation of a <a href="/docs/api/numerics/#CompiledFn"><code>CompiledFn</code></a> over arrays.</p>
+<p>Phase 25 / PA-8 — NumPy / JAX / PyTorch / DLPack array evaluation.</p>
+<p>Evaluation runs entirely natively: input arrays are read via the buffer
+protocol (a single bulk copy per array, not a Python <code>float</code> per
+element), the compiled function is called with the GIL released, and the
+result is written directly into a preallocated output array. No
+intermediate Python list of floats (<code>.tolist()</code>) is ever created, which
+is what previously made this path dramatically slower than it needed to
+be for large arrays.</p>
+
+<div class="doc-sub">Calling convention</div><p>Two things are easy to get wrong, and both now raise an error that says so:</p>
+<ul>
+<li>the first argument is the <strong>compiled</strong> function, not the expression —
+<code>f = compile_expr(expr, [x, y])</code>, then <code>numpy_eval(f, xs, ys)</code>;</li>
+<li>the arrays are <strong>separate positional arguments</strong>, one per input variable
+— <code>numpy_eval(f, xs, ys)</code>, <em>not</em> <code>numpy_eval(f, [xs, ys])</code>.</li>
+</ul>
+<p>(<a href="/docs/api/numerics/#CompiledFn.__call__"><code>CompiledFn.__call__()</code></a> goes the other way: it evaluates a single
+point, and takes that point as one sequence — <code>f([1.0, 2.0])</code>.)</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">compiled_fn</code><span class="ptype">CompiledFn</span></dt><dd><p>A compiled function returned by <a href="/docs/api/numerics/#compile_expr"><code>compile_expr()</code></a> or
+<a href="/docs/api/codegen/#CompileCache"><code>CompileCache</code></a>.  <strong>Not</strong> an <a href="/docs/api/core/#Expr"><code>Expr</code></a>, and not a traced
+Python function.</p>
+</dd></div><div class="param"><dt><code class="pname">*arrays</code><span class="ptype">array-like</span></dt><dd><p>One array per input variable, passed as separate positional
+arguments.  All arrays must have the same number of elements.
+Accepts NumPy arrays, PyTorch CPU tensors, JAX arrays, CuPy arrays
+(host copy made), or anything with <code>__dlpack__</code> or <code>__array__</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">numpy.ndarray</span></dt><dd><p>Output values with the same shape as the first input array.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">TypeError</span></dt><dd><p><em>compiled_fn</em> is not a compiled function — most often an <code>Expr</code> that
+has not been through <a href="/docs/api/numerics/#compile_expr"><code>compile_expr()</code></a>.</p>
+</dd></div><div class="param"><dt><span class="ptype">ValueError</span></dt><dd><p>The number of arrays does not match the compiled function&#39;s arity,
+including the common case of one list holding all of them.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> numpy </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> np</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x, y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"y"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> f </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.compile_expr(x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y, [x, y])</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> xs </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> np.linspace(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1_000_000</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ys </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> np.linspace(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1_000_000</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> out </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.numpy_eval(f, xs, ys)     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># one argument per variable</span></span></code></pre></div></div></section>
+<section class="sym" id="numpy_eval_par"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">numpy_eval_par</span>(<span class="sig-p">compiled_fn</span>, <span class="sig-p">*arrays</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#numpy_eval_par" aria-label="Link to numpy_eval_par">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L824" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Parallel vectorised evaluation of a <a href="/docs/api/numerics/#CompiledFn"><code>CompiledFn</code></a> over arrays.</p>
+<p>Identical to <a href="/docs/api/numerics/#numpy_eval"><code>numpy_eval()</code></a> but distributes the N evaluation points
+across all available CPU cores using Rayon.  The Python GIL is released
+during evaluation so other threads are not blocked.</p>
+<p>Requires the <code>parallel</code> build feature
+(<code>maturin develop --features parallel</code>).  Falls back silently to the
+sequential <a href="/docs/api/numerics/#numpy_eval"><code>numpy_eval()</code></a> when the feature is not compiled in.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">compiled_fn</code><span class="ptype">CompiledFn</span></dt><dd><p>A compiled function returned by <a href="/docs/api/numerics/#compile_expr"><code>compile_expr()</code></a> or
+<a href="/docs/api/codegen/#CompileCache"><code>CompileCache</code></a> — not an <a href="/docs/api/core/#Expr"><code>Expr</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">*arrays</code><span class="ptype">array-like</span></dt><dd><p>One array per input variable, passed as separate positional arguments
+(<code>numpy_eval_par(f, xs, ys)</code>, not <code>numpy_eval_par(f, [xs, ys])</code>).
+All arrays must have the same number of elements.  Accepts NumPy
+arrays, PyTorch CPU tensors, JAX arrays, or anything with
+<code>__dlpack__</code> or <code>__array__</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">numpy.ndarray</span></dt><dd><p>Output values with the same shape as the first input array.</p>
+</dd></div></dl>
+<div class="doc-sub">Notes</div><p>For small N (&lt; <del>1 000 points) thread-scheduling overhead may exceed the
+computation time; [<code>numpy_eval()</code>](</del>/api/numerics/#numpy_eval) is faster in that regime.</p>
+
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> numpy </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> np</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> f </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.compile_expr(x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [x])</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> xs </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> np.linspace(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10_000_000</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ys </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.numpy_eval_par(f, xs)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># multi-core evaluation</span></span></code></pre></div></div></section>
+<section class="sym" id="CompiledVecFn"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">CompiledVecFn</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#CompiledVecFn" aria-label="Link to CompiledVecFn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13154" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Several outputs compiled together: <code>compile_expr([e1, e2, …], inputs)</code>.</p>
+<p>Calling it on one point returns a list with one value per output;
+<code>numpy_eval(f, xs, ys)</code> returns an array of shape <code>(n_outputs, *xs.shape)</code>.
+Subexpressions the outputs share are evaluated once per point, and every
+output equals what <code>compile_expr</code> of that expression alone returns.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="CompiledVecFn.n_inputs">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_inputs</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledVecFn.n_inputs" aria-label="Link to CompiledVecFn.n_inputs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13183" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of input variables.</p>
+</div>
+</div>
+<div class="member" id="CompiledVecFn.n_outputs">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_outputs</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledVecFn.n_outputs" aria-label="Link to CompiledVecFn.n_outputs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13188" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of outputs.</p>
+</div>
+</div>
+<div class="member" id="CompiledVecFn.tier">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">tier</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledVecFn.tier" aria-label="Link to CompiledVecFn.tier">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13195" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Backend evaluating the outputs: <code>&quot;interpreter&quot;</code>, <code>&quot;cranelift&quot;</code> or
+<code>&quot;llvm&quot;</code>.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="CompiledVecFn.__call__">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">__call__</span>(<span class="sig-p">point</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledVecFn.__call__" aria-label="Link to CompiledVecFn.__call__">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13162" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Evaluate every output at one point, given as a single sequence of
+floats (one per input variable). Returns a list of <code>n_outputs</code> floats.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="CompiledFn"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">CompiledFn</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#CompiledFn" aria-label="Link to CompiledFn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13062" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A compiled function returned by <a href="/docs/api/numerics/#compile_expr"><code>compile_expr()</code></a>.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="CompiledFn.n_inputs">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_inputs</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledFn.n_inputs" aria-label="Link to CompiledFn.n_inputs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13545" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of input variables.</p>
+</div>
+</div>
+<div class="member" id="CompiledFn.tier">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">tier</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledFn.tier" aria-label="Link to CompiledFn.tier">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13560" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Backend that evaluates single-point calls: <code>&quot;interpreter&quot;</code>,
+<code>&quot;cranelift&quot;</code> or <code>&quot;llvm&quot;</code>.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="CompiledFn.__call__">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">__call__</span>(<span class="sig-p">*args</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledFn.__call__" aria-label="Link to CompiledFn.__call__">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13511" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Evaluate at <strong>one point</strong>, given as a single sequence of floats.</p>
+<p><code>f([1.0, 2.0])</code> — one argument holding every input value, not one
+argument per input. To evaluate over arrays of points instead, use
+<code>alkahest.numpy_eval(f, xs, ys)</code>, which takes the arrays as separate
+positional arguments.</p>
+</div>
+</div>
+<div class="member" id="CompiledFn.call_batch_raw">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">call_batch_raw</span>(<span class="sig-p">inputs_flat</span>, <span class="sig-p">n_vars</span>, <span class="sig-p">n_points</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledFn.call_batch_raw" aria-label="Link to CompiledFn.call_batch_raw">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13582" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Batch-evaluate over N points (Phase 25 — NumPy/JAX array evaluation).</p>
+<p><code>inputs_flat</code> is a flat list of length <code>n_vars * n_points</code> laid out
+var-major: <code>[x0[0], x0[1], …, x1[0], x1[1], …]</code>.</p>
+<p>Returns a flat list of N outputs.  In Python this is wrapped by the
+<code>alkahest.numpy_eval</code> helper that handles the buffer-protocol conversion.</p>
+</div>
+</div>
+<div class="member" id="CompiledFn.call_batch_raw_par">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">call_batch_raw_par</span>(<span class="sig-p">inputs_flat</span>, <span class="sig-p">n_vars</span>, <span class="sig-p">n_points</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledFn.call_batch_raw_par" aria-label="Link to CompiledFn.call_batch_raw_par">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13607" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Parallel batch evaluation using Rayon (requires <code>--features parallel</code>).</p>
+<p>Identical to <code>call_batch_raw()</code> but distributes the N points across
+all available CPU cores.  The GIL is released during evaluation so other
+Python threads are not blocked.</p>
+<p>Use <a href="/docs/api/numerics/#numpy_eval_par"><code>numpy_eval_par()</code></a> for a NumPy-friendly wrapper.</p>
+</div>
+</div>
+<div class="member" id="CompiledFn.call_batch_buffer">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">call_batch_buffer</span>(<span class="sig-p">inputs</span>, <span class="sig-p">output</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledFn.call_batch_buffer" aria-label="Link to CompiledFn.call_batch_buffer">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13646" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Fast-path batch evaluation directly against buffer-protocol objects
+(NumPy <code>float64</code> arrays, <code>array.array(&#39;d&#39;, …)</code>, memoryviews, …).</p>
+<p>Unlike <code>call_batch_raw()</code>, this never materialises a Python list
+or <code>float</code> object per element: each input array&#39;s contents are copied
+into a native <code>Vec&lt;f64&gt;</code> in one bulk <code>memcpy</code>-style operation (via
+PyO3&#39;s buffer protocol), the compiled function runs with the GIL
+released, and the result is written back into the caller-supplied
+<code>output</code> buffer the same way.</p>
+<p><code>inputs</code> must contain exactly <code>n_inputs</code> buffers, each of length
+<code>n_points</code>, C-contiguous, and holding <code>float64</code> elements. <code>output</code>
+must be a writable buffer of the same shape (e.g. <code>numpy.empty</code>).</p>
+<p>This is the method used internally by <a href="/docs/api/numerics/#numpy_eval"><code>numpy_eval()</code></a>;
+most callers should use that helper rather than calling this
+directly.</p>
+</div>
+</div>
+<div class="member" id="CompiledFn.call_batch_buffer_par">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">call_batch_buffer_par</span>(<span class="sig-p">inputs</span>, <span class="sig-p">output</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledFn.call_batch_buffer_par" aria-label="Link to CompiledFn.call_batch_buffer_par">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13674" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Parallel counterpart to <code>call_batch_buffer()</code> (requires
+<code>--features parallel</code>). Distributes the <code>n_points</code> evaluations across
+all available CPU cores via Rayon; the GIL is released for the
+duration of the native call.</p>
+<p>Used internally by <a href="/docs/api/numerics/#numpy_eval_par"><code>numpy_eval_par()</code></a>.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="emit_c"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">emit_c</span>(<span class="sig-p">expr</span>, <span class="sig-p">var</span>, <span class="sig-p">var_name</span><span class="sig-def">=&quot;x&quot;</span>, <span class="sig-p">fn_name</span><span class="sig-def">=&quot;eval_poly&quot;</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#emit_c" aria-label="Link to emit_c">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14659" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Emit a C function that evaluates the Horner form of a polynomial.</p>
+<p>Returns a <code>str</code> containing a complete C function definition.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr</span></dt><dd><p>A univariate polynomial in <code>var</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">var</code><span class="ptype">Expr or list[Expr]</span></dt><dd><p>The polynomial variable. <code>emit_c</code> only supports univariate
+polynomials, so a list/tuple is accepted as a convenience but must
+contain exactly one <code>Expr</code> (e.g. <code>[x]</code> is equivalent to <code>x</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">var_name</code><span class="ptype">str</span></dt><dd><p>The C variable name (default <code>&quot;x&quot;</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">fn_name</code><span class="ptype">str</span></dt><dd><p>The C function name (default <code>&quot;eval_poly&quot;</code>).</p>
+</dd></div></dl></div></section>
+<h2 id="ball-arithmetic"><a class="hanchor" href="#ball-arithmetic" aria-hidden="true" tabindex="-1">#</a>Ball arithmetic</h2>
+<section class="sym" id="ArbBall"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">ArbBall</span>(<span class="sig-p">mid</span>, <span class="sig-p">rad</span><span class="sig-def">=0.0</span>, <span class="sig-p">prec</span><span class="sig-def">=128</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ArbBall" aria-label="Link to ArbBall">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13907" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Create a real ball <code>[mid ± rad]</code>.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="ArbBall.mid">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">mid</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.mid" aria-label="Link to ArbBall.mid">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13932" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Midpoint rounded to the nearest <code>f64</code>.</p>
+<p>This is a <strong>lossy</strong> readout: past ~16 digits <code>mid ± rad</code> read through
+the <code>f64</code> accessors is <em>not</em> an enclosure.  Use <code>mid_str</code>,
+<code>mid_exact</code> or <code>to_mpf</code> for the full-precision midpoint, and
+<code>lo</code> / <code>hi</code> for outward-rounded <code>f64</code> bounds.</p>
+</div>
+</div>
+<div class="member" id="ArbBall.prec">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">prec</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.prec" aria-label="Link to ArbBall.prec">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13938" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Working precision of the ball, in bits.</p>
+</div>
+</div>
+<div class="member" id="ArbBall.rad">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rad</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.rad" aria-label="Link to ArbBall.rad">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13992" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Radius, rounded <strong>up</strong> to <code>f64</code>.</p>
+<p>Nearest-rounding here would report a radius smaller than the true one
+and turn a valid enclosure into an invalid one at the Python boundary.</p>
+</div>
+</div>
+<div class="member" id="ArbBall.lo">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">lo</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.lo" aria-label="Link to ArbBall.lo">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14005" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Lower endpoint, rounded <strong>down</strong> to <code>f64</code>.</p>
+<p>The ball is computed at <code>prec</code> bits — far finer than <code>f64</code> — so a
+nearest-rounded endpoint can land <em>inside</em> the true interval. A caller
+writing <code>lo &lt;= v &lt;= hi</code> would then get <code>False</code> for a value the ball
+genuinely encloses, which defeats the entire purpose of rigorous
+arithmetic. Rounding outward keeps the <code>f64</code> view a valid enclosure of
+the exact one, at the cost of being at most one ulp wider.</p>
+</div>
+</div>
+<div class="member" id="ArbBall.hi">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">hi</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.hi" aria-label="Link to ArbBall.hi">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14011" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Upper endpoint, rounded <strong>up</strong> to <code>f64</code>. See [<code>lo</code>].</p>
+</div>
+</div>
+<div class="member" id="ArbBall.is_exact">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_exact</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.is_exact" aria-label="Link to ArbBall.is_exact">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14021" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>True if the ball has zero radius (a single exact value).</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="ArbBall.mid_str">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">mid_str</span>(<span class="sig-p">) / rad_str(</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.mid_str" aria-label="Link to ArbBall.mid_str">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13944" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Midpoint as a decimal string carrying every digit of the stored
+binary value (round-trips exactly), e.g. <code>&quot;1.2020569...e0&quot;</code>.</p>
+</div>
+</div>
+<div class="member" id="ArbBall.rad_str">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rad_str</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.rad_str" aria-label="Link to ArbBall.rad_str">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13949" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Radius as a decimal string (full precision, no <code>f64</code> underflow).</p>
+</div>
+</div>
+<div class="member" id="ArbBall.mid_exact">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">mid_exact</span>(<span class="sig-p">) / rad_exact(</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.mid_exact" aria-label="Link to ArbBall.mid_exact">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13954" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Midpoint as an exact <code>fractions.Fraction</code>.</p>
+</div>
+</div>
+<div class="member" id="ArbBall.rad_exact">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rad_exact</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.rad_exact" aria-label="Link to ArbBall.rad_exact">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13959" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Radius as an exact <code>fractions.Fraction</code>.</p>
+</div>
+</div>
+<div class="member" id="ArbBall.to_mpf">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_mpf</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.to_mpf" aria-label="Link to ArbBall.to_mpf">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13965" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>(mid, rad)</code> as <code>mpmath.mpf</code> values, exact conversions of the stored
+binary floats (requires <code>mpmath</code>).</p>
+</div>
+</div>
+<div class="member" id="ArbBall.contains">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">contains</span>(<span class="sig-p">v</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.contains" aria-label="Link to ArbBall.contains">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14015" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ArbBall.sin">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">sin</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.sin" aria-label="Link to ArbBall.sin">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14057" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ArbBall.cos">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">cos</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.cos" aria-label="Link to ArbBall.cos">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14062" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ArbBall.exp">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exp</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.exp" aria-label="Link to ArbBall.exp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14067" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ArbBall.log">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">log</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.log" aria-label="Link to ArbBall.log">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14073" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ArbBall.sqrt">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">sqrt</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ArbBall.sqrt" aria-label="Link to ArbBall.sqrt">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14084" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="interval_eval"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">interval_eval</span>(<span class="sig-p">expr</span>, <span class="sig-p">bindings</span>, <span class="sig-p">prec</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#interval_eval" aria-label="Link to interval_eval">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14137" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Evaluate a symbolic expression using rigorous interval (ball) arithmetic.</p>
+<p><code>bindings</code> is a dict mapping Expr → ArbBall.</p>
+</div></section>
+<h2 id="gpu-evaluation"><a class="hanchor" href="#gpu-evaluation" aria-hidden="true" tabindex="-1">#</a>GPU evaluation</h2>
+<section class="sym" id="compile_cuda"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">compile_cuda</span>(<span class="sig-p">expr</span>, <span class="sig-p">inputs</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#compile_cuda" aria-label="Link to compile_cuda">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17232" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.compile_cuda(expr, inputs) -&gt; CudaCompiledFn</code></p>
+<p>Compile a symbolic expression to a CUDA GPU kernel targeting the NVPTX
+backend. Returns a <code>CudaCompiledFn</code> object whose <code>.ptx</code> attribute contains
+the generated PTX assembly.</p>
+</div></section>
+<h2 id="evaluation"><a class="hanchor" href="#evaluation" aria-hidden="true" tabindex="-1">#</a>Evaluation</h2>
+<section class="sym" id="evaluate"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">evaluate</span>(<span class="sig-p">expr</span>, <span class="sig-p">bindings</span>, <span class="sig-sep">*</span>, <span class="sig-p">mode</span><span class="sig-def">=&quot;auto&quot;</span>, <span class="sig-p">precision_bits</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#evaluate" aria-label="Link to evaluate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14268" rel="noopener">source</a></div>
+</div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="EvaluationResult"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">EvaluationResult</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#EvaluationResult" aria-label="Link to EvaluationResult">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14168" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Structured result returned by the unified evaluator (stable top-level).</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="EvaluationResult.value">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">value</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EvaluationResult.value" aria-label="Link to EvaluationResult.value">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14182" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EvaluationResult.status">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">status</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EvaluationResult.status" aria-label="Link to EvaluationResult.status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14186" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EvaluationResult.backend">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">backend</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EvaluationResult.backend" aria-label="Link to EvaluationResult.backend">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14190" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EvaluationResult.requested_mode">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">requested_mode</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EvaluationResult.requested_mode" aria-label="Link to EvaluationResult.requested_mode">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14194" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EvaluationResult.requested_precision_bits">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">requested_precision_bits</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EvaluationResult.requested_precision_bits" aria-label="Link to EvaluationResult.requested_precision_bits">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14198" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EvaluationResult.achieved_precision_bits">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">achieved_precision_bits</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EvaluationResult.achieved_precision_bits" aria-label="Link to EvaluationResult.achieved_precision_bits">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14202" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EvaluationResult.enclosure">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">enclosure</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EvaluationResult.enclosure" aria-label="Link to EvaluationResult.enclosure">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14206" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EvaluationResult.reason">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">reason</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EvaluationResult.reason" aria-label="Link to EvaluationResult.reason">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14210" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EvaluationResult.is_enclosure">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_enclosure</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EvaluationResult.is_enclosure" aria-label="Link to EvaluationResult.is_enclosure">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14214" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="ModularEvaluation"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">ModularEvaluation</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation" aria-label="Link to ModularEvaluation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21231" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>The result of evaluating a <a href="/docs/api/diff/#ModularRecurrence"><code>ModularRecurrence</code></a>, with the
+evidence that makes its residues trustworthy.</p>
+<p><code>singular_indices</code> is the field to read when a residue is surprising:
+it lists the steps where the recurrence&#39;s leading coefficient was not a
+unit mod <code>p</code> and the working precision had to absorb the loss.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="ModularEvaluation.prime">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">prime</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.prime" aria-label="Link to ModularEvaluation.prime">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21239" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The prime the evaluation ran at.</p>
+</div>
+</div>
+<div class="member" id="ModularEvaluation.precision">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">precision</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.precision" aria-label="Link to ModularEvaluation.precision">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21245" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>k</code> — the precision that was asked for, and delivered.</p>
+</div>
+</div>
+<div class="member" id="ModularEvaluation.working_precision">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">working_precision</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.working_precision" aria-label="Link to ModularEvaluation.working_precision">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21255" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>K &gt;= k</code> — the precision the forward pass actually ran at.</p>
+<p><code>working_precision - precision</code> is the total <code>p</code>-adic precision lost
+to singular steps, and is <code>0</code> for a recurrence whose leading
+coefficient is a unit throughout.</p>
+</div>
+</div>
+<div class="member" id="ModularEvaluation.modulus">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">modulus</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.modulus" aria-label="Link to ModularEvaluation.modulus">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21261" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>p**k</code>.</p>
+</div>
+</div>
+<div class="member" id="ModularEvaluation.n_singular">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_singular</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.n_singular" aria-label="Link to ModularEvaluation.n_singular">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21267" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>How many singular steps there were, in total.</p>
+</div>
+</div>
+<div class="member" id="ModularEvaluation.steps">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">steps</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.steps" aria-label="Link to ModularEvaluation.steps">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21273" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>How many forward steps the evaluation took.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="ModularEvaluation.residues">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">residues</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.residues" aria-label="Link to ModularEvaluation.residues">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21278" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The residues, one per requested index, each in <code>[0, p**k)</code>.</p>
+</div>
+</div>
+<div class="member" id="ModularEvaluation.singular_indices">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">singular_indices</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.singular_indices" aria-label="Link to ModularEvaluation.singular_indices">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21285" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Indices <code>n</code> where <code>p</code> divides the leading coefficient <code>a_J(n)</code>.</p>
+<p>Truncated to the first 64; <code>n_singular</code> is the full count.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="guess_relation"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">guess_relation</span>(
+    <span class="sig-p">constants</span>,
+    <span class="sig-p">precision_bits</span><span class="sig-def">=664</span>,
+    <span class="sig-p">max_abs_coeff</span><span class="sig-def">=None</span>,
+    <span class="sig-p">check_precision</span><span class="sig-def">=True</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">digits</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#guess_relation" aria-label="Link to guess_relation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2575" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Search for integers <code>aᵢ</code> with <code>Σ aᵢ·constantsᵢ ≈ 0</code>.</p>
+<p>Returns the coefficients as a list of Python <code>int</code> (of any size), or
+<code>None</code> when no relation is found.</p>
+<p><strong>Precision travels with the input.</strong> The search runs at the smaller of
+<code>precision_bits</code> and the precision the constants carry, and its detection
+threshold is derived from that effective width:</p>
+<p>==================================  ==================================
+Input                               Search precision it allows
+==================================  ==================================
+<code>float</code>                           53 bits (the 64-bit engine minimum)
+<code>mpmath.mpf</code>                      its mantissa, passed exactly —
+                                    never through <code>float</code>
+decimal <code>str</code> / <code>Decimal</code>       its significant digits
+<code>ArbBall</code>                         what its radius leaves of 53 bits
+<code>int</code>, <code>Fraction</code>               unbounded (exact)
+<code>digits=</code>                         a further cap
+==================================  ==================================</p>
+<p>Searching wider than the data used to zero-pad it into exact rationals, which
+both hid true relations — <code>90·ζ(4) = π⁴</code> from 115-digit strings came back
+<code>None</code> under the 664-bit default — and manufactured false ones among the
+padded values. An <code>mpf</code> went through <code>float()</code>, so 120-digit inputs were
+searched as doubles.</p>
+<p>Raises <a href="/docs/api/errors/#PslqError"><code>PslqError</code></a> (<code>E-PSLQ-004</code>) when the relation found is larger
+than the inputs&#39; precision can justify, or does not hold to the precision
+they carry, rather than returning a number that is an artifact of how the
+inputs were written; and <code>E-PSLQ-005</code> when the inputs are exact rationals
+and the relation is simply false for them:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">guess_relation([</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">float</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(pi), </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">float</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e), </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">float</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(log(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))])</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># was: [-60771139, 67263243, 11653676]   ← confident and meaningless</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># now: None, or E-PSLQ-004 — never that relation</span></span></code></pre></div><p>The test is on the <em>result</em>, not the input, so small relations among floats
+still come back: <code>[1.0, 2.0, 3.0]</code> needs almost no precision to pin down
+and is returned normally. See <a href="/docs/api/numerics/#relation_confidence"><code>relation_confidence()</code></a> for the numbers.</p>
+<p>A relation among decimal strings or <code>mpf</code> values that passes those tests
+is returned, but <em>unendorsed</em> unless <code>digits=</code> declares how many digits
+are trustworthy — <a href="/docs/api/numerics/#relation_confidence"><code>relation_confidence()</code></a> reports <code>credible: None</code>
+for it until then. <code>digits=</code> also caps the search width:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">guess_relation([mpf(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> floats], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">digits</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">16</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># raises E-PSLQ-004</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">guess_relation(two_hundred_digit_strings, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">digits</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">200</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># judged, and passes</span></span></code></pre></div><p>Pass <code>check_precision=False</code> to accept a relation among the supplied
+values themselves (the search width is still capped at their precision).</p>
+</div></section>
+<section class="sym" id="relation_confidence"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">relation_confidence</span>(
+    <span class="sig-p">constants</span>,
+    <span class="sig-p">coeffs</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">digits</span><span class="sig-def">=None</span>,
+    <span class="sig-p">precision_bits</span><span class="sig-def">=None</span>,
+    <span class="sig-p">margin_digits</span><span class="sig-def">=None</span>
+)<span class="sig-ret"> → dict</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#relation_confidence" aria-label="Link to relation_confidence">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2452" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Judge a found relation against the precision its inputs actually carry.</p>
+<p>Pinning down <code>n</code> coefficients bounded by <code>H</code> selects one of the
+<code>(2H+1)ⁿ</code> integer vectors in that box, so it takes about
+<code>n·log10(2H+1)</code> digits of agreement. When that exceeds the digits the
+inputs have, the relation was <em>purchasable</em> from the available precision —
+the search would have found something whatever the constants were — and it
+is evidence of nothing. Because PSLQ returns the <em>smallest</em> relation the
+precision can buy, a purchased one lands just under the bound rather than
+over it, so a relation must clear it by <code>margin_digits</code> (default 10) to
+count as credible.</p>
+<p><strong>The relation is also evaluated.</strong> <code>Σ aᵢ·cᵢ</code> is computed exactly on the
+values supplied (a <code>float</code> or <code>mpmath.mpf</code> is an exact binary rational,
+a decimal string an exact decimal one). It must cancel to the precision the
+inputs carry — <code>residual_digits</code> — and the digits it holds to beyond what
+the coefficient size explains — <code>excess_digits</code> — must reach
+<code>margin_digits</code>. A relation that fails either test is <code>credible: False</code>
+whatever the declared precision: a cheap relation that does not hold is not
+rescued by being cheap.</p>
+<p><strong>The input&#39;s precision has to be knowable, and often it is not.</strong> A
+<code>float</code> is 53 bits however it is printed, so it is judged. <code>int</code> and
+<code>Fraction</code> are exactly the rationals they spell, so precision cannot be
+the reason a relation among them is spurious — instead the relation itself
+is evaluated (see <code>exact_residual</code> below). A <strong>decimal string</strong> is
+<em>unknown</em>: the digits <code>&quot;3.14159265358979&quot;</code> are equally the exact rational
+314159265358979/10¹⁴ and π truncated to 15 places, and nothing in the string
+says which. An <code>mpmath.mpf</code> is unknown for the same reason: its accuracy
+is not recoverable from the object. Unknown is not unbounded, though: a
+literal&#39;s length is a <em>ceiling</em> on what it can carry (a 20-digit string
+holds at most 20 digits, an <code>mpf</code> at most its mantissa&#39;s bits), which is
+enough to refute a relation. Pass <code>digits=</code> (decimal) or
+<code>precision_bits=</code> (binary) to say how many digits are trustworthy; a
+declaration is a cap, so declaring 200 digits for a <code>float</code> still yields
+~16, and for a 20-digit string still yields 20.</p>
+<p>Returns a dict:</p>
+<p><code>credible</code>
+    <code>True</code>, <code>False</code>, or <code>None</code> for <em>unknown</em> — the precision of the
+    inputs could not be established, so no judgement was made. <code>None</code> is
+    never a pass: treat it as &quot;not yet checked&quot; and re-run with <code>digits=</code>.
+    A relation can still be refuted (<code>False</code>) with the precision unknown.
+<code>available_digits</code>
+    Digits the inputs are known to carry (<code>inf</code> for exact inputs),
+    or <code>None</code> when unknown.
+<code>consumed_digits</code>
+    Digits of agreement the relation costs, <code>n·log10(2H+1)</code>.
+<code>spare_digits</code>
+    <code>available - consumed</code>, or <code>None</code> when unknown.
+<code>margin_digits</code>
+    Spare digits demanded of a credible relation.
+<code>precision_source</code>
+    Where <code>available_digits</code> came from: <code>&quot;float&quot;</code>, <code>&quot;exact&quot;</code>,
+    <code>&quot;declared&quot;</code>, <code>&quot;content&quot;</code> (a declaration capped by the length of
+    the literals), <code>&quot;ball&quot;</code>, or <code>&quot;unknown&quot;</code>.
+<code>residual_digits</code>
+    Digits to which <code>Σ aᵢ·cᵢ</code> cancels relative to <code>Σ |aᵢ·cᵢ|</code>
+    (<code>inf</code> for an exact zero), or <code>None</code> when it cannot be evaluated.
+<code>excess_digits</code>
+    <code>min(residual_digits, ceiling) - consumed_digits</code>: agreement the
+    coefficient size does not explain. A credible relation has at least
+    <code>margin_digits</code> of it.
+<code>exact_residual</code>
+    <code>Σ aᵢ·cᵢ</code> as an exact <code>Fraction</code> when every constant
+    is an exact rational and no precision was declared, otherwise <code>None</code>.
+    A nonzero value <strong>refutes</strong> the relation, and is the one way
+    <code>credible</code> can be <code>False</code> while <code>available_digits</code> is <code>inf</code>:
+    nothing is short of precision, the relation is just false.</p>
+<p>Note what <code>credible: True</code> means on the exact branch: the relation holds
+for <strong>the numbers supplied</strong>. If those numbers are rounded stand-ins for
+something else — <code>Fraction(*float(pi).as_integer_ratio())</code> is exactly the
+double, not π — then so is the verdict, and no gate reading only the
+constants can tell. Declare <code>digits=</code> when they are stand-ins; that is
+what turns them back into approximations with a precision to be judged.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.relation_confidence([</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"credible"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.relation_confidence([</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.7</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">60771139</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">67263243</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">11653676</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"credible"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">False</span></span></code></pre></div><p>Exact inputs are judged by evaluating the relation, not by counting digits:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.relation_confidence([</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"credible"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.relation_confidence([</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"credible"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">False</span></span></code></pre></div><p>A decimal string is not endorsed until its precision is declared, but a
+relation that does not hold is refuted either way:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> sqrt2 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "1.41421356237309504880168872420969807856967187537694806841301"</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> two_sqrt2 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "2.82842712474619009760337744841939615713934375075389613682602"</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(ak.relation_confidence([sqrt2, two_sqrt2], [</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"credible"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">None</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.relation_confidence([sqrt2, two_sqrt2], [</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">digits</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">60</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"credible"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.relation_confidence([sqrt2, two_sqrt2], [</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">digits</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">60</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"credible"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">False</span></span></code></pre></div><p>A ten-digit-per-coefficient relation among 20-digit strings is exactly what
+20 digits can buy, and declaring more digits than the strings hold does not
+change that:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pi_20 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "3.1415926535897932385"</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e_20 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "2.7182818284590452354"</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> big </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5144503108</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5945642943</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.relation_confidence([pi_20, e_20], big, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">digits</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">60</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"credible"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">False</span></span></code></pre></div></div></section>
+<h2 id="rigorous-bounds"><a class="hanchor" href="#rigorous-bounds" aria-hidden="true" tabindex="-1">#</a>Rigorous bounds</h2>
+<section class="sym" id="bound_on_box"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">bound_on_box</span>(
+    <span class="sig-p">expr</span>,
+    <span class="sig-p">box</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">order</span><span class="sig-def">=6</span>,
+    <span class="sig-p">prec</span><span class="sig-def">=128</span>,
+    <span class="sig-p">tol</span><span class="sig-def">=1e-9</span>,
+    <span class="sig-p">max_subdivisions</span><span class="sig-def">=2048</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#bound_on_box" aria-label="Link to bound_on_box">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16420" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.bound_on_box(expr, box, *, order=6, prec=128, tol=1e-9, max_subdivisions=2048)</code></p>
+<p>Rigorous enclosure of the <strong>range</strong> of <code>expr</code> over an axis-aligned box,
+via Taylor models plus Moore–Skelboe branch-and-bound.</p>
+<p><code>box</code> is a list of <code>(variable, lo, hi)</code>. The returned
+<a href="/docs/api/numerics/#Enclosure"><code>Enclosure</code></a> is a guaranteed outer bound; when the work budget runs
+out it is returned anyway with <code>budget_exhausted=True</code> — wide but true.</p>
+</div></section>
+<section class="sym" id="bounds_supported"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">bounds_supported</span>(<span class="sig-p">expr</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#bounds_supported" aria-label="Link to bounds_supported">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16283" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.bounds_supported(expr) -&gt; BoundsSupport</code></p>
+<p>Can the validated-bounds subsystem bound this expression at all?</p>
+<p><a href="/docs/api/numerics/#bound_on_box"><code>bound_on_box()</code></a>, <a href="/docs/api/numerics/#verified_integral"><code>verified_integral()</code></a>, <a href="/docs/api/numerics/#verified_no_roots"><code>verified_no_roots()</code></a>
+and <a href="/docs/api/numerics/#verified_sign"><code>verified_sign()</code></a> all evaluate through the same Taylor-model
+evaluator, and it refuses any construct it has no rigorous rule for with
+<code>E-VALIDATED-001</code>. This answers that question <em>without running the
+bound</em>, so a planning loop can pick a certifiable route instead of
+discovering the boundary by hitting it.</p>
+<p>The answer is produced by running the real evaluator on a probe box, so it
+cannot drift from what <a href="/docs/api/numerics/#bound_on_box"><code>bound_on_box()</code></a> does. The same information per
+primitive is the <code>taylor_model</code> flag in
+<code>capabilities()[&quot;primitives&quot;]</code>.</p>
+<p><strong>What it does not promise.</strong> <code>True</code> means no <code>E-VALIDATED-001</code>. A
+supported function can still be refused on a <em>particular box</em> for a
+domain violation (<code>E-VALIDATED-003</code>, e.g. <code>log</code> on <code>[-2, -1]</code>) or a
+non-finite enclosure (<code>E-VALIDATED-004</code>) — those depend on the box, not
+on the expression, so no box-free predicate can rule them out.</p>
+<p>Note this is a different question from <a href="/docs/api/certificates/#certifiable"><code>certifiable()</code></a>, which
+asks whether an operation emits a <strong>Lean</strong> certificate. A rigorous
+enclosure is not a Lean proof term, and the validated subsystem is not in
+the certificate ledger; conflating the two under one predicate would make
+a <code>True</code> mean two different kinds of evidence.</p>
+
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool(); x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> bool</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(ak.bounds_supported(ak.sin(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.exp(x)))</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> bool</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(ak.bounds_supported(ak.bessel_j0(x)))   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># covered since 3.9.0</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> answer </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.bounds_supported(ak.floor(x))</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> bool</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(answer), answer.functions</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">False</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'floor'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])</span></span></code></pre></div></div></section>
+<section class="sym" id="BoundsSupport"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">BoundsSupport</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#BoundsSupport" aria-label="Link to BoundsSupport">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16207" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Whether the validated-bounds subsystem can bound an expression at all.</p>
+<p>Returned by <a href="/docs/api/numerics/#bounds_supported"><code>bounds_supported()</code></a>. Truthy exactly when every
+construct in the expression has a rigorous Taylor-model rule, so it drops
+into <code>if ak.bounds_supported(f):</code>.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">supported</code><span class="ptype">bool</span></dt><dd><p>The verdict. <code>bool(self)</code> is the same value.</p>
+</dd></div><div class="param"><dt><code class="pname">blocker</code><span class="ptype">str or None</span></dt><dd><p>The evaluator&#39;s own description of the <strong>first</strong> construct it has no
+rule for (<code>&quot;function `bessel_j0`&quot;</code>), or <code>None</code> when supported.</p>
+</dd></div><div class="param"><dt><code class="pname">functions</code><span class="ptype">list of str</span></dt><dd><p>Every function in the expression with no Taylor-model rule, sorted.
+Empty when <code>supported</code> is <code>True</code> — and possibly empty when it is
+<code>False</code>, if the blocker is a node kind rather than a function.</p>
+</dd></div><div class="param"><dt><code class="pname">detail</code><span class="ptype">str</span></dt><dd><p>One-sentence human explanation.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="BoundsSupport.supported">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">supported</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BoundsSupport.supported" aria-label="Link to BoundsSupport.supported">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16209" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="BoundsSupport.blocker">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">blocker</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BoundsSupport.blocker" aria-label="Link to BoundsSupport.blocker">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16211" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="BoundsSupport.functions">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">functions</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BoundsSupport.functions" aria-label="Link to BoundsSupport.functions">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16213" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="BoundsSupport.detail">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">detail</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BoundsSupport.detail" aria-label="Link to BoundsSupport.detail">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16215" rel="noopener">source</a></div></div>
+  
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="BoundsSupport.as_dict">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">as_dict</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BoundsSupport.as_dict" aria-label="Link to BoundsSupport.as_dict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16225" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The verdict as a plain dict, for logging and JSON.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="Enclosure"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">Enclosure</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Enclosure" aria-label="Link to Enclosure">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16010" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A <strong>rigorous</strong> enclosure: the true value is guaranteed to lie in
+<code>[lower, upper]</code>.</p>
+<p>Returned by <a href="/docs/api/numerics/#bound_on_box"><code>bound_on_box()</code></a> and
+<a href="/docs/api/numerics/#verified_integral"><code>verified_integral()</code></a>. The bound may be <em>wide</em>, but it is
+never <em>wrong</em> — that is the whole contract. Check
+<code>budget_exhausted</code> to see whether it is as tight as you asked for.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="Enclosure.lower">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">lower</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Enclosure.lower" aria-label="Link to Enclosure.lower">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16012" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Enclosure.upper">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">upper</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Enclosure.upper" aria-label="Link to Enclosure.upper">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16014" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Enclosure.budget_exhausted">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">budget_exhausted</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Enclosure.budget_exhausted" aria-label="Link to Enclosure.budget_exhausted">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16016" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Enclosure.subdivisions">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">subdivisions</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Enclosure.subdivisions" aria-label="Link to Enclosure.subdivisions">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16018" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Enclosure.width">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">width</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Enclosure.width" aria-label="Link to Enclosure.width">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16025" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Width of the enclosure.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="Enclosure.contains">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">contains</span>(<span class="sig-p">v</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Enclosure.contains" aria-label="Link to Enclosure.contains">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16030" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>True if <code>v</code> is inside the rigorous enclosure.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="verified_integral"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">verified_integral</span>(
+    <span class="sig-p">expr</span>,
+    <span class="sig-p">var</span>,
+    <span class="sig-p">a</span>,
+    <span class="sig-p">b</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">order</span><span class="sig-def">=8</span>,
+    <span class="sig-p">prec</span><span class="sig-def">=128</span>,
+    <span class="sig-p">tol</span><span class="sig-def">=1e-9</span>,
+    <span class="sig-p">max_subdivisions</span><span class="sig-def">=4096</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#verified_integral" aria-label="Link to verified_integral">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16493" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.verified_integral(expr, var, a, b, *, order=8, prec=128, tol=1e-9, max_subdivisions=4096)</code></p>
+<p>Rigorous enclosure of <code>∫_a^b expr d(var)</code> by Taylor-model quadrature.</p>
+<p>Unlike <code>integrate_definite()</code>, this never needs a closed form — and
+unlike a floating-point quadrature, the answer is a <em>theorem</em>: the true
+integral is guaranteed to lie in the returned interval. Refuses on
+singular or improper integrands rather than guessing.</p>
+<p>A <strong>removable</strong> singularity is not a refusal: an integrand written as
+<code>N(x)/D(x)</code> whose two halves vanish at the same point <code>p</code>, to the same
+order, with some <code>D**(d)(p) != 0</code> — <code>log(1+x)/x</code> on <code>[0, 1]</code>,
+<code>sin(x)/x</code> on <code>[-1, 1]</code>, <code>(1-cos(x))/(x*x)</code> on <code>[0, 1]</code> — is
+enclosed via Cauchy&#39;s mean value theorem, iterated as many times as the
+order of the zero requires, and the value returned is the integral of the
+continuous extension. The zeros are checked <em>symbolically</em>, so a genuine
+pole is never mistaken for a removable one.</p>
+<p>A <strong>bounded</strong> integrand whose Taylor model runs out of <em>domain</em> rather than
+out of function is not a refusal either. <code>asin</code> and <code>acos</code> on
+<code>[0, 1]</code>, <code>sqrt(1 - x*x)</code> on <code>[0, 1]</code>, <code>sqrt(x)</code> and <code>x**x</code> on
+<code>[0, 1]</code> are all finite and continuous on the closed interval, but the
+Taylor rule needs a derivative bound it does not have at the end of the
+domain, so no model exists on the last panel however far it is bisected.
+That panel is closed with a <code>width * range</code> bound computed by interval
+arithmetic, which needs no derivative. The panel is of order <code>2**-60</code> of
+the interval by then, so the crude bound costs essentially nothing.</p>
+<p>An <strong>unbounded</strong> integrand is still refused, whether or not the integral
+converges (<code>-log(x)</code> on <code>[0, 1]</code>, <code>1/sqrt(1-x*x)</code> on <code>[0, 1]</code>): the
+integral exists, but no rigorous enclosure of the <em>integrand</em> does, and no
+bounded range exists either. The <a href="/docs/api/errors/#ValidatedError"><code>ValidatedError</code></a> message names the
+Taylor rule that stopped and where, and does not claim the integral fails
+to exist.</p>
+</div></section>
+<section class="sym" id="verified_no_roots"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">verified_no_roots</span>(
+    <span class="sig-p">expr</span>,
+    <span class="sig-p">box</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">order</span><span class="sig-def">=6</span>,
+    <span class="sig-p">prec</span><span class="sig-def">=128</span>,
+    <span class="sig-p">tol</span><span class="sig-def">=1e-9</span>,
+    <span class="sig-p">max_subdivisions</span><span class="sig-def">=2048</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#verified_no_roots" aria-label="Link to verified_no_roots">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16549" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.verified_no_roots(expr, box, ...) -&gt; &quot;true&quot; | &quot;false&quot; | &quot;undecided&quot;</code></p>
+<p>Three-valued: <code>&quot;true&quot;</code> proves <code>expr</code> has no root anywhere in the box,
+<code>&quot;false&quot;</code> proves it does, and <code>&quot;undecided&quot;</code> means neither could be
+established within the budget. The third is never collapsed into the
+other two.</p>
+<p><code>&quot;false&quot;</code> is certified by the intermediate value theorem: the box is
+first proven free of poles and branch cuts (so <code>expr</code> is continuous on it),
+then the box is subdivided until two points are found at which <code>expr</code> is
+rigorously proven to have opposite signs. A box is convex, so the segment
+joining them stays inside it and <code>expr</code> must vanish somewhere along it.
+Because the two points need not be the box&#39;s own endpoints, an even number
+of roots no longer defeats the test — <code>x*x - 2</code> on <code>[-2, 2]</code> is
+<code>&quot;false&quot;</code>.</p>
+<p>A root that never produces a sign change — a double root such as
+<code>(x-1)**2</code> — stays <code>&quot;undecided&quot;</code>: no witness exists, and none is
+invented.</p>
+</div></section>
+<section class="sym" id="verified_sign"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">verified_sign</span>(
+    <span class="sig-p">expr</span>,
+    <span class="sig-p">box</span>,
+    <span class="sig-p">predicate</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">order</span><span class="sig-def">=6</span>,
+    <span class="sig-p">prec</span><span class="sig-def">=128</span>,
+    <span class="sig-p">tol</span><span class="sig-def">=1e-9</span>,
+    <span class="sig-p">max_subdivisions</span><span class="sig-def">=2048</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#verified_sign" aria-label="Link to verified_sign">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16631" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.verified_sign(expr, box, predicate, ...) -&gt; &quot;true&quot; | &quot;false&quot; | &quot;undecided&quot;</code></p>
+<p><code>predicate</code> is one of <code>&quot;positive&quot;</code>, <code>&quot;negative&quot;</code>, <code>&quot;nonnegative&quot;</code>,
+<code>&quot;nonpositive&quot;</code>. A <code>&quot;false&quot;</code> verdict is itself certified — either the
+enclosure proves the predicate fails everywhere, or a rigorously evaluated
+point witnesses the failure.</p>
+<p>An inequality that is <strong>tight at an endpoint</strong> of the box is still decided.
+Subdivision alone cannot do it — where the margin vanishes, every enclosure
+of the range straddles zero — so the box is split: a collar at the endpoint
+is handled by a truncated Taylor expansion with a proven Lagrange remainder,
+the rest by branch-and-bound. That covers the classical sharp trigonometric
+inequalities (Cusa–Huygens, Mitrinović–Adamović, Wilker, Huygens, Jordan) on
+boxes reaching <code>x = 0</code>. Tightness in the <em>interior</em> is not covered and
+stays <code>&quot;undecided&quot;</code>.</p>
+<p><code>&quot;undecided&quot;</code> is <strong>not monotone in the box</strong>: it is a search verdict, not
+a logical one, and a box that stops just short of the point an inequality is
+tight at gets a much weaker collar than one that reaches it. A box that
+stops short of <code>x = 0</code> is retried with the collar planted at <code>0</code> — a
+<code>&quot;true&quot;</code> on the larger box implies <code>&quot;true&quot;</code> on the box asked about — so
+the classical inequalities decide on <code>[1e-12, pi/2]</code> as well as on
+<code>[0, pi/2]</code>. For a statement tight somewhere else the effect remains: on
+<code>&quot;undecided&quot;</code>, try the <em>larger</em> box whose endpoint is the tight point
+before concluding the statement is out of reach.</p>
+<p><code>tol</code> sets the tolerance of the <em>enclosure</em>, not of the verdict: it is an
+absolute width, so it does not bound how close to zero the answer may be.
+Once the enclosure has been computed, the search is re-run with the sign
+itself as the stopping rule, which is what decides an inequality whose
+margin is narrower than <code>tol</code>.</p>
+</div></section>
+<section class="sym" id="verified_ode"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">verified_ode</span>(
+    <span class="sig-p">rhs</span>,
+    <span class="sig-p">vars</span>,
+    <span class="sig-p">t</span>,
+    <span class="sig-p">y0</span>,
+    <span class="sig-p">t_span</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">order</span><span class="sig-def">=20</span>,
+    <span class="sig-p">prec</span><span class="sig-def">=128</span>,
+    <span class="sig-p">tol</span><span class="sig-def">=1e-16</span>,
+    <span class="sig-p">max_steps</span><span class="sig-def">=20000</span>,
+    <span class="sig-p">h_min</span><span class="sig-def">=None</span>,
+    <span class="sig-p">max_rel_width</span><span class="sig-def">=1.0</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#verified_ode" aria-label="Link to verified_ode">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/verified_ode.rs#L170" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.verified_ode(rhs, vars, t, y0, t_span, *, order=20, prec=128, tol=1e-16, max_steps=20000, h_min=None, max_rel_width=1.0)</code></p>
+<p><strong>Validated</strong> integration of <code>y&#39; = f(t, y)</code>, <code>y(t0) ∈ y0</code>: returns
+boxes that are <em>guaranteed</em> to contain the true solution (every solution,
+when <code>y0</code> is a box), or refuses with a coded <a href="/docs/api/errors/#ValidatedError"><code>ValidatedError</code></a>.</p>
+<p>Method: interval Taylor series of order <code>order</code> (coefficients by
+automatic differentiation of <code>rhs</code> in ball arithmetic), an a-priori
+enclosure per step validated by the Picard–Lindelöf operator, a Lagrange
+remainder bound, and Lohner&#39;s QR coordinate frame against the wrapping
+effect.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">rhs</code></dt><dd><p>list of Expr — <code>f_i(t, y)</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">vars</code></dt><dd><p>list of state symbols <code>y_i</code> (same length as <code>rhs</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">t</code></dt><dd><p>the time symbol, or <code>None</code> for an autonomous system.</p>
+</dd></div><div class="param"><dt><code class="pname">y0</code></dt><dd><p>initial values — each a float (a point) or a <code>(lo, hi)</code> pair.</p>
+</dd></div><div class="param"><dt><code class="pname">t_span</code></dt><dd><p><code>(t0, t1)</code> with <code>t0 &lt; t1</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">order</code></dt><dd><p>Taylor order per step (1..60).</p>
+</dd></div><div class="param"><dt><code class="pname">prec</code></dt><dd><p>working precision in bits.</p>
+</dd></div><div class="param"><dt><code class="pname">tol</code></dt><dd><p>local error target (relative to <code>max(1, |y|)</code>); only steers the
+step size, never soundness.</p>
+</dd></div><div class="param"><dt><code class="pname">max_steps</code></dt><dd><p>refuse with <code>E-VALIDATED-008</code> beyond this many steps.</p>
+</dd></div><div class="param"><dt><code class="pname">h_min</code></dt><dd><p>smallest step tried (default <code>1e-12 * (t1 - t0)</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">max_rel_width</code></dt><dd><p>refuse with <code>E-VALIDATED-007</code> when a component&#39;s width
+exceeds this times <code>max(1, |y|)</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt></dt><dd><p><a href="/docs/api/numerics/#VerifiedOdeSolution"><code>VerifiedOdeSolution</code></a>.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">Example</span></dt><dd><p>:</p>
+<p>y = pool.symbol(&quot;y&quot;)
+sol = ak.verified_ode([-y], [y], None, [1.0], (0.0, 1.0))
+lo, hi = sol.enclosure(1.0)[0]      # contains exp(-1), width ~1e-25</p>
+</dd></div></dl></div></section>
+<section class="sym" id="VerifiedOdeSolution"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">VerifiedOdeSolution</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#VerifiedOdeSolution" aria-label="Link to VerifiedOdeSolution">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/verified_ode.rs#L35" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Rigorous enclosures of an ODE solution, returned by
+<a href="/docs/api/numerics/#verified_ode"><code>verified_ode()</code></a>.</p>
+<p><code>times[i]</code> is an exact grid point and <code>enclosures[i]</code> a list of
+<code>(lo, hi)</code> intervals, one per state component, that is <strong>guaranteed</strong> to
+contain <code>y(times[i])</code>. Bounds are rounded outward to <code>float</code>.
+<code>enclosure()</code> encloses the solution at any <code>t</code> in the span.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="VerifiedOdeSolution.times">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">times</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#VerifiedOdeSolution.times" aria-label="Link to VerifiedOdeSolution.times">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/verified_ode.rs#L43" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The adaptive time grid <code>t0 &lt; t1 &lt; … &lt; tN</code> (exact floats).</p>
+</div>
+</div>
+<div class="member" id="VerifiedOdeSolution.enclosures">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">enclosures</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#VerifiedOdeSolution.enclosures" aria-label="Link to VerifiedOdeSolution.enclosures">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/verified_ode.rs#L50" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Grid enclosures: <code>enclosures[i][c] = (lo, hi)</code> contains component
+<code>c</code> of the solution at <code>times[i]</code>.</p>
+</div>
+</div>
+<div class="member" id="VerifiedOdeSolution.widths">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">widths</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#VerifiedOdeSolution.widths" aria-label="Link to VerifiedOdeSolution.widths">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/verified_ode.rs#L56" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Widest component width at each grid point.</p>
+</div>
+</div>
+<div class="member" id="VerifiedOdeSolution.max_width">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">max_width</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#VerifiedOdeSolution.max_width" aria-label="Link to VerifiedOdeSolution.max_width">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/verified_ode.rs#L66" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Widest component width over the whole grid.</p>
+</div>
+</div>
+<div class="member" id="VerifiedOdeSolution.steps">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">steps</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#VerifiedOdeSolution.steps" aria-label="Link to VerifiedOdeSolution.steps">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/verified_ode.rs#L72" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of accepted integration steps.</p>
+</div>
+</div>
+<div class="member" id="VerifiedOdeSolution.dim">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dim</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#VerifiedOdeSolution.dim" aria-label="Link to VerifiedOdeSolution.dim">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/verified_ode.rs#L78" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>State dimension.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="VerifiedOdeSolution.enclosure">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">enclosure</span>(<span class="sig-p">t</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#VerifiedOdeSolution.enclosure" aria-label="Link to VerifiedOdeSolution.enclosure">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/verified_ode.rs#L84" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>A rigorous enclosure <code>[(lo, hi), …]</code> of <code>y(t)</code> for any <code>t</code> in the
+integrated span (not only grid points).</p>
+</div>
+</div></div></div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/poly/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Polynomial</span></a><a class="pager-next" href="/docs/api/transform/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Transformation</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/numerics.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#compiled-evaluation">Compiled evaluation</a></li><li class="d3"><a href="#compile_expr">compile_expr</a></li><li class="d3"><a href="#eval_expr">eval_expr</a></li><li class="d3"><a href="#numpy_eval">numpy_eval</a></li><li class="d3"><a href="#numpy_eval_par">numpy_eval_par</a></li><li class="d3"><a href="#CompiledVecFn">CompiledVecFn</a></li><li class="d3"><a href="#CompiledFn">CompiledFn</a></li><li class="d3"><a href="#emit_c">emit_c</a></li><li class="d2"><a href="#ball-arithmetic">Ball arithmetic</a></li><li class="d3"><a href="#ArbBall">ArbBall</a></li><li class="d3"><a href="#interval_eval">interval_eval</a></li><li class="d2"><a href="#gpu-evaluation">GPU evaluation</a></li><li class="d3"><a href="#compile_cuda">compile_cuda</a></li><li class="d2"><a href="#evaluation">Evaluation</a></li><li class="d3"><a href="#evaluate">evaluate</a></li><li class="d3"><a href="#EvaluationResult">EvaluationResult</a></li><li class="d3"><a href="#ModularEvaluation">ModularEvaluation</a></li><li class="d3"><a href="#guess_relation">guess_relation</a></li><li class="d3"><a href="#relation_confidence">relation_confidence</a></li><li class="d2"><a href="#rigorous-bounds">Rigorous bounds</a></li><li class="d3"><a href="#bound_on_box">bound_on_box</a></li><li class="d3"><a href="#bounds_supported">bounds_supported</a></li><li class="d3"><a href="#BoundsSupport">BoundsSupport</a></li><li class="d3"><a href="#Enclosure">Enclosure</a></li><li class="d3"><a href="#verified_integral">verified_integral</a></li><li class="d3"><a href="#verified_no_roots">verified_no_roots</a></li><li class="d3"><a href="#verified_sign">verified_sign</a></li><li class="d3"><a href="#verified_ode">verified_ode</a></li><li class="d3"><a href="#VerifiedOdeSolution">VerifiedOdeSolution</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/numerics.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

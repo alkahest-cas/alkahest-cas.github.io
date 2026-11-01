@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propositional logic API · Alkahest Docs</title>
+<meta name="description" content="Boolean connectives, normal forms, exact two-level minimisation, reduced ordered binary decision diagrams (ROBDDs) and equivalence checking. Atoms are…">
+<meta property="og:title" content="Propositional logic API · Alkahest Docs">
+<meta property="og:description" content="Boolean connectives, normal forms, exact two-level minimisation, reduced ordered binary decision diagrams (ROBDDs) and equivalence checking. Atoms are…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/" class="active" aria-current="page">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>Propositional logic</h1>
+    <div class="prose-block"><p>Boolean connectives, normal forms, exact two-level minimisation, reduced
+ordered binary decision diagrams (ROBDDs) and equivalence checking.  Atoms are
+Boolean symbols; the transformations that hold under any interpretation of
+their atoms (<a href="/docs/api/logic/#to_nnf"><code>to_nnf()</code></a>, <a href="/docs/api/logic/#to_cnf"><code>to_cnf()</code></a>, <a href="/docs/api/logic/#to_dnf"><code>to_dnf()</code></a>,
+<a href="/docs/api/logic/#simplify_logic"><code>simplify_logic()</code></a>) also accept arithmetic relations such as
+<code>pool.gt(x, 0)</code> as opaque atoms.  Refusals raise <a href="/docs/api/errors/#LogicError"><code>LogicError</code></a>
+(<code>E-LOGIC-002</code> … <code>E-LOGIC-006</code>); an active <code>alkahest.Budget</code> is honoured
+everywhere (<a href="/docs/api/errors/#BudgetExceededError"><code>BudgetExceededError</code></a>).</p>
+</div>
+<h2 id="connectives"><a class="hanchor" href="#connectives" aria-hidden="true" tabindex="-1">#</a>Connectives</h2>
+<section class="sym" id="And"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">And</span>(<span class="sig-p">*args</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#And" aria-label="Link to And">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L110" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Logical conjunction of any number of predicates.</p>
+<p><code>And(a, b, c)</code> is flattened (nested <code>And</code> arguments are spliced in),
+<code>True</code> arguments are dropped, a <code>False</code> argument or a complementary
+pair <code>x, Not(x)</code> gives <code>False</code>, duplicates are removed and the
+arguments are put in a canonical order (atoms by name, then compound
+terms), so <code>And(b, a) is</code> the same expression as <code>And(a, b)</code>.
+Python <code>True</code>/<code>False</code> are accepted alongside expressions.  A single
+argument is returned unchanged.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool(); a, b, c </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"a"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"b"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"c"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.And(c, ak.And(b, a)) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">==</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.And(a, b, c)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span></code></pre></div></div></section>
+<section class="sym" id="Or"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">Or</span>(<span class="sig-p">*args</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Or" aria-label="Link to Or">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L120" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Logical disjunction of any number of predicates (dual of <a href="/docs/api/logic/#And"><code>And()</code></a>:
+flattened, <code>False</code> dropped, <code>True</code> or <code>x, Not(x)</code> gives <code>True</code>,
+deduplicated and canonically ordered).</p>
+</div></section>
+<section class="sym" id="Not"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">Not</span>(<span class="sig-p">a</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Not" aria-label="Link to Not">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L128" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Logical negation; <code>Not(Not(x))</code> is <code>x</code> and <code>Not(True)</code> is <code>False</code>.</p>
+</div></section>
+<section class="sym" id="Xor"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">Xor</span>(<span class="sig-p">*args</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Xor" aria-label="Link to Xor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L145" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Exclusive or (odd parity) of any number of predicates.</p>
+<p>The kernel has no <code>Xor</code> node, so the result is the parity chain written
+with <code>And</code>/<code>Or</code>/<code>Not</code>; consecutive stages share their sub-formula, so
+the expression grows linearly with the number of arguments.  <code>Xor(x, x)</code>
+is <code>False</code>; <code>Xor()</code> of bools only is refused (no pool).</p>
+</div></section>
+<section class="sym" id="Implies"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">Implies</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Implies" aria-label="Link to Implies">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L153" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Material implication <code>a → b</code>, built as <code>Or(Not(a), b)</code>.</p>
+</div></section>
+<section class="sym" id="Equivalent"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">Equivalent</span>(<span class="sig-p">*args</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Equivalent" aria-label="Link to Equivalent">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L163" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Equivalence of any number of predicates: true when all have the same
+value, built as <code>Or(And(a₁…aₙ), And(¬a₁…¬aₙ))</code>.</p>
+</div></section>
+<section class="sym" id="ITE"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">ITE</span>(<span class="sig-p">c</span>, <span class="sig-p">t</span>, <span class="sig-p">e</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ITE" aria-label="Link to ITE">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L171" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>If-then-else <code>(c ∧ t) ∨ (¬c ∧ e)</code> (the multiplexer).</p>
+</div></section>
+<h2 id="normal-forms-and-minimisation"><a class="hanchor" href="#normal-forms-and-minimisation" aria-hidden="true" tabindex="-1">#</a>Normal forms and minimisation</h2>
+<section class="sym" id="to_nnf"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">to_nnf</span>(<span class="sig-p">expr</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#to_nnf" aria-label="Link to to_nnf">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L204" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Negation normal form: negations pushed onto atoms, only <code>And</code>/<code>Or</code>
+above them.  Arithmetic relations are opaque atoms (<code>Not(x &lt; 0)</code> is kept,
+not rewritten to <code>x &gt;= 0</code>).</p>
+<p>Raises <code>LogicError</code> (<code>E-LOGIC-002</code>) for quantified formulas or
+non-Boolean terms.</p>
+</div></section>
+<section class="sym" id="to_cnf"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">to_cnf</span>(<span class="sig-p">expr</span>, <span class="sig-p">simplify</span><span class="sig-def">=False</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#to_cnf" aria-label="Link to to_cnf">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L221" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Conjunctive normal form (product of sums).</p>
+<p>With <code>simplify=False</code> (default) the form is obtained by distribution, with
+tautological, duplicate and subsumed clauses dropped; it can be
+exponentially larger than the input and is refused past 100 000 clauses
+(<code>LogicError</code>, <code>E-LOGIC-003</code>).  <code>simplify=True</code> returns the minimum
+CNF of <a href="/docs/api/logic/#simplify_logic"><code>simplify_logic()</code></a> instead.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool(); a, b, c </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"a"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"b"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"c"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(ak.to_cnf(ak.Or(a, ak.And(b, c))))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(a ∨ b) ∧ (a ∨ c)</span></span></code></pre></div></div></section>
+<section class="sym" id="to_dnf"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">to_dnf</span>(<span class="sig-p">expr</span>, <span class="sig-p">simplify</span><span class="sig-def">=False</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#to_dnf" aria-label="Link to to_dnf">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L233" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Disjunctive normal form (sum of products); the dual of <a href="/docs/api/logic/#to_cnf"><code>to_cnf()</code></a>,
+with the same <code>simplify</code> switch and size ceiling.</p>
+</div></section>
+<section class="sym" id="simplify_logic"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_logic</span>(<span class="sig-p">expr</span>, <span class="sig-p">form</span><span class="sig-def">=&quot;auto&quot;</span>, <span class="sig-p">dontcare</span><span class="sig-def">=None</span>, <span class="sig-p">exact</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_logic" aria-label="Link to simplify_logic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L340" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Minimise a propositional formula to a two-level form.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code></dt><dd><p>formula over Boolean symbols (relations such as <code>x &gt; 0</code> are
+accepted as opaque atoms).</p>
+</dd></div><div class="param"><dt><code class="pname">form</code></dt><dd><p><code>&quot;dnf&quot;</code> (sum of products), <code>&quot;cnf&quot;</code> (product of sums) or
+<code>&quot;auto&quot;</code> (whichever has fewer literals, DNF on a tie).</p>
+</dd></div><div class="param"><dt><code class="pname">dontcare</code></dt><dd><p>optional formula marking assignments whose value is free;
+the result agrees with <code>expr</code> wherever <code>dontcare</code> is false.</p>
+</dd></div><div class="param"><dt><code class="pname">exact</code></dt><dd><p><code>None</code> (default) — exact up to 12 variables, heuristic beyond;
+<code>True</code> — exact or raise <code>LogicError</code> (<code>E-LOGIC-004</code>, more
+than 16 variables or a covering search past its bound);
+<code>False</code> — heuristic.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt></dt><dd><p><code>Expr</code> — the minimised formula.  <a href="/docs/api/logic/#minimize_logic"><code>minimize_logic()</code></a> returns the</p>
+</dd></div><div class="param"><dt></dt><dd><p>same with <code>exact</code>/<code>terms</code>/<code>literals</code> metadata.</p>
+</dd></div></dl>
+<p>The exact method is Quine–McCluskey prime implicants followed by a
+minimum cover (Petrick&#39;s method, run as branch-and-bound): fewest terms,
+then fewest literals.  The heuristic is an espresso-style expand /
+irredundant pass on the ROBDD of the function; its cover is always
+equivalent but not necessarily minimum.  Every result is checked against
+the input before it is returned.</p>
+<p>Raises <code>LogicError</code> (<code>E-LOGIC-002</code> not propositional, <code>E-LOGIC-003</code>
+size ceiling, <code>E-LOGIC-004</code> exactness unavailable, <code>E-LOGIC-005</code> bad
+<code>form</code>) and <code>BudgetExceededError</code> under an active budget.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool(); a, b </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"a"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"b"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(ak.simplify_logic(ak.Or(ak.And(a, b), ak.And(a, ak.Not(b)))))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">a</span></span></code></pre></div></div></section>
+<section class="sym" id="minimize_logic"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">minimize_logic</span>(<span class="sig-p">expr</span>, <span class="sig-p">form</span><span class="sig-def">=&quot;dnf&quot;</span>, <span class="sig-p">dontcare</span><span class="sig-def">=None</span>, <span class="sig-p">exact</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#minimize_logic" aria-label="Link to minimize_logic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L489" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><a href="/docs/api/logic/#simplify_logic"><code>simplify_logic()</code></a> returning a <a href="/docs/api/logic/#MinimizedLogic"><code>MinimizedLogic</code></a> record
+(<code>expr</code>, <code>form</code>, <code>exact</code>, <code>terms</code>, <code>literals</code>) so a caller can see
+whether minimality was proven.  Default <code>form</code> is <code>&quot;dnf&quot;</code>.</p>
+<p><strong>Multi-output.</strong> Pass a list or tuple of formulas to minimise them
+jointly: the result is a <a href="/docs/api/logic/#MultiMinimizedLogic"><code>MultiMinimizedLogic</code></a> whose <code>exprs</code> are
+two-level forms built from product terms (clauses for <code>form=&quot;cnf&quot;</code>)
+<em>shared</em> between outputs, so <code>terms</code> counts each distinct term once —
+never more than the sum of the separately minimised outputs.  <code>dontcare</code>
+applies to every output.  Up to 12 variables (16 with <code>exact=True</code>) the
+shared cover is exact (multi-output Quine–McCluskey primes, then a minimum
+cover of the (output, minterm) pairs: fewest distinct terms, then fewest
+literals); beyond that the espresso-style pass runs per output and the
+pooled cubes are cut down to an irredundant shared set, flagged
+<code>exact=False</code>.  Every output is verified against its input before the
+result is returned.  At most 64 outputs (<code>LogicError</code>, <code>E-LOGIC-003</code>).</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool(); a, b </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"a"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"b"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> r </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.minimize_logic([ak.Xor(a, b), ak.And(a, b), ak.Or(a, b)])</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> r.terms, r.exact</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div></div></section>
+<section class="sym" id="MultiMinimizedLogic"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">MultiMinimizedLogic</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic" aria-label="Link to MultiMinimizedLogic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L355" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Result of <a href="/docs/api/logic/#minimize_logic"><code>minimize_logic()</code></a> on a list of formulas: one two-level
+formula per output, built from product terms (or clauses) shared between
+outputs.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="MultiMinimizedLogic.exprs">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exprs</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.exprs" aria-label="Link to MultiMinimizedLogic.exprs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L358" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>One formula per input, in order.</p>
+</div>
+</div>
+<div class="member" id="MultiMinimizedLogic.form">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">form</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.form" aria-label="Link to MultiMinimizedLogic.form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L361" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>&quot;dnf&quot;</code> or <code>&quot;cnf&quot;</code>.</p>
+</div>
+</div>
+<div class="member" id="MultiMinimizedLogic.exact">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exact</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.exact" aria-label="Link to MultiMinimizedLogic.exact">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L365" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>True</code> when the shared cover is proven minimum (fewest distinct
+terms, then fewest literals); <code>False</code> for the heuristic cover.</p>
+</div>
+</div>
+<div class="member" id="MultiMinimizedLogic.terms">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">terms</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.terms" aria-label="Link to MultiMinimizedLogic.terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L369" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Distinct product terms (DNF) or clauses (CNF) over all outputs; a term
+feeding several outputs counts once.</p>
+</div>
+</div>
+<div class="member" id="MultiMinimizedLogic.literals">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">literals</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.literals" aria-label="Link to MultiMinimizedLogic.literals">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L372" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Literal occurrences over the distinct terms.</p>
+</div>
+</div>
+<div class="member" id="MultiMinimizedLogic.per_output_terms">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">per_output_terms</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.per_output_terms" aria-label="Link to MultiMinimizedLogic.per_output_terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L375" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Terms in each output&#39;s own formula.</p>
+</div>
+</div>
+<div class="member" id="MultiMinimizedLogic.shared_terms">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">shared_terms</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.shared_terms" aria-label="Link to MultiMinimizedLogic.shared_terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L378" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Distinct terms used by more than one output.</p>
+</div>
+</div></div></div></section>
+<h2 id="decision-diagrams"><a class="hanchor" href="#decision-diagrams" aria-hidden="true" tabindex="-1">#</a>Decision diagrams</h2>
+<section class="sym" id="bdd"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">bdd</span>(<span class="sig-p">expr</span>, <span class="sig-p">order</span><span class="sig-def">=None</span>, <span class="sig-p">max_nodes</span><span class="sig-def">=None</span>, <span class="sig-p">auto_reorder</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#bdd" aria-label="Link to bdd">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1125" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Build the reduced ordered BDD of a formula over Boolean symbols.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code></dt><dd><p>formula (<code>And</code>/<code>Or</code>/<code>Not</code>/<code>Xor</code>/… over symbols).</p>
+</dd></div><div class="param"><dt><code class="pname">order</code></dt><dd><p>optional list of symbols (or names) fixing the variable order,
+root first; symbols of <code>expr</code> not listed are appended.  <code>None</code>
+uses depth-first first-visit order over the canonically sorted
+formula, which interleaves the operand bits of bit-sliced
+arithmetic (the order adders and comparators need).</p>
+</dd></div><div class="param"><dt><code class="pname">max_nodes</code></dt><dd><p>node ceiling (default 2 000 000).  A BDD that would exceed
+it is refused with <code>LogicError</code> (<code>E-LOGIC-003</code>); an active
+<code>alkahest.Budget</code> is honoured too (<code>BudgetExceededError</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">auto_reorder</code></dt><dd><p>dynamic variable reordering (Rudell sifting) once the
+manager holds this many live nodes: <code>False</code> off, <code>True</code> or an
+<code>int</code> threshold on.  <code>None</code> (default) means on at 50 000 nodes
+unless an explicit <code>order</code> was given.  It never changes what a
+BDD means, only its order and size; see <a href="/docs/api/logic/#BDD.reorder"><code>BDD.reorder()</code></a> to
+sift on demand.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt></dt><dd><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span></code></pre></div></dd></div><div class="param"><dt></dt><dd><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool(); a, b, c </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"a"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"b"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"c"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div></dd></div><div class="param"><dt></dt><dd><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> f </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.bdd(ak.Or(ak.And(a, b), ak.And(b, c), ak.And(a, c)))</span></span></code></pre></div></dd></div><div class="param"><dt></dt><dd><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> f.sat_count(), f.node_count()</span></span></code></pre></div></dd></div><div class="param"><dt></dt><dd><p>(4, 4)</p>
+</dd></div></dl></div></section>
+<section class="sym" id="BDD"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">BDD</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#BDD" aria-label="Link to BDD">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L645" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A reduced ordered binary decision diagram, returned by <a href="/docs/api/logic/#bdd"><code>bdd()</code></a>.</p>
+<p>Canonical for its variable order: two BDDs of the same manager are
+equivalent exactly when <a href="/docs/api/logic/#equivalent"><code>equivalent()</code></a> says so, in time independent of
+the formulas.  <code>&amp;</code>, <code>|</code>, <code>^</code> and <code>~</code> combine BDDs (or a BDD and an
+<code>Expr</code>); operands built by separate <a href="/docs/api/logic/#bdd"><code>bdd()</code></a> calls are merged by
+variable name.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="BDD.auto_reorder">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">auto_reorder</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.auto_reorder" aria-label="Link to BDD.auto_reorder">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1013" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The automatic-reordering threshold in nodes, or <code>None</code> when off.</p>
+</div>
+</div>
+<div class="member" id="BDD.order">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">order</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.order" aria-label="Link to BDD.order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1024" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Variable names in the manager&#39;s order (root first).</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="BDD.implies">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">implies</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.implies" aria-label="Link to BDD.implies">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L827" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>self → other</code>.</p>
+</div>
+</div>
+<div class="member" id="BDD.iff">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">iff</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.iff" aria-label="Link to BDD.iff">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L832" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>self ↔ other</code>.</p>
+</div>
+</div>
+<div class="member" id="BDD.ite">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ite</span>(<span class="sig-p">g</span>, <span class="sig-p">h</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.ite" aria-label="Link to BDD.ite">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L837" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>if self then g else h</code> (the ITE operator every BDD operation reduces to).</p>
+</div>
+</div>
+<div class="member" id="BDD.restrict">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">restrict</span>(<span class="sig-p">assignment</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.restrict" aria-label="Link to BDD.restrict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L854" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Cofactor: fix variables to constants.  <code>assignment</code> maps symbols (or
+names) to bools.</p>
+</div>
+</div>
+<div class="member" id="BDD.exists">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exists</span>(<span class="sig-p">variables</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.exists" aria-label="Link to BDD.exists">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L875" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Existential quantification <code>∃ vars . self</code>.</p>
+</div>
+</div>
+<div class="member" id="BDD.forall">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">forall</span>(<span class="sig-p">variables</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.forall" aria-label="Link to BDD.forall">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L885" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Universal quantification <code>∀ vars . self</code>.</p>
+</div>
+</div>
+<div class="member" id="BDD.sat_count">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">sat_count</span>(<span class="sig-p">variables</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.sat_count" aria-label="Link to BDD.sat_count">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L901" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of satisfying assignments (a Python <code>int</code>, exact).</p>
+<p>With <code>variables=None</code> the count is over every variable of the BDD&#39;s
+manager — the formula&#39;s symbols plus any brought in by combining it
+with other BDDs.  Pass <code>variables</code> (symbols or names, a superset of
+<code>support()</code>) to count over exactly that set.</p>
+</div>
+</div>
+<div class="member" id="BDD.reorder">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">reorder</span>(<span class="sig-p">max_growth</span><span class="sig-def">=1.2</span>, <span class="sig-p">max_swaps</span><span class="sig-def">=...</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.reorder" aria-label="Link to BDD.reorder">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L981" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Re-sort the manager&#39;s variable order by Rudell sifting to shrink the
+diagrams.</p>
+<p>Every function of the manager (this BDD and any combined with it)
+keeps its meaning: <code>sat_count</code>, <a href="/docs/api/logic/#equivalent"><code>equivalent()</code></a> and
+<code>to_expr()</code> are unchanged; <code>order</code> and <code>node_count()</code>
+change.  Unreferenced intermediate nodes are collected.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">max_growth</code></dt><dd><p>abandon a variable&#39;s excursion in one direction once
+the manager exceeds this multiple of the best size seen for it
+(default 1.2; at least 1.0).</p>
+</dd></div><div class="param"><dt><code class="pname">max_swaps</code></dt><dd><p>stop after this many adjacent-variable swaps (default
+200 000); <code>complete</code> is then <code>False</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt></dt><dd><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span></code></pre></div></dd></div><div class="param"><dt></dt><dd><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span></code></pre></div></dd></div><div class="param"><dt></dt><dd><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> xs </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [p.symbol(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">f</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">{</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">i</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">}</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> i </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> range</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">6</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)]</span></span></code></pre></div></dd></div><div class="param"><dt></dt><dd><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ys </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [p.symbol(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">f</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"y</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">{</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">i</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">}</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> i </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> range</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">6</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)]</span></span></code></pre></div></dd></div><div class="param"><dt></dt><dd><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> f </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.bdd(ak.Or(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[ak.And(x, y) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x, y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> zip</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(xs, ys)]),</span></span></code></pre></div></dd></div><div class="param"><dt></dt><dd><p>...            order=xs + ys, auto_reorder=False)</p>
+</dd></div><div class="param"><dt></dt><dd><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> before </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> f.node_count()</span></span></code></pre></div></dd></div><div class="param"><dt></dt><dd><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> _ </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> f.reorder()</span></span></code></pre></div></dd></div><div class="param"><dt></dt><dd><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> f.node_count() </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">&#x3C;</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> before</span></span></code></pre></div></dd></div><div class="param"><dt></dt><dd><p>True</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="BDD.set_auto_reorder">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">set_auto_reorder</span>(<span class="sig-p">threshold</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.set_auto_reorder" aria-label="Link to BDD.set_auto_reorder">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1005" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Turn automatic reordering of this BDD&#39;s manager on or off: <code>False</code>
+(off), <code>True</code> (sift once the manager holds 50 000 live nodes) or an
+<code>int</code> threshold.  Checked after every operation that produces a BDD.</p>
+</div>
+</div>
+<div class="member" id="BDD.node_count">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">node_count</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.node_count" aria-label="Link to BDD.node_count">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1018" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Non-terminal nodes reachable from this function.</p>
+</div>
+</div>
+<div class="member" id="BDD.support">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">support</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.support" aria-label="Link to BDD.support">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1029" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Names of the variables the function depends on, in BDD order.</p>
+</div>
+</div>
+<div class="member" id="BDD.satisfy_one">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">satisfy_one</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.satisfy_one" aria-label="Link to BDD.satisfy_one">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1040" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>One satisfying assignment <code>{name: bool}</code> (variables left out are
+free), or <code>None</code> if unsatisfiable.</p>
+</div>
+</div>
+<div class="member" id="BDD.is_true">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_true</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.is_true" aria-label="Link to BDD.is_true">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1055" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>True</code> when the function is the constant true.</p>
+</div>
+</div>
+<div class="member" id="BDD.is_false">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_false</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.is_false" aria-label="Link to BDD.is_false">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1060" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>True</code> when the function is the constant false.</p>
+</div>
+</div>
+<div class="member" id="BDD.equivalent">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">equivalent</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.equivalent" aria-label="Link to BDD.equivalent">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1066" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Canonical equivalence: same node after merging the operand into this
+manager.</p>
+</div>
+</div>
+<div class="member" id="BDD.to_expr">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_expr</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.to_expr" aria-label="Link to BDD.to_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1072" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The function as a formula (Shannon expansion at every node).</p>
+</div>
+</div></div></div></section>
+<h2 id="equivalence-and-truth-tables"><a class="hanchor" href="#equivalence-and-truth-tables" aria-hidden="true" tabindex="-1">#</a>Equivalence and truth tables</h2>
+<section class="sym" id="equivalent"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">equivalent</span>(<span class="sig-p">f</span>, <span class="sig-p">g</span>, <span class="sig-p">method</span><span class="sig-def">=&quot;auto&quot;</span>, <span class="sig-p">counterexample</span><span class="sig-def">=False</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#equivalent" aria-label="Link to equivalent">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L545" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Decide whether two propositional formulas are equivalent.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt></dt><dd><p>f, g: formulas (same pool).</p>
+</dd></div><div class="param"><dt><code class="pname">method</code></dt><dd><p><code>&quot;auto&quot;</code> (truth table up to 16 variables, then a BDD capped
+at 200 000 nodes, then SAT), <code>&quot;truth_table&quot;</code>, <code>&quot;bdd&quot;</code> or
+<code>&quot;sat&quot;</code> (DPLL on the miter <code>f ⊕ g</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">counterexample</code></dt><dd><p>return <code>(verdict, assignment_or_None)</code> instead of a
+bare bool; the assignment maps symbol names to bools and is checked
+to separate <code>f</code> and <code>g</code>.</p>
+</dd></div></dl>
+<p>Relations (<code>x &gt; 0</code>) are accepted as opaque atoms: <code>True</code> is then still
+a proof, but a propositional difference is refused with <code>LogicError</code>
+(<code>E-LOGIC-002</code>) rather than reported as <code>False</code>, because <code>x &gt; 0</code> and
+<code>Not(x &lt;= 0)</code> are propositionally independent yet equal over ℝ.  A search
+that exhausts its bound raises <code>LogicError</code> (<code>E-LOGIC-003</code>) — never a
+guessed verdict.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool(); a, b </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"a"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"b"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.equivalent(ak.Not(ak.And(a, b)), ak.Or(ak.Not(a), ak.Not(b)))</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span></code></pre></div></div></section>
+<section class="sym" id="truth_table"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">truth_table</span>(<span class="sig-p">expr</span>, <span class="sig-p">variables</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#truth_table" aria-label="Link to truth_table">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L595" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Truth table of a formula over Boolean symbols.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code></dt><dd><p>formula.</p>
+</dd></div><div class="param"><dt><code class="pname">variables</code></dt><dd><p>the symbols to tabulate, in column order; must include
+every symbol of <code>expr</code>.  <code>None</code> uses the formula&#39;s symbols
+sorted by name.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt></dt><dd><p><code>list[tuple[tuple[bool, ...], bool]]</code> — one <code>(assignment, value)</code></p>
+</dd></div><div class="param"><dt></dt><dd><p>row per assignment, from all-<code>False</code> to all-<code>True</code> with the last</p>
+</dd></div><div class="param"><dt></dt><dd><p>variable varying fastest.  At most 22 variables (<code>E-LOGIC-003</code>).</p>
+</dd></div></dl></div></section>
+<div class="prose-block"><p><a href="/docs/api/logic/#satisfiable"><code>satisfiable()</code></a> decides any purely propositional formula, including ones
+wider than 64 symbols or with heavily shared sub-formulas (parity chains,
+carry chains), on the formula&#39;s DAG.</p>
+</div>
+<h2 id="satisfiability"><a class="hanchor" href="#satisfiability" aria-hidden="true" tabindex="-1">#</a>Satisfiability</h2>
+<section class="sym" id="satisfiable"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">satisfiable</span>(<span class="sig-p">formula</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#satisfiable" aria-label="Link to satisfiable">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15892" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Decide satisfiability of a predicate <code>Expr</code>.</p>
+<p>Returns <code>False</code> if unsatisfiable, <code>True</code> if satisfiable with no witness
+variables, a <code>dict</code> of symbol → value string if a witness is found, or
+<code>None</code> if the fragment is unsupported.  <code>None</code> <strong>never</strong> means
+&quot;unsatisfiable&quot; — only <code>False</code> is a proof of that.</p>
+<p>Two fragments are decided, and they are disjoint:</p>
+<ul>
+<li><strong>Purely propositional</strong> — every leaf is a bare symbol (read as a Boolean
+variable, whatever <code>Domain</code> it was declared with) or <code>pool.pred_true()</code>
+/ <code>pool.pred_false()</code>, combined with <code>pred_and</code> / <code>pred_or</code> /
+<code>pred_not</code> (equivalently <a href="/docs/api/logic/#And"><code>And()</code></a> / <a href="/docs/api/logic/#Or"><code>Or()</code></a> / <a href="/docs/api/logic/#Not"><code>Not()</code></a>).  This
+fragment is decided <strong>completely</strong> by DPLL: it returns <code>None</code> only if
+the search exceeds its budget of 2 000 000 branching decisions, never
+because it gave up thinking.  Wide formulas (more than 64 symbols) and
+formulas with shared sub-formulas (<code>Xor</code> parity chains, carry chains)
+are encoded on their DAG, so their size is what they share, not what
+they unfold to.
+<code>→</code> and <code>↔</code> are in it once written out: <code>a → b</code> is
+<code>Or(Not(a), b)</code> and <code>a ↔ b</code> is <code>And(Or(Not(a), b), Or(Not(b), a))</code>;
+the kernel has no separate implication node (<a href="/docs/api/logic/#Implies"><code>Implies()</code></a>,
+<a href="/docs/api/logic/#Equivalent"><code>Equivalent()</code></a>, <a href="/docs/api/logic/#Xor"><code>Xor()</code></a> and <a href="/docs/api/logic/#ITE"><code>ITE()</code></a> build these forms).</li>
+<li><strong>One real symbol against rational constants</strong> — <code>x &lt; 3</code>, <code>x &gt;= 1/2</code>
+and Boolean combinations of them, decided by interval intersection.  This
+one is <em>incomplete</em>: <code>None</code> is common, and expected.</li>
+</ul>
+<p>Everything else is <code>None</code>, including — deliberately — any formula that
+<strong>mixes</strong> a Boolean symbol with an arithmetic relation (<code>A ∧ x &gt; 0</code>), any
+formula over two or more real symbols, and anything quantified.  Deciding
+those needs a Boolean-plus-theory combination this function does not
+implement; the cheap alternative, abstracting each relation to a fresh
+proposition, is sound for &quot;unsatisfiable&quot; only and would call
+<code>x &gt; 0 ∧ x &lt; 0</code> satisfiable.  Send them to <a href="/docs/api/solve/#decide"><code>decide()</code></a> (real
+quantifier elimination by CAD) or to <a href="/docs/api/mod-smt/"><code>smt</code></a> instead.</p>
+<p>A witness <code>dict</code> is <strong>homogeneous</strong>, so a caller can tell which path
+answered from any one value: propositional witnesses map every symbol to
+<code>&quot;true&quot;</code> or <code>&quot;false&quot;</code>, interval witnesses map every symbol to a rational
+literal such as <code>&quot;1/2&quot;</code>.  The two never appear in the same dict.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A, B </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"A"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"B"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.satisfiable(p.pred_and([p.pred_or([A, B]), p.pred_not(A), p.pred_not(B)]))</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">False</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> sorted</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(ak.satisfiable(p.pred_and([p.pred_or([A, B]), p.pred_not(A)])).items())</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'A'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'false'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), (</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'B'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'true'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)]</span></span></code></pre></div></div></section>
+<section class="sym" id="MinimizedLogic"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">MinimizedLogic</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic" aria-label="Link to MinimizedLogic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L245" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Result of <a href="/docs/api/logic/#minimize_logic"><code>minimize_logic()</code></a>: the two-level formula and how it was
+obtained.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="MinimizedLogic.expr">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">expr</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.expr" aria-label="Link to MinimizedLogic.expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L247" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="MinimizedLogic.form">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">form</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.form" aria-label="Link to MinimizedLogic.form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L250" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>&quot;dnf&quot;</code> or <code>&quot;cnf&quot;</code>.</p>
+</div>
+</div>
+<div class="member" id="MinimizedLogic.exact">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exact</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.exact" aria-label="Link to MinimizedLogic.exact">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L254" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>True</code> when the cover is proven minimum (fewest terms, then fewest
+literals); <code>False</code> for the heuristic cover.</p>
+</div>
+</div>
+<div class="member" id="MinimizedLogic.terms">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">terms</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.terms" aria-label="Link to MinimizedLogic.terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L257" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Product terms (DNF) or clauses (CNF).</p>
+</div>
+</div>
+<div class="member" id="MinimizedLogic.literals">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">literals</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.literals" aria-label="Link to MinimizedLogic.literals">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L260" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Literal occurrences.</p>
+</div>
+</div></div></div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/linprog/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Linear and integer programming</span></a><a class="pager-next" href="/docs/api/codegen/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Code generation</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/logic.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#connectives">Connectives</a></li><li class="d3"><a href="#And">And</a></li><li class="d3"><a href="#Or">Or</a></li><li class="d3"><a href="#Not">Not</a></li><li class="d3"><a href="#Xor">Xor</a></li><li class="d3"><a href="#Implies">Implies</a></li><li class="d3"><a href="#Equivalent">Equivalent</a></li><li class="d3"><a href="#ITE">ITE</a></li><li class="d2"><a href="#normal-forms-and-minimisation">Normal forms and minimisation</a></li><li class="d3"><a href="#to_nnf">to_nnf</a></li><li class="d3"><a href="#to_cnf">to_cnf</a></li><li class="d3"><a href="#to_dnf">to_dnf</a></li><li class="d3"><a href="#simplify_logic">simplify_logic</a></li><li class="d3"><a href="#minimize_logic">minimize_logic</a></li><li class="d3"><a href="#MultiMinimizedLogic">MultiMinimizedLogic</a></li><li class="d2"><a href="#decision-diagrams">Decision diagrams</a></li><li class="d3"><a href="#bdd">bdd</a></li><li class="d3"><a href="#BDD">BDD</a></li><li class="d2"><a href="#equivalence-and-truth-tables">Equivalence and truth tables</a></li><li class="d3"><a href="#equivalent">equivalent</a></li><li class="d3"><a href="#truth_table">truth_table</a></li><li class="d2"><a href="#satisfiability">Satisfiability</a></li><li class="d3"><a href="#satisfiable">satisfiable</a></li><li class="d3"><a href="#MinimizedLogic">MinimizedLogic</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/logic.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

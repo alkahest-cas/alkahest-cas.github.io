@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>alkahest.research · Alkahest Docs</title>
+<meta name="description" content="Session-level provenance for autoresearch loops — the Alkahest claim graph.">
+<meta property="og:title" content="alkahest.research · Alkahest Docs">
+<meta property="og:description" content="Session-level provenance for autoresearch loops — the Alkahest claim graph.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/" class="active" aria-current="page">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API · Submodule</div>
+    <h1>alkahest.research</h1>
+    <div class="prose-block"><p>Session-level provenance for autoresearch loops — the Alkahest claim graph.</p>
+<p><a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> is a <em>per-call</em> object: it carries a value, a
+derivation log, an optional Lean certificate, and verification metadata for one
+computation.  A research loop that runs for days produces thousands of them and
+has nowhere to put them, so its output degrades into a chat transcript — and
+transcripts do not survive context compaction.</p>
+<p>This module supplies the missing session-level artifact: a <strong>directed acyclic
+graph of claims</strong>.  Each <code>Claim</code> carries</p>
+<ul>
+<li>a <strong>stable, content-addressed identifier</strong> derived from the normalised
+statement, the hypotheses, and the method — so the same claim derived twice,
+in different processes or on different days, gets the same ID and citing it
+across runs is meaningful;</li>
+<li>the statement (an <a href="/docs/api/core/#Expr"><code>Expr</code></a>, an equation, or free text);</li>
+<li>the <strong>hypotheses</strong> it holds under, taken from <a href="/docs/api/core/#Assumptions"><code>Assumptions</code></a>
+(hypotheses travel with the claim rather than living in an agent&#39;s context
+window, where they are dropped at the next compaction);</li>
+<li>the derivation (<code>DerivedResult.steps</code>);</li>
+<li>certificate text and verification status, <strong>copied verbatim</strong>;</li>
+<li>provenance metadata (operation, arguments, Alkahest version, build features);</li>
+<li><strong>dependency edges</strong> to the claim IDs it was derived from.</li>
+</ul>
+<p>The graph serialises to a versioned, deterministic, diffable JSON document
+(<code>ClaimGraph.to_json()</code>), renders to Markdown and LaTeX
+(<code>ClaimGraph.to_markdown()</code>, <code>ClaimGraph.to_latex()</code>), and can be
+<strong>re-verified</strong> against a newer library version (<code>ClaimGraph.verify()</code>).</p>
+<h4 id="honesty-invariant"><a class="hanchor" href="#honesty-invariant" aria-hidden="true" tabindex="-1">#</a>Honesty invariant</h4>
+<p>The recording layer <strong>never upgrades a claim&#39;s status</strong>.  A claim&#39;s status is
+whatever <code>DerivedResult.verification[&quot;status&quot;]</code> said; claims created by
+<code>ResearchSession.conjecture()</code> are always <code>&quot;unverified&quot;</code>, and there is no
+parameter to say otherwise.  <code>ClaimGraph.verify()</code> may only <em>lower</em>
+confidence — a failed re-check marks a claim <code>&quot;refuted&quot;</code>; a successful
+re-check is recorded as an audit entry and does not promote anything.</p>
+<h4 id="quick-start"><a class="hanchor" href="#quick-start" aria-hidden="true" tabindex="-1">#</a>Quick start</h4>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.research.session(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">title</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"Demo"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">capture</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> s:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">     result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.integrate(x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)), x)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># captured</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> graph </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> s.graph</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> len</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(graph) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 1</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> doc </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> graph.to_markdown()</span></span></code></pre></div></div>
+<section class="sym" id="research.Claim"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">research.</span><span class="sig-name">Claim</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#research.Claim" aria-label="Link to research.Claim">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L534" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>One recorded mathematical claim and everything needed to audit it.</p>
+<p>Instances are immutable; <code>ClaimGraph</code> produces updated copies via
+<code>dataclasses.replace()</code> rather than mutating in place.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">id</code><span class="ptype">str</span></dt><dd><p>Content-addressed identifier (see <code>claim_id()</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">statement</code><span class="ptype">str</span></dt><dd><p>Normalised statement text.</p>
+</dd></div><div class="param"><dt><code class="pname">kind</code><span class="ptype">str</span></dt><dd><p><code>&quot;expr&quot;</code> when the statement is an expression/equation, <code>&quot;text&quot;</code> for
+a prose claim or conjecture.</p>
+</dd></div><div class="param"><dt><code class="pname">latex</code><span class="ptype">str or None</span></dt><dd><p>LaTeX rendering of the statement, when it is an expression.</p>
+</dd></div><div class="param"><dt><code class="pname">hypotheses</code><span class="ptype">tuple of str</span></dt><dd><p>Predicates from the governing <a href="/docs/api/core/#Assumptions"><code>Assumptions</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">method</code><span class="ptype">str</span></dt><dd><p>Operation that produced the claim, e.g. <code>&quot;integrate&quot;</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">status</code><span class="ptype">str</span></dt><dd><p>Copied verbatim from <code>DerivedResult.verification[&quot;status&quot;]</code>, or
+<code>&quot;unverified&quot;</code> for a conjecture.  Never upgraded by this layer.</p>
+</dd></div><div class="param"><dt><code class="pname">evidence</code><span class="ptype">str</span></dt><dd><p>Copied verbatim from <code>verification[&quot;evidence&quot;]</code> (<code>&quot;none&quot;</code> when
+absent), or the free-text evidence supplied for a conjecture.</p>
+</dd></div><div class="param"><dt><code class="pname">verification</code><span class="ptype">dict</span></dt><dd><p>The full verification mapping, verbatim.</p>
+</dd></div><div class="param"><dt><code class="pname">derivation</code><span class="ptype">tuple of dict</span></dt><dd><p><code>DerivedResult.steps</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">certificate</code><span class="ptype">str or None</span></dt><dd><p>Certificate source text, when one was emitted.</p>
+</dd></div><div class="param"><dt><code class="pname">certificate_format</code><span class="ptype">str or None</span></dt><dd><p>Format of <em>certificate</em>, e.g. <code>&quot;lean4&quot;</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">depends_on</code><span class="ptype">tuple of str</span></dt><dd><p>IDs of the claims this one was derived from.</p>
+</dd></div><div class="param"><dt><code class="pname">check</code><span class="ptype">dict or None</span></dt><dd><p>Machine-readable re-verification recipe (see <code>ClaimGraph.verify()</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">provenance</code><span class="ptype">dict</span></dt><dd><p>Identity-neutral but reproducible metadata: operation, argument
+renderings, Alkahest version, build feature flags.</p>
+</dd></div><div class="param"><dt><code class="pname">recorded_at</code><span class="ptype">str or None</span></dt><dd><p>ISO-8601 UTC timestamp.  <strong>Volatile</strong> — excluded from
+<code>to_json(stable=True)</code> and from the graph digest.</p>
+</dd></div><div class="param"><dt><code class="pname">audit</code><span class="ptype">tuple of dict</span></dt><dd><p>Re-verification outcomes appended by <code>ClaimGraph.verify()</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">label</code><span class="ptype">str or None</span></dt><dd><p>Short human-readable name used in rendered documents.</p>
+</dd></div><div class="param"><dt><code class="pname">tags</code><span class="ptype">tuple of str</span></dt><dd><p>Free-form labels for querying.</p>
+</dd></div><div class="param"><dt><code class="pname">notes</code><span class="ptype">str or None</span></dt><dd><p>Free-form prose attached by the loop author.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="research.Claim.id">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">id</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.id" aria-label="Link to research.Claim.id">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L589" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.statement">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">statement</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.statement" aria-label="Link to research.Claim.statement">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L590" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.kind">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">kind</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.kind" aria-label="Link to research.Claim.kind">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L591" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.latex">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">latex</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.latex" aria-label="Link to research.Claim.latex">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L592" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.hypotheses">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">hypotheses</span><span class="sig-ann">: tuple[str, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.hypotheses" aria-label="Link to research.Claim.hypotheses">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L593" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.method">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">method</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.method" aria-label="Link to research.Claim.method">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L594" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.status">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">status</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.status" aria-label="Link to research.Claim.status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L595" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.evidence">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">evidence</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.evidence" aria-label="Link to research.Claim.evidence">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L596" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.verification">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.verification" aria-label="Link to research.Claim.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L597" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.derivation">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">derivation</span><span class="sig-ann">: tuple[dict[str, Any], ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.derivation" aria-label="Link to research.Claim.derivation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L598" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.certificate">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certificate</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.certificate" aria-label="Link to research.Claim.certificate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L599" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.certificate_format">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certificate_format</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.certificate_format" aria-label="Link to research.Claim.certificate_format">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L600" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.depends_on">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">depends_on</span><span class="sig-ann">: tuple[str, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.depends_on" aria-label="Link to research.Claim.depends_on">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L601" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.check">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">check</span><span class="sig-ann">: dict[str, Any] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.check" aria-label="Link to research.Claim.check">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L602" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.provenance">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">provenance</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.provenance" aria-label="Link to research.Claim.provenance">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L603" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.recorded_at">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">recorded_at</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.recorded_at" aria-label="Link to research.Claim.recorded_at">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L604" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.audit">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">audit</span><span class="sig-ann">: tuple[dict[str, Any], ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.audit" aria-label="Link to research.Claim.audit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L605" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.label">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">label</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.label" aria-label="Link to research.Claim.label">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L606" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.tags">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">tags</span><span class="sig-ann">: tuple[str, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.tags" aria-label="Link to research.Claim.tags">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L607" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.notes">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">notes</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.notes" aria-label="Link to research.Claim.notes">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L608" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.Claim.machine_checked">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">machine_checked</span><span class="sig-ann">: bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.machine_checked" aria-label="Link to research.Claim.machine_checked">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L613" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>True when a checker actually verified this claim.</p>
+<p>An emitted-but-unchecked Lean certificate is <strong>not</strong> machine-checked.</p>
+</div>
+</div>
+<div class="member" id="research.Claim.badge">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">badge</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.badge" aria-label="Link to research.Claim.badge">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L621" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Honest one-line description of this claim&#39;s verification status.</p>
+</div>
+</div>
+<div class="member" id="research.Claim.mark">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">mark</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.mark" aria-label="Link to research.Claim.mark">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L626" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Short all-caps marker, e.g. <code>&quot;[VERIFIED]&quot;</code> or <code>&quot;[UNVERIFIED]&quot;</code>.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="research.Claim.content_id">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">content_id</span>()<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.content_id" aria-label="Link to research.Claim.content_id">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L630" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Recompute the content-addressed ID from this claim&#39;s own fields.</p>
+</div>
+</div>
+<div class="member" id="research.Claim.to_dict">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_dict</span>(<span class="sig-sep">*</span>, <span class="sig-p">stable</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>)<span class="sig-ret"> → dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.to_dict" aria-label="Link to research.Claim.to_dict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L636" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Return a JSON-ready mapping.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">stable</code><span class="ptype">bool</span></dt><dd><p>When true, omit volatile fields (<code>recorded_at</code> and any audit
+timestamps) so that two runs of the same computation produce
+byte-identical output.</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="research.Claim.from_dict">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">from_dict</span>(<span class="sig-p">data</span><span class="sig-ann">: Mapping[str, Any]</span>)<span class="sig-ret"> → Claim</span></code></pre><span class="kind kind-small">classmethod</span><div class="sym-links"><a class="hanchor-inline" href="#research.Claim.from_dict" aria-label="Link to research.Claim.from_dict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L676" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Rebuild a <code>Claim</code> from <code>to_dict()</code> output.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="research.ClaimGraph"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">research.</span><span class="sig-name">ClaimGraph</span>(
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">title</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">metadata</span><span class="sig-ann">: Mapping[str, Any] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph" aria-label="Link to research.ClaimGraph">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L886" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A cycle-free, content-addressed set of <code>Claim</code> records.</p>
+<p>A graph owns its claims and their dependency edges.  Edges always point
+from a claim to claims that already exist in the graph, which makes cycles
+impossible by construction for graphs built incrementally; graphs loaded
+from JSON are topologically checked at load time.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">title</code><span class="ptype">str, optional</span></dt><dd><p>Document title used by the renderers.</p>
+</dd></div><div class="param"><dt><code class="pname">metadata</code><span class="ptype">mapping, optional</span></dt><dd><p>Free-form session metadata (build features, seeds, notes).</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.research </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ClaimGraph</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> g </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ClaimGraph(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">title</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"Notes"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> len</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(g)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span></span></code></pre></div><div class="members"><div class="members-title">Properties</div><div class="member" id="research.ClaimGraph.title">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">title</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.title" aria-label="Link to research.ClaimGraph.title">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L948" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Document title used by <code>to_markdown()</code> / <code>to_latex()</code>.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.metadata">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">metadata</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.metadata" aria-label="Link to research.ClaimGraph.metadata">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L953" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Mutable free-form session metadata.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.claims">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">claims</span><span class="sig-ann">: tuple[Claim, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.claims" aria-label="Link to research.ClaimGraph.claims">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L958" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>All claims, in insertion order (which is a topological order).</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.ids">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ids</span><span class="sig-ann">: tuple[str, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.ids" aria-label="Link to research.ClaimGraph.ids">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L963" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>All claim IDs, in insertion order.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="research.ClaimGraph.get">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">get</span>(<span class="sig-p">key</span><span class="sig-ann">: str</span>, <span class="sig-p">default</span><span class="sig-ann">: Claim | None</span><span class="sig-def">=None</span>)<span class="sig-ret"> → Claim | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.get" aria-label="Link to research.ClaimGraph.get">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L943" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Return the claim with this ID, or <em>default</em>.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.add">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">add</span>(<span class="sig-p">claim</span><span class="sig-ann">: Claim</span>)<span class="sig-ret"> → Claim</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.add" aria-label="Link to research.ClaimGraph.add">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L969" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Insert <em>claim</em>, or merge it into an identically-identified claim.</p>
+<p>Because IDs are content-addressed, re-deriving the same claim is not an
+error: the stored claim keeps its original status and derivation and
+gains any new dependency edges, tags, and audit entries.  Self-edges
+(a claim that cites an identically-addressed claim, which happens when
+an operation is a no-op) are dropped.</p>
+<p>A <strong>re-verification recipe on the later claim is adopted</strong> when the
+stored claim carries none.  Attaching a <code>check</code> is the one supported
+way to link a statement to evidence, so recording a statement bare and
+then recording it again with a recipe has to work; dropping the recipe
+made <code>verify()</code> report <code>skipped</code> for a claim that was in fact
+checkable.  An existing recipe is never overwritten — the first
+recorded evidence wins, as the status does.</p>
+
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">MissingClaimError</span></dt><dd><p>If any dependency is absent from the graph.</p>
+</dd></div><div class="param"><dt><span class="ptype">CycleError</span></dt><dd><p>If the edge would make the graph cyclic.</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="research.ClaimGraph.merge">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">merge</span>(<span class="sig-p">other</span><span class="sig-ann">: ClaimGraph</span>)<span class="sig-ret"> → ClaimGraph</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.merge" aria-label="Link to research.ClaimGraph.merge">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1058" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Return a new graph containing the claims of both graphs.</p>
+<p><em>other</em>&#39;s claims are inserted in its own topological order, so cross-
+graph citations resolve as long as the union is acyclic.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.dependencies">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dependencies</span>(<span class="sig-p">key</span><span class="sig-ann">: str</span>)<span class="sig-ret"> → tuple[str, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.dependencies" aria-label="Link to research.ClaimGraph.dependencies">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1073" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Direct dependencies of the claim with this ID.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.dependents">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dependents</span>(<span class="sig-p">key</span><span class="sig-ann">: str</span>)<span class="sig-ret"> → tuple[str, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.dependents" aria-label="Link to research.ClaimGraph.dependents">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1077" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Claims that cite the claim with this ID directly.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.ancestors">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ancestors</span>(<span class="sig-p">key</span><span class="sig-ann">: str</span>)<span class="sig-ret"> → tuple[str, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.ancestors" aria-label="Link to research.ClaimGraph.ancestors">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1083" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>All claims this one transitively rests on, nearest first.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.impact">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">impact</span>(<span class="sig-p">key</span><span class="sig-ann">: str</span>)<span class="sig-ret"> → tuple[str, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.impact" aria-label="Link to research.ClaimGraph.impact">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1087" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Claims that would be invalidated if this claim turned out false.</p>
+<p>The transitive closure of <code>dependents()</code> — the answer to &quot;what
+depends on this claim if it turns out to be wrong?&quot;.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.by_status">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">by_status</span>(<span class="sig-p">status</span><span class="sig-ann">: str</span>)<span class="sig-ret"> → tuple[Claim, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.by_status" aria-label="Link to research.ClaimGraph.by_status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1108" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>All claims whose status equals <em>status</em>.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.by_tag">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">by_tag</span>(<span class="sig-p">tag</span><span class="sig-ann">: str</span>)<span class="sig-ret"> → tuple[Claim, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.by_tag" aria-label="Link to research.ClaimGraph.by_tag">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1112" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>All claims carrying <em>tag</em>.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.by_method">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">by_method</span>(<span class="sig-p">method</span><span class="sig-ann">: str</span>)<span class="sig-ret"> → tuple[Claim, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.by_method" aria-label="Link to research.ClaimGraph.by_method">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1116" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>All claims produced by <em>method</em>.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.machine_checkable">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">machine_checkable</span>()<span class="sig-ret"> → tuple[Claim, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.machine_checkable" aria-label="Link to research.ClaimGraph.machine_checkable">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1120" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Claims a checker actually verified (see <code>Claim.machine_checked</code>).</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.unverified">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">unverified</span>()<span class="sig-ret"> → tuple[Claim, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.unverified" aria-label="Link to research.ClaimGraph.unverified">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1124" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Claims carrying no verification evidence at all.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.roots">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">roots</span>()<span class="sig-ret"> → tuple[Claim, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.roots" aria-label="Link to research.ClaimGraph.roots">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1128" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Claims with no dependencies.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.leaves">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">leaves</span>()<span class="sig-ret"> → tuple[Claim, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.leaves" aria-label="Link to research.ClaimGraph.leaves">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1132" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Claims nothing else depends on.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.summary">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">summary</span>()<span class="sig-ret"> → dict[str, int]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.summary" aria-label="Link to research.ClaimGraph.summary">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1136" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Claim counts by status, sorted by status name.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.topological_order">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">topological_order</span>()<span class="sig-ret"> → tuple[str, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.topological_order" aria-label="Link to research.ClaimGraph.topological_order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1143" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>A dependency-respecting ordering of the claim IDs.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.to_dict">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_dict</span>(<span class="sig-sep">*</span>, <span class="sig-p">stable</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>)<span class="sig-ret"> → dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.to_dict" aria-label="Link to research.ClaimGraph.to_dict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1149" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Return the graph as a JSON-ready mapping.</p>
+<p>Claims are emitted in insertion (topological) order; every mapping is
+written with sorted keys by <code>to_json()</code>.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.to_json">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_json</span>(<span class="sig-sep">*</span>, <span class="sig-p">indent</span><span class="sig-ann">: int | None</span><span class="sig-def">=2</span>, <span class="sig-p">stable</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>)<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.to_json" aria-label="Link to research.ClaimGraph.to_json">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1167" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Serialise to JSON with deterministic key order.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">indent</code><span class="ptype">int or None</span></dt><dd><p>Passed to <code>json.dumps()</code>.  <code>None</code> emits a compact document.</p>
+</dd></div><div class="param"><dt><code class="pname">stable</code><span class="ptype">bool</span></dt><dd><p>When true, drop volatile fields (timestamps, working directory) so
+two runs of the same computation produce byte-identical output.
+Identity — the claim IDs — never depends on volatile data, so a
+<code>stable=False</code> document still diffs cleanly outside those fields.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.research </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ClaimGraph</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ClaimGraph().to_json(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">indent</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">None</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">stable</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">).startswith(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'{"claims": []'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span></code></pre></div></div>
+</div>
+<div class="member" id="research.ClaimGraph.from_dict">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">from_dict</span>(<span class="sig-p">data</span><span class="sig-ann">: Mapping[str, Any]</span>)<span class="sig-ret"> → ClaimGraph</span></code></pre><span class="kind kind-small">classmethod</span><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.from_dict" aria-label="Link to research.ClaimGraph.from_dict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1195" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Rebuild a graph from <code>to_dict()</code> output.</p>
+
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">ClaimGraphError</span></dt><dd><p>On an unknown document kind or a schema version this build cannot
+read.</p>
+</dd></div><div class="param"><dt><span class="ptype">CycleError</span></dt><dd><p>If the dependency edges contain a cycle.</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="research.ClaimGraph.from_json">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">from_json</span>(<span class="sig-p">text</span><span class="sig-ann">: str</span>)<span class="sig-ret"> → ClaimGraph</span></code></pre><span class="kind kind-small">classmethod</span><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.from_json" aria-label="Link to research.ClaimGraph.from_json">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1222" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Rebuild a graph from <code>to_json()</code> output.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.save">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">save</span>(<span class="sig-p">path</span><span class="sig-ann">: str | os.PathLike[str]</span>, <span class="sig-sep">*</span>, <span class="sig-p">stable</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>)<span class="sig-ret"> → None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.save" aria-label="Link to research.ClaimGraph.save">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1226" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Write the graph to <em>path</em> as JSON (UTF-8, trailing newline).</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.load">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">load</span>(<span class="sig-p">path</span><span class="sig-ann">: str | os.PathLike[str]</span>)<span class="sig-ret"> → ClaimGraph</span></code></pre><span class="kind kind-small">classmethod</span><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.load" aria-label="Link to research.ClaimGraph.load">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1233" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Read a graph previously written by <code>save()</code>.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.digest">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">digest</span>()<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.digest" aria-label="Link to research.ClaimGraph.digest">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1238" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>SHA-256 of the stable serialisation — a fingerprint of the content.</p>
+<p>Two runs of the same computation produce the same digest even though
+their timestamps differ.</p>
+</div>
+</div>
+<div class="member" id="research.ClaimGraph.verify">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verify</span>(
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">pool</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">tolerance</span><span class="sig-ann">: float</span><span class="sig-def">=1e-08</span>,
+    <span class="sig-p">samples</span><span class="sig-ann">: Sequence[float]</span><span class="sig-def">=(0.37, 1.23, 2.71)</span>,
+    <span class="sig-p">mark_refuted</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>
+)<span class="sig-ret"> → VerificationReport</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.verify" aria-label="Link to research.ClaimGraph.verify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1248" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Re-check every claim that carries a re-verification recipe.</p>
+<p>Claims are re-derived from their serialised text — the recipe is parsed
+into a fresh <a href="/docs/api/core/#ExprPool"><code>ExprPool</code></a> — so a graph loaded from disk
+can be revalidated against a newer library build rather than trusted
+blindly.</p>
+<p>This pass can only <em>lower</em> confidence.  A failed re-check marks the
+claim <code>&quot;refuted&quot;</code> (when <em>mark_refuted</em>); a successful one appends an
+audit entry and leaves the status alone.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">pool</code><span class="ptype">ExprPool, optional</span></dt><dd><p>Pool to parse into.  A fresh pool is created when omitted.</p>
+</dd></div><div class="param"><dt><code class="pname">tolerance</code><span class="ptype">float</span></dt><dd><p>Absolute tolerance for the numeric residual fallback.  It does not
+apply to a <code>numeric_relation</code> recipe whose constants are supplied
+at a precision a float cannot hold: those are evaluated exactly and
+judged against the precision the caller actually gave (see below).</p>
+</dd></div><div class="param"><dt><code class="pname">samples</code><span class="ptype">sequence of float</span></dt><dd><p>Sample points used for the numeric fallback.  Each sample gives a
+<em>point</em>, not a single value: free symbols are bound to the sample
+offset by their rank in sorted name order, so they take distinct
+values and the evaluation is off the diagonal <code>x = y = z</code>.  A
+<code>numeric_ok</code> outcome is still finitely many points — evidence,
+never a proof — and a symbol whose offset leaves an operation&#39;s
+domain makes that point unevaluable, which the detail string
+reports and which can leave the outcome <code>inconclusive</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">mark_refuted</code><span class="ptype">bool</span></dt><dd><p>When true (default), failed claims have their status set to
+<code>&quot;refuted&quot;</code> in place.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">VerificationReport</span></dt></div></dl></div>
+</div>
+<div class="member" id="research.ClaimGraph.to_markdown">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_markdown</span>(
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">include_derivations</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>,
+    <span class="sig-p">include_certificates</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>,
+    <span class="sig-p">max_steps</span><span class="sig-ann">: int</span><span class="sig-def">=12</span>
+)<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.to_markdown" aria-label="Link to research.ClaimGraph.to_markdown">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1321" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Render the graph as a Markdown research document.</p>
+<p>Every claim gets its statement, hypotheses, method, dependency links,
+derivation, and an honest verification badge.  A summary table at the
+top states exactly which subset of the document a machine actually
+checked.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">include_derivations</code><span class="ptype">bool</span></dt><dd><p>Emit the per-claim rewrite-step table.</p>
+</dd></div><div class="param"><dt><code class="pname">include_certificates</code><span class="ptype">bool</span></dt><dd><p>Inline the certificate source (can be long).</p>
+</dd></div><div class="param"><dt><code class="pname">max_steps</code><span class="ptype">int</span></dt><dd><p>Truncate derivation tables to this many steps.</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="research.ClaimGraph.to_latex">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_latex</span>(
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">standalone</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>,
+    <span class="sig-p">include_derivations</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>
+)<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraph.to_latex" aria-label="Link to research.ClaimGraph.to_latex">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1351" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Render the graph as a LaTeX research document.</p>
+<p>Each claim becomes a numbered subsection carrying <code>\label{clm:&lt;id&gt;}</code>;
+dependencies are emitted as <code>\hyperref</code> links, so a loop that ran for
+a week emits a writeup with every claim linked to its derivation and
+its certificate status.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">standalone</code><span class="ptype">bool</span></dt><dd><p>Emit a full <code>article</code> document (preamble + <code>\begin{document}</code>)
+rather than only the body.</p>
+</dd></div><div class="param"><dt><code class="pname">include_derivations</code><span class="ptype">bool</span></dt><dd><p>Emit the per-claim derivation list.</p>
+</dd></div></dl></div>
+</div></div></div></section>
+<section class="sym" id="research.RecheckOutcome"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">research.</span><span class="sig-name">RecheckOutcome</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#research.RecheckOutcome" aria-label="Link to research.RecheckOutcome">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L801" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Result of re-checking one claim.</p>
+<p><code>outcome</code> is one of</p>
+<p><code>&quot;ok&quot;</code>
+    The claim was re-established exactly (symbolic residual is zero).
+<code>&quot;numeric_ok&quot;</code>
+    The exact check was inconclusive but a numeric residual check passed.
+    This is evidence, not a proof.
+<code>&quot;failed&quot;</code>
+    The re-check contradicts the claim.  <code>ClaimGraph.verify()</code> marks
+    such claims <code>&quot;refuted&quot;</code>.
+<code>&quot;inconclusive&quot;</code>
+    The recipe ran but decided nothing (e.g. the simplifier could not
+    reduce the residual and no numeric sample was possible).
+<code>&quot;skipped&quot;</code>
+    No re-verification recipe is attached to the claim.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="research.RecheckOutcome.claim_id">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">claim_id</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.RecheckOutcome.claim_id" aria-label="Link to research.RecheckOutcome.claim_id">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L821" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.RecheckOutcome.outcome">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">outcome</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.RecheckOutcome.outcome" aria-label="Link to research.RecheckOutcome.outcome">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L822" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.RecheckOutcome.kind">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">kind</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.RecheckOutcome.kind" aria-label="Link to research.RecheckOutcome.kind">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L823" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.RecheckOutcome.detail">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">detail</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.RecheckOutcome.detail" aria-label="Link to research.RecheckOutcome.detail">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L824" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.RecheckOutcome.ok">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ok</span><span class="sig-ann">: bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.RecheckOutcome.ok" aria-label="Link to research.RecheckOutcome.ok">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L827" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>True when the re-check did not contradict the claim.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="research.ResearchSession"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">research.</span><span class="sig-name">ResearchSession</span>(
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">title</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">pool</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">assumptions</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">capture</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>,
+    <span class="sig-p">normalize</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>,
+    <span class="sig-p">graph</span><span class="sig-ann">: ClaimGraph | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">metadata</span><span class="sig-ann">: Mapping[str, Any] | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">crosscheck</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#research.ResearchSession" aria-label="Link to research.ResearchSession">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1721" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Records the results produced inside a block as a <code>ClaimGraph</code>.</p>
+<p>Enter the session with <code>session()</code>.  Inside the block:</p>
+<ul>
+<li>with <code>capture=True</code>, every <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> returned by
+a module-level Alkahest operation is recorded automatically, and its
+dependency edges are inferred from the expressions it was computed from;</li>
+<li><code>record()</code> registers a result explicitly (one line, always complete);</li>
+<li><code>conjecture()</code> registers a claim that is <em>not</em> proved — its status is
+hard-wired to <code>&quot;unverified&quot;</code>.</li>
+</ul>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">title</code><span class="ptype">str, optional</span></dt><dd><p>Document title.</p>
+</dd></div><div class="param"><dt><code class="pname">pool</code><span class="ptype">ExprPool, optional</span></dt><dd><p>Entered as the active <a href="/docs/api/core/#context"><code>context()</code></a> pool for the block.</p>
+</dd></div><div class="param"><dt><code class="pname">assumptions</code><span class="ptype">Assumptions, optional</span></dt><dd><p>Hypotheses attached to every claim recorded in the block, and entered
+as the active assumption context.  Defaults to whatever
+<a href="/docs/api/core/#active_assumptions"><code>active_assumptions()</code></a> reports at record time.</p>
+</dd></div><div class="param"><dt><code class="pname">capture</code><span class="ptype">bool</span></dt><dd><p>Enable automatic capture (see <code>captured_operations()</code> for its exact
+scope).</p>
+</dd></div><div class="param"><dt><code class="pname">normalize</code><span class="ptype">bool</span></dt><dd><p>Put expression statements into the kernel&#39;s normal form before hashing.
+Disable for very hot loops; IDs then depend on how the expression was
+built.</p>
+</dd></div><div class="param"><dt><code class="pname">graph</code><span class="ptype">ClaimGraph, optional</span></dt><dd><p>Continue an existing graph — this is how iteration <em>N+1</em> cites
+iteration <em>N</em>.</p>
+</dd></div><div class="param"><dt><code class="pname">metadata</code><span class="ptype">mapping, optional</span></dt><dd><p>Extra session metadata stored on the graph.</p>
+</dd></div></dl><div class="members"><div class="members-title">Methods</div><div class="member" id="research.ResearchSession.record">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">record</span>(
+    <span class="sig-p">result</span><span class="sig-ann">: Any</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">statement</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">method</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">label</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">hypotheses</span><span class="sig-ann">: Sequence[str] | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">depends_on</span><span class="sig-ann">: Sequence[str]</span><span class="sig-def">=()</span>,
+    <span class="sig-p">sources</span><span class="sig-ann">: Sequence[Any]</span><span class="sig-def">=()</span>,
+    <span class="sig-p">tags</span><span class="sig-ann">: Sequence[str]</span><span class="sig-def">=()</span>,
+    <span class="sig-p">notes</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">check</span><span class="sig-ann">: Mapping[str, Any] | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">arguments</span><span class="sig-ann">: Sequence[str] | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">crosscheck</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>
+)<span class="sig-ret"> → Claim</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ResearchSession.record" aria-label="Link to research.ResearchSession.record">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1836" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Record a <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> (or bare <code>Expr</code>) as a claim.</p>
+<p>The claim&#39;s status, evidence, and certificate are copied <strong>verbatim</strong>
+from <code>result.verification</code>; this method never upgrades them.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">result</code><span class="ptype">DerivedResult or Expr</span></dt><dd><p>The result to record.</p>
+</dd></div><div class="param"><dt><code class="pname">statement</code><span class="ptype">Expr, DerivedResult, str or mapping, optional</span></dt><dd><p>What the claim asserts, if different from <code>result.value</code>.  A
+mapping of the form <code>{&quot;kind&quot;: ..., &quot;statement&quot;: ..., &quot;latex&quot;: ...}</code>
+is used verbatim, which is how relations such as
+<code>∫ f dx = F</code> are supplied.</p>
+<p>It is <strong>free text, and nothing checks that it describes</strong>
+<code>result</code>.  So a machine-checked status is not carried over onto
+it: when <em>statement</em> is supplied without a <em>check</em> recipe and the
+result&#39;s status is in <code>MACHINE_CHECKED_STATUSES</code>, the claim
+is stored as <code>&quot;asserted&quot;</code> instead, with the result&#39;s own status
+preserved under <code>verification[&quot;result_status&quot;]</code>.  Supply <em>check</em>
+— the recipe <code>ClaimGraph.verify()</code> re-runs — to keep the
+machine-checked status, or record the result without <em>statement</em>.</p>
+</dd></div><div class="param"><dt><code class="pname">method</code><span class="ptype">str, optional</span></dt><dd><p>Operation name.  Defaults to <code>&quot;record&quot;</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">label</code><span class="ptype">str, optional</span></dt><dd><p>Short human-readable title for rendered documents.</p>
+</dd></div><div class="param"><dt><code class="pname">hypotheses</code><span class="ptype">sequence of str, optional</span></dt><dd><p>Overrides the hypotheses taken from the active
+<a href="/docs/api/core/#Assumptions"><code>Assumptions</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">depends_on</code><span class="ptype">sequence of str</span></dt><dd><p>Explicit dependency claim IDs.</p>
+</dd></div><div class="param"><dt><code class="pname">sources</code><span class="ptype">sequence</span></dt><dd><p>Expressions or results this was computed from; their originating
+claims (if recorded in this session) become dependency edges.</p>
+</dd></div><div class="param"><dt><code class="pname">tags, notes</code><span class="ptype">optional</span></dt><dd><p>Free-form metadata.</p>
+</dd></div><div class="param"><dt><code class="pname">check</code><span class="ptype">mapping, optional</span></dt><dd><p>A re-verification recipe (see <code>ClaimGraph.verify()</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">arguments</code><span class="ptype">sequence of str, optional</span></dt><dd><p>Rendered arguments stored in the claim&#39;s provenance.</p>
+</dd></div><div class="param"><dt><code class="pname">crosscheck</code><span class="ptype">CrossCheck, optional</span></dt><dd><p>An already-computed <a href="/docs/api/mod-crosscheck/#crosscheck.CrossCheck"><code>crosscheck.CrossCheck</code></a>,
+attached to the claim under <code>verification[&quot;crosscheck&quot;]</code> and
+surfaced as a <code>crosscheck:&lt;outcome&gt;</code> tag.</p>
+<p>It is <strong>evidence, never a verdict</strong>.  Agreement with an independent
+implementation does not upgrade the status, and a divergence does
+not set <code>&quot;refuted&quot;</code> either: a divergence names two suspects, not
+one (P2-2 design decision D5), so which side is wrong is for a human
+or a later check to adjudicate.  The recording layer&#39;s honesty
+invariant — it may never raise confidence — is preserved exactly.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Claim</span></dt><dd><p>The stored claim (merged, if an identical claim already existed).</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="research.ResearchSession.conjecture">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">conjecture</span>(
+    <span class="sig-p">statement</span><span class="sig-ann">: Any</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">evidence</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">method</span><span class="sig-ann">: str</span><span class="sig-def">='conjecture'</span>,
+    <span class="sig-p">label</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">hypotheses</span><span class="sig-ann">: Sequence[str] | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">depends_on</span><span class="sig-ann">: Sequence[str]</span><span class="sig-def">=()</span>,
+    <span class="sig-p">sources</span><span class="sig-ann">: Sequence[Any]</span><span class="sig-def">=()</span>,
+    <span class="sig-p">tags</span><span class="sig-ann">: Sequence[str]</span><span class="sig-def">=()</span>,
+    <span class="sig-p">notes</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">check</span><span class="sig-ann">: Mapping[str, Any] | None</span><span class="sig-def">=None</span>
+)<span class="sig-ret"> → Claim</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ResearchSession.conjecture" aria-label="Link to research.ResearchSession.conjecture">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1990" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Record a claim that is <strong>not</strong> proved.</p>
+<p>The status is hard-wired to <code>&quot;unverified&quot;</code> — there is deliberately no
+parameter to say otherwise.  <em>evidence</em> is free text describing why the
+conjecture is plausible (e.g. <code>&quot;PSLQ at 60 digits&quot;</code>); it is rendered
+as supporting evidence, never as a proof.</p>
+
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Claim</span></dt></div></dl></div>
+</div>
+<div class="member" id="research.ResearchSession.cite">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">cite</span>(<span class="sig-p">claim</span><span class="sig-ann">: str | Claim</span>)<span class="sig-ret"> → Claim</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ResearchSession.cite" aria-label="Link to research.ResearchSession.cite">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L2048" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Mark a claim as a dependency of the next result recorded.</p>
+<p>Lets iteration <em>N+1</em> cite iteration <em>N</em> by ID even when the two are not
+linked by a shared expression object.</p>
+
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">MissingClaimError</span></dt><dd><p>If the ID is not in this session&#39;s graph.</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="research.ResearchSession.run">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">run</span>(<span class="sig-p">operation</span><span class="sig-ann">: Callable[..., Any]</span>, <span class="sig-p">*args</span><span class="sig-ann">: Any</span>, <span class="sig-p">**kwargs</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ResearchSession.run" aria-label="Link to research.ResearchSession.run">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L2064" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Call <em>operation</em> and record its result, returning the result.</p>
+<p>The explicit, always-complete alternative to automatic capture:
+dependency edges are inferred from <em>args</em> exactly as they would be by
+the capture hook.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak                      </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># doctest: +SKIP</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> value </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> s.run(ak.integrate, f, x)          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># doctest: +SKIP</span></span></code></pre></div></div>
+</div>
+<div class="member" id="research.ResearchSession.capture_report">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">capture_report</span>()<span class="sig-ret"> → dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.ResearchSession.capture_report" aria-label="Link to research.ResearchSession.capture_report">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L2080" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>What automatic capture is doing, and anything it could not do.</p>
+<p>Returns a mapping with <code>mode</code>, the <code>operations</code> currently hooked,
+the number of <code>claims</code> recorded, and any <code>errors</code> raised inside the
+hook.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="research.VerificationReport"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">research.</span><span class="sig-name">VerificationReport</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#research.VerificationReport" aria-label="Link to research.VerificationReport">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L833" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Aggregate outcome of <code>ClaimGraph.verify()</code>.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="research.VerificationReport.outcomes">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">outcomes</span><span class="sig-ann">: tuple[RecheckOutcome, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.VerificationReport.outcomes" aria-label="Link to research.VerificationReport.outcomes">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L836" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.VerificationReport.alkahest_version">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">alkahest_version</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.VerificationReport.alkahest_version" aria-label="Link to research.VerificationReport.alkahest_version">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L837" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.VerificationReport.checked_at">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">checked_at</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.VerificationReport.checked_at" aria-label="Link to research.VerificationReport.checked_at">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L838" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="research.VerificationReport.ok">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ok</span><span class="sig-ann">: bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.VerificationReport.ok" aria-label="Link to research.VerificationReport.ok">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L847" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>True when no claim was refuted.</p>
+</div>
+</div>
+<div class="member" id="research.VerificationReport.failed">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">failed</span><span class="sig-ann">: tuple[RecheckOutcome, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.VerificationReport.failed" aria-label="Link to research.VerificationReport.failed">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L852" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Outcomes that contradicted their claim.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="research.VerificationReport.summary">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">summary</span>()<span class="sig-ret"> → dict[str, int]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.VerificationReport.summary" aria-label="Link to research.VerificationReport.summary">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L856" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Count of outcomes by kind, e.g. <code>{&quot;ok&quot;: 3, &quot;skipped&quot;: 2}</code>.</p>
+</div>
+</div>
+<div class="member" id="research.VerificationReport.to_markdown">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_markdown</span>()<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#research.VerificationReport.to_markdown" aria-label="Link to research.VerificationReport.to_markdown">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L863" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Render the report as a Markdown table.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="research.ClaimGraphError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-prefix">research.</span><span class="sig-name">ClaimGraphError</span><span class="sig-bases">(ValueError)</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#research.ClaimGraphError" aria-label="Link to research.ClaimGraphError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L208" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Base class for claim-graph errors (<code>E-RESEARCH-*</code>).</p>
+</div></section>
+<section class="sym" id="research.CycleError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-prefix">research.</span><span class="sig-name">CycleError</span><span class="sig-bases">(ClaimGraphError)</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#research.CycleError" aria-label="Link to research.CycleError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L223" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>The deserialised graph contains a dependency cycle.</p>
+</div></section>
+<section class="sym" id="research.MissingClaimError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-prefix">research.</span><span class="sig-name">MissingClaimError</span><span class="sig-bases">(ClaimGraphError, KeyError)</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#research.MissingClaimError" aria-label="Link to research.MissingClaimError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L214" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A dependency edge referenced a claim that is not in the graph.</p>
+</div></section>
+<section class="sym" id="research.captured_operations"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">research.</span><span class="sig-name">captured_operations</span>()<span class="sig-ret"> → tuple[str, ...]</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#research.captured_operations" aria-label="Link to research.captured_operations">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L1703" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Operations currently wrapped for automatic capture.</p>
+<p>Empty until the first <code>session()</code> with <code>capture=True</code> is entered.
+Automatic capture sees calls made <strong>through the module namespace</strong>
+(<code>alkahest.integrate(...)</code>).  It does not see calls through a name bound
+before the hooks were installed (<code>from alkahest import integrate</code>) or
+methods on objects (<code>Assumptions.simplify</code>); use
+<code>ResearchSession.record()</code> for those.</p>
+</div></section>
+<section class="sym" id="research.claim_id"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">research.</span><span class="sig-name">claim_id</span>(
+    <span class="sig-p">statement</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">hypotheses</span><span class="sig-ann">: Sequence[str]</span><span class="sig-def">=()</span>,
+    <span class="sig-p">method</span><span class="sig-ann">: str</span><span class="sig-def">=''</span>
+)<span class="sig-ret"> → str</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#research.claim_id" aria-label="Link to research.claim_id">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L483" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return the content-addressed identifier for a claim.</p>
+<p>The identifier is <code>&quot;clm_&quot; + sha256(payload)[:16]</code> where <em>payload</em> is a
+canonical JSON encoding of the normalised statement, the <strong>sorted</strong> set of
+hypotheses, and the method.  It deliberately does <em>not</em> include timestamps,
+dependency edges, or the library version, so the same claim derived twice
+in different sessions receives the same ID.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">statement</code><span class="ptype">str</span></dt><dd><p>The already-normalised statement text (see
+<code>ResearchSession.record()</code>, which normalises for you).</p>
+</dd></div><div class="param"><dt><code class="pname">hypotheses</code><span class="ptype">sequence of str</span></dt><dd><p>Hypothesis predicates.  Order is irrelevant — they are sorted.</p>
+</dd></div><div class="param"><dt><code class="pname">method</code><span class="ptype">str</span></dt><dd><p>The operation or method that produced the claim, e.g. <code>&quot;integrate&quot;</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">str</span></dt><dd><p>A stable identifier such as <code>&quot;clm_9f1c0b2a7d4e5f60&quot;</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.research </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> claim_id</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> claim_id(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"(1/2 * log(2))"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x > 0"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"integrate"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">==</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> claim_id(</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">     "(1/2 * log(2))"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x > 0"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"integrate"</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> )</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span></code></pre></div></div></section>
+<section class="sym" id="research.session"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">research.</span><span class="sig-name">session</span>(
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">title</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">pool</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">assumptions</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">capture</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>,
+    <span class="sig-p">normalize</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>,
+    <span class="sig-p">graph</span><span class="sig-ann">: ClaimGraph | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">metadata</span><span class="sig-ann">: Mapping[str, Any] | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">crosscheck</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>
+)<span class="sig-ret"> → ResearchSession</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#research.session" aria-label="Link to research.session">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L2215" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Open a research session (see <code>ResearchSession</code>).</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.research.session(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">title</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"Demo"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">capture</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> s:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">     _ </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.integrate(x, x)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> len</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(s.graph)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span></span></code></pre></div></div></section>
+<section class="sym" id="research.MACHINE_CHECKED_STATUSES"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">research.</span><span class="sig-name">MACHINE_CHECKED_STATUSES</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#research.MACHINE_CHECKED_STATUSES" aria-label="Link to research.MACHINE_CHECKED_STATUSES">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L98" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>MACHINE_CHECKED_STATUSES = frozenset({'exactly_verified', 'lean_checked'})</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="research.SCHEMA_VERSION"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">research.</span><span class="sig-name">SCHEMA_VERSION</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#research.SCHEMA_VERSION" aria-label="Link to research.SCHEMA_VERSION">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L91" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>SCHEMA_VERSION = 1</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="research.STATUS_BADGES"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">research.</span><span class="sig-name">STATUS_BADGES</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#research.STATUS_BADGES" aria-label="Link to research.STATUS_BADGES">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/research.py#L104" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>STATUS_BADGES = {'lean_checked': 'an external Lean 4 run checked this claim', 'exactly_verified': 'the kernel proved the symbolic residual is zero', 'certificate_available':…</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/mod-pari/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">alkahest.pari</span></a><a class="pager-next" href="/docs/api/mod-smt/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">alkahest.smt</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/blob/main/website/docs/scripts/extract_api.py" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d3"><a href="#research.Claim">research.Claim</a></li><li class="d3"><a href="#research.ClaimGraph">research.ClaimGraph</a></li><li class="d3"><a href="#research.RecheckOutcome">research.RecheckOutcome</a></li><li class="d3"><a href="#research.ResearchSession">research.ResearchSession</a></li><li class="d3"><a href="#research.VerificationReport">research.VerificationReport</a></li><li class="d3"><a href="#research.ClaimGraphError">research.ClaimGraphError</a></li><li class="d3"><a href="#research.CycleError">research.CycleError</a></li><li class="d3"><a href="#research.MissingClaimError">research.MissingClaimError</a></li><li class="d3"><a href="#research.captured_operations">research.captured_operations</a></li><li class="d3"><a href="#research.claim_id">research.claim_id</a></li><li class="d3"><a href="#research.session">research.session</a></li><li class="d3"><a href="#research.MACHINE_CHECKED_STATUSES">research.MACHINE_CHECKED_STATUSES</a></li><li class="d3"><a href="#research.SCHEMA_VERSION">research.SCHEMA_VERSION</a></li><li class="d3"><a href="#research.STATUS_BADGES">research.STATUS_BADGES</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/blob/main/website/docs/scripts/extract_api.py" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plotting, printing and parsing API · Alkahest Docs</title>
+<meta name="description" content="Python API reference for plotting, printing and parsing in Alkahest: 10 documented symbols with signatures, parameters and source links.">
+<meta property="og:title" content="Plotting, printing and parsing API · Alkahest Docs">
+<meta property="og:description" content="Python API reference for plotting, printing and parsing in Alkahest: 10 documented symbols with signatures, parameters and source links.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/" class="active" aria-current="page">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>Plotting, printing and parsing</h1>
+    <section class="sym" id="latex"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">latex</span>(<span class="sig-p">expr</span>)<span class="sig-ret"> → str</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#latex" aria-label="Link to latex">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_pretty.py#L15" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return a LaTeX string for the given <a href="/docs/api/core/#Expr"><code>Expr</code></a>.</p>
+<p>A <a href="/docs/api/diff/#Series"><code>Series</code></a> (from <a href="/docs/api/diff/#series"><code>series()</code></a>) renders its
+expansion with the <code>O(·)</code> term, and a <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a>
+renders its <code>.value</code>.</p>
+<p>The result is suitable for <code>$...$</code> in a LaTeX document or
+<code>IPython.display.Math(alkahest.latex(expr))</code> in a Jupyter notebook.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.latex(alkahest.sin(x)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.cos(x)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">sin</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">!</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">left(x</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">right)^2 + </span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">cos</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">!</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">left(x</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">right)^2'</span></span></code></pre></div></div></section>
+<section class="sym" id="plot"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">plot</span>(
+    <span class="sig-p">expr</span>,
+    <span class="sig-p">var</span>,
+    <span class="sig-p">range_</span><span class="sig-ann">: tuple[float, float]</span><span class="sig-def">=(-5.0, 5.0)</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">n</span><span class="sig-ann">: int</span><span class="sig-def">=300</span>,
+    <span class="sig-p">label</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">title</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">backend</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">**kw</span><span class="sig-ann">: Any</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#plot" aria-label="Link to plot">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_plot.py#L98" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Plot a single-variable symbolic expression.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr  — symbolic expression in <em>var</em>.</span></dt></div><div class="param"><dt><code class="pname">var</code><span class="ptype">Expr  — the free variable.</span></dt></div><div class="param"><dt><code class="pname">range_</code><span class="ptype">(lo, hi) — plotting interval (default: <code>(-5, 5)</code>).</span></dt></div><div class="param"><dt><code class="pname">n</code><span class="ptype">number of sample points (default: <code>300</code>).</span></dt></div><div class="param"><dt><code class="pname">label</code><span class="ptype">legend label.</span></dt></div><div class="param"><dt><code class="pname">title</code><span class="ptype">axis title.</span></dt></div><div class="param"><dt><code class="pname">backend</code><span class="ptype"><code>&quot;matplotlib&quot;</code> (default) or <code>&quot;plotly&quot;</code>.</span></dt></div><div class="param"><dt><code class="pname">**kw</code><span class="ptype">forwarded to the backend&#39;s line-plot call.</span></dt></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt></dt><dd><p>Axes (matplotlib) or Figure (plotly).</p>
+</dd></div></dl></div></section>
+<section class="sym" id="plot3d"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">plot3d</span>(
+    <span class="sig-p">expr</span>,
+    <span class="sig-p">var_x</span>,
+    <span class="sig-p">var_y</span>,
+    <span class="sig-p">x_range</span><span class="sig-ann">: tuple[float, float]</span><span class="sig-def">=(-5.0, 5.0)</span>,
+    <span class="sig-p">y_range</span><span class="sig-ann">: tuple[float, float]</span><span class="sig-def">=(-5.0, 5.0)</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">n</span><span class="sig-ann">: int</span><span class="sig-def">=80</span>,
+    <span class="sig-p">title</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">backend</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">**kw</span><span class="sig-ann">: Any</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#plot3d" aria-label="Link to plot3d">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_plot.py#L162" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Plot a two-variable symbolic expression as a 3-D surface.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr  — symbolic expression in <em>var_x</em> and <em>var_y</em>.</span></dt></div><div class="param"><dt><code class="pname">var_x, var_y</code><span class="ptype">Expr — the two free variables.</span></dt></div><div class="param"><dt><code class="pname">x_range, y_range</code><span class="ptype">(lo, hi) — plotting intervals.</span></dt></div><div class="param"><dt><code class="pname">n</code><span class="ptype">grid resolution per axis (default: <code>80</code>).</span></dt></div><div class="param"><dt><code class="pname">title</code><span class="ptype">figure title.</span></dt></div><div class="param"><dt><code class="pname">backend</code><span class="ptype"><code>&quot;matplotlib&quot;</code> (default) or <code>&quot;plotly&quot;</code>.</span></dt></div><div class="param"><dt><code class="pname">**kw</code><span class="ptype">forwarded to the backend surface call.</span></dt></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt></dt><dd><p>Axes3D (matplotlib) or Figure (plotly).</p>
+</dd></div></dl></div></section>
+<section class="sym" id="plot_dag"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">plot_dag</span>(<span class="sig-p">expr</span>, <span class="sig-sep">*</span>, <span class="sig-p">title</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>, <span class="sig-p">**kw</span><span class="sig-ann">: Any</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#plot_dag" aria-label="Link to plot_dag">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_plot.py#L466" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Visualise the expression DAG.</p>
+<p>Tries the <code>graphviz</code> Python package first (renders a nice PNG/SVG via
+system Graphviz).  Falls back to returning the raw DOT string so the
+caller can pipe it to <code>dot</code> manually.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr — the expression to visualise.</span></dt></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt></dt><dd><p>graphviz.Source  — if the <code>graphviz</code> package is installed.</p>
+</dd></div><div class="param"><dt></dt><dd><p>str              — raw DOT string otherwise.</p>
+</dd></div></dl></div></section>
+<section class="sym" id="plot_implicit"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">plot_implicit</span>(
+    <span class="sig-p">expr</span>,
+    <span class="sig-p">var_x</span>,
+    <span class="sig-p">var_y</span>,
+    <span class="sig-p">x_range</span><span class="sig-ann">: tuple[float, float]</span><span class="sig-def">=(-5.0, 5.0)</span>,
+    <span class="sig-p">y_range</span><span class="sig-ann">: tuple[float, float]</span><span class="sig-def">=(-5.0, 5.0)</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">n</span><span class="sig-ann">: int</span><span class="sig-def">=200</span>,
+    <span class="sig-p">title</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">backend</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">**kw</span><span class="sig-ann">: Any</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#plot_implicit" aria-label="Link to plot_implicit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_plot.py#L290" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Plot the zero-set of a two-variable expression via matplotlib contour.</p>
+<p>Evaluates <code>expr</code> on an <code>n×n</code> grid and draws the zero contour.
+Only supports the <code>&quot;matplotlib&quot;</code> backend (Plotly contour lines are
+available as a <code>&quot;plotly&quot;</code> fallback using <code>Contour</code>).</p>
+</div></section>
+<section class="sym" id="plot_parametric"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">plot_parametric</span>(
+    <span class="sig-p">expr_x</span>,
+    <span class="sig-p">expr_y</span>,
+    <span class="sig-p">param</span>,
+    <span class="sig-p">range_</span><span class="sig-ann">: tuple[float, float]</span><span class="sig-def">=(0.0, 6.283185307179586)</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">n</span><span class="sig-ann">: int</span><span class="sig-def">=500</span>,
+    <span class="sig-p">label</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">title</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">backend</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">**kw</span><span class="sig-ann">: Any</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#plot_parametric" aria-label="Link to plot_parametric">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_plot.py#L223" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Plot a parametric curve (x(t), y(t)).</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr_x, expr_y</code><span class="ptype">Expr — x- and y-components in <em>param</em>.</span></dt></div><div class="param"><dt><code class="pname">param</code><span class="ptype">Expr  — the parameter variable.</span></dt></div><div class="param"><dt><code class="pname">range_</code><span class="ptype">(lo, hi) — parameter interval (default: <code>(0, 2π)</code>).</span></dt></div><div class="param"><dt><code class="pname">n</code><span class="ptype">number of sample points.</span></dt></div></dl></div></section>
+<section class="sym" id="plot_roots"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">plot_roots</span>(
+    <span class="sig-p">unipoly</span>,
+    <span class="sig-p">var</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">title</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">backend</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">**kw</span><span class="sig-ann">: Any</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#plot_roots" aria-label="Link to plot_roots">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_plot.py#L343" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Mark real roots of a <code>UniPoly</code> on the x-axis (rug plot).</p>
+<p>Uses <a href="/docs/api/poly/#real_roots"><code>real_roots()</code></a> to isolate roots, then places a vertical
+line at the midpoint of each isolating interval.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">unipoly</code><span class="ptype">UniPoly — polynomial whose real roots are to be marked.</span></dt></div><div class="param"><dt><code class="pname">var</code><span class="ptype">Expr    — the variable (used for axis labelling only).</span></dt></div></dl></div></section>
+<section class="sym" id="plot_series"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">plot_series</span>(
+    <span class="sig-p">series_result</span>,
+    <span class="sig-p">original_expr</span>,
+    <span class="sig-p">var</span>,
+    <span class="sig-p">range_</span><span class="sig-ann">: tuple[float, float]</span><span class="sig-def">=(-3.0, 3.0)</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">n</span><span class="sig-ann">: int</span><span class="sig-def">=300</span>,
+    <span class="sig-p">title</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">backend</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">**kw</span><span class="sig-ann">: Any</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#plot_series" aria-label="Link to plot_series">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_plot.py#L405" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Overlay a Taylor/Laurent series truncation against the original function.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">series_result</code><span class="ptype">Series or DerivedResult — output of <a href="/docs/api/diff/#series"><code>series()</code></a>.</span></dt></div><div class="param"><dt><code class="pname">original_expr</code><span class="ptype">Expr — the exact expression (plotted as a reference).</span></dt></div><div class="param"><dt><code class="pname">var</code><span class="ptype">Expr — the variable.</span></dt></div><div class="param"><dt><code class="pname">range_</code><span class="ptype">(lo, hi) — plotting interval.</span></dt></div></dl></div></section>
+<section class="sym" id="plot_svg"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">plot_svg</span>(
+    <span class="sig-p">expr</span>,
+    <span class="sig-p">var</span>,
+    <span class="sig-p">range_</span><span class="sig-ann">: tuple[float, float]</span><span class="sig-def">=(-5.0, 5.0)</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">width</span><span class="sig-ann">: int</span><span class="sig-def">=640</span>,
+    <span class="sig-p">height</span><span class="sig-ann">: int</span><span class="sig-def">=400</span>,
+    <span class="sig-p">n</span><span class="sig-ann">: int</span><span class="sig-def">=300</span>
+)<span class="sig-ret"> → str</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#plot_svg" aria-label="Link to plot_svg">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_plot.py#L504" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return a standalone SVG string for the expression (no Python dep needed).</p>
+<p>This calls the Rust <code>render_svg</code> function directly and requires no
+matplotlib / plotly installation.  The result can be:</p>
+<ul>
+<li>Written to a <code>.svg</code> file.</li>
+<li>Embedded in HTML as <code>&lt;img src=&quot;data:image/svg+xml;base64,...&quot;&gt;</code>.</li>
+<li>Displayed in Jupyter: <code>IPython.display.SVG(alkahest.plot_svg(...))</code>.</li>
+</ul>
+</div></section>
+<section class="sym" id="unicode_str"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">unicode_str</span>(<span class="sig-p">expr</span>)<span class="sig-ret"> → str</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#unicode_str" aria-label="Link to unicode_str">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_pretty.py#L48" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return a Unicode pretty-printed string for the given <a href="/docs/api/core/#Expr"><code>Expr</code></a>.</p>
+<p>Uses Unicode superscripts, Greek letters, fraction characters, and root
+symbols for a human-readable representation without LaTeX markup.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.unicode_str(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'x² + 1'</span></span></code></pre></div></div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/errors/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Error handling</span></a><a class="pager-next" href="/docs/api/more/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Everything else</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/blob/main/website/docs/scripts/extract_api.py" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d3"><a href="#latex">latex</a></li><li class="d3"><a href="#plot">plot</a></li><li class="d3"><a href="#plot3d">plot3d</a></li><li class="d3"><a href="#plot_dag">plot_dag</a></li><li class="d3"><a href="#plot_implicit">plot_implicit</a></li><li class="d3"><a href="#plot_parametric">plot_parametric</a></li><li class="d3"><a href="#plot_roots">plot_roots</a></li><li class="d3"><a href="#plot_series">plot_series</a></li><li class="d3"><a href="#plot_svg">plot_svg</a></li><li class="d3"><a href="#unicode_str">unicode_str</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/blob/main/website/docs/scripts/extract_api.py" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

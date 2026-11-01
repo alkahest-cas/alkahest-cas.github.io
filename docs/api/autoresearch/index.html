@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autoresearch modules API · Alkahest Docs</title>
+<meta name="description" content="Three submodules aimed at unattended math-search loops. All are reachable as alkahest.ansatz / alkahest.crosscheck / alkahest.smt without a separate import…">
+<meta property="og:title" content="Autoresearch modules API · Alkahest Docs">
+<meta property="og:description" content="Three submodules aimed at unattended math-search loops. All are reachable as alkahest.ansatz / alkahest.crosscheck / alkahest.smt without a separate import…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/" class="active" aria-current="page">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>Autoresearch modules API</h1>
+    <div class="prose-block"><p>Three submodules aimed at unattended math-search loops. All are reachable as
+<code>alkahest.ansatz</code> / <code>alkahest.crosscheck</code> / <code>alkahest.smt</code> without a
+separate import, and all are listed in <code>alkahest.__all__</code>.</p>
+<p>Conceptual guides: <code>Ansatz families &lt;../ansatz.html&gt;</code><em>,
+<code>Cross-CAS testing &lt;../crosscheck.html&gt;</code></em>, <code>SMT bridge &lt;../smt.html&gt;</code>_.</p>
+<blockquote><p><strong>Note</strong> 
+Each module has one error code that means <em>undecided by this route</em>, not
+<em>false</em>: <code>E-ANSATZ-003</code> (no member of this family fits), <code>E-XCHECK-002</code>
+(no oracle installed), <code>E-SMT-003</code> (algebraic witness that cannot be
+lifted exactly). A search loop that records any of them as a negative result
+closes a branch it never explored.</p>
+</blockquote>
+</div>
+<h2 id="alkahestansatz"><a class="hanchor" href="#alkahestansatz" aria-hidden="true" tabindex="-1">#</a>alkahest.ansatz</h2>
+<div class="prose-block"><p>Parametric families with named unknown coefficients, plus the fitting step.</p>
+</div>
+<section class="sym" id="ansatz.polynomial"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">ansatz.</span><span class="sig-name">polynomial</span>(
+    <span class="sig-p">pool</span><span class="sig-ann">: Any</span>,
+    <span class="sig-p">vars</span><span class="sig-ann">: Sequence[Any]</span>,
+    <span class="sig-p">degree</span><span class="sig-ann">: int</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">name</span><span class="sig-ann">: str</span><span class="sig-def">='c'</span>,
+    <span class="sig-p">min_degree</span><span class="sig-ann">: int</span><span class="sig-def">=0</span>,
+    <span class="sig-p">max_terms</span><span class="sig-ann">: int</span><span class="sig-def">=DEFAULT_MAX_TERMS</span>,
+    <span class="sig-p">reserved</span><span class="sig-ann">: Sequence[Any]</span><span class="sig-def">=()</span>
+)<span class="sig-ret"> → Ansatz</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ansatz.polynomial" aria-label="Link to ansatz.polynomial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/ansatz.py#L710" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Every polynomial of total degree ≤ <em>degree</em> in <em>vars</em>, with unknown coefficients.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">pool</code><span class="ptype">ExprPool</span></dt><dd><p>Pool the coefficient symbols are interned in.</p>
+</dd></div><div class="param"><dt><code class="pname">vars</code><span class="ptype">sequence of Expr</span></dt><dd><p>Independent variables, in the order the exponent tuples index them.</p>
+</dd></div><div class="param"><dt><code class="pname">degree</code><span class="ptype">int</span></dt><dd><p>Maximum <strong>total</strong> degree.</p>
+</dd></div><div class="param"><dt><code class="pname">name</code><span class="ptype">str</span></dt><dd><p>Coefficient prefix. Names are <code>f&quot;{name}_{i}&quot;</code> for one variable and
+<code>f&quot;{name}_{i}_{j}...&quot;</code> for several — always predictable, never
+gensym-ed. Collides → <code>E-ANSATZ-001</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">min_degree</code><span class="ptype">int</span></dt><dd><p>Drop monomials of total degree below this (<code>min_degree=degree</code> gives
+the homogeneous forms).</p>
+</dd></div><div class="param"><dt><code class="pname">max_terms</code><span class="ptype">int</span></dt><dd><p>Refuse rather than materialise a family bigger than this
+(<code>E-ANSATZ-002</code>). <code>C(n + d, d)</code> grows fast.</p>
+</dd></div><div class="param"><dt><code class="pname">reserved</code><span class="ptype">sequence of Expr or str</span></dt><dd><p>Extra symbols (or names) the coefficients must not collide with — pass
+the target function here when it carries symbols of its own.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Ansatz</span></dt></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">AnsatzError</span></dt><dd><p><code>E-ANSATZ-001</code> on a name collision, <code>E-ANSATZ-002</code> if the family
+exceeds <em>max_terms</em>.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ansatz </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> polynomial</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> polynomial(pool, [x], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">degree</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A.names</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'c_0'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'c_1'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'c_2'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'c_3'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">     polynomial(pool, [x], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">degree</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">99</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">max_terms</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.AnsatzError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> exc:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">     exc.code</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'E-ANSATZ-002'</span></span></code></pre></div></div></section>
+<section class="sym" id="ansatz.rational"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">ansatz.</span><span class="sig-name">rational</span>(
+    <span class="sig-p">pool</span><span class="sig-ann">: Any</span>,
+    <span class="sig-p">vars</span><span class="sig-ann">: Sequence[Any]</span>,
+    <span class="sig-p">num_degree</span><span class="sig-ann">: int</span>,
+    <span class="sig-p">den_degree</span><span class="sig-ann">: int</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">name</span><span class="sig-ann">: str</span><span class="sig-def">='a'</span>,
+    <span class="sig-p">den_name</span><span class="sig-ann">: str</span><span class="sig-def">='b'</span>,
+    <span class="sig-p">monic_denominator</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>,
+    <span class="sig-p">max_terms</span><span class="sig-ann">: int</span><span class="sig-def">=DEFAULT_MAX_TERMS</span>,
+    <span class="sig-p">reserved</span><span class="sig-ann">: Sequence[Any]</span><span class="sig-def">=()</span>
+)<span class="sig-ret"> → Ansatz</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ansatz.rational" aria-label="Link to ansatz.rational">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/ansatz.py#L804" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A rational-function family <code>p / q</code> — the Padé case, kept linear.</p>
+<p><code>p/q ≈ f</code> is <em>not</em> linear in the coefficients of <code>p</code> and <code>q</code>, but
+<code>p − f·q = 0</code> is linear in them jointly. This constructor records the
+numerator/denominator split so <code>Ansatz.residual()</code> (and <code>fit()</code>,
+which clears denominators itself) can apply that transform, keeping the
+default solve path exact linear algebra with no <code>groebner</code> dependency.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">pool, vars, max_terms, reserved</code></dt><dd><p>As <code>polynomial()</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">num_degree, den_degree</code><span class="ptype">int</span></dt><dd><p>Total degrees of the numerator and denominator.</p>
+</dd></div><div class="param"><dt><code class="pname">name, den_name</code><span class="ptype">str</span></dt><dd><p>Coefficient prefixes for the numerator and denominator.</p>
+</dd></div><div class="param"><dt><code class="pname">monic_denominator</code><span class="ptype">bool</span></dt><dd><p>When true (default), the denominator&#39;s constant term is fixed to <code>1</code>.
+Without a normalisation <code>p/q</code> and <code>(λp)/(λq)</code> are the same function,
+so <strong>every</strong> such fit would report a spurious extra free parameter.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Ansatz</span></dt><dd><p><code>.expr</code> is the quotient; <code>.metadata[&quot;numerator&quot;]</code> and
+<code>[&quot;denominator&quot;]</code> are the two polynomials, and
+<code>[&quot;numerator_terms&quot;]</code> is how many of <code>.unknowns</code> belong to the
+numerator.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ansatz </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> rational</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> rational(pool, [x], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">num_degree</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">den_degree</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A.names</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'a_0'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'a_1'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'b_1'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A.expr</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">((a_0 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> a_1)) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> b_1))</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">^-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div></div></section>
+<section class="sym" id="ansatz.exponential_polynomial"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">ansatz.</span><span class="sig-name">exponential_polynomial</span>(
+    <span class="sig-p">pool</span><span class="sig-ann">: Any</span>,
+    <span class="sig-p">var</span><span class="sig-ann">: Any</span>,
+    <span class="sig-p">rates</span><span class="sig-ann">: Sequence[Any]</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">degree</span><span class="sig-ann">: int | Sequence[int]</span><span class="sig-def">=0</span>,
+    <span class="sig-p">name</span><span class="sig-ann">: str</span><span class="sig-def">='c'</span>,
+    <span class="sig-p">max_terms</span><span class="sig-ann">: int</span><span class="sig-def">=DEFAULT_MAX_TERMS</span>,
+    <span class="sig-p">reserved</span><span class="sig-ann">: Sequence[Any]</span><span class="sig-def">=()</span>
+)<span class="sig-ret"> → Ansatz</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ansatz.exponential_polynomial" aria-label="Link to ansatz.exponential_polynomial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/ansatz.py#L987" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>Σᵢ pᵢ(x)·e^{λᵢ x}</code> with polynomial <code>pᵢ</code> of the given degree.</p>
+<p>The standard ansatz for a linear ODE or recurrence whose characteristic
+roots <code>λᵢ</code> are already known — the polynomial factor&#39;s degree is the
+multiplicity minus one. Because the <code>λᵢ</code> are <em>given</em>, the family stays
+linear in the unknowns and fits through the default path.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">pool</code><span class="ptype">ExprPool</span></dt></div><div class="param"><dt><code class="pname">var</code><span class="ptype">Expr</span></dt><dd><p>The independent variable.</p>
+</dd></div><div class="param"><dt><code class="pname">rates</code><span class="ptype">sequence of Expr or int</span></dt><dd><p>The exponents <code>λᵢ</code>. Duplicates are allowed but pointless — raise the
+corresponding <em>degree</em> instead.</p>
+</dd></div><div class="param"><dt><code class="pname">degree</code><span class="ptype">int or sequence of int</span></dt><dd><p>Degree of each polynomial factor; a scalar applies to every rate.</p>
+</dd></div><div class="param"><dt><code class="pname">name, max_terms, reserved</code></dt><dd><p>As <code>polynomial()</code>. Coefficient names are <code>f&quot;{name}_{i}_{k}&quot;</code> for
+rate <em>i</em> and power <em>k</em>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Ansatz</span></dt></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ansatz </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> exponential_polynomial</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> exponential_polynomial(pool, x, [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A.names</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'c_0_0'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'c_1_0'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A.expr</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">((exp(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> c_0_0) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (exp((x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> c_1_0))</span></span></code></pre></div></div></section>
+<section class="sym" id="ansatz.linear_combination"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">ansatz.</span><span class="sig-name">linear_combination</span>(
+    <span class="sig-p">pool</span><span class="sig-ann">: Any</span>,
+    <span class="sig-p">basis</span><span class="sig-ann">: Sequence[Any]</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">vars</span><span class="sig-ann">: Sequence[Any] | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">name</span><span class="sig-ann">: str</span><span class="sig-def">='c'</span>,
+    <span class="sig-p">max_terms</span><span class="sig-ann">: int</span><span class="sig-def">=DEFAULT_MAX_TERMS</span>,
+    <span class="sig-p">reserved</span><span class="sig-ann">: Sequence[Any]</span><span class="sig-def">=()</span>
+)<span class="sig-ret"> → Ansatz</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ansatz.linear_combination" aria-label="Link to ansatz.linear_combination">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/ansatz.py#L909" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>Σ cᵢ · basisᵢ</code> — the general escape hatch.</p>
+<p>Whenever the family is &quot;an unknown linear combination of <em>these</em> things&quot;
+— a Lyapunov basis, a set of candidate integrals, ζ(3) and π³ and log³2 —
+this is the constructor. Everything else in this module is a convenience
+wrapper that computes a basis for you.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">pool</code><span class="ptype">ExprPool</span></dt></div><div class="param"><dt><code class="pname">basis</code><span class="ptype">sequence of Expr</span></dt><dd><p>The basis functions. Not checked for linear independence — a dependent
+basis simply shows up as free parameters in the fit, which is the
+honest answer.</p>
+</dd></div><div class="param"><dt><code class="pname">vars</code><span class="ptype">sequence of Expr, optional</span></dt><dd><p>Independent variables. Inferred from the <em>basis&#39;s</em> free symbols (sorted
+by name) when omitted — never from <code>reserved</code>, which only reserves
+names.</p>
+</dd></div><div class="param"><dt><code class="pname">name, max_terms, reserved</code></dt><dd><p>As <code>polynomial()</code>. <code>reserved</code> keeps the coefficients from
+colliding with symbols the basis does not mention; it does not make
+those symbols variables of the family.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Ansatz</span></dt></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ansatz </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> linear_combination</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> linear_combination(pool, [ak.sin(x), ak.cos(x)])</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A.expr</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">((sin(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> c_0) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (cos(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> c_1))</span></span></code></pre></div></div></section>
+<section class="sym" id="ansatz.quadratic_form"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">ansatz.</span><span class="sig-name">quadratic_form</span>(
+    <span class="sig-p">pool</span><span class="sig-ann">: Any</span>,
+    <span class="sig-p">vars</span><span class="sig-ann">: Sequence[Any]</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">name</span><span class="sig-ann">: str</span><span class="sig-def">='q'</span>,
+    <span class="sig-p">max_terms</span><span class="sig-ann">: int</span><span class="sig-def">=DEFAULT_MAX_TERMS</span>,
+    <span class="sig-p">reserved</span><span class="sig-ann">: Sequence[Any]</span><span class="sig-def">=()</span>
+)<span class="sig-ret"> → Ansatz</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ansatz.quadratic_form" aria-label="Link to ansatz.quadratic_form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/ansatz.py#L1078" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>Σ_{i ≤ j} q_ij · xᵢ xⱼ</code> — the Lyapunov-candidate family.</p>
+<p>Only the upper triangle carries an unknown, because <code>q_ij xᵢxⱼ</code> and
+<code>q_ji xⱼxᵢ</code> are the same term and carrying both would make every fit
+report spurious free parameters.</p>
+<p>This module&#39;s job <strong>ends</strong> when it has produced the candidate. Deciding
+whether a fitted form is non-negative is <a href="/docs/api/solve/#prove_nonneg"><code>prove_nonneg()</code></a> /
+<a href="/docs/api/solve/#sos_decompose"><code>sos_decompose()</code></a>&#39;s job, and <code>certify_nonneg()</code> is the
+one-line hand-off — positivity is not reimplemented here.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">pool, vars, name, max_terms, reserved</code></dt><dd><p>As <code>polynomial()</code>. Coefficient names are <code>f&quot;{name}_{i}_{j}&quot;</code> with
+<code>i &lt;= j</code> indexing <em>vars</em>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Ansatz</span></dt></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ansatz </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> quadratic_form</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x, y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"y"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> quadratic_form(pool, [x, y])</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A.names</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'q_0_0'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'q_0_1'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'q_1_1'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div></div></section>
+<section class="sym" id="ansatz.fit"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">ansatz.</span><span class="sig-name">fit</span>(
+    <span class="sig-p">ansatz</span><span class="sig-ann">: Ansatz</span>,
+    <span class="sig-p">residual</span><span class="sig-ann">: Any</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">certify</span><span class="sig-ann">: str</span><span class="sig-def">='residual'</span>,
+    <span class="sig-p">seed</span><span class="sig-ann">: int | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">oversample</span><span class="sig-ann">: int | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">max_points</span><span class="sig-ann">: int | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">degree_bound</span><span class="sig-ann">: int | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">tolerance</span><span class="sig-ann">: float</span><span class="sig-def">=1e-08</span>,
+    <span class="sig-p">samples</span><span class="sig-ann">: int</span><span class="sig-def">=5</span>
+)<span class="sig-ret"> → AnsatzSolution</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ansatz.fit" aria-label="Link to ansatz.fit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/ansatz.py#L1943" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Solve for the coefficients that make <em>residual</em> vanish identically.</p>
+<p>The default path is <strong>exact linear algebra, not Gröbner</strong>. Undetermined
+coefficients, series matching, Lyapunov forms and Padé are all linear in
+the unknowns once denominators are cleared, so the system is built by
+probing with <a href="/docs/api/simplify/#subs"><code>subs()</code></a> and reduced with
+<a href="/docs/api/matrix/#Matrix.rref"><code>Matrix.rref()</code></a> over exact rationals. Nothing here needs the
+<code>groebner</code> feature; the one path that does (a residual genuinely
+nonlinear in the unknowns) refuses with <code>E-ANSATZ-004</code> when it is absent
+rather than degrading silently.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">ansatz</code><span class="ptype">Ansatz</span></dt><dd><p>The family to fit.</p>
+</dd></div><div class="param"><dt><code class="pname">residual</code><span class="ptype">Expr or DerivedResult</span></dt><dd><p>The expression that must vanish identically in <code>ansatz.vars</code> —
+typically <code>ansatz.expr - target</code>. If it is not affine in the unknowns
+because of an unknown-bearing denominator (the Padé case), the
+denominator is cleared automatically and the fact is recorded in
+<code>AnsatzSolution.steps</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">certify</code><span class="ptype">{&quot;residual&quot;, &quot;exact&quot;, &quot;none&quot;}</span></dt><dd><p><code>&quot;residual&quot;</code> (default) builds the system by collocation and checks it
+by exact back-substitution. <code>&quot;exact&quot;</code> builds the system by
+Taylor-coefficient extraction instead, so the <em>system itself</em> is exact
+for polynomial residuals, and still back-substitutes. <code>&quot;none&quot;</code> skips
+the check entirely and returns <code>status=&quot;unverified&quot;</code> — for hot loops
+that will verify downstream, never for anything recorded as a result.</p>
+</dd></div><div class="param"><dt><code class="pname">seed</code><span class="ptype">int, optional</span></dt><dd><p>Sample-point seed. Defaults to <a href="/docs/api/workload/#budget_seed"><code>budget_seed()</code></a> (so
+<code>with ak.context(budget=ak.Budget(seed=7))</code> controls it), and to
+<code>DEFAULT_SEED</code> when no budget is active. Two runs with the same
+seed use the same points on any machine.</p>
+</dd></div><div class="param"><dt><code class="pname">oversample</code><span class="ptype">int, optional</span></dt><dd><p>Extra equations beyond the unknown count. Defaults to
+<code>max(4, len(ansatz))</code>. Over-sampling is what lets the rank be <em>read</em>
+off the <code>rref</code> instead of assumed.</p>
+</dd></div><div class="param"><dt><code class="pname">max_points</code><span class="ptype">int, optional</span></dt><dd><p>Cap on sample-point draws, including those skipped for being poles.
+Applies to collocation only — the <code>certify=&quot;exact&quot;</code> path draws a base
+point, not a system, so capping <em>its</em> equation count here would return
+a smaller system than the degree bound promises. Size that one with
+<code>degree_bound=</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">degree_bound</code><span class="ptype">int, optional</span></dt><dd><p>Multi-index degree for <code>certify=&quot;exact&quot;</code>; every multi-index up to it
+contributes an equation, and the bound reached is recorded in
+<code>AnsatzSolution.steps</code>. Defaults to the smallest degree that
+supplies at least as many equations as the collocation path would use.</p>
+</dd></div><div class="param"><dt><code class="pname">tolerance</code><span class="ptype">float</span></dt><dd><p>Numeric residual below which a non-normalising fit is still reported as
+<code>&quot;numerically_checked&quot;</code> rather than as a stated failure.</p>
+</dd></div><div class="param"><dt><code class="pname">samples</code><span class="ptype">int</span></dt><dd><p>Fresh points used for that numeric check.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">AnsatzSolution</span></dt></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">AnsatzError</span></dt><dd><p><code>E-ANSATZ-003</code> when the system is inconsistent — <strong>no member of the
+family satisfies the constraints</strong>, which is a positive result for a
+search loop and should be recorded as a closed branch.
+<code>E-ANSATZ-004</code> when the residual is nonlinear in the unknowns and
+this build has no <code>groebner</code> feature to escalate to.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><p>Round-trip a known polynomial:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ansatz </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> fit, polynomial</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> polynomial(pool, [x], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">degree</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> sol </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> fit(A, A.expr </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> sol.expr</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">^</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> sol.status, sol.free</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'exactly_verified'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, ())</span></span></code></pre></div><p>An underdetermined family returns its free parameters rather than an
+arbitrary member:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> B </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> polynomial(pool, [x], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">degree</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">name</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"d"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> under </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> fit(B, ak.diff(B.expr, x).value </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> under.rank, [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">str</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(f) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> f </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> under.free]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'d_0'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])</span></span></code></pre></div></div></section>
+<section class="sym" id="ansatz.enumerate_family"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">ansatz.</span><span class="sig-name">enumerate_family</span>(
+    <span class="sig-p">ansatz</span><span class="sig-ann">: Ansatz</span>,
+    <span class="sig-p">coeffs</span><span class="sig-ann">: Iterable[Any]</span><span class="sig-def">=(-1, 0, 1)</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">max_members</span><span class="sig-ann">: int</span><span class="sig-def">=DEFAULT_MAX_MEMBERS</span>
+)<span class="sig-ret"> → Iterator[Any]</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ansatz.enumerate_family" aria-label="Link to ansatz.enumerate_family">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/ansatz.py#L1190" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Lazily enumerate concrete members over a finite coefficient set.</p>
+<p>Enumeration and fitting stay separate on purpose: this feeds <em>stage 2</em> of a
+search loop (generate candidates, then hammer them with
+<a href="/docs/api/numerics/#compile_expr"><code>compile_expr()</code></a> or <a href="/docs/api/workload/#batch_map"><code>batch_map()</code></a>), while
+<code>fit()</code> is <em>stage 3</em> (turn data into a symbolic claim). Fusing them
+produces an API that does neither well.</p>
+<p>The bound is checked <strong>before</strong> the first member is built, from
+<code>len(coeffs) ** len(ansatz)</code> — enumeration is lazy <em>and</em> bounded.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">ansatz</code><span class="ptype">Ansatz</span></dt></div><div class="param"><dt><code class="pname">coeffs</code><span class="ptype">iterable</span></dt><dd><p>Values each coefficient ranges over. Materialised once.</p>
+</dd></div><div class="param"><dt><code class="pname">max_members</code><span class="ptype">int</span></dt><dd><p>Refuse (<code>E-ANSATZ-002</code>) rather than start an enumeration longer than
+this.</p>
+</dd></div></dl>
+<div class="doc-sub">Yields</div><dl class="params"><div class="param"><dt><span class="ptype">Expr</span></dt><dd><p>One member per assignment, coefficients varying last-unknown-fastest.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">AnsatzError</span></dt><dd><p><code>E-ANSATZ-002</code> when the family size exceeds <em>max_members</em>.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ansatz </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> enumerate_family, polynomial</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> polynomial(pool, [x], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">degree</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">str</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(m) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> m </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> enumerate_family(A, [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'0'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'x'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'1'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'(x + 1)'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">     next</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(enumerate_family(A, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">range</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> **</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 6</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">max_members</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.AnsatzError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> exc:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">     exc.code</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'E-ANSATZ-002'</span></span></code></pre></div></div></section>
+<section class="sym" id="ansatz.certify_nonneg"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">ansatz.</span><span class="sig-name">certify_nonneg</span>(
+    <span class="sig-p">candidate</span><span class="sig-ann">: Any</span>,
+    <span class="sig-p">vars</span><span class="sig-ann">: Sequence[Any] | None</span><span class="sig-def">=None</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">constraints</span><span class="sig-ann">: Sequence[Any]</span><span class="sig-def">=()</span>,
+    <span class="sig-p">**kwargs</span><span class="sig-ann">: Any</span>
+)<span class="sig-ret"> → Any</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ansatz.certify_nonneg" aria-label="Link to ansatz.certify_nonneg">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/ansatz.py#L2383" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Hand a fitted candidate to <a href="/docs/api/solve/#prove_nonneg"><code>prove_nonneg()</code></a>.</p>
+<p>The ansatz module&#39;s job ends when it has produced the candidate. Positivity
+is decided by the existing certificate machinery — this is a one-line
+adapter that unwraps an <code>AnsatzSolution</code> or <code>Ansatz</code> and
+forwards, so that a Lyapunov workflow reads</p>
+<p><code>cert = certify_nonneg(fit(quadratic_form(pool, [x, y]), residual))</code></p>
+<p>and every outcome (a <a href="/docs/api/solve/#PositivityCertificate"><code>PositivityCertificate</code></a>, an
+<code>E-SOS-003</code> refutation with a witness, an <code>E-SOS-002</code> &quot;no certificate
+of this shape at this degree&quot;) comes back unmodified. Nothing about
+positivity is reimplemented or reinterpreted here.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">candidate</code><span class="ptype">AnsatzSolution, Ansatz, Expr or DerivedResult</span></dt><dd><p>The expression to certify. An <code>AnsatzSolution</code> still carrying
+free parameters is refused — an undetermined form is not a candidate.</p>
+</dd></div><div class="param"><dt><code class="pname">vars</code><span class="ptype">sequence of Expr, optional</span></dt><dd><p>Variables; taken from the ansatz when <em>candidate</em> carries one.</p>
+</dd></div><div class="param"><dt><code class="pname">constraints</code><span class="ptype">sequence of Expr</span></dt><dd><p>Forwarded as <code>prove_nonneg(constraints=...)</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">**kwargs</code></dt><dd><p>Forwarded verbatim.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">PositivityCertificate</span></dt></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">AnsatzError</span></dt><dd><p><code>E-ANSATZ-003</code> if the candidate still has free parameters.</p>
+</dd></div><div class="param"><dt><span class="ptype">SosError</span></dt><dd><p>Whatever <a href="/docs/api/solve/#prove_nonneg"><code>prove_nonneg()</code></a> raises — passed through.</p>
+</dd></div></dl></div></section>
+<section class="sym" id="prove_nonneg_on"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">prove_nonneg_on</span>(
+    <span class="sig-p">expr</span>,
+    <span class="sig-p">vars</span>,
+    <span class="sig-p">constraints</span><span class="sig-def">=None</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">equalities</span><span class="sig-def">=None</span>,
+    <span class="sig-p">level</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#prove_nonneg_on" aria-label="Link to prove_nonneg_on">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16782" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.prove_nonneg_on(expr, vars, constraints=(), *, equalities=(), level=None)</code></p>
+<p>Prove <code>expr ≥ 0</code> on the semialgebraic set <code>{g_i ≥ 0, h_j = 0}</code> with a
+<strong>Putinar</strong> (quadratic-module) certificate
+<code>expr = σ₀ + Σ σ_i·g_i + Σ λ_j·h_j</code>, every <code>σ</code> an explicit sum of
+squares of rational polynomials and every <code>λ</code> a rational polynomial.</p>
+<p><code>constraints</code> items are a polynomial <code>g</code> (meaning <code>g ≥ 0</code>) or a
+comparison built with <code>pool.ge</code>/<code>pool.le</code>/<code>pool.gt</code>/<code>pool.lt</code>
+(strict ones are relaxed to their closure, which is sound) or
+<code>pool.pred_eq</code> (an equality). <code>equalities</code> items are <code>h</code> (meaning
+<code>h = 0</code>) or <code>pool.pred_eq(a, b)</code>. <code>level</code> is the relaxation order
+<code>k</code>: every summand has degree <code>≤ 2k</code>; <code>None</code> tries the smallest
+level that can work and two more.</p>
+<p>Returns a <a href="/docs/api/solve/#PositivityCertificate"><code>PositivityCertificate</code></a> with <code>kind == &quot;putinar&quot;</code>,
+already re-verified exactly; equalities appear in it as the pair
+<code>h ≥ 0</code>, <code>-h ≥ 0</code> with <code>λ = σ⁺ − σ⁻</code>. With no constraints and no
+equalities at all this is <a href="/docs/api/solve/#sos_decompose"><code>sos_decompose()</code></a> (<code>kind == &quot;sos&quot;</code>,
+<code>level</code> read as its <code>basis_degree</code>).</p>
+<p>An inequality predicate passed in <code>equalities</code> is refused
+(<code>E-SOS-004</code>). A witness always satisfies strict comparisons strictly:
+a point of the closure only is not a refutation.</p>
+<p>Raises <a href="/docs/api/errors/#SosError"><code>SosError</code></a> <code>E-SOS-003</code> when a rational point of the set has
+<code>expr &lt; 0</code> (the exception&#39;s <code>witness</code> attribute maps each variable to
+its exact value), <code>E-SOS-002</code> when no certificate was found at the
+level(s) searched (undecided — raise <code>level</code>; the message says whether
+the module was found to be Archimedean), <code>E-SOS-001</code>/<code>E-SOS-004</code> on
+malformed input.</p>
+<p>Example: <code>prove_nonneg_on(1 - x**2, [x, y], [1 - x**2 - y**2])</code> returns
+the certificate <code>1 - x² = y² + 1·(1 - x² - y²)</code>.</p>
+</div></section>
+<h2 id="alkahestcrosscheck"><a class="hanchor" href="#alkahestcrosscheck" aria-hidden="true" tabindex="-1">#</a>alkahest.crosscheck</h2>
+<div class="prose-block"><p>Differential testing against an external CAS oracle (SymPy today).</p>
+</div>
+<section class="sym" id="crosscheck.check"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">check</span>(
+    <span class="sig-p">operation</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">*args</span><span class="sig-ann">: Any</span>,
+    <span class="sig-p">oracle</span><span class="sig-ann">: Oracle | str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">assumptions</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">points</span><span class="sig-ann">: int</span><span class="sig-def">=DEFAULT_POINTS</span>,
+    <span class="sig-p">seed</span><span class="sig-ann">: int | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">pool</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">**kwargs</span><span class="sig-ann">: Any</span>
+)<span class="sig-ret"> → CrossCheck</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.check" aria-label="Link to crosscheck.check">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1675" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Run one query through Alkahest and through an oracle, and compare.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">operation</code><span class="ptype">str</span></dt><dd><p>Name of an <code>OPERATIONS</code> entry; also the <code>alkahest</code> module
+attribute that is called on the Alkahest side.</p>
+</dd></div><div class="param"><dt><code class="pname">*args</code></dt><dd><p>The arguments you would pass to <code>alkahest.&lt;operation&gt;</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">oracle</code><span class="ptype">Oracle or str, optional</span></dt><dd><p>Which oracle to use. Defaults to the first installed one.</p>
+</dd></div><div class="param"><dt><code class="pname">assumptions</code><span class="ptype">Assumptions, optional</span></dt><dd><p>Governing assumption context; defaults to
+<a href="/docs/api/core/#active_assumptions"><code>active_assumptions()</code></a>. An assumption with no faithful
+mapping into the oracle&#39;s language yields <code>incomparable</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">points</code><span class="ptype">int</span></dt><dd><p>Sample count for the rigorous-numeric rung.</p>
+</dd></div><div class="param"><dt><code class="pname">seed</code><span class="ptype">int, optional</span></dt><dd><p>Sampling seed. Defaults to the active <a href="/docs/api/workload/#Budget"><code>Budget</code></a> seed,
+then to <code>DEFAULT_SEED</code>, so a check is reproducible.</p>
+</dd></div><div class="param"><dt><code class="pname">pool</code><span class="ptype">ExprPool, optional</span></dt><dd><p>Pool the arguments live in; defaults to <a href="/docs/api/core/#active_pool"><code>active_pool()</code></a>.
+Only needed to attempt the <strong>Alkahest side</strong> of the symbolic rung — the
+oracle&#39;s answer has to be lifted back into a pool to be subtracted
+there. Without it the rung still runs, in the oracle only, and the
+record says which system proved what.</p>
+</dd></div><div class="param"><dt><code class="pname">**kwargs</code></dt><dd><p>Forwarded to the Alkahest call.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">CrossCheck</span></dt><dd><p>Four-valued: <code>agree</code> / <code>diverge</code> / <code>incomparable</code> /
+<code>unavailable</code>. <strong>A missing oracle is <code>unavailable</code>, never
+<code>agree</code>.</strong></p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">CrossCheckError</span></dt><dd><p><code>E-XCHECK-003</code> if <em>operation</em> has no defined comparison rung.
+Untranslatable input and missing oracles are <em>outcomes</em>, not
+exceptions; an unknown operation is a caller mistake.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.crosscheck </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> check</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> out </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> check(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"diff"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, ak.sin(x), x)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> out.outcome </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> {</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"agree"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"unavailable"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">}</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> out.outcome </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">==</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "agree"</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> or</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> out.reason </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">==</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "no_oracle"</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span></code></pre></div></div></section>
+<section class="sym" id="crosscheck.sweep"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">sweep</span>(
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">seed</span><span class="sig-ann">: int | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">cases</span><span class="sig-ann">: int</span><span class="sig-def">=40</span>,
+    <span class="sig-p">operations</span><span class="sig-ann">: Sequence[str]</span><span class="sig-def">=SWEEP_OPERATIONS</span>,
+    <span class="sig-p">oracle</span><span class="sig-ann">: Oracle | str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">pool</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">points</span><span class="sig-ann">: int</span><span class="sig-def">=DEFAULT_POINTS</span>
+)<span class="sig-ret"> → SweepReport</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.sweep" aria-label="Link to crosscheck.sweep">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2666" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Run a seeded differential sweep and report what diverged.</p>
+<p>This is the <strong>nightly</strong> tier of the two-tier arrangement described in
+<code>docs/mdbook/src/crosscheck.md</code>. It is deliberately not a per-PR gate: it
+is randomised, and an oracle upgrade would turn it red for reasons that have
+nothing to do with the pull request under review. Its findings are meant to
+be promoted into <code>FROZEN_CORPUS</code>, which <em>is</em> the per-PR gate.</p>
+<blockquote><p><strong>Warning</strong> 
+<strong>Neither side is bounded, and this module does not pretend otherwise.</strong>
+Alkahest&#39;s heavy engines hold the GIL, so a non-terminating call cannot
+be timed out from Python: a worker thread cannot be stopped, and
+abandoning one wedges the interpreter anyway. SymPy is no better placed.
+Run the nightly job under an OS-level timeout, and wrap the sweep in
+<code>context(budget=...)</code> for the engines that <em>are</em> cooperative
+(<a href="/docs/api/diff/#integrate"><code>integrate()</code></a>, best-effort <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a> — see
+<code>docs/mdbook/src/budgets.md</code>). <code>SWEEP_OPERATIONS</code> is chosen to
+stay clear of the paths known not to terminate.</p>
+</blockquote>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">seed</code><span class="ptype">int, optional</span></dt><dd><p>Defaults to the active <a href="/docs/api/workload/#Budget"><code>Budget</code></a> seed, then to
+<code>DEFAULT_SEED</code>. Always recorded on the report.</p>
+</dd></div><div class="param"><dt><code class="pname">cases</code><span class="ptype">int</span></dt><dd><p>Number of expressions to generate.</p>
+</dd></div><div class="param"><dt><code class="pname">operations</code><span class="ptype">sequence of str</span></dt><dd><p>Which <code>OPERATIONS</code> entries to exercise.</p>
+</dd></div><div class="param"><dt><code class="pname">oracle</code><span class="ptype">Oracle or str, optional</span></dt><dd><p>Defaults to the first installed oracle. With none installed the report
+is all <code>unavailable</code> — the sweep does not pretend to have run.</p>
+</dd></div><div class="param"><dt><code class="pname">pool</code><span class="ptype">ExprPool, optional</span></dt><dd><p>Pool to build candidates in; a fresh one by default.</p>
+</dd></div><div class="param"><dt><code class="pname">points</code><span class="ptype">int</span></dt><dd><p>Sample count passed to <code>check()</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">SweepReport</span></dt></div></dl></div></section>
+<section class="sym" id="crosscheck.run_frozen_corpus"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">run_frozen_corpus</span>(
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">oracle</span><span class="sig-ann">: Oracle | str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">cases</span><span class="sig-ann">: Sequence[FrozenCase]</span><span class="sig-def">=FROZEN_CORPUS</span>
+)<span class="sig-ret"> → list[tuple[FrozenCase, CrossCheck | None]]</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.run_frozen_corpus" aria-label="Link to crosscheck.run_frozen_corpus">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L3030" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Re-run <code>FROZEN_CORPUS</code> against the installed oracle.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">oracle</code><span class="ptype">Oracle or str, optional</span></dt><dd><p>Defaults to the first installed oracle.</p>
+</dd></div><div class="param"><dt><code class="pname">cases</code><span class="ptype">sequence of FrozenCase</span></dt><dd><p>Defaults to the whole corpus.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">list of (FrozenCase, CrossCheck or None)</span></dt><dd><p><code>None</code> means the case does not apply to the installed oracle version
+and was skipped — a skip, never a pass.</p>
+</dd></div></dl></div></section>
+<section class="sym" id="crosscheck.to_sympy"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">to_sympy</span>(<span class="sig-p">expr</span><span class="sig-ann">: Any</span>, <span class="sig-sep">*</span>, <span class="sig-p">assumptions</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>)<span class="sig-ret"> → Any</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.to_sympy" aria-label="Link to crosscheck.to_sympy">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L702" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Translate an Alkahest expression into SymPy, or refuse.</p>
+<p>The one translator this package ships, exposed directly for callers who
+want the term rather than a comparison. Total over <code>NODE_TAGS</code>:
+anything it cannot map faithfully raises rather than degrading.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt><dd><p>Expression to translate.</p>
+</dd></div><div class="param"><dt><code class="pname">assumptions</code><span class="ptype">Assumptions, optional</span></dt><dd><p>Governing assumption context; defaults to
+<a href="/docs/api/core/#active_assumptions"><code>active_assumptions()</code></a>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">sympy.Basic</span></dt></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">CrossCheckError</span></dt><dd><p><code>E-XCHECK-002</code> if SymPy is not installed, <code>E-XCHECK-001</code> if the
+expression or the assumption context has no faithful mapping.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.crosscheck </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> oracles, to_sympy</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> if</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> oracles()[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"sympy"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">     str</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(to_sympy(ak.sin(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> else</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">     'sin(x)**2'</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'sin(x)**2'</span></span></code></pre></div></div></section>
+<section class="sym" id="crosscheck.register_oracle"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">register_oracle</span>(<span class="sig-p">oracle_cls</span><span class="sig-ann">: type[Oracle]</span>)<span class="sig-ret"> → None</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.register_oracle" aria-label="Link to crosscheck.register_oracle">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1164" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Register an <code>Oracle</code> implementation under its <code>name</code>.</p>
+<p>The comparator resolves oracles through this registry, so a new backend is
+a class plus one call — no change to the ladder, the outcomes, or the
+frozen corpus machinery.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">oracle_cls</code><span class="ptype">type[Oracle]</span></dt><dd><p>Class (not instance); it is constructed lazily, and only when
+<a href="/docs/api/pari/#available"><code>Oracle.available()</code></a> says it can be.</p>
+</dd></div></dl></div></section>
+<section class="sym" id="crosscheck.oracles"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">oracles</span>()<span class="sig-ret"> → dict[str, str | None]</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.oracles" aria-label="Link to crosscheck.oracles">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1180" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Which oracles are installed, and at what version.</p>
+<p>Reports every <em>known</em> oracle, including the absent ones — an agent must be
+able to tell that SymPy is missing <strong>before</strong> it plans around a check that
+will only ever return <code>unavailable</code>.</p>
+
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">dict</span></dt><dd><p><code>{&quot;sympy&quot;: &quot;1.14.0&quot;, &quot;wolfram&quot;: None}</code>-shaped; <code>None</code> means
+&quot;known to this build, not installed here&quot;.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.crosscheck </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> oracles</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> sorted</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(oracles())</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'sympy'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span></code></pre></div></div></section>
+<h2 id="alkahestsmt"><a class="hanchor" href="#alkahestsmt" aria-hidden="true" tabindex="-1">#</a>alkahest.smt</h2>
+<div class="prose-block"><p>SMT-LIB 2 export and a bridge to an external solver (<code>z3</code>, <code>cvc5</code>).</p>
+</div>
+<section class="sym" id="to_smtlib"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">to_smtlib</span>(
+    <span class="sig-p">formula</span><span class="sig-ann">: Any</span>,
+    <span class="sig-p">logic</span><span class="sig-ann">: str</span><span class="sig-def">='auto'</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">check_sat</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>,
+    <span class="sig-p">get_model</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>
+)<span class="sig-ret"> → str</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#to_smtlib" aria-label="Link to to_smtlib">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L270" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Export a predicate <a href="/docs/api/core/#Expr"><code>Expr</code></a> as an SMT-LIB 2 script.</p>
+<p>The SMT counterpart of <a href="/docs/api/certificates/#to_lean"><code>to_lean()</code></a>: Alkahest emits a standard
+artifact and an independently maintained external tool consumes it.  The
+emitter itself lives in Rust (<code>alkahest_core::logic::smtlib</code>) so that
+match exhaustiveness over <code>Formula</code> / <code>PredicateKind</code> enforces total
+coverage; this wrapper only maps the error type.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">formula</code><span class="ptype">Expr</span></dt><dd><p>A predicate or quantified expression — built with <code>pool.gt</code>/<code>lt</code>/…
+and <a href="/docs/api/logic/#And"><code>And()</code></a> / <a href="/docs/api/logic/#Or"><code>Or()</code></a> / <a href="/docs/api/logic/#Not"><code>Not()</code></a>,
+or <a href="/docs/api/solve/#Forall"><code>Forall()</code></a> / <a href="/docs/api/solve/#Exists"><code>Exists()</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">logic</code><span class="ptype">str</span></dt><dd><p><code>&quot;auto&quot;</code> (default) infers the weakest logic that fits: <code>QF_LIA</code>,
+<code>QF_NIA</code>, <code>QF_LRA</code>, <code>QF_NRA</code>, <code>QF_LIRA</code>, <code>QF_NIRA</code>, their
+quantified counterparts, or <code>ALL</code>.  Naming a logic too weak for the
+formula is an error (<code>E-SMT-002</code>), not a silent downgrade.</p>
+</dd></div><div class="param"><dt><code class="pname">check_sat, get_model</code><span class="ptype">bool</span></dt><dd><p>Append <code>(check-sat)</code> / <code>(get-model)</code> and set <code>:produce-models</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">SmtError</span></dt><dd><p><code>E-SMT-002</code> when the formula is outside the exportable fragment.  Use
+<code>supported()</code> to ask the same question without raising.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(ak.to_smtlib(ak.And(pool.gt(x, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)), pool.lt(x, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))))</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"> # doctest: +SKIP</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">; alkahest </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">SMT</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">LIB</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> export</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">set</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">logic </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">QF_LRA</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span></span></code></pre></div></div></section>
+<section class="sym" id="smt.solve"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">smt.</span><span class="sig-name">solve</span>(
+    <span class="sig-p">formula</span><span class="sig-ann">: Any</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">solver</span><span class="sig-ann">: str</span><span class="sig-def">='auto'</span>,
+    <span class="sig-p">logic</span><span class="sig-ann">: str</span><span class="sig-def">='auto'</span>,
+    <span class="sig-p">budget</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
+    <span class="sig-p">pool</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>
+)<span class="sig-ret"> → SmtResult</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.solve" aria-label="Link to smt.solve">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1094" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Ask an external SMT solver about <code>formula</code>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">formula</code><span class="ptype">Expr</span></dt><dd><p>A <strong>quantifier-free</strong> predicate expression.  Quantified formulas export
+fine with <a href="/docs/api/autoresearch/#to_smtlib"><code>to_smtlib()</code></a> but are refused here (<code>E-SMT-002</code>): this
+function guarantees that every <code>sat</code> model is checked exactly
+in-process, and there is nothing to check for a quantified model.</p>
+<p>If you wrote the question as <code>Exists(x, Exists(y, body))</code>, pass
+<code>body</code>: a sat query already asks whether <em>some</em> assignment satisfies
+the formula, so the free variables of <code>body</code> are implicitly
+existentially quantified and the returned model is the witness.  The
+quantifiers are not stripped for you — that would silently answer about
+a different expression than the one handed in — and the rewrite is not
+valid under a <a href="/docs/api/solve/#Forall"><code>Forall()</code></a> anyway.</p>
+</dd></div><div class="param"><dt><code class="pname">solver</code><span class="ptype">str</span></dt><dd><p><code>&quot;auto&quot;</code> (first installed, in <code>SOLVERS</code> order) or a name.</p>
+</dd></div><div class="param"><dt><code class="pname">logic</code><span class="ptype">str</span></dt><dd><p>Forwarded to <a href="/docs/api/autoresearch/#to_smtlib"><code>to_smtlib()</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">budget</code><span class="ptype">Budget, optional</span></dt><dd><p><code>budget.wall_ms</code> is passed to the solver&#39;s own timeout flag <em>and</em>
+enforced as a parent-side deadline.  A timeout raises
+<a href="/docs/api/errors/#BudgetExceededError"><code>BudgetExceededError</code></a> (<code>E-BUDGET-001</code>), so a loop
+gets the structured &quot;hard, not hung&quot; distinction rather than a bare
+<code>unknown</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">pool</code><span class="ptype">ExprPool, optional</span></dt><dd><p>Pool for <code>SmtResult.model_exprs</code>; defaults to
+<a href="/docs/api/core/#active_pool"><code>active_pool()</code></a>.  <code>SmtResult.model</code> is exact and
+present either way.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">SmtResult</span></dt></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">SmtError</span></dt><dd><p><code>E-SMT-001</code> no solver installed — a refusal, never a silent fallback
+to <a href="/docs/api/logic/#satisfiable"><code>satisfiable()</code></a>, whose fragments (propositional, and one
+real variable against rational constants) do not overlap what is asked
+here.
+<code>E-SMT-002</code> formula outside the exportable/solvable fragment.
+<code>E-SMT-003</code> a model value (<code>root-obj</code>) cannot be lifted exactly.
+<code>E-SMT-004</code> the model failed back-substitution.  This is raised, never
+warned: it means the bridge or the solver is broken.</p>
+</dd></div><div class="param"><dt><span class="ptype">BudgetExceededError</span></dt><dd><p>The solver hit <code>budget.wall_ms</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"n"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"integer"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> f </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.And(pool.gt(x, n), pool.lt(x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> r </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.smt.solve(f)                     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># doctest: +SKIP</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> r.status, r.badge                       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># doctest: +SKIP</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'sat'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'the solver'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">s model was substituted back </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">and</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> ...</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">')</span></span></code></pre></div></div></section>
+<section class="sym" id="smt.supported"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">smt.</span><span class="sig-name">supported</span>(<span class="sig-p">formula</span><span class="sig-ann">: Any</span>, <span class="sig-sep">*</span>, <span class="sig-p">solver</span><span class="sig-ann">: str</span><span class="sig-def">='auto'</span>)<span class="sig-ret"> → SmtSupport</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.supported" aria-label="Link to smt.supported">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L547" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Can this formula be handed to an SMT solver — and should it be?</p>
+<p>The plan-ahead predicate, for the same reason
+<a href="/docs/api/certificates/#certifiable"><code>certifiable()</code></a> exists: a loop must be able to choose a route
+<em>before</em> it commits, not discover a refusal after paying for the setup.</p>
+<p>The &quot;should it be&quot; half matters and cuts the opposite way to the usual
+instinct.  For real arithmetic with no integer variables (<code>QF_LRA</code> /
+<code>QF_NRA</code>), <code>recommendation</code> is <code>&quot;prefer_in_tree&quot;</code>:
+<a href="/docs/api/solve/#prove_nonneg"><code>prove_nonneg()</code></a> and <a href="/docs/api/solve/#sos_decompose"><code>sos_decompose()</code></a> yield a
+<code>PositivityCertificate</code> that composes with <a href="/docs/api/certificates/#to_lean"><code>to_lean()</code></a>,
+whereas an SMT solver yields an answer and no artifact.  The genuinely new
+capability the bridge buys is <strong>mixed integer/real/boolean</strong> problems, which
+neither CAD nor <a href="/docs/api/solve/#diophantine"><code>diophantine()</code></a> handles — there
+<code>recommendation</code> is <code>&quot;smt&quot;</code>.</p>
+
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">SmtSupport</span></dt><dd><p>Truthy when <a href="/docs/api/solve/#solve"><code>solve()</code></a> would run.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"n"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"integer"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> s </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.smt.supported(pool.gt(n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> n, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> s.recommendation                                      </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># doctest: +SKIP</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'smt'</span></span></code></pre></div></div></section>
+<section class="sym" id="smt.solvers"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">smt.</span><span class="sig-name">solvers</span>()<span class="sig-ret"> → dict[str, str | None]</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.solvers" aria-label="Link to smt.solvers">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L187" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Which SMT solvers are installed, and at what version.</p>
+<p>Returns a mapping over every name in <code>SOLVERS</code>; the value is the
+solver&#39;s self-reported version string, or <code>None</code> when the binary was not
+found.  Absence is reported <strong>negatively and explicitly</strong> so an agent can
+tell before it plans that the hand-off is unavailable, rather than
+discovering it as a refusal mid-loop.</p>
+
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.smt.solvers()                      </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># doctest: +SKIP</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">{</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'z3'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'Z3 version 4.13.0 - 64 bit'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'cvc5'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">None</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">}</span></span></code></pre></div></div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/workload/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Search / workload</span></a><a class="pager-next" href="/docs/api/certificates/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Certificates</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/autoresearch.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#alkahestansatz">alkahest.ansatz</a></li><li class="d3"><a href="#ansatz.polynomial">ansatz.polynomial</a></li><li class="d3"><a href="#ansatz.rational">ansatz.rational</a></li><li class="d3"><a href="#ansatz.exponential_polynomial">ansatz.exponential_polynomial</a></li><li class="d3"><a href="#ansatz.linear_combination">ansatz.linear_combination</a></li><li class="d3"><a href="#ansatz.quadratic_form">ansatz.quadratic_form</a></li><li class="d3"><a href="#ansatz.fit">ansatz.fit</a></li><li class="d3"><a href="#ansatz.enumerate_family">ansatz.enumerate_family</a></li><li class="d3"><a href="#ansatz.certify_nonneg">ansatz.certify_nonneg</a></li><li class="d3"><a href="#prove_nonneg_on">prove_nonneg_on</a></li><li class="d2"><a href="#alkahestcrosscheck">alkahest.crosscheck</a></li><li class="d3"><a href="#crosscheck.check">crosscheck.check</a></li><li class="d3"><a href="#crosscheck.sweep">crosscheck.sweep</a></li><li class="d3"><a href="#crosscheck.run_frozen_corpus">crosscheck.run_frozen_corpus</a></li><li class="d3"><a href="#crosscheck.to_sympy">crosscheck.to_sympy</a></li><li class="d3"><a href="#crosscheck.register_oracle">crosscheck.register_oracle</a></li><li class="d3"><a href="#crosscheck.oracles">crosscheck.oracles</a></li><li class="d2"><a href="#alkahestsmt">alkahest.smt</a></li><li class="d3"><a href="#to_smtlib">to_smtlib</a></li><li class="d3"><a href="#smt.solve">smt.solve</a></li><li class="d3"><a href="#smt.supported">smt.supported</a></li><li class="d3"><a href="#smt.solvers">smt.solvers</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/autoresearch.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

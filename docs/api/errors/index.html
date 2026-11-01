@@ -1,0 +1,1104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Error handling API · Alkahest Docs</title>
+<meta name="description" content="Structured exception hierarchy with stable diagnostic codes.">
+<meta property="og:title" content="Error handling API · Alkahest Docs">
+<meta property="og:description" content="Structured exception hierarchy with stable diagnostic codes.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/" class="active" aria-current="page">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>Error handling API</h1>
+    <div class="prose-block"><p>Structured exception hierarchy with stable diagnostic codes.</p>
+</div>
+<h2 id="base-class"><a class="hanchor" href="#base-class" aria-hidden="true" tabindex="-1">#</a>Base class</h2>
+<section class="sym" id="AlkahestError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">AlkahestError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">code</span><span class="sig-ann">: str</span><span class="sig-def">='E-UNKNOWN'</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#AlkahestError" aria-label="Link to AlkahestError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L198" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Base class for all alkahest errors.</p>
+<p>Inherits the <strong>native</strong> base class registered by the extension. That is
+load-bearing rather than cosmetic: the Rust engines raise the native
+classes, the pure-Python subsystems (<code>ansatz</code>, <code>crosscheck</code>, <code>smt</code>,
+the batch helpers) raise the wrappers below, and before this the two
+hierarchies were disjoint. <code>except alkahest.AlkahestError</code> — the
+documented way to catch anything this library raises — therefore caught
+the Rust half and silently missed the Python half.</p>
+<p>Subclasses keep their keyword constructors: only the message is forwarded
+to the native base, whose <code>__init__</code> is <code>BaseException</code>&#39;s and takes
+positional arguments only.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">code</code><span class="ptype">str</span></dt><dd><p>Stable diagnostic code, e.g. <code>&quot;E-POLY-001&quot;</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">remediation</code><span class="ptype">str | None</span></dt><dd><p>Human-readable fix suggestion.</p>
+</dd></div><div class="param"><dt><code class="pname">span</code><span class="ptype">tuple[int, int] | None</span></dt><dd><p>Source byte span <code>(start, end)</code>, or <code>None</code>.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="AlkahestError.code">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">code</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#AlkahestError.code" aria-label="Link to AlkahestError.code">#</a></div></div>
+  <div class="member-body"><p>Stable diagnostic code string, e.g. <code>&quot;E-POLY-001&quot;</code>.</p>
+</div>
+</div>
+<div class="member" id="AlkahestError.message">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">message</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#AlkahestError.message" aria-label="Link to AlkahestError.message">#</a></div></div>
+  <div class="member-body"><p>Human-readable description.</p>
+</div>
+</div>
+<div class="member" id="AlkahestError.remediation">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">remediation</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#AlkahestError.remediation" aria-label="Link to AlkahestError.remediation">#</a></div></div>
+  <div class="member-body"><p>Suggested remediation, or <code>None</code>.</p>
+</div>
+</div>
+<div class="member" id="AlkahestError.span">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">span</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#AlkahestError.span" aria-label="Link to AlkahestError.span">#</a></div></div>
+  <div class="member-body"><p>Character offset range <code>(start, end)</code> in the source expression,
+or <code>None</code>.</p>
+</div>
+</div></div></div></section>
+<h2 id="refusals-versus-verdicts"><a class="hanchor" href="#refusals-versus-verdicts" aria-hidden="true" tabindex="-1">#</a>Refusals versus verdicts</h2>
+<div class="prose-block"><p>Some codes are <strong>refusals</strong>: Alkahest could not establish the answer, and the
+only alternative to saying so was a confident wrong one. They mean <em>undecided</em>,
+never <em>false</em>, and an unattended loop that records one as a negative result
+closes a branch it never explored.</p>
+<p>Refusals: <code>E-CAD-001</code>, <code>E-LINALG-010</code>, <code>E-MAT-004</code>, <code>E-SOS-002</code>,
+<code>E-ANSATZ-003</code>, <code>E-SMT-003</code>, <code>E-INT-001</code>, <code>E-BUDGET-001..003</code>,
+<code>E-ASYMPT-004</code>, <code>E-ODE-011</code>, <code>E-ODE-044</code>, <code>E-EVAL-012</code>.</p>
+<p>Verdicts: <code>E-INT-004</code> (proven non-elementary), <code>E-MAT-003</code> (proven
+singular), <code>E-EVAL-009</code> (undefined at this point), <code>E-TRANSFORM-004</code> and
+<code>E-TRANSFORM-013</code> (the rule&#39;s own hypothesis is refuted — no transform of
+this shape exists), <code>E-ODE-041</code> (an irregular singular point has no Frobenius
+series).</p>
+</div>
+<h2 id="exception-subclasses"><a class="hanchor" href="#exception-subclasses" aria-hidden="true" tabindex="-1">#</a>Exception subclasses</h2>
+<section class="sym" id="ConversionError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">ConversionError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ConversionError" aria-label="Link to ConversionError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L236" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Expression could not be converted to the requested type (e.g. not polynomial).</p>
+</div></section>
+<section class="sym" id="DomainError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">DomainError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#DomainError" aria-label="Link to DomainError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L260" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A side condition was violated (e.g. division by a known-zero expression).</p>
+</div></section>
+<section class="sym" id="LogicError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">LogicError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#LogicError" aria-label="Link to LogicError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L396" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A propositional-logic operation refused (<code>E-LOGIC-*</code>).</p>
+<p>Raised by <a href="/docs/api/logic/#simplify_logic"><code>simplify_logic()</code></a>, <a href="/docs/api/logic/#to_cnf"><code>to_cnf()</code></a>,
+<a href="/docs/api/logic/#bdd"><code>bdd()</code></a>, <a href="/docs/api/logic/#equivalent"><code>equivalent()</code></a> and friends:</p>
+<ul>
+<li><code>E-LOGIC-002</code> — the input is not a propositional formula over the
+atoms the operation accepts (a quantifier, a non-Boolean term, or a
+propositional counterexample over relations that may be dependent).</li>
+<li><code>E-LOGIC-003</code> — a size ceiling was reached (BDD nodes, normal-form
+terms, SAT decisions, truth-table width); nothing was truncated.</li>
+<li><code>E-LOGIC-004</code> — <code>exact=True</code> was demanded and a minimum could not be
+certified.</li>
+<li><code>E-LOGIC-005</code> — a malformed argument (<code>form</code>, <code>method</code>, <code>order</code>).</li>
+<li><code>E-LOGIC-006</code> — an internal self-check failed; the result was withheld.</li>
+</ul>
+</div></section>
+<section class="sym" id="DiffError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">DiffError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#DiffError" aria-label="Link to DiffError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L324" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Differentiation failed (e.g. unknown function).</p>
+</div></section>
+<section class="sym" id="IntegrationError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">IntegrationError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#IntegrationError" aria-label="Link to IntegrationError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L348" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Symbolic integration failed.</p>
+</div></section>
+<section class="sym" id="MatrixError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">MatrixError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#MatrixError" aria-label="Link to MatrixError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L555" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Matrix operation failed (dimension mismatch, singular, etc.).</p>
+</div></section>
+<section class="sym" id="LinearAlgebraError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">LinearAlgebraError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#LinearAlgebraError" aria-label="Link to LinearAlgebraError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L579" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Symbolic linear algebra operation failed (nullspace, decompositions, normal forms).</p>
+</div></section>
+<section class="sym" id="EigenError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">EigenError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#EigenError" aria-label="Link to EigenError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L567" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Eigen-decomposition failed (unsplit characteristic polynomial, defective matrix, etc.).</p>
+</div></section>
+<section class="sym" id="CadError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">CadError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#CadError" aria-label="Link to CadError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L622" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Cylindrical algebraic decomposition / real QE failed.</p>
+</div></section>
+<section class="sym" id="AnsatzError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">AnsatzError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">code</span><span class="sig-ann">: str</span><span class="sig-def">='E-ANSATZ-001'</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#AnsatzError" aria-label="Link to AnsatzError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1000" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>An ansatz family could not be built, or could not be fitted.</p>
+<p>Raised by <a href="/docs/api/mod-ansatz/"><code>ansatz</code></a> (P2 item 1 — conjecture generation).
+<code>.code</code> distinguishes the causes, and note that only the first two are
+&quot;you called it wrong&quot;; the others are <em>results</em>:</p>
+<ul>
+<li><code>E-ANSATZ-001</code> — a coefficient symbol name collides with a symbol
+already interned in the pool, so the fit would silently solve for the
+wrong thing.</li>
+<li><code>E-ANSATZ-002</code> — the requested family exceeds <code>max_terms</code>.
+<code>C(n+d, d)</code> grows fast; refusing beats materialising it.</li>
+<li><code>E-ANSATZ-003</code> — the constraints are inconsistent: <strong>no member of this
+family satisfies them</strong>. For a search loop this is a positive result — a
+closed branch — not a malfunction.</li>
+<li><code>E-ANSATZ-004</code> — the residual is nonlinear in the unknowns and the
+escalation path (<a href="/docs/api/solve/#solve"><code>solve()</code></a>) needs a <code>groebner</code> build,
+which this one is not.</li>
+</ul>
+</div></section>
+<section class="sym" id="CrossCheckError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">CrossCheckError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">code</span><span class="sig-ann">: str</span><span class="sig-def">='E-XCHECK-001'</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#CrossCheckError" aria-label="Link to CrossCheckError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1030" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A cross-CAS differential check could not be <em>posed</em>, so it was refused.</p>
+<p>Raised by <a href="/docs/api/mod-crosscheck/"><code>crosscheck</code></a> (P2 item 2). A refusal here always
+beats a guess: a divergence is only informative if both systems were asked
+the same question, and a best-effort translation manufactures false
+divergences, which are worse than no signal at all.</p>
+<ul>
+<li><code>E-XCHECK-001</code> — the expression contains a node (or an active
+assumption) with no faithful mapping into the oracle&#39;s language.</li>
+<li><code>E-XCHECK-002</code> — no oracle is installed. Never reported as agreement;
+see <a href="/docs/api/autoresearch/#crosscheck.oracles"><code>crosscheck.oracles()</code></a>.</li>
+<li><code>E-XCHECK-003</code> — the operation has no defined comparison rung. A caller
+error, raised before any oracle is consulted.</li>
+<li><code>E-XCHECK-004</code> — the oracle itself declined: it has no implementation
+for the operation, raised, or returned an unevaluated form. An
+environmental outcome rather than a caller error, and <strong>not</strong> a
+divergence — comparing against a refusal would fabricate one.</li>
+</ul>
+</div></section>
+<section class="sym" id="SmtError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">SmtError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">code</span><span class="sig-ann">: str</span><span class="sig-def">='E-SMT-001'</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#SmtError" aria-label="Link to SmtError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1060" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>An SMT-LIB export, solver invocation, or model lift failed.</p>
+<p>Raised by <a href="/docs/api/mod-smt/"><code>smt</code></a> (P2 item 3).</p>
+<ul>
+<li><code>E-SMT-001</code> — no solver binary was found. Reported as a refusal rather
+than a silent fallback to <a href="/docs/api/logic/#satisfiable"><code>satisfiable()</code></a>, which decides only
+the propositional and single-real-variable fragments and would answer
+<code>None</code> here — looking like the solver had run and found nothing.</li>
+<li><code>E-SMT-002</code> — the formula is outside the supported SMT-LIB fragment;
+check <a href="/docs/api/autoresearch/#smt.supported"><code>smt.supported()</code></a> first.</li>
+<li><code>E-SMT-003</code> — the model contains a value (an <code>root-obj</code> algebraic
+number) that cannot yet be lifted <strong>exactly</strong>. Refused rather than
+truncated to a float: a float witness recorded as an exact one is the
+silent-error shape this whole subsystem exists to avoid.</li>
+<li><code>E-SMT-004</code> — a returned model failed back-substitution. The bridge or
+the solver is broken; this must never be downgraded to a warning.</li>
+</ul>
+</div></section>
+<section class="sym" id="OdeError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">OdeError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">code</span><span class="sig-ann">: str</span><span class="sig-def">='E-ODE-001'</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#OdeError" aria-label="Link to OdeError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L682" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>An ODE routine did not return a solution (<code>E-ODE-*</code>).</p>
+<p>One class for the whole prefix, because the prefix is the subsystem: the
+number says which engine declined and why.</p>
+<ul>
+<li><code>E-ODE-001</code> … <code>003</code> — construction or lowering
+(<a href="/docs/api/ode/#ODE"><code>ODE</code></a>).</li>
+<li><code>E-ODE-010</code> … <code>014</code> — <code>dsolve()</code>.
+<code>013</code> is a recognised ODE class whose quadrature did not close, and
+<code>014</code> a Riccati equation with no particular solution to seed it —
+both strictly more informative than <code>010</code> (&quot;outside the implemented
+classes&quot;), and <code>011</code> is a candidate that failed substitution
+verification and is withheld rather than returned.</li>
+<li><code>E-ODE-020</code> … <code>026</code> — the numeric integrators
+(<code>ode_integrate_rk4()</code> and friends).</li>
+<li><code>E-ODE-030</code> … <code>034</code> —
+<code>dsolve_system()</code>.</li>
+<li><code>E-ODE-040</code> … <code>045</code> —
+<code>series_solve()</code> (Frobenius). <code>041</code> is a
+fact about the equation — an irregular singular point has no Frobenius
+series, so no wider implementation would find one — whereas <code>042</code>
+(irrational indicial roots) is a limit of this solver&#39;s rational
+recurrence. These sat on <code>020</code> … <code>025</code> before 3.10, where they
+collided with the numeric block above; they had never reached Python at
+all, so the renumbering broke nothing.</li>
+</ul>
+</div></section>
+<section class="sym" id="TransformError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">TransformError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">code</span><span class="sig-ann">: str</span><span class="sig-def">='E-TRANSFORM-001'</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#TransformError" aria-label="Link to TransformError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L720" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>An integral or sequence transform did not return a value (<code>E-TRANSFORM-*</code>).</p>
+<p>Raised by <code>laplace_transform()</code>,
+<code>fourier_transform()</code>,
+<code>z_transform()</code> and their inverses. One class for
+the whole <code>transform</code> module, the way <a href="/docs/api/errors/#OdeError"><code>OdeError</code></a> is one class for
+the whole of <code>E-ODE-*</code>: the number says which table and which failure, and
+a caller who wants only one of them filters on the code.</p>
+<p>Laplace (<code>00x</code>), Fourier (<code>01x</code>), Z (<code>10x</code>):</p>
+<ul>
+<li><code>E-TRANSFORM-001</code> / <code>011</code> / <code>101</code> — no forward rule matched. A
+fact about <em>this implementation</em>: these are table-driven, and a wider
+table would close it.</li>
+<li><code>E-TRANSFORM-002</code> / <code>102</code> — the inverse table does not reach this
+form. Same kind of fact.</li>
+<li><code>E-TRANSFORM-003</code> / <code>012</code> / <code>103</code> — the two variables passed are
+the same symbol.</li>
+<li><code>E-TRANSFORM-004</code> — the <strong>unilateral hypothesis is refuted</strong>. The
+Laplace integral runs over <code>t &gt;= 0</code>, so a Heaviside/Dirac edge at
+<code>a &lt; 0</code> is invisible to it (<code>L{theta(t+1)} = 1/s</code>, <em>not</em> <code>e**s/s</code>),
+and an advance factor <code>e**(+a*s)</code> on the inverse is the transform of no
+causal function. Not a gap: there is nothing to find.</li>
+<li><code>E-TRANSFORM-013</code> — the Fourier table entry&#39;s <strong>decay hypothesis is
+refuted</strong>. At a non-positive rate the defining integral diverges, and a
+negative Lorentzian amplitude transforms to the opposite sign and the
+opposite direction of growth from the tabulated form.</li>
+</ul>
+<p>The <code>004</code>/<code>013</code> split from the rest is the point of the prefix. A table
+miss says &quot;rewrite the input, or wait for a wider table&quot;; a refuted
+hypothesis says &quot;no implementation will ever answer this&quot;. A symbolic
+parameter is never reported as either — it cannot be decided, so it is
+carried as a side condition instead.</p>
+</div></section>
+<section class="sym" id="AsymptoticError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">AsymptoticError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">code</span><span class="sig-ann">: str</span><span class="sig-def">='E-ASYMPT-001'</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#AsymptoticError" aria-label="Link to AsymptoticError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L766" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>An asymptotic expansion at infinity was not produced (<code>E-ASYMPT-*</code>).</p>
+<p>Raised by <code>asymptotic_expand()</code>.</p>
+<ul>
+<li><code>E-ASYMPT-001</code> — <code>n_terms</code> below 1.</li>
+<li><code>E-ASYMPT-002</code> — the <code>x = 1/t</code> series did not close.</li>
+<li><code>E-ASYMPT-003</code> — a derivative needed for the expansion failed.</li>
+<li><code>E-ASYMPT-004</code> — an expansion <strong>was</strong> computed and then withheld,
+because the numeric <code>o()</code>-gate could not confirm a single term of it at
+large <code>x</code>. Never downgraded to a warning.</li>
+<li><code>E-ASYMPT-005</code> — the scale is outside the implemented rules
+(exp/log hierarchies, Gamma/Stirling); power scales and a single log/exp
+peel are what this covers.</li>
+</ul>
+</div></section>
+<section class="sym" id="FpsError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">FpsError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">code</span><span class="sig-ann">: str</span><span class="sig-def">='E-FPS-001'</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#FpsError" aria-label="Link to FpsError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L792" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A formal-power-series operation refused (<code>E-FPS-*</code>).</p>
+<p>Raised by <code>Fps</code>.</p>
+<p><code>E-FPS-001</code> and <code>002</code> are the same mathematical fact reached two ways:
+the object has a pole at the origin, so it is a Laurent series and not a
+formal <em>power</em> series. <code>004</code>/<code>005</code>/<code>006</code> are the constant-term
+hypotheses the operations need to be well defined at all — <code>f(0) = 0</code>
+for composition/<code>exp</code>/reversion, <code>f(0) = 1</code> for <code>log</code> and the default
+n-th root, <code>f(0) != 0</code> for the inverse — and each carries the rewrite
+that removes the obstruction in its <code>.remediation</code>. <code>003</code> and <code>007</code>
+are the implementation&#39;s limits: exact rational coefficients only, and an
+underlying Taylor expansion that has to close.</p>
+</div></section>
+<section class="sym" id="ProbabilityError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">ProbabilityError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">code</span><span class="sig-ann">: str</span><span class="sig-def">='E-PROB-001'</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ProbabilityError" aria-label="Link to ProbabilityError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1261" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A probability query did not return a value (<code>E-PROB-*</code>).</p>
+<p>Raised by the <code>experimental</code> distribution surface. The six
+codes are kept apart because they call for four different next steps, and
+collapsing them would send a caller looking for a better integrator when
+the integral simply diverges:</p>
+<ul>
+<li><code>E-PROB-001</code> — a parameter is a <em>number</em> that violates the
+distribution&#39;s own constraint (<code>sigma &lt;= 0</code>, <code>a &gt;= b</code>,
+<code>p</code> outside <code>[0, 1]</code>, a non-literal <code>n</code> for <code>Binomial</code>). A
+<strong>symbolic</strong> parameter is never reported here: it cannot be decided, so
+it is carried as a side condition on
+<code>constraints()</code> instead.</li>
+<li><code>E-PROB-002</code> — the query is outside the supported shape: a
+non-polynomial <code>f</code> over a countably infinite discrete support, a
+non-affine argument to <code>expectation_affine()</code>,
+a moment order past the range the verifier can still fail on.</li>
+<li><code>E-PROB-003</code> — the reduction integral was built and the symbolic
+integrator declined it. The message names the integral.</li>
+<li><code>E-PROB-004</code> — there is no closed form inside this library&#39;s primitive
+set: the <code>Gamma</code> CDF at a non-integer shape needs the incomplete gamma,
+the <code>Beta</code> CDF needs the incomplete beta, the normal quantile needs
+<code>erf**-1</code>, the <code>Beta</code> characteristic function needs <code>1F1</code> — and the
+log-normal characteristic function has no closed form at all.</li>
+<li><code>E-PROB-005</code> — a closed form <strong>was</strong> computed and then <strong>withheld</strong>,
+because quadrature of its own defining integral could not confirm it.
+Never downgraded to a warning: a caller cannot tell a checked value from
+an unchecked one once it is in their hands.</li>
+<li><code>E-PROB-006</code> — the defining integral does not converge, so the quantity
+does not exist. The formal symbolic answer for a divergent expectation is
+typically a clean, plausible, wrong number, which is why the convergence
+check runs <em>before</em> the symbolic work rather than after.</li>
+</ul>
+</div></section>
+<section class="sym" id="VectorError"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">VectorError</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#VectorError" aria-label="Link to VectorError">#</a></div>
+</div><div class="sym-body"><p>Code prefix <code>E-VEC-*</code>. Vector calculus over an orthogonal chart
+(<code>experimental.Coordinates</code>). <code>E-VEC-004</code> is the one to
+read twice: every <code>grad</code>/<code>div</code>/<code>curl</code>/<code>laplacian</code> formula in the
+module is derived for an orthogonal frame, and on a skew chart they still
+evaluate — to an expression that looks like a divergence and is not one. So
+the tangent inner products must be <em>proven</em> to vanish, and an undecided one
+is a refusal rather than an assumption. <code>E-VEC-005</code> is a scale factor that
+is zero, or whose non-vanishing could not be established; every operator
+divides by it.</p>
+<p>Reached as <code>alkahest.experimental.VectorError</code>; it is not on the
+top-level namespace.</p>
+</div></section>
+<section class="sym" id="UnitError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">UnitError</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#UnitError" aria-label="Link to UnitError">#</a></div>
+</div><div class="sym-body"><p>Code prefix <code>E-UNIT-*</code>. Physical units and dimensional analysis
+(<a href="/docs/api/mod-units/"><code>units</code></a>). <code>E-UNIT-001</code> is an operation that needs equal
+dimensions — a sum, a conversion — and got two different ones; the message
+names both. <code>E-UNIT-002</code> is a malformed or unknown unit string.
+<code>E-UNIT-003</code> refuses an affine temperature (<code>degC</code>/<code>degF</code>) anywhere but
+on its own in a conversion: <code>2 · 20 °C</code> has no meaning. <code>E-UNIT-004</code> is
+a function argument or symbolic exponent that is not a pure number (an
+angle must be in <code>rad</code>). <code>E-UNIT-005</code> is a symbol or function with no
+known unit; <code>E-UNIT-006</code> a sum whose terms share a dimension but not a
+unit (its value depends on which number is in which unit); <code>E-UNIT-007</code>
+a fractional power whose scale has no exact rational root.</p>
+</div></section>
+<section class="sym" id="TensorError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">TensorError</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#TensorError" aria-label="Link to TensorError">#</a></div>
+</div><div class="sym-body"><p>Code prefix <code>E-TENSOR-*</code>. Tensor calculus on a coordinate chart
+(<code>tensor</code>). <code>E-TENSOR-001</code> a metric that is not <code>n x n</code> for
+<code>n</code> distinct coordinate symbols; <code>002</code> a metric that is not symmetric;
+<code>003</code> a determinant that is identically zero; <code>004</code> a floating-point
+entry (the layer is exact); <code>005</code> a node the component field cannot hold
+(<code>Piecewise</code>, a predicate); <code>006</code> a partial derivative that is not
+available; <code>007</code> a denominator that vanishes identically; <code>008</code> the Weyl
+tensor below dimension 3; <code>009</code> an abstract-index error (an index three
+times, twice up or twice down, mismatched free indices); <code>010</code> an internal
+invariant, refused rather than answered.</p>
+</div></section>
+<section class="sym" id="ControlsError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">ControlsError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">code</span><span class="sig-ann">: str</span><span class="sig-def">='E-CTRL-001'</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ControlsError" aria-label="Link to ControlsError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L92" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A controls-layer operation refused (<code>E-CTRL-001</code> … <code>E-CTRL-006</code>).</p>
+<p><code>001</code> malformed input; <code>002</code> an improper transfer function where a
+proper one is needed; <code>003</code> a numeric routine on data with free
+parameters; <code>004</code> the requested object does not exist (singular Lyapunov
+operator, no stabilising Riccati solution, infinite DC gain); <code>005</code> out
+of the exact engine&#39;s reach — use the numeric route; <code>006</code> numpy is
+required and missing.</p>
+</div></section>
+<section class="sym" id="NcError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">NcError</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#NcError" aria-label="Link to NcError">#</a></div>
+</div><div class="sym-body"><p>Code prefix <code>E-NC-*</code>. Noncommutative algebra. <code>E-NC-001</code>: word
+rewriting did not reach a normal form within <code>max_steps</code> (the rules may
+not terminate). <code>E-NC-002</code>: an expansion past the term or power cap.
+<code>E-NC-003</code>: a rule whose left side is not a single word with coefficient</p>
+<ol>
+<li><code>E-NC-004</code>: a malformed ladder-mode list. <code>E-NC-005</code>: a γ slot that
+is not <code>0</code>–<code>3</code>, <code>5</code> or a commutative label. <code>E-NC-006</code>: a γ trace
+past 14 slots. <code>E-NC-007</code>: a vacuum expectation over a factor that is not
+a listed ladder operator. <code>E-NC-008</code>: a malformed Lie-algebra table (not
+distinct noncommutative generators, bad or inconsistent structure
+constants, failed Jacobi identity). <code>E-NC-009</code>: a malformed
+sequence-wildcard pattern in <code>make_rule(..., sequence=[...])</code>.</li>
+</ol>
+</div></section>
+<section class="sym" id="QuaternionError"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">QuaternionError</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#QuaternionError" aria-label="Link to QuaternionError">#</a></div>
+</div><div class="sym-body"><p>Code prefix <code>E-QUAT-*</code>. Quaternion algebra and rotations
+(<code>experimental.Quaternion</code>). <code>E-QUAT-001</code> is a zero or
+undecided norm. <code>E-QUAT-002</code> refuses the axis of the identity rotation,
+which does not exist — <em>every</em> unit vector is one, and the conventional
+<code>(0, 0, 1)</code> is a stated answer to a question with no answer.
+<code>E-QUAT-003</code> refuses a matrix that could not be checked to be a proper
+rotation, including any symbolic matrix, because Shepperd&#39;s branch
+selection is a comparison between entries and there is none to make on a
+symbol.</p>
+<p>Reached as <code>alkahest.experimental.QuaternionError</code>.</p>
+</div></section>
+<section class="sym" id="DaeError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">DaeError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#DaeError" aria-label="Link to DaeError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L818" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>DAE structural analysis failed.</p>
+</div></section>
+<section class="sym" id="SolverError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">SolverError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#SolverError" aria-label="Link to SolverError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L842" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Polynomial system solver failed.</p>
+</div></section>
+<div class="prose-block"><blockquote><p><strong>Note</strong> 
+<code>radical</code> and <code>primary_decomposition</code> refuse rather than return an ideal
+they cannot certify: <code>E-IDEAL-005</code> (no certified radical) and
+<code>E-IDEAL-006</code> (no certified primary decomposition). Both currently arrive
+as a plain <code>ValueError</code> whose message states the reason; the stable
+code is available to Rust callers from
+<code>alkahest_cas::ideal::take_ideal_refusal()</code>.</p>
+</blockquote>
+</div>
+<section class="sym" id="LinprogError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">LinprogError</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#LinprogError" aria-label="Link to LinprogError">#</a></div>
+</div><div class="sym-body"><p>Code prefix <code>E-LP-*</code>. Exact linear / mixed-integer programming
+(<a href="/docs/api/linprog/#linprog"><code>linprog()</code></a>, <a href="/docs/api/linprog/#milp"><code>milp()</code></a>, <a href="/docs/api/linprog/#linprog_expr"><code>linprog_expr()</code></a>):</p>
+<ul>
+<li><code>E-LP-001</code> — malformed shapes (row length, right-hand-side count,
+bounds, integrality, sense)</li>
+<li><code>E-LP-002</code> — a float or irrational coefficient; refused, never rounded</li>
+<li><code>E-LP-003</code> — not affine in the decision variables</li>
+<li><code>E-LP-004</code> — a strict inequality or a non-relation constraint</li>
+<li><code>E-LP-005</code> — branch and bound reached <code>max_nodes</code>. Not an answer: the
+exception carries <code>incumbent</code> (best integer point, unproven),
+<code>incumbent_fun</code>, <code>bound</code> (best open bound) and <code>nodes</code></li>
+<li><code>E-LP-006</code> — a certificate failed its own exact check; the result was
+withheld</li>
+<li><code>E-LP-007</code> — an unsupported parametric programme
+(<a href="/docs/api/linprog/#linprog_parametric"><code>linprog_parametric()</code></a>, <a href="/docs/api/linprog/#linprog_expr"><code>linprog_expr()</code></a> with <code>parameter</code>):
+the parameter multiplies a variable in a constraint, enters
+non-linearly, moves both the objective and the right-hand side, or is
+combined with integer variables</li>
+</ul>
+<p>A budget trip during either solver raises <a href="/docs/api/errors/#BudgetExceededError"><code>BudgetExceededError</code></a> with
+the same <code>incumbent</code> / <code>incumbent_fun</code> / <code>bound</code> attributes.</p>
+</div></section>
+<section class="sym" id="JitError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">JitError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#JitError" aria-label="Link to JitError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L830" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>JIT compilation failed.</p>
+</div></section>
+<div class="prose-block"><blockquote><p><strong>Note</strong> 
+<a href="/docs/api/codegen/#to_stablehlo"><code>to_stablehlo()</code></a> raises the base <a href="/docs/api/errors/#AlkahestError"><code>AlkahestError</code></a> with code
+<code>E-STABLEHLO-001</code> (no exact StableHLO lowering for a function, named in
+the message), <code>-002</code> (a non-numeric node such as <code>O(x)</code>), <code>-003</code> (a
+free symbol not in the input list), <code>-004</code> (an infinite/NaN constant) or
+<code>-005</code> (an invalid MLIR function name).</p>
+</blockquote>
+</div>
+<section class="sym" id="CudaError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">CudaError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#CudaError" aria-label="Link to CudaError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L854" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>NVPTX / CUDA compilation or launch failed.</p>
+</div></section>
+<section class="sym" id="SparseInterpError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">SparseInterpError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#SparseInterpError" aria-label="Link to SparseInterpError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L658" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Sparse modular polynomial interpolation failed.</p>
+</div></section>
+<section class="sym" id="SparseGcdError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">SparseGcdError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#SparseGcdError" aria-label="Link to SparseGcdError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L670" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Sparse modular GCD computation failed.</p>
+</div></section>
+<section class="sym" id="ParseError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">ParseError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">code</span><span class="sig-ann">: str</span><span class="sig-def">='E-PARSE-001'</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ParseError" aria-label="Link to ParseError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1089" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Malformed expression text, with the source span (<code>.span</code>) of the fault.</p>
+<p><code>E-PARSE-001</code> lexical (an unexpected character, a malformed or
+out-of-range number literal), <code>E-PARSE-002</code> syntactic (including
+division by the literal <code>0</code>), <code>E-PARSE-003</code> unknown function,
+<code>E-PARSE-004</code> nesting deeper than the parser&#39;s limit (the same ceiling as
+<code>E-DEPTH-001</code>).  Every malformed input to <a href="/docs/api/core/#parse"><code>parse()</code></a> raises
+this — never <code>RecursionError</code>, <code>ValueError</code> or <code>ZeroDivisionError</code>.</p>
+</div></section>
+<section class="sym" id="PoolError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">PoolError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#PoolError" aria-label="Link to PoolError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L336" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Pool was closed, mismatched, or otherwise invalid.</p>
+</div></section>
+<section class="sym" id="CertificateUnavailableError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">CertificateUnavailableError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#CertificateUnavailableError" aria-label="Link to CertificateUnavailableError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L890" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A Lean certificate was required but the emitter withheld one.</p>
+<p>Raised by <a href="/docs/api/certificates/#require_certificate"><code>require_certificate()</code></a> and by any derivation-producing
+call made under <code>with alkahest.context(require_certificate=True)</code>. The
+computation itself succeeded — what is missing is the machine-checkable
+evidence, so this is a <em>policy</em> failure, not a mathematical one.</p>
+<p><code>.remediation</code> names the blocking rewrite rules where they can be
+identified. <a href="/docs/api/certificates/#certificate_coverage"><code>certificate_coverage()</code></a> tabulates which shapes
+certify.</p>
+</div></section>
+<section class="sym" id="BudgetExceededError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">BudgetExceededError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#BudgetExceededError" aria-label="Link to BudgetExceededError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L912" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A <a href="/docs/api/workload/#Budget"><code>Budget</code></a> was exceeded, or cancellation was requested.</p>
+<p>Raised by heavy engines (<a href="/docs/api/diff/#integrate"><code>integrate()</code></a> today) at a
+cooperative checkpoint inside the Rust kernel — see
+<code>alkahest_core::budget</code> and <code>_budget</code>. A fine, expected
+answer for a fan-out search loop, not a crash: <code>.code</code> distinguishes
+the three causes:</p>
+<ul>
+<li><code>E-BUDGET-001</code> — the active budget&#39;s wall-clock limit elapsed.</li>
+<li><code>E-BUDGET-002</code> — the active budget&#39;s step counter exceeded <code>max_steps</code>.</li>
+<li><code>E-BUDGET-003</code> — <a href="/docs/api/workload/#request_cancel"><code>request_cancel()</code></a> was called and not
+yet cleared.</li>
+</ul>
+</div></section>
+<h2 id="catching-errors-by-subsystem"><a class="hanchor" href="#catching-errors-by-subsystem" aria-hidden="true" tabindex="-1">#</a>Catching errors by subsystem</h2>
+<div class="prose-block"><p>Match on the base class and filter by code prefix:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.integrate(expr, x)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.AlkahestError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    if</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e.code.startswith(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"E-INT-"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">):</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">        # integration failed</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">        print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">f</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"Integration failed (</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">{</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">e.code</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">}</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">): </span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">{</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">e.remediation</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">}</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    else</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">        raise</span></span></code></pre></div><p>For the full error taxonomy (cause classification, refusal vs verdict, rules for
+adding codes) see the <code>Error handling &lt;../errors.html&gt;</code>_ chapter of the user
+guide, whose source is <code>docs/mdbook/src/errors.md</code>.</p>
+</div>
+<h2 id="more-exception-classes"><a class="hanchor" href="#more-exception-classes" aria-hidden="true" tabindex="-1">#</a>More exception classes</h2>
+<section class="sym" id="AssumptionError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">AssumptionError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#AssumptionError" aria-label="Link to AssumptionError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L272" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>An explicit simplification assumption contradicted the current context.</p>
+</div></section>
+<section class="sym" id="DepthLimitError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">DepthLimitError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#DepthLimitError" aria-label="Link to DepthLimitError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L284" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>An expression was too deeply nested to walk by recursion.</p>
+<p>Alkahest processes most expressions by structural recursion, and a native
+stack overflow is a <code>SIGSEGV</code> rather than an exception — it would kill the
+interpreter outright, with no traceback for a caller to log.  Past a
+measured ceiling the operation therefore declines instead, which is
+something <code>except Exception</code> can actually catch.</p>
+<p>Depth is <em>nesting</em>, not size: <code>pool.add([t1, ..., t100000])</code> has depth 2
+and is fine.  So does the same sum written with repeated <code>+</code> — <code>Add</code> and
+<code>Mul</code> splice nested same-operator children when they are built, so a
+left-associated chain of <code>+</code> is the very same flat, depth-2 node.  What
+still nests is everything else: <code>Pow</code> towers, function chains such as
+<code>sin(sin(sin(...)))</code>, and <code>Piecewise</code> nesting.</p>
+<p><strong>Which operations raise this is per operation.</strong>  The simplification entry
+points (<a href="/docs/api/simplify/#simplify"><code>simplify()</code></a> and its variants) do not walk by
+recursion — their traversals are trampolined or iterative — and accept
+input of any depth.  They still raise here for an input that would reach
+the one recursive pass on that path: the assumption-gated e-graph, which
+runs when the expression contains a <code>Domain.Positive</code> or
+<code>Domain.NonZero</code> symbol, or when an explicit <a href="/docs/api/core/#Assumptions"><code>Assumptions</code></a>
+context is supplied.  Everything else — printing, <code>diff</code>,
+<code>symbolic_grad</code>, <code>subs</code>, the evaluators, the emitters — recurses, and
+raises past the ceiling.</p>
+<p>Rebuilding the expression with less nesting, or splitting the work into
+subexpressions, is the fix.</p>
+</div></section>
+<section class="sym" id="DiophantineError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">DiophantineError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#DiophantineError" aria-label="Link to DiophantineError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L543" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Integer Diophantine solving failed (linear / quadratic patterns).</p>
+</div></section>
+<section class="sym" id="DivisionByZeroError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">DivisionByZeroError</span><span class="sig-bases">(DomainError, ZeroDivisionError)</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#DivisionByZeroError" aria-label="Link to DivisionByZeroError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L662" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Division by an exact zero (<code>E-DOMAIN-001</code>).</p>
+<p>Raised by <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a> when a denominator simplifies to <code>0</code> — e.g.
+<code>simplify(1/(x + (-1)*x))</code> — and by <code>Expr</code> division by a literal zero.
+It is a <a href="/docs/api/errors/#DomainError"><code>DomainError</code></a> <em>and</em> a <code>ZeroDivisionError</code>, so both
+<code>except ak.DomainError</code> and <code>except ZeroDivisionError</code> catch it.</p>
+</div></section>
+<section class="sym" id="FactorError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">FactorError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#FactorError" aria-label="Link to FactorError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L248" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Polynomial factorization failed.</p>
+</div></section>
+<section class="sym" id="HolonomicError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">HolonomicError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#HolonomicError" aria-label="Link to HolonomicError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L472" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Creative telescoping refused: input outside the proper hypergeometric
+class (<code>E-HOLO-001</code>), bounded search exhausted (<code>E-HOLO-002</code>), a
+candidate certificate failed exact verification (<code>E-HOLO-003</code>), the call
+was malformed (<code>E-HOLO-004</code>), or a guessed recurrence is not supported by
+the terms supplied (<code>E-HOLO-005</code>).</p>
+<p>M6 added three more, all from modular / <code>p</code>-adic evaluation
+(<a href="/docs/api/diff/#ModularRecurrence"><code>ModularRecurrence</code></a>, <a href="/docs/api/poly/#binomial_mod"><code>binomial_mod()</code></a>): the
+modulus is not a prime power the backend supports (<code>E-HOLO-006</code>), a step
+of the recurrence does not determine its next term as a <code>p</code>-adic integer
+(<code>E-HOLO-007</code>), or the working precision the singular steps demand is
+past a machine-word modulus (<code>E-HOLO-008</code>).</p>
+<p>A refusal here is informative, not a failure: it says the term is not one
+Zeilberger&#39;s algorithm decides at the requested bounds, so a loop can close
+that branch instead of re-attempting it.</p>
+<p><code>E-HOLO-005</code> is the one exception to &quot;close that branch&quot;. It comes from
+<a href="/docs/api/diff/#guess_holonomic"><code>guess_holonomic()</code></a> and means <em>the data could not answer</em> —
+too few terms to test every candidate in bounds, or a fit with no surplus
+equations to confirm it. Recording it as &quot;this sequence has no recurrence&quot;
+closes a branch that was never explored. <code>E-HOLO-008</code> is the same shape:
+a resource ceiling, not a mathematical verdict.</p>
+</div></section>
+<section class="sym" id="HomotopyError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">HomotopyError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#HomotopyError" aria-label="Link to HomotopyError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L936" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Numerical polynomial continuation failed (V2-14 homotopy solver).</p>
+<p>The native class is registered by the extension as <code>PyHomotopyError</code>;
+this is the Python-side wrapper used for <code>isinstance</code> checks, and its
+absence is what <code>scripts/check_error_codes.py</code> was reporting.</p>
+<ul>
+<li><code>E-HOMOTOPY-002</code> — the start system has too few paths for the target.</li>
+<li><code>E-HOMOTOPY-003</code> — path tracking failed for a random gamma.</li>
+<li><code>E-HOMOTOPY-004</code> — the tracker exhausted its step budget.</li>
+</ul>
+</div></section>
+<section class="sym" id="IoError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">IoError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#IoError" aria-label="Link to IoError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L866" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Checkpoint / restore I/O error (formerly PoolPersistError, E-POOL-* codes).</p>
+</div></section>
+<section class="sym" id="LatticeError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">LatticeError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#LatticeError" aria-label="Link to LatticeError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L591" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>LLL lattice reduction failed (structure, Lovász parameter, or iteration limit).</p>
+</div></section>
+<section class="sym" id="LimitError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">LimitError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#LimitError" aria-label="Link to LimitError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L372" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Symbolic limit computation failed.</p>
+</div></section>
+<section class="sym" id="LinearRecurrenceError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">LinearRecurrenceError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#LinearRecurrenceError" aria-label="Link to LinearRecurrenceError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L519" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Linear recurrence solving failed.</p>
+</div></section>
+<section class="sym" id="ModularError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">ModularError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ModularError" aria-label="Link to ModularError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L957" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A modular / CRT reconstruction step failed (<code>E-MOD-001</code> … <code>E-MOD-004</code>).</p>
+<p>As with <a href="/docs/api/errors/#HomotopyError"><code>HomotopyError</code></a>, the native class exists as <code>PyModularError</code>
+and this wrapper is what makes it catchable by name from Python.</p>
+</div></section>
+<section class="sym" id="NumberTheoryError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">NumberTheoryError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#NumberTheoryError" aria-label="Link to NumberTheoryError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L878" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Integer number-theory primitive failed (parity, modulus, or unsolvable congruence).</p>
+</div></section>
+<section class="sym" id="ParamGroebnerError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">ParamGroebnerError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ParamGroebnerError" aria-label="Link to ParamGroebnerError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L973" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A Gröbner basis over <code>Q(params)</code> refused or was called wrongly (M9).</p>
+<p>Raised by <code>ParametricGroebnerBasis</code> and by
+<code>GroebnerBasis.compute(..., params=[...])</code>.  The native class exists as
+<code>PyParamGroebnerError</code>; this wrapper is what makes it catchable by name.</p>
+<ul>
+<li><code>E-PARAMGB-001</code> — no generators were supplied.</li>
+<li><code>E-PARAMGB-002</code> — the generators disagree on the variable/parameter
+lists.</li>
+<li><code>E-PARAMGB-003</code> — a specialisation was given the wrong number of values.</li>
+<li><code>E-PARAMGB-004</code> — <strong>a result, not a malfunction.</strong> The requested
+parameter point is on the degeneracy locus: one of the conditions the
+basis assumed vanishes there, so the generic basis says nothing about it.
+Read <code>ParametricGroebnerBasis.conditions()</code> to see which hypersurfaces
+those are, or compute over ℚ directly at that point.</li>
+</ul>
+</div></section>
+<section class="sym" id="ProductError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">ProductError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ProductError" aria-label="Link to ProductError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L507" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Symbolic discrete product failed (unsupported term or factorisation).</p>
+</div></section>
+<section class="sym" id="PslqError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">PslqError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">code</span><span class="sig-ann">: str</span><span class="sig-def">='E-PSLQ-001'</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#PslqError" aria-label="Link to PslqError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L603" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Integer-relation heuristic failed (input, coefficient bound, or lattice step).</p>
+<p><code>E-PSLQ-004</code> is raised when the supplied constants carry less precision
+than the relation found needs, and <code>E-PSLQ-005</code> when the constants are
+exact rationals and the relation is simply false for them — see
+<a href="/docs/api/numerics/#guess_relation"><code>guess_relation()</code></a>.</p>
+</div></section>
+<section class="sym" id="RealRootError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">RealRootError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#RealRootError" aria-label="Link to RealRootError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L634" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Real root isolation failed (conversion to univariate polynomial, etc.).</p>
+</div></section>
+<section class="sym" id="ResultantError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">ResultantError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ResultantError" aria-label="Link to ResultantError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L646" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Polynomial resultant or subresultant PRS computation failed.</p>
+</div></section>
+<section class="sym" id="RsolveError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">RsolveError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#RsolveError" aria-label="Link to RsolveError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L531" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Difference equation / rsolve failed.</p>
+</div></section>
+<section class="sym" id="SeriesError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">SeriesError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#SeriesError" aria-label="Link to SeriesError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L360" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Symbolic series expansion failed.</p>
+</div></section>
+<section class="sym" id="SosError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">SosError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#SosError" aria-label="Link to SosError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L448" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A positivity question was not answered with a certificate.</p>
+<p>The three outcomes are deliberately distinct, because conflating them
+loses information a search loop needs:</p>
+<ul>
+<li><code>E-SOS-003</code> — the target is <em>definitely</em> negative somewhere; the
+message carries a witness point. The claim is false.</li>
+<li><code>E-SOS-002</code> — no certificate of the searched shape at this degree.
+This is <strong>not</strong> a proof that none exists; raise the degree, or fall back
+to the complete (and far more expensive) <a href="/docs/api/solve/#decide"><code>decide()</code></a>.</li>
+<li><code>E-SOS-001</code> / <code>E-SOS-004</code> — the input was not a polynomial in the
+given variables, or the call was malformed.</li>
+</ul>
+</div></section>
+<section class="sym" id="SumError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">SumError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#SumError" aria-label="Link to SumError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L384" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Symbolic summation failed (not hypergeometric or not Gosper-summable).</p>
+</div></section>
+<section class="sym" id="ValidatedError"><div class="sym-head">
+  <span class="kind kind-exception">exception</span>
+  <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-name">ValidatedError</span>(
+    <span class="sig-p">message</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ValidatedError" aria-label="Link to ValidatedError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L422" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A rigorous bound could not be established, so none is returned.</p>
+<p>Every variant is a refusal, never a guess: an unsupported primitive
+(<code>E-VALIDATED-001</code>), a free symbol with no interval (<code>E-VALIDATED-002</code>),
+a singularity or branch cut inside the box (<code>E-VALIDATED-003</code>), an
+enclosure that overflowed to infinity (<code>E-VALIDATED-004</code>), or a malformed
+request (<code>E-VALIDATED-005</code>).  <a href="/docs/api/numerics/#verified_ode"><code>verified_ode()</code></a> adds a step-size
+underflow near a blow-up or non-Lipschitz point (<code>E-VALIDATED-006</code>), an
+enclosure grown too wide to say anything (<code>E-VALIDATED-007</code>) and a step
+limit, typically on a stiff problem (<code>E-VALIDATED-008</code>).</p>
+<p>Note that running out of <em>budget</em> is not an error — that returns a wide but
+still rigorous enclosure with <code>budget_exhausted=True</code>, because a loose
+true bound is useful and a tight false one is not.</p>
+</div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/certificates/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Certificates</span></a><a class="pager-next" href="/docs/api/plotting/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Plotting, printing and parsing</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/errors.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#base-class">Base class</a></li><li class="d3"><a href="#AlkahestError">AlkahestError</a></li><li class="d2"><a href="#refusals-versus-verdicts">Refusals versus verdicts</a></li><li class="d2"><a href="#exception-subclasses">Exception subclasses</a></li><li class="d3"><a href="#ConversionError">ConversionError</a></li><li class="d3"><a href="#DomainError">DomainError</a></li><li class="d3"><a href="#LogicError">LogicError</a></li><li class="d3"><a href="#DiffError">DiffError</a></li><li class="d3"><a href="#IntegrationError">IntegrationError</a></li><li class="d3"><a href="#MatrixError">MatrixError</a></li><li class="d3"><a href="#LinearAlgebraError">LinearAlgebraError</a></li><li class="d3"><a href="#EigenError">EigenError</a></li><li class="d3"><a href="#CadError">CadError</a></li><li class="d3"><a href="#AnsatzError">AnsatzError</a></li><li class="d3"><a href="#CrossCheckError">CrossCheckError</a></li><li class="d3"><a href="#SmtError">SmtError</a></li><li class="d3"><a href="#OdeError">OdeError</a></li><li class="d3"><a href="#TransformError">TransformError</a></li><li class="d3"><a href="#AsymptoticError">AsymptoticError</a></li><li class="d3"><a href="#FpsError">FpsError</a></li><li class="d3"><a href="#ProbabilityError">ProbabilityError</a></li><li class="d3"><a href="#VectorError">VectorError</a></li><li class="d3"><a href="#UnitError">UnitError</a></li><li class="d3"><a href="#TensorError">TensorError</a></li><li class="d3"><a href="#ControlsError">ControlsError</a></li><li class="d3"><a href="#NcError">NcError</a></li><li class="d3"><a href="#QuaternionError">QuaternionError</a></li><li class="d3"><a href="#DaeError">DaeError</a></li><li class="d3"><a href="#SolverError">SolverError</a></li><li class="d3"><a href="#LinprogError">LinprogError</a></li><li class="d3"><a href="#JitError">JitError</a></li><li class="d3"><a href="#CudaError">CudaError</a></li><li class="d3"><a href="#SparseInterpError">SparseInterpError</a></li><li class="d3"><a href="#SparseGcdError">SparseGcdError</a></li><li class="d3"><a href="#ParseError">ParseError</a></li><li class="d3"><a href="#PoolError">PoolError</a></li><li class="d3"><a href="#CertificateUnavailableError">CertificateUnavailableError</a></li><li class="d3"><a href="#BudgetExceededError">BudgetExceededError</a></li><li class="d2"><a href="#catching-errors-by-subsystem">Catching errors by subsystem</a></li><li class="d2"><a href="#more-exception-classes">More exception classes</a></li><li class="d3"><a href="#AssumptionError">AssumptionError</a></li><li class="d3"><a href="#DepthLimitError">DepthLimitError</a></li><li class="d3"><a href="#DiophantineError">DiophantineError</a></li><li class="d3"><a href="#DivisionByZeroError">DivisionByZeroError</a></li><li class="d3"><a href="#FactorError">FactorError</a></li><li class="d3"><a href="#HolonomicError">HolonomicError</a></li><li class="d3"><a href="#HomotopyError">HomotopyError</a></li><li class="d3"><a href="#IoError">IoError</a></li><li class="d3"><a href="#LatticeError">LatticeError</a></li><li class="d3"><a href="#LimitError">LimitError</a></li><li class="d3"><a href="#LinearRecurrenceError">LinearRecurrenceError</a></li><li class="d3"><a href="#ModularError">ModularError</a></li><li class="d3"><a href="#NumberTheoryError">NumberTheoryError</a></li><li class="d3"><a href="#ParamGroebnerError">ParamGroebnerError</a></li><li class="d3"><a href="#ProductError">ProductError</a></li><li class="d3"><a href="#PslqError">PslqError</a></li><li class="d3"><a href="#RealRootError">RealRootError</a></li><li class="d3"><a href="#ResultantError">ResultantError</a></li><li class="d3"><a href="#RsolveError">RsolveError</a></li><li class="d3"><a href="#SeriesError">SeriesError</a></li><li class="d3"><a href="#SosError">SosError</a></li><li class="d3"><a href="#SumError">SumError</a></li><li class="d3"><a href="#ValidatedError">ValidatedError</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/errors.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

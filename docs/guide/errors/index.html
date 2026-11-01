@@ -1,0 +1,1319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Error handling · Alkahest Docs</title>
+<meta name="description" content="Alkahest uses a structured exception hierarchy. Every error carries a stable diagnostic code, a human-readable message, an optional source span, and an…">
+<meta property="og:title" content="Error handling · Alkahest Docs">
+<meta property="og:description" content="Alkahest uses a structured exception hierarchy. Every error carries a stable diagnostic code, a human-readable message, an optional source span, and an…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/" class="active" aria-current="page">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/" class="active" aria-current="page">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <div class="eyebrow">Trust and verification</div>
+    <h1>Error handling</h1>
+    <p>Alkahest uses a structured exception hierarchy. Every error carries a stable diagnostic code, a human-readable message, an optional source span, and an optional remediation hint.</p>
+<h2 id="exception-hierarchy"><a class="hanchor" href="#exception-hierarchy" aria-hidden="true" tabindex="-1">#</a>Exception hierarchy</h2>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>AlkahestError (base)
+├── ConversionError   (E-POLY-*)   — expression → polynomial/rational conversion
+├── DomainError       (E-DOMAIN-*) — mathematical side conditions violated
+├── DiffError         (E-DIFF-*)   — differentiation failed
+├── IntegrationError  (E-INT-*)    — integration failed
+├── MatrixError       (E-MAT-*)    — matrix shape / singularity / undecidable determinant
+│   ├── LinearAlgebraError (E-LINALG-*) — elimination, decompositions, canonical forms
+│   └── EigenError         (E-EIGEN-*)  — eigenvalues, eigenvectors, Jordan form
+├── CadError          (E-CAD-*)    — real quantifier elimination, see [Positivity](./positivity.md#decide-refuses-rather-than-guessing)
+├── OdeError          (E-ODE-*)    — every ODE engine: construction, dsolve, dsolve_system, series_solve, numeric
+├── TransformError    (E-TRANSFORM-*) — Laplace / Fourier / Z transforms and their inverses
+├── AsymptoticError   (E-ASYMPT-*) — asymptotic expansion at infinity
+├── FpsError          (E-FPS-*)    — formal power series
+├── DaeError          (E-DAE-*)    — DAE structural analysis
+├── SolverError       (E-SOLVE-*)  — polynomial system solving
+├── JitError          (E-JIT-*)    — LLVM/JIT codegen
+├── CudaError         (E-CUDA-*)   — NVPTX compile, kernel launch, or driver, see [GPU support](./gpu.md)
+├── PoolError         (E-POOL-*)   — ExprPool misuse
+├── AnsatzError       (E-ANSATZ-*) — ansatz family construction or fitting, see [Ansatz families](./ansatz.md)
+├── CrossCheckError   (E-XCHECK-*) — cross-CAS check could not be posed, see [Cross-CAS testing](./crosscheck.md)
+├── SmtError          (E-SMT-*)    — SMT-LIB export, solver run, or model lift, see [SMT bridge](./smt.md)
+├── VectorError       (E-VEC-*)    — vector calculus over an orthogonal chart, see below
+├── QuaternionError   (E-QUAT-*)   — quaternion algebra and rotations, see below
+├── UnitError         (E-UNIT-*)   — units and dimensional analysis, see [Units](./units.md)
+├── TensorError       (E-TENSOR-*) — metric → curvature and abstract indices, see [Tensor calculus](./tensor.md)
+├── ControlsError     (E-CTRL-*)   — transfer functions, state space, Lyapunov / Riccati, see [Controls](./controls.md)
+├── SpecialFunctionError (E-SPECFN-*) — orthogonal polynomials, Y_lm, 3j/6j/Clebsch–Gordan, Bessel/zeta/polylog, see [Orthogonal polynomials](./orthopoly.md) and [Bessel, Airy, zeta](./specfun.md)
+├── NcError           (E-NC-*)     — noncommutative algebra, see [Noncommutative algebra](./noncommutative.md)
+├── ProbabilityError  (E-PROB-*)   — distributions, expectations, generating functions, entropy, see below
+├── GroupError        (E-GRP-*)    — permutation groups: orbits, Schreier–Sims, membership
+├── FunctionFieldError (E-FFLD-*) — divisors, Pic⁰ and Riemann–Roch on algebraic curves, see below
+├── ThetaError        (E-THETA-*)  — Riemann theta, modular and Weierstrass functions as rigorous enclosures
+└── BudgetExceededError (E-BUDGET-*) — budget/cancellation trip, see [Budgets](./budgets.md)</code></pre></div><h2 id="error-attributes"><a class="hanchor" href="#error-attributes" aria-hidden="true" tabindex="-1">#</a>Error attributes</h2>
+<p>Every exception instance exposes:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Attribute</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody><tr>
+<td><code>.code</code></td>
+<td><code>str</code></td>
+<td>Stable diagnostic code, e.g. <code>&quot;E-POLY-001&quot;</code></td>
+</tr>
+<tr>
+<td><code>.remediation</code></td>
+<td><code>str | None</code></td>
+<td>What the user should try</td>
+</tr>
+<tr>
+<td><code>.span</code></td>
+<td><code>tuple[int, int] | None</code></td>
+<td>Character offset range in source expression</td>
+</tr>
+</tbody></table></div>
+<p>There is no <code>.message</code>. The human-readable description is <code>str(e)</code>, which carries the
+code, the message and the remediation on separate lines; <code>e.args[0]</code> is the same
+string. Branch on <code>.code</code>, print <code>str(e)</code>.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool, UniPoly, ConversionError</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">    # sin(x) cannot be represented as a polynomial</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> UniPoly.from_symbolic(alkahest.sin(x), x)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ConversionError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e.code)          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># E-POLY-006</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">str</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e))          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "[E-POLY-006] function 'sin' cannot appear in a polynomial</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">                           #  Remediation: not a polynomial; wrap in the function only</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">                           #  after rational reduction"</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e.remediation)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "not a polynomial; wrap in the function only after</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">                           #  rational reduction"</span></span></code></pre></div><h2 id="common-errors-and-remediations"><a class="hanchor" href="#common-errors-and-remediations" aria-hidden="true" tabindex="-1">#</a>Common errors and remediations</h2>
+<h3 id="conversionerror-e-poly-"><a class="hanchor" href="#conversionerror-e-poly-" aria-hidden="true" tabindex="-1">#</a>ConversionError (E-POLY-*)</h3>
+<p>Raised when an expression cannot be converted to a polynomial or rational function.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Cause</th>
+<th>Remediation</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-POLY-001</code></td>
+<td>A symbol the conversion could not place</td>
+<td>Remove it, or declare it as a parameter</td>
+</tr>
+<tr>
+<td><code>E-POLY-002</code></td>
+<td>A coefficient is not a rational integer</td>
+<td>Rationalize, or substitute</td>
+</tr>
+<tr>
+<td><code>E-POLY-003</code></td>
+<td>A negative or non-integer exponent</td>
+<td>Only non-negative integer exponents are supported</td>
+</tr>
+<tr>
+<td><code>E-POLY-004</code></td>
+<td>Degree ceiling exceeded: an exponent, or a monomial&#39;s total degree, above <code>u32::MAX</code> (including one produced by multiplying terms, e.g. <code>x^(2^31)·x^(2^31)</code>), or a dense univariate degree above 2^26 or the active <code>Budget(max_bytes=...)</code></td>
+<td>Reduce the degree (e.g. substitute <code>t = x^k</code>), or keep the expression symbolic</td>
+</tr>
+<tr>
+<td><code>E-POLY-005</code></td>
+<td>Symbolic exponent (a variable in the exponent)</td>
+<td>Substitute a concrete integer first</td>
+</tr>
+<tr>
+<td><code>E-POLY-006</code></td>
+<td>A non-polynomial <strong>function</strong> in the input (e.g. <code>sin</code>)</td>
+<td>Use <code>Expr</code> directly, or expand as a series first. This — not <code>E-POLY-001</code> — is what <code>UniPoly.from_symbolic(sin(x), x)</code> raises</td>
+</tr>
+<tr>
+<td><code>E-POLY-007</code></td>
+<td>The denominator is zero</td>
+<td>Ensure it is non-zero before converting</td>
+</tr>
+<tr>
+<td><code>E-POLY-008</code> … <code>E-POLY-010</code></td>
+<td><code>FactorError</code>, not <code>ConversionError</code>: factoring the zero polynomial, or a bad modulus</td>
+<td>—</td>
+</tr>
+</tbody></table></div>
+<h3 id="domainerror-e-domain-"><a class="hanchor" href="#domainerror-e-domain-" aria-hidden="true" tabindex="-1">#</a>DomainError (E-DOMAIN-*)</h3>
+<p>Raised when a mathematical side condition is violated.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Cause</th>
+<th>Remediation</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-DOMAIN-001</code></td>
+<td>Division by zero: <code>Expr / 0</code>, or a denominator that <code>simplify</code> reduces to <code>0</code> (<code>1/(x + 2*x - 3*x)</code>). Raised as <code>DivisionByZeroError</code>, which is both a <code>DomainError</code> and a <code>ZeroDivisionError</code></td>
+<td>Check the denominator before dividing — it is identically zero</td>
+</tr>
+<tr>
+<td><code>E-DOMAIN-002</code></td>
+<td><code>log(0)</code> or <code>log(negative)</code></td>
+<td>Ensure argument is positive; use complex domain if needed</td>
+</tr>
+<tr>
+<td><code>E-DOMAIN-003</code></td>
+<td><code>sqrt(negative)</code></td>
+<td>Use <code>AcbBall</code> or declare complex domain</td>
+</tr>
+</tbody></table></div>
+<h3 id="integrationerror-e-int-"><a class="hanchor" href="#integrationerror-e-int-" aria-hidden="true" tabindex="-1">#</a>IntegrationError (E-INT-*)</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Cause</th>
+<th>Remediation</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-INT-001</code></td>
+<td>No method could decide the integrand (or a definite integral&#39;s hypotheses could not be established). A refusal, not a proof that no closed form exists</td>
+<td>Try an equivalent form of the integrand, or integrate numerically</td>
+</tr>
+<tr>
+<td><code>E-INT-002</code></td>
+<td>Division by zero inside an integration rule</td>
+<td>Report the integrand</td>
+</tr>
+<tr>
+<td><code>E-INT-003</code></td>
+<td>Algebraic extension of unsupported degree</td>
+<td>Rewrite the radical, or integrate numerically</td>
+</tr>
+<tr>
+<td><code>E-INT-004</code></td>
+<td><strong>Proven</strong> non-elementary: no elementary antiderivative exists. The message names the integrand (and, labelled, the sub-integrand or coefficient that carries the obstruction)</td>
+<td>Use the special-function answer if one is offered, or integrate numerically</td>
+</tr>
+</tbody></table></div>
+<h3 id="solvererror-e-solve-"><a class="hanchor" href="#solvererror-e-solve-" aria-hidden="true" tabindex="-1">#</a>SolverError (E-SOLVE-*)</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Cause</th>
+<th>Remediation</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-SOLVE-001</code></td>
+<td>An equation is not polynomial <em>or rational</em> in the declared variables — a transcendental function, a symbolic exponent, or a symbol the conversion could not place</td>
+<td>Restate it as a ratio of polynomials in the unknowns and parameters. (An <em>inconsistent</em> system is not an error: it returns an empty list)</td>
+</tr>
+<tr>
+<td><code>E-SOLVE-002</code></td>
+<td>Back-substitution reached an irreducible factor of degree ≥ 3 whose coefficients involve free parameters or algebraic numbers (rational-coefficient univariates of any degree are solved, with <code>RootOf</code> where no radical form is used)</td>
+<td>Substitute values for the parameters, or use <code>numeric=True</code> / <code>method=&quot;homotopy&quot;</code></td>
+</tr>
+<tr>
+<td><code>E-SOLVE-003</code></td>
+<td>Gröbner basis did not terminate</td>
+<td>Increase node/iteration limits</td>
+</tr>
+<tr>
+<td><code>E-SOLVE-005</code></td>
+<td>An equation&#39;s denominator is identically zero (<code>1/(x - x)</code>), so it denotes no function and has no solution set</td>
+<td>Check the equation for a subtraction that cancels</td>
+</tr>
+<tr>
+<td><code>E-SOLVE-006</code></td>
+<td><code>solve(..., numeric=True)</code> was asked for numbers, but a solution depends on a free parameter and there is no symbolic solution to return instead (the homotopy fallback, <code>solve([x**3 - y], [x], numeric=True)</code>); where a symbolic solution exists it is returned as an <code>Expr</code></td>
+<td>Solve with <code>numeric=False</code> for the parametric answer, or substitute a value for the parameter first</td>
+</tr>
+<tr>
+<td><code>E-SOLVE-007</code></td>
+<td><code>solve(..., numeric=True)</code> found a parameter-free solution value that does not evaluate to a finite complex number</td>
+<td>Solve with <code>numeric=False</code> for the exact solution set</td>
+</tr>
+<tr>
+<td><code>E-SOLVE-008</code></td>
+<td><code>RootOf(poly, x, k)</code> was given something that is not a non-constant polynomial in <code>x</code> over ℚ, or an index outside <code>0 ≤ k &lt;</code> number of distinct roots</td>
+<td>Pass a polynomial with rational coefficients and an index in range (real roots ascending, then complex by real then imaginary part)</td>
+</tr>
+<tr>
+<td><code>E-SOLVE-009</code></td>
+<td><code>nsolve</code> could not search: a symbol other than the unknown has no value, the bracket has no sign change or is empty/non-finite, or <code>all_in</code> was given a non-smooth equation (<code>abs</code>, <code>floor</code>, <code>Piecewise</code> of the unknown)</td>
+<td>Substitute values for the other symbols; pass a bracket on which the equation changes sign, or a starting point <code>x0</code></td>
+</tr>
+<tr>
+<td><code>E-SOLVE-012</code></td>
+<td>Numeric root-finding failed: Newton/Brent did not converge, the equation has no real value where the search needed one, the budget stopped it, or <code>solve(..., numeric=True, interval=(a, b))</code> could not prove its root list complete (a double root, a stretch outside the domain)</td>
+<td>Try a tighter bracket or another <code>x0</code>; inspect <code>nsolve(eq, x, all_in=(a, b)).unresolved</code></td>
+</tr>
+</tbody></table></div>
+<h3 id="pslqerror-e-pslq-"><a class="hanchor" href="#pslqerror-e-pslq-" aria-hidden="true" tabindex="-1">#</a>PslqError (E-PSLQ-*)</h3>
+<p>Raised by <code>alkahest.guess_relation</code>, the augmented-lattice integer-relation heuristic, and
+reported without an exception by <code>alkahest.relation_confidence</code>.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Cause</th>
+<th>Remediation</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-PSLQ-001</code></td>
+<td>Fewer than two constants supplied</td>
+<td>Pass at least two constants that might admit a linear dependence</td>
+</tr>
+<tr>
+<td><code>E-PSLQ-002</code></td>
+<td>Every constant truncated to zero at the working precision</td>
+<td>Use higher precision, or supply the constants as decimal strings</td>
+</tr>
+<tr>
+<td><code>E-PSLQ-003</code></td>
+<td>Working precision below the engine&#39;s 64-bit floor</td>
+<td>Allocate at least 64 MPFR bits; ≈664 bits ≈ 200 decimal digits</td>
+</tr>
+<tr>
+<td><code>E-PSLQ-004</code></td>
+<td>The relation found is <strong>larger than the inputs&#39; precision can justify</strong> — it was purchasable from the available digits and is evidence of nothing</td>
+<td>Supply the constants at the precision they were computed to, declare their real accuracy with <code>digits=</code>, or pass <code>check_precision=False</code> to accept the relation unjudged</td>
+</tr>
+<tr>
+<td><code>E-PSLQ-005</code></td>
+<td>The constants are exact rationals and the relation is <strong>false for them</strong>: <code>Σ aᵢ·cᵢ</code> evaluated in exact arithmetic is not zero</td>
+<td>The constants are probably truncations of a numerical computation rather than the values you mean — declare their accuracy with <code>digits=</code>, or supply more of them</td>
+</tr>
+</tbody></table></div>
+<p><code>E-PSLQ-004</code> and <code>E-PSLQ-005</code> are raised from Python (<code>alkahest.guess_relation</code>), so they
+are not in the Rust <code>REGISTRY</code>; both are subclasses of <code>PslqError</code> and are caught by
+<code>except alkahest.PslqError</code>. The two are deliberately distinct: <code>004</code> is a statement about
+how much precision the inputs carry, <code>005</code> is a statement about the relation itself and
+does not depend on precision at all.</p>
+<h3 id="primarydecompositionerror-e-ideal-"><a class="hanchor" href="#primarydecompositionerror-e-ideal-" aria-hidden="true" tabindex="-1">#</a>PrimaryDecompositionError (E-IDEAL-*)</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Cause</th>
+<th>Remediation</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-IDEAL-001</code></td>
+<td>No generators supplied</td>
+<td>Pass at least one generator</td>
+</tr>
+<tr>
+<td><code>E-IDEAL-002</code></td>
+<td>Generators disagree on the variable list</td>
+<td>Use one variable list for every generator</td>
+</tr>
+<tr>
+<td><code>E-IDEAL-003</code></td>
+<td>Saturation split exceeded its recursion depth</td>
+<td>Simplify the generating set</td>
+</tr>
+<tr>
+<td><code>E-IDEAL-004</code></td>
+<td>FLINT could not factor a generator</td>
+<td>Report the generating set as a minimal failing example</td>
+</tr>
+</tbody></table></div>
+<h3 id="refusals-when-alkahest-declines-to-answer"><a class="hanchor" href="#refusals-when-alkahest-declines-to-answer" aria-hidden="true" tabindex="-1">#</a>Refusals: when Alkahest declines to answer</h3>
+<p>A refusal is not a malfunction. These codes all mean <em>&quot;I could not establish this, and
+the alternative to saying so is a confident wrong answer&quot;</em> — the outcome an unattended
+loop must record as <strong>undecided</strong>, never as a negative result.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Class</th>
+<th>What it means</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-LINALG-010</code></td>
+<td><code>LinearAlgebraError</code></td>
+<td>An entry&#39;s vanishing could be proven neither zero nor non-zero, so <code>rank</code> / <code>rref</code> / <code>nullspace</code> / <code>eigenvects</code> / <code>jordan_form</code> declined to pick a branch</td>
+</tr>
+<tr>
+<td><code>E-MAT-004</code></td>
+<td><code>MatrixError</code></td>
+<td>Same, for a determinant: <code>inverse()</code> will not divide by something it cannot show is non-zero</td>
+</tr>
+<tr>
+<td><code>E-EIGEN-008</code></td>
+<td><code>EigenError</code> / <code>LinearAlgebraError</code></td>
+<td>The closed-form eigenvalues were produced and then failed their own check: <code>Π(z − λ)</code> and <code>det(zI − A)</code> disagree at a sampled <code>z</code>, so the radicals are not the spectrum on the branches anything reads them on. <code>eigenvals</code> / <code>eigenvects</code> / <code>diagonalize</code> / <code>jordan_form</code> / <code>matrix_exp</code> refuse rather than return them</td>
+</tr>
+<tr>
+<td><code>E-LINALG-011</code></td>
+<td><code>LinearAlgebraError</code></td>
+<td><code>matrix_exp</code> will not stand behind this <code>e^A</code>. Either nothing confirmed the eigenvalue list is the spectrum — Putzer&#39;s expansion is built entirely on it, and a wrong list yields a plausible matrix rather than an error — or the candidate was produced and then disagreed with <code>e^A</code> recomputed by scaling and squaring. An eigenvalue gap <code>λᵢ − λⱼ</code> that could not be settled is <em>not</em> this: it is divided by and <strong>reported</strong>, as <code>NonZero</code> side conditions</td>
+</tr>
+<tr>
+<td><code>E-CAD-001</code></td>
+<td><code>CadError</code></td>
+<td><code>decide</code> is outside its fragment, or the only candidate solutions lie at an irrational boundary point it cannot test exactly</td>
+</tr>
+<tr>
+<td><code>E-SOS-002</code></td>
+<td><code>SosError</code></td>
+<td>No positivity certificate of this shape at this degree — a statement about the search, not a proof that none exists. <strong>Record it as <code>unknown</code>, never as &quot;not SOS&quot; or &quot;the inequality is false&quot;:</strong> <code>p</code> may be SOS outside the LP subcone searched, SOS at a higher <code>basis_degree</code>, or non-negative without being SOS (Motzkin). <code>E-SOS-003</code>, which carries a witness point, is the only SOS <em>refutation</em>. The message carries a <code>what the search actually did:</code> trace; lines marked <code>NOT SEARCHED</code> are budgets that fired, not searches that came up empty, and mean the corresponding basis or multiplier power was never looked at. See <a href="/docs/guide/positivity/#three-outcomes-deliberately-kept-apart">Positivity certificates</a></td>
+</tr>
+<tr>
+<td><code>E-IDEAL-005</code></td>
+<td><code>IdealRefusal</code></td>
+<td><code>radical</code> cannot certify <code>√I</code> for this ideal. Only monomial, principal and zero-dimensional ideals — and anything whose primary decomposition is certified — are answered; the alternative is asserting <code>√I = I</code> with nothing behind it</td>
+</tr>
+<tr>
+<td><code>E-IDEAL-006</code></td>
+<td><code>IdealRefusal</code></td>
+<td><code>primary_decomposition</code> reached a component it cannot show is primary, so it will not report the ideal itself with an unjustified <code>associated_prime</code></td>
+</tr>
+<tr>
+<td><code>E-SOLVE-004</code></td>
+<td><code>TriangularizeRefusal</code></td>
+<td><code>triangularize</code> extracted a chain that does not generate an ideal containing the input, i.e. one that cuts out a larger variety than the system. Splitting on the initials (Lazard–Kalkbrener) is not implemented</td>
+</tr>
+<tr>
+<td><code>E-SERIES-003</code></td>
+<td><code>SeriesError</code></td>
+<td><code>series</code> ran past its work ceiling (or an active <code>Budget</code>) before reaching the requested order. Coefficients are formed by repeated differentiation without re-simplifying, so a nested radical&#39;s derivatives grow by a constant factor each time; a <em>shorter</em> series would carry an <code>O(h^order)</code> label nothing bounded</td>
+</tr>
+<tr>
+<td><code>E-SERIES-004</code></td>
+<td><code>SeriesError</code></td>
+<td>A <code>series</code> coefficient came out as an indeterminate form (<code>0/0</code>, <code>1/0</code>, <code>log(0)</code>) rather than a number, so the expansion point is a singularity this engine cannot resolve — a branch point (<code>√x</code>), an essential singularity (<code>e^{1/x}</code>), or a removable one it could not cancel. Returning the <code>Series</code> anyway would report success and hand back coefficients that evaluate to <code>NaN</code></td>
+</tr>
+<tr>
+<td><code>E-PSLQ-004</code></td>
+<td><code>PslqError</code></td>
+<td><code>guess_relation</code> found an integer relation the inputs&#39; precision cannot justify — pinning down <code>n</code> coefficients bounded by <code>H</code> costs about <code>n·log10(2H+1)</code> digits of agreement, and the inputs do not carry that many. <strong>Record it as <code>undecided</code>, not as &quot;no relation exists&quot;:</strong> the same constants at higher precision may well admit one. <code>relation_confidence</code> reports the same judgement as data, including a three-valued <code>credible</code> whose <code>None</code> means <em>the inputs&#39; precision is not knowable</em>, never a pass</td>
+</tr>
+<tr>
+<td><code>E-PSLQ-005</code></td>
+<td><code>PslqError</code></td>
+<td>The constants are exact rationals and <code>Σ aᵢ·cᵢ</code> is not zero in exact arithmetic. <strong>This one is a verdict, not a refusal</strong> — the relation is refuted for the numbers supplied</td>
+</tr>
+<tr>
+<td><code>E-SERIES-005</code></td>
+<td><code>SeriesError</code></td>
+<td><code>experimental.puiseux_series</code> found no Puiseux expansion at the point at all: a logarithm of something vanishing (<code>log x</code>, <code>√x·log x</code> — a Puiseux–<em>log</em> / transseries term, which this engine has no representation for), an essential singularity (<code>e^{1/x}</code>), or a ramification index past the range an expansion can be <em>checked</em> at. Truncating <code>√x·log x</code> to <code>x^{1/2}</code> would be a wrong answer rather than a coarse one</td>
+</tr>
+<tr>
+<td><code>E-SERIES-006</code></td>
+<td><code>SeriesError</code></td>
+<td><code>experimental.puiseux_series</code> <strong>computed</strong> an expansion and then withheld it, because its verifier could not confirm it — the truncation residual did not decay at the claimed rate, or nothing near the point could be evaluated (a branch that is not real on the side sampled, a head with no numeric kernel). Distinct from <code>E-SERIES-005</code> on purpose: that one says there is nothing to return, this one says there was something and it is not trustworthy</td>
+</tr>
+<tr>
+<td><code>E-SERIES-007</code></td>
+<td><code>SeriesError</code></td>
+<td><code>series</code> about <code>+oo</code>/<code>-oo</code> found no expansion in powers of <code>1/x</code> — <code>exp(x)</code>, <code>log(x)</code>, <code>sqrt(x)</code> and <code>sin(x)</code> have none at <code>+oo</code> — or the point mentions <code>oo</code> without being <code>±oo</code> (<code>oo + 1</code>, <code>a*oo</code>). <code>puiseux_series</code> raises it for any infinite point. Substituting <code>oo</code> into the Taylor formula is what used to happen, and it returned <code>0*oo</code> and <code>oo^-1</code> as coefficients</td>
+</tr>
+<tr>
+<td><code>E-INT-004</code></td>
+<td><code>IntegrationError</code></td>
+<td>Proven non-elementary. <strong>This one is a verdict, not a refusal</strong> — keep it apart from the rest</td>
+</tr>
+<tr>
+<td><code>E-BUDGET-001..005</code></td>
+<td><code>BudgetExceededError</code></td>
+<td>Ran out of the time, steps or memory it was given, was cancelled, or is about to exhaust the process address-space limit</td>
+</tr>
+<tr>
+<td><code>E-TRANSFORM-004</code></td>
+<td><code>TransformError</code></td>
+<td>The unilateral transform&#39;s causality hypothesis is <strong>refuted</strong>. <code>L{θ(t+1)}</code> is <code>1/s</code>; the shift rule would emit <code>e^{s}/s</code>, because the edge at <code>a = −1</code> lies outside the range <code>∫₀^∞</code> sees. On the inverse, an advance factor <code>e^{+as}</code> is the transform of no causal function. <strong>A verdict, not a refusal</strong> — there is nothing a wider table would find</td>
+</tr>
+<tr>
+<td><code>E-TRANSFORM-013</code></td>
+<td><code>TransformError</code></td>
+<td>A Fourier table entry&#39;s decay hypothesis is <strong>refuted</strong>: at a non-positive rate the defining integral diverges, and a negative Lorentzian amplitude has a transform whose sign <em>and</em> direction of growth are opposite to the tabulated one. Also a verdict</td>
+</tr>
+<tr>
+<td><code>E-ODE-011</code></td>
+<td><code>OdeError</code></td>
+<td><code>dsolve</code> produced a candidate closed form and then withheld it, because substituting it back into the equation did not verify. Distinct from <code>E-ODE-010</code> on purpose: that one says no class matched, this one says something was found and is not trustworthy</td>
+</tr>
+<tr>
+<td><code>E-ODE-044</code></td>
+<td><code>OdeError</code></td>
+<td>The same for <code>series_solve</code>: a candidate Frobenius series that failed the exact-residual gate</td>
+</tr>
+<tr>
+<td><code>E-ASYMPT-004</code></td>
+<td><code>AsymptoticError</code></td>
+<td><code>asymptotic_expand</code> computed an expansion and then withheld it, because the numeric <code>o()</code>-gate rejected every candidate term at large <code>x</code>. The function may have an oscillatory or non-power-scale tail</td>
+</tr>
+<tr>
+<td><code>E-PROB-005</code></td>
+<td><code>ProbabilityError</code></td>
+<td>A moment, CDF, quantile, characteristic function or entropy was <strong>computed</strong> and then withheld, because quadrature of its own defining integral could not confirm it. The same shape as <code>E-ODE-011</code> and <code>E-SERIES-006</code>: something was found and it is not trustworthy</td>
+</tr>
+<tr>
+<td><code>E-PROB-003</code></td>
+<td><code>ProbabilityError</code></td>
+<td>The reduction integral was built and the symbolic integrator declined it. A fact about <strong>this integrator</strong>, so a wider integration table would close it — the message names the integral, so it can be handed to quadrature instead</td>
+</tr>
+<tr>
+<td><code>E-PROB-006</code></td>
+<td><code>ProbabilityError</code></td>
+<td>The defining integral <strong>diverges</strong>, so there is no value. <strong>A verdict, not a refusal</strong> — <code>E[e^{X²}]</code> under a standard normal, <code>E[e^{tX}]</code> for a log-normal at any <code>t &gt; 0</code>, <code>D(P‖Q)</code> where <code>P</code> charges a set <code>Q</code> gives probability zero. Keep it apart from <code>E-PROB-003</code>: retrying with a wider integration table is the wrong next step. The convergence gate is <em>sufficient, not complete</em> — a divergence it cannot see still surfaces as <code>E-PROB-003</code></td>
+</tr>
+</tbody></table></div>
+<p><code>E-SERIES-003</code> and <code>E-SERIES-004</code> travel out of band for the same reason (<code>SeriesError</code> is
+exhaustive) but <em>are</em> wired into the bindings: <code>series</code> returns <code>SeriesError::InvalidOrder</code>
+with <code>calculus::series::take_series_refusal()</code> pending, and the Python layer raises
+<code>SeriesError</code> with <code>.code == &quot;E-SERIES-003&quot;</code> / <code>&quot;E-SERIES-004&quot;</code> — or <code>BudgetExceededError</code>
+when a budget was what stopped it. <code>SeriesRefusal::cause()</code> distinguishes the two in Rust.</p>
+<p><code>E-SERIES-005</code> and <code>E-SERIES-006</code> come from a different type — <code>calculus::puiseux::PuiseuxError</code>,
+which is <code>#[non_exhaustive]</code> from birth and so needs no out-of-band channel — but they raise the
+same Python <code>SeriesError</code>, because <code>puiseux_series</code> is the series engine widened rather than a
+new subsystem, and <code>except SeriesError</code> should keep covering both entry points. A budget trip
+inside <code>puiseux_series</code> raises <code>BudgetExceededError</code>, not <code>E-SERIES-003</code>: &quot;raise your budget&quot;
+and &quot;this expansion does not close&quot; are different problems.</p>
+<p>A <strong>removable</strong> singularity is not in that list, because it is no longer refused: <code>series</code>
+puts the expression over a common denominator and divides the two power series rather than
+substituting the expansion point into a quotient, so <code>sin(x)/x</code> gives <code>1 − x²/6 + O(x⁴)</code> and
+<code>1/sin(x)</code> gives <code>x⁻¹ + x/6 + O(x)</code>. <code>E-SERIES-004</code> is what is left when that does not
+apply.</p>
+<p><code>E-EIGEN-008</code> travels out of band on the same arrangement: <code>EigenError</code> and
+<code>LinearAlgebraError</code> are exhaustive, so the refusal is returned inside
+<code>UnsupportedIrreducibleDegree</code> — whose text now states the disjunction it covers — with
+<code>matrix::take_spectrum_refusal()</code> pending, and the Python bindings raise <code>EigenError</code> /
+<code>LinearAlgebraError</code> carrying <code>.code == &quot;E-EIGEN-008&quot;</code> and the offending <code>λ</code> list.</p>
+<p><code>E-IDEAL-005</code>, <code>E-IDEAL-006</code> and <code>E-SOLVE-004</code> are new in 3.8 and travel <strong>out of band</strong>:
+<code>PrimaryDecompositionError</code> and <code>SolverError</code> are public exhaustive enums that cannot gain
+a variant in a patch release, so the refusal is returned inside an existing variant and the
+real code is available from <code>ideal::take_ideal_refusal()</code> /
+<code>solver::regular_chains::take_triangularize_refusal()</code>. The Python bindings consult both, so
+<code>radical</code> and <code>primary_decomposition</code> raise <code>AlkahestError</code> with <code>.code == &quot;E-IDEAL-005&quot;</code> /
+<code>&quot;E-IDEAL-006&quot;</code>, and <code>triangularize</code> raises <code>SolverError</code> with <code>.code == &quot;E-SOLVE-004&quot;</code>.
+<code>AlkahestError</code> subclasses <code>ValueError</code>, so code that catches <code>ValueError</code> is unaffected.</p>
+<p><code>E-SOLVE-005</code> uses the same channel for the same reason: <code>solve</code> returns
+<code>SolverError::NotPolynomial</code> with <code>solver::take_undefined_equation()</code> pending, and the
+Python binding raises <code>SolverError</code> with <code>.code == &quot;E-SOLVE-005&quot;</code>. It means the equation&#39;s
+denominator vanishes identically, so it is not a rational function of anything and there is
+no solution set to report — distinct from <code>E-SOLVE-001</code>, which means the equation is a
+perfectly good function that is merely not polynomial or rational in the declared unknowns.</p>
+<p>The takers are <em>consuming</em>, which is what keeps the carrier variant honest: a genuinely
+non-polynomial equation still reports <code>E-SOLVE-001</code>, because no refusal is pending for it.
+Both readings of the shared variant stay distinguishable.</p>
+<p>The three-valued zero test behind <code>E-LINALG-010</code> / <code>E-MAT-004</code> is new in 3.8. Before it,
+&quot;could not prove <code>det ≠ 0</code>&quot; was silently read as &quot;<code>det = 0</code>&quot;, and <code>Matrix.nullspace()</code>
+returned a confident wrong basis for any 2×2 with a symbolic determinant.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">a </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"a"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">zero, one </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># `mystery` has no evaluation rule, so its vanishing is genuinely undecidable.</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">opaque </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.func(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"mystery"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [a])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">m </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.Matrix([[opaque, zero], [zero, one]])</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    m.inverse()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.MatrixError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e.code)          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># E-MAT-004</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e.remediation)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># substitute concrete values for the parameters</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ak.Matrix([[opaque, zero], [zero, zero]]).nullspace()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.LinearAlgebraError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e.code)          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># E-LINALG-010</span></span></code></pre></div><p><code>LinearAlgebraError</code> and <code>EigenError</code> are both subclasses of <code>MatrixError</code>, so
+<code>except ak.MatrixError</code> catches all three families; catch the subclass when you want to
+distinguish them. Note that <code>eigenvects()</code> raises <code>EigenError</code> — with code
+<code>E-LINALG-010</code>, because the code identifies <em>what could not be decided</em>, not which
+wrapper it surfaced through.</p>
+<h2 id="catching-errors-by-code"><a class="hanchor" href="#catching-errors-by-code" aria-hidden="true" tabindex="-1">#</a>Catching errors by code</h2>
+<p>For programmatic error handling:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.integrate(expr, x)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.AlkahestError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    if</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e.code.startswith(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"E-INT-"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">):</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">        print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">f</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"Integration failed: </span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">{</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">e.remediation</span><span style="--shiki-light:#005CC5;--shiki-dark:#F47067">}</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    else</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">        raise</span></span></code></pre></div><h2 id="error-taxonomy"><a class="hanchor" href="#error-taxonomy" aria-hidden="true" tabindex="-1">#</a>Error taxonomy</h2>
+<p>Every error is classified on two independent axes: <strong>subsystem</strong> (determines the code prefix and exception class) and <strong>cause</strong> (informs the remediation hint).</p>
+<h3 id="subsystem-axis"><a class="hanchor" href="#subsystem-axis" aria-hidden="true" tabindex="-1">#</a>Subsystem axis</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Prefix</th>
+<th>Class</th>
+<th>Scope</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-POLY-*</code></td>
+<td><code>ConversionError</code></td>
+<td>Expression → polynomial/rational-function conversion</td>
+</tr>
+<tr>
+<td><code>E-DOMAIN-*</code></td>
+<td><code>DomainError</code></td>
+<td>Side-condition violations (div-by-zero, log of 0, <code>sqrt</code> of negative)</td>
+</tr>
+<tr>
+<td><code>E-DIFF-*</code></td>
+<td><code>DiffError</code></td>
+<td>Forward/reverse differentiation, unknown derivatives</td>
+</tr>
+<tr>
+<td><code>E-INT-*</code></td>
+<td><code>IntegrationError</code></td>
+<td>Symbolic integration (Risch, heuristic, table)</td>
+</tr>
+<tr>
+<td><code>E-MAT-*</code></td>
+<td><code>MatrixError</code></td>
+<td>Matrix shape, proven-singular, non-invertible, and (<code>E-MAT-004</code>) an undecidable determinant</td>
+</tr>
+<tr>
+<td><code>E-LINALG-*</code></td>
+<td><code>LinearAlgebraError</code> <em>(subclass of <code>MatrixError</code>)</em></td>
+<td>Elimination, decompositions, canonical forms; <code>E-LINALG-010</code> is the undecidable-entry refusal</td>
+</tr>
+<tr>
+<td><code>E-EIGEN-*</code></td>
+<td><code>EigenError</code> <em>(subclass of <code>MatrixError</code>)</em></td>
+<td>Eigenvalues, eigenvectors, Jordan form, diagonalisation</td>
+</tr>
+<tr>
+<td><code>E-CAD-*</code></td>
+<td><code>CadError</code></td>
+<td>Real quantifier elimination — outside the fragment, or an untestable irrational boundary point</td>
+</tr>
+<tr>
+<td><code>E-ODE-*</code></td>
+<td><code>OdeError</code></td>
+<td>Every ODE engine, one class per prefix: construction and lowering (<code>001</code>–<code>003</code>), <code>dsolve</code> (<code>010</code>–<code>014</code>), the numeric integrators (<code>020</code>–<code>026</code>), <code>dsolve_system</code> (<code>030</code>–<code>034</code>), and <code>series_solve</code> (<code>040</code>–<code>045</code>, moved off <code>020</code>–<code>025</code> in 3.10 where they collided with the numeric block)</td>
+</tr>
+<tr>
+<td><code>E-TRANSFORM-*</code></td>
+<td><code>TransformError</code></td>
+<td>Laplace (<code>00x</code>), Fourier (<code>01x</code>) and Z (<code>10x</code>) transform tables and their inverses. <code>E-TRANSFORM-004</code> and <code>E-TRANSFORM-013</code> are <strong>refuted hypotheses</strong>, not table gaps — see below</td>
+</tr>
+<tr>
+<td><code>E-ASYMPT-*</code></td>
+<td><code>AsymptoticError</code></td>
+<td><code>experimental.asymptotic_expand</code>; <code>E-ASYMPT-004</code> is an expansion the numeric <code>o()</code>-gate could not confirm, withheld rather than returned</td>
+</tr>
+<tr>
+<td><code>E-FPS-*</code></td>
+<td><code>FpsError</code></td>
+<td>Formal power series (<code>experimental.Fps</code>) — a pole at the origin (<code>001</code>/<code>002</code>), a non-rational coefficient (<code>003</code>), or one of the constant-term hypotheses <code>f(0) = 0</code> / <code>1</code> / <code>≠ 0</code> that make composition, <code>log</code> and the inverse well defined (<code>004</code>–<code>006</code>)</td>
+</tr>
+<tr>
+<td><code>E-DAE-*</code></td>
+<td><code>DaeError</code></td>
+<td>DAE structural analysis (Pantelides, index reduction)</td>
+</tr>
+<tr>
+<td><code>E-SOLVE-*</code></td>
+<td><code>SolverError</code></td>
+<td>Polynomial system solving, Gröbner basis</td>
+</tr>
+<tr>
+<td><code>E-LAT-*</code></td>
+<td><code>LatticeError</code> (<code>001</code>–<code>004</code>), <code>LatticeGeometryError</code> (<code>005</code>–<code>014</code>)</td>
+<td>Lattices over ℤ. <code>001</code>–<code>004</code> are LLL reduction (empty/ragged basis, <code>δ</code> outside <code>(¼, 1)</code>, iteration guard) and stay on the stable <code>LatticeError</code>. The experimental lattice toolkit raises <code>LatticeGeometryError</code>, which is <code>#[non_exhaustive]</code> and <strong>wraps</strong> a <code>LatticeError</code> when a reduction under it fails, so <code>001</code>–<code>004</code> reach a caller unchanged; in Python it is a <em>subclass</em> of <code>LatticeError</code>, so one <code>except</code> still catches both. <code>005</code>–<code>007</code> reject a Gram matrix that is not square, not symmetric or not positive definite; <code>008</code>/<code>009</code> are the exact-enumeration refusals (rank above the ceiling, node budget exhausted) and are <strong>not</strong> an invitation to approximate — there is no heuristic SVP/CVP here; <code>010</code> needs an integral Gram matrix for a theta series, <code>011</code> is a vector of the wrong length, <code>012</code> an out-of-range constructor parameter, <code>013</code> an operation needing ambient coordinates on a Gram-only lattice, and <code>014</code> an internal invariant, reported rather than panicked because these run under a PyO3 boundary</td>
+</tr>
+<tr>
+<td><code>E-PSLQ-*</code></td>
+<td><code>PslqError</code></td>
+<td>Integer-relation search (<code>guess_relation</code>); <code>E-PSLQ-004</code> is the input-precision refusal and <code>E-PSLQ-005</code> the exact refutation</td>
+</tr>
+<tr>
+<td><code>E-JIT-*</code></td>
+<td><code>JitError</code></td>
+<td>LLVM/Cranelift codegen and linking. <code>E-JIT-005</code> refuses <code>compile_expr</code> / <code>CompileCache.compile</code> on an expression with a free symbol the input list does not bind (<code>compile_expr(x + y, [x])</code>): such a function has no value at any point, and used to return <code>NaN</code> for every call instead of raising. <code>π</code> needs no binding. Rust callers get it as <code>JitError::UnsupportedNode</code> with the code from <code>take_unbound_symbols()</code>, or check first with <code>check_inputs_bind</code>. <code>E-JIT-006</code> refuses an expression applying a function with no numeric implementation — an undefined <code>f(x)</code>, a <code>Derivative</code> of one, any head the primitive registry does not know — which used to compile and return <code>NaN</code> at every point (<code>take_unevaluable_functions()</code> / <code>check_functions_evaluable</code> in Rust)</td>
+</tr>
+<tr>
+<td><code>E-STABLEHLO-*</code></td>
+<td><code>AlkahestError</code></td>
+<td><code>to_stablehlo</code> refusals: <code>001</code> a function with no exact StableHLO lowering (<code>erf</code>, <code>gamma</code>, <code>lambert_w</code>, <code>asinh</code>, a user function — the message names it), <code>002</code> a node with no numeric value (<code>O(x)</code>), <code>003</code> a free symbol not in the input list, <code>004</code> an infinite/NaN constant, <code>005</code> a function name that is not an MLIR identifier. These used to return <code>&#39;&#39;</code> with no error</td>
+</tr>
+<tr>
+<td><code>E-CODEGEN-*</code></td>
+<td><code>AlkahestError</code></td>
+<td><code>emit_c_expr</code> / <code>emit_c_vec</code> refusals: <code>001</code> a function with no C lowering (<code>diracdelta</code>, Airy, <code>zeta</code>, <code>polylog</code>, <code>hyper</code>, spherical Bessel, incomplete elliptic integrals, Bessel of a literal non-integer order, <code>polygamma</code> of order &gt; 1, a user function — the message names it), <code>002</code> a node with no straight-line C form (<code>O(x)</code>, quantifiers, root sums), <code>003</code> a free symbol not listed in <code>vars</code> (<code>pi</code> needs no binding). These used to be uncoded <code>ValueError</code>s; <code>AlkahestError</code> still subclasses <code>ValueError</code></td>
+</tr>
+<tr>
+<td><code>E-CUDA-*</code></td>
+<td><code>CudaError</code></td>
+<td>NVPTX compile, kernel launch, driver/runtime failures</td>
+</tr>
+<tr>
+<td><code>E-POOL-*</code></td>
+<td><code>PoolError</code></td>
+<td><code>ExprPool</code> misuse (closed, cross-pool, persisted-handle mismatch). <code>E-POOL-001</code>: arguments from different pools passed to one call — an operator, a pool constructor (<code>pool.add</code> / <code>pool.func</code> / <code>pool.forall</code> …), or any function or method taking more than one expression (<code>diff(expr, var)</code>, <code>eval_expr(expr, {var: …})</code>, <code>Matrix + Matrix</code>, a <code>CompileCache</code> used with a second pool); the message names the argument. <code>E-POOL-002</code>: a built-in function name given the wrong number of arguments (<code>pool.func(&quot;sqrt&quot;, [])</code>, <code>pool.func(&quot;EllipticPi&quot;, [x])</code>)</td>
+</tr>
+<tr>
+<td><code>E-PARSE-*</code></td>
+<td><code>ParseError</code></td>
+<td><code>alkahest.parse</code> and the Rust <code>parse</code>: <code>001</code> lexical (including an out-of-range number literal), <code>002</code> syntactic (including a wrong built-in arity and division by the literal <code>0</code>), <code>003</code> unknown function, <code>004</code> nesting past 2048 levels (the <code>E-DEPTH-001</code> ceiling). Carries <code>.span</code> — see <a href="/docs/guide/parsing/">Parsing</a></td>
+</tr>
+<tr>
+<td><code>E-IO-*</code></td>
+<td><code>IoError</code></td>
+<td>Pool checkpoint files (<code>ExprPool.save_to</code> / <code>ExprPool.load_from</code>). Loading a corrupt or untrusted <code>.akp</code> file raises one of these and never aborts or panics: <code>001</code> a filesystem error, or structurally invalid data (a child reference to a node that is not earlier in the file, a node count past what an <code>ExprId</code> can address); <code>002</code> bad magic; <code>003</code> unsupported format version; <code>004</code> truncated — including any length, arity, branch count or node count that claims more bytes than the rest of the file holds, which is refused <strong>before</strong> anything is allocated for it; <code>005</code> invalid UTF-8; <code>006</code> unknown domain tag; <code>007</code> unknown node tag; <code>008</code> unknown predicate kind; <code>009</code> an invalid numeral, a rational with denominator 0, or a float precision outside <code>1 ..= 2^24</code> bits. Non-canonical nodes (an unreduced rational, an unsorted or one-argument <code>Add</code>, a duplicated node) are canonicalised on load, and every later child reference is remapped so it still points at the node the file meant</td>
+</tr>
+<tr>
+<td><code>E-CERT-*</code></td>
+<td><code>CertificateUnavailableError</code></td>
+<td>A Lean certificate was required but withheld</td>
+</tr>
+<tr>
+<td><code>E-BUDGET-*</code></td>
+<td><code>BudgetExceededError</code></td>
+<td>Budget/cancellation trip — see <a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></td>
+</tr>
+<tr>
+<td><code>E-ANSATZ-*</code></td>
+<td><code>AnsatzError</code></td>
+<td>Ansatz family construction and fitting — see <a href="/docs/guide/ansatz/">Ansatz families</a></td>
+</tr>
+<tr>
+<td><code>E-XCHECK-*</code></td>
+<td><code>CrossCheckError</code></td>
+<td>Cross-CAS differential testing — see <a href="/docs/guide/crosscheck/">Cross-CAS testing</a></td>
+</tr>
+<tr>
+<td><code>E-SMT-*</code></td>
+<td><code>SmtError</code></td>
+<td>SMT-LIB export, solver invocation, model lift — see <a href="/docs/guide/smt/">SMT bridge</a></td>
+</tr>
+<tr>
+<td><code>E-PARI-*</code></td>
+<td><code>PariError</code> (<code>PariUnavailable</code> for <code>001</code>)</td>
+<td>Optional PARI/GP interop — <code>001</code> no binding, <code>002</code> unsupported input, <code>003</code> PARI answer failed Alkahest verification, <code>004</code> PARI itself raised — see <a href="/docs/guide/pari/">PARI interop</a></td>
+</tr>
+<tr>
+<td><code>E-RESIDUE-*</code></td>
+<td><code>AlkahestError</code></td>
+<td><code>residue</code> — not a rational function, zero denominator, pole order out of range, or (<code>E-RESIDUE-005</code>) a point that is not an exact constant in ℚ(i)</td>
+</tr>
+<tr>
+<td><code>E-VEC-*</code></td>
+<td><code>VectorError</code></td>
+<td>Vector calculus over an orthogonal chart — a non-differentiable component, a repeated or non-symbol coordinate, a chart that could not be <em>proven</em> orthogonal (<code>E-VEC-004</code>), or a degenerate scale factor (<code>E-VEC-005</code>). See <a href="#vector-calculus-and-quaternions">Vector calculus and quaternions</a></td>
+</tr>
+<tr>
+<td><code>E-QUAT-*</code></td>
+<td><code>QuaternionError</code></td>
+<td>Quaternion algebra and rotations — a zero or undecided norm (<code>E-QUAT-001</code>), the axis of the identity rotation, which does not exist (<code>E-QUAT-002</code>), or a matrix that could not be checked to be a proper rotation (<code>E-QUAT-003</code>)</td>
+</tr>
+<tr>
+<td><code>E-UNIT-*</code></td>
+<td><code>UnitError</code></td>
+<td>Units and dimensional analysis (<code>alkahest.units</code>) — different dimensions where equal ones are needed, both named (<code>001</code>); a malformed or unknown unit (<code>002</code>); an affine temperature <code>degC</code>/<code>degF</code> in arithmetic or a compound unit (<code>003</code>); a function argument or symbolic exponent that is not a pure number (<code>004</code>); a symbol with no known unit (<code>005</code>); a sum of same-dimension terms in different units (<code>006</code>); a fractional power with an irrational scale (<code>007</code>). See <a href="/docs/guide/units/">Units and dimensional analysis</a></td>
+</tr>
+<tr>
+<td><code>E-TENSOR-*</code></td>
+<td><code>TensorError</code></td>
+<td>Tensor calculus (<code>alkahest.tensor</code>) — a metric that is not <code>n x n</code> for <code>n</code> distinct coordinate symbols (<code>001</code>); not symmetric (<code>002</code>); a determinant identically zero (<code>003</code>); a float entry (<code>004</code>); a node the exact field cannot hold, e.g. <code>Piecewise</code> (<code>005</code>); an unavailable partial derivative (<code>006</code>); a denominator that vanishes identically (<code>007</code>); the Weyl tensor below dimension 3 (<code>008</code>); an abstract-index error (<code>009</code>); an internal invariant (<code>010</code>). See <a href="/docs/guide/tensor/">Tensor calculus</a></td>
+</tr>
+<tr>
+<td><code>E-CTRL-*</code></td>
+<td><code>ControlsError</code></td>
+<td>Controls layer (<code>alkahest.controls</code>, raised from Python) — malformed input: not a rational function of the transfer variable, non-conforming shapes, MIMO where SISO is needed (<code>001</code>); an improper transfer function where a proper one is needed (<code>002</code>); a numeric routine (Bode, margins, numeric Lyapunov/Riccati) on data with free parameters (<code>003</code>); the object does not exist — a singular Lyapunov operator (<code>λᵢ + λⱼ = 0</code>), no stabilising Riccati solution, an infinite DC gain (<code>004</code>); beyond the exact engine — symbolic size limits, an unsolvable polynomial system (<code>005</code>); numpy missing (<code>006</code>). See <a href="/docs/guide/controls/">Controls</a></td>
+</tr>
+<tr>
+<td><code>E-SPECFN-*</code></td>
+<td><code>SpecialFunctionError</code></td>
+<td>Orthogonal polynomials, spherical harmonics and angular-momentum coupling — an angular momentum that is not an integer or half-integer (<code>001</code>); a negative <code>j</code>/<code>l</code> (<code>002</code>); a non-integer <code>l</code>/<code>m</code> for <code>spherical_harmonic_y</code> (<code>003</code>); an explicit expansion or coupling coefficient past the size cap (<code>004</code>); the wrong number of family parameters (<code>005</code>); a pole such as <code>zeta(1)</code> or <code>polylog(1, 1)</code> (<code>006</code>); a non-integer spherical Bessel order (<code>007</code>); a <code>polygamma</code> order that is not a non-negative integer (<code>008</code>); a hypergeometric transformation that does not apply — the logarithmic case, a literal <code>z</code> outside its region, no quadratic family (<code>009</code>). See <a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a> and <a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></td>
+</tr>
+<tr>
+<td><code>E-NC-*</code></td>
+<td><code>NcError</code></td>
+<td>Noncommutative algebra — rewriting that did not reach a normal form within <code>max_steps</code> (<code>001</code>); an expansion past the size caps (<code>002</code>); a rule whose left side is not one word (<code>003</code>); a malformed ladder-mode list (<code>004</code>); a bad γ slot (<code>005</code>); a γ trace past 14 slots (<code>006</code>); a vacuum expectation over a non-ladder factor (<code>007</code>). See <a href="/docs/guide/noncommutative/">Noncommutative algebra</a></td>
+</tr>
+<tr>
+<td><code>E-GFQ-*</code></td>
+<td><code>FiniteFieldError</code></td>
+<td>Linear algebra over the finite fields GF(q), q = p^k (<code>alkahest.experimental.FiniteField</code> / <code>GfMatrix</code>). <code>001</code> a non-prime characteristic and <code>002</code> one past a machine word — both refusals, because ℤ/nℤ for composite n has zero divisors and no well-defined rank; <code>004</code> a reducible defining polynomial; <code>009</code> a singular matrix; <code>010</code> a linear system with no solution, refused rather than approximated</td>
+</tr>
+<tr>
+<td><code>E-CODE-*</code></td>
+<td><code>CodingError</code></td>
+<td>Classical linear codes over GF(q), weight enumerators, MacWilliams, Krawtchouk polynomials and the Delsarte LP bound (<code>alkahest.experimental.LinearCode</code> / <code>delsarte_lp_bound</code>). Two matter most. <code>E-CODE-004</code> refuses a codeword enumeration past its hard cap rather than truncating it — the minimum weight of <em>some</em> codewords is an upper bound on <code>d</code> wearing <code>d</code>&#39;s name. <code>E-CODE-007</code> <strong>withholds</strong> an LP bound whose dual certificate failed its own exact feasibility check, because an upper bound that came out too small &quot;rules out&quot; codes that exist. The rest: <code>001</code> a zero-length code, <code>002</code> a distance outside <code>1..=n</code>, <code>003</code> a GF(q) refusal passed through with its own <code>E-GFQ</code> code kept visible in the message, <code>005</code> a length past the LP cap, <code>006</code> a vector that is not the weight distribution of a linear code, <code>008</code> an unusable alphabet size. See <a href="#certified-coding-bounds">Certified coding bounds</a></td>
+</tr>
+<tr>
+<td><code>E-LP-*</code></td>
+<td><code>LinprogError</code></td>
+<td>Exact linear and mixed-integer programming (<code>alkahest.linprog</code> / <code>milp</code> / <code>linprog_expr</code>). <code>001</code> malformed shapes, <code>002</code> a float or irrational coefficient (refused, never rounded), <code>003</code> an objective or constraint that is not affine in the decision variables, <code>004</code> a strict inequality or a non-relation, <code>005</code> branch and bound reached <code>max_nodes</code> — the exception carries the unproven <code>incumbent</code> and the open <code>bound</code>, which bracket the optimum, <code>006</code> a certificate that failed its own exact check, withheld, <code>007</code> an unsupported parametric programme (<code>linprog_parametric</code> / <code>linprog_expr(parameter=…)</code>): the parameter in the constraint matrix, non-linear, in both the objective and the right-hand side, or combined with integers. A budget trip raises <code>BudgetExceededError</code> with the same attachments. See <a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></td>
+</tr>
+<tr>
+<td><code>E-NUMF-*</code></td>
+<td><code>NumberFieldError</code></td>
+<td>Algebraic number fields ℚ[x]/(f) and the cyclotomic fields ℚ(ζ_n) (<code>alkahest.experimental.NumberField</code>). <code>E-NUMF-003</code> is the one that matters: the defining polynomial is <strong>checked</strong> for irreducibility and a reducible one is refused, because ℚ[x]/(f) for reducible f is a ring with zero divisors in which <code>inverse</code> has no answer and <code>norm</code> is not multiplicative — the error names a proper factor. <code>005</code> zero has no inverse; <code>006</code> two fields with different canonical defining polynomials, which are not interchangeable even when isomorphic; <code>008</code> ℚ(ζ_n) with φ(n) past the degree cap. Note <code>polynomial_discriminant</code> is the discriminant of the <strong>defining polynomial</strong>, not the field discriminant — the ring of integers is not computed</td>
+</tr>
+<tr>
+<td><code>E-GRP-*</code></td>
+<td><code>GroupError</code></td>
+<td>Permutation groups (<code>alkahest.experimental</code>) — an images array that is not a bijection (<code>E-GRP-001</code>), a degree mismatch, which is never repaired by padding with fixed points (<code>E-GRP-002</code>), a point outside <code>0..degree</code> — points are <strong>0-based</strong> here (<code>E-GRP-003</code>), a group too large to list element by element, whose order is still exact (<code>E-GRP-004</code>), a degree above the Schreier–Sims memory limit (<code>E-GRP-005</code>), or a standard family asked for below the <code>n</code> where its degree-<code>n</code> action is faithful, e.g. <code>dihedral(2)</code> (<code>E-GRP-006</code>)</td>
+</tr>
+<tr>
+<td><code>E-MATGRP-*</code></td>
+<td><code>MatGroupError</code></td>
+<td>Matrix groups over GF(q) built from <strong>arbitrary generators</strong> (<code>alkahest.experimental.MatGroup</code>) — exact order and membership from a Schreier–Sims base and strong generating set on the action on vectors, orbits on vectors and on projective points, random elements by product replacement, derived subgroup, centre and normal closure. <code>#[non_exhaustive]</code>, and it <strong>wraps</strong> <code>FiniteFieldError</code> and <code>GroupError</code>, so an <code>E-GFQ-*</code> or <code>E-GRP-*</code> raised underneath reaches the caller with its own code rather than a relabelled one; in Python it is a subclass of <code>AlkahestError</code> like the rest. <code>E-MATGRP-007</code> is the one to read twice: Schreier–Sims that exhausts its work budget <strong>refuses</strong>, because a chain missing a level reports the product of the orbits it did build — a proper <em>divisor</em> of <code>|G|</code>, indistinguishable from the right answer for a smaller group. <code>E-MATGRP-006</code> refuses an orbit past its cap for the same reason, and because an orbit on vectors is bounded by <code>q^d − 1</code> that cap is on <code>q^d</code> and <strong>not</strong> on <code>|G|</code>: <code>GL(4, 8)</code>, of order <code>≈ 2 · 10^14</code>, is fine — its orbit is <code>8^4 − 1 = 4095</code> points — while the far smaller <code>GL(2, 4096)</code> is not. Being inside the orbit cap is necessary and not sufficient: <code>GL(12, 2)</code> has a 4095-point orbit and still refuses, on <code>E-MATGRP-007</code>. <code>E-MATGRP-008</code> withholds the element <em>list</em> while <code>order()</code> stays exact. The rest: <code>001</code> a non-square matrix, <code>002</code> a degree mismatch — vectors are <code>1 × d</code> <strong>rows</strong>, because the action is <code>v ↦ v·M</code>, <code>003</code> a matrix over a different field, <code>004</code> a singular generator, <code>005</code> a degree above the ceiling, <code>009</code> a <code>q</code> too large for the operations that enumerate GF(q) itself, <code>010</code> a family with no constructor here (<code>GU</code>, <code>SO</code> and the twisted types; build them with <code>MatGroup</code> from your own generators), <code>011</code> a centralizing algebra too large to enumerate for the centre, <code>012</code> the zero vector, which spans no projective point, <code>013</code> an internal invariant, reported rather than panicked because these run under a PyO3 boundary</td>
+</tr>
+<tr>
+<td><code>E-FPGRP-*</code></td>
+<td><code>FpGroupError</code></td>
+<td>Finitely presented groups <code>⟨X | R⟩</code>, Todd–Coxeter coset enumeration, Reidemeister–Schreier and low-degree group cohomology (<code>alkahest.experimental.FpGroup</code>). <strong><code>E-FPGRP-004</code> and <code>E-FPGRP-005</code> are different facts and must not be conflated.</strong> <code>004</code> means coset enumeration hit its cap: the word problem for finitely presented groups is undecidable, so it says <em>only</em> &quot;I did not finish&quot; — it is <strong>not</strong> a claim that the group is infinite, nor that it is finite. <code>005</code> means the group <strong>is</strong> infinite, proved, because its abelianisation has an infinite cyclic factor, which is a terminating Smith normal form. <code>⟨a, b | a², b³, (ab)⁷⟩</code> is the (2,3,7) triangle group — infinite, with a <em>trivial</em> abelianisation — and therefore lands on <code>004</code>, which is the honest answer. The rest: <code>001</code>–<code>003</code> a word letter outside the rank (letters are signed and <strong>1-based</strong>), a malformed alphabet, and relator syntax; <code>006</code> a coset cap above what the build will allocate and <code>007</code> a coset outside <code>0..index</code> (cosets are <strong>0-based</strong>, and coset 0 is the subgroup <code>H</code>); <code>008</code> a cohomological degree above 2 and <code>009</code> a group or module above the cohomology&#39;s size limits, refused rather than run for an hour; <code>010</code> a malformed module; <code>011</code> an &quot;action&quot; that is not one, because some relator does not act as the identity on <code>M</code> — refused rather than silently used; <code>012</code> an internal invariant, reported rather than panicked because these run under a PyO3 boundary; <code>013</code> a word longer than the cap — exponents nest, so <code>(a^100000)^100000</code> asks for 10^10 letters, and the ceiling is on the length of the <em>result</em> rather than on any one exponent; <code>014</code> a multiplication table above its own cap, which is far below the coset cap because the table is <code>|G|^2</code> words and <code>|G|^2</code> transversal traces</td>
+</tr>
+<tr>
+<td><code>E-CHAR-*</code></td>
+<td><code>CharacterError</code></td>
+<td>Conjugacy classes and <strong>exact</strong> character tables of permutation groups (<code>alkahest.experimental.ConjugacyClasses</code> / <code>CharacterTable</code>), by Dixon–Schneider. <code>E-CHAR-007</code> is the one that matters: a table that was computed, failed one of its <strong>own</strong> orthogonality checks, and was <em>withheld</em>. Row and column orthogonality, <code>Σ_i χ_i(1)² = |G|</code>, <code>χ_i(1) | |G|</code> and one character per class are all implied by the group axioms, so a violation is a defect in alkahest rather than bad input, and returning the table with a caveat is not an option — a caller cannot tell a checked table from an unchecked one once it is in their hands. <code>001</code> and <code>003</code> are two ceilings on <em>different</em> things: <code>001</code> caps <code>|G|</code>, because classes here are the orbits of <code>G</code> acting on itself and every element is held in memory (the group&#39;s order is still exact — it is the class partition that is refused, and nothing partial is returned), while <code>003</code> caps <code>φ(exp G)</code>, the degree of the one cyclotomic field every value lives in — the two are independent, so a group of small exponent passes <code>003</code> at any order and meets <code>001</code> instead, while the cyclic group of order 1000 is refused by <code>003</code> despite being small. The rest: <code>002</code> a cap above the hard ceiling, <code>004</code> a failed search for a prime <code>p ≡ 1 (mod exp G)</code> above <code>|G|</code> (a search-bound miss, not a mathematical obstruction), <code>005</code> an element outside the group, <code>006</code> an out-of-range class or character index, <code>008</code> the class multiplication matrices failing to split into one line per class, and <code>009</code> an internal invariant — reported rather than panicked because these run under a PyO3 boundary. A failure raised inside the permutation-group layer, the cyclotomic field or the GF(p) matrix layer keeps its own <code>E-GRP-*</code>, <code>E-NUMF-*</code> or <code>E-GFQ-*</code> code rather than being relabelled</td>
+</tr>
+<tr>
+<td><code>E-PROB-*</code></td>
+<td><code>ProbabilityError</code></td>
+<td><code>alkahest.experimental</code>&#39;s distribution surface — laws, expectations, moments, characteristic and generating functions, entropy and KL divergence. <code>E-PROB-005</code> and <code>E-PROB-006</code> are the two to branch on: one is a closed form that was <strong>withheld</strong>, the other says the quantity <strong>does not exist</strong>. See <a href="#probability-four-ways-not-to-answer">Probability: four ways not to answer</a></td>
+</tr>
+<tr>
+<td><code>E-FFLD-*</code></td>
+<td><code>FunctionFieldError</code></td>
+<td><code>alkahest.experimental</code>&#39;s function-field surface — divisors, the divisor class group <code>Pic⁰</code>, torsion order and Riemann–Roch. The implemented class is the <strong>imaginary hyperelliptic</strong> model <code>y² = a(x)</code> with <code>a</code> squarefree of <strong>odd</strong> degree and <strong>ℚ-rational places</strong>, because that is what the Mumford/Cantor machinery reused from the algebraic integrator is scoped to; every boundary outside it is one of these codes rather than a guess. Three to keep apart: <code>E-FFLD-007</code> is a <strong>verdict</strong> (the class has infinite order), <code>E-FFLD-006</code> is the matching <strong>undecided</strong>, and <code>E-FFLD-011</code> is an answer that was computed and then <strong>withheld</strong> for failing its own check. The most common one in practice is <code>E-FFLD-003</code>: the divisor has a place of degree ≥ 2, which cannot be represented. See <a href="#function-fields-what-is-modelled">Function fields: what is modelled</a></td>
+</tr>
+<tr>
+<td><code>E-STAB-*</code></td>
+<td><code>StabilizerError</code></td>
+<td><code>alkahest.experimental</code>&#39;s symplectic / stabilizer surface — the <code>(x | z)</code> binary symplectic form, Pauli operators, stabilizer and CSS codes, and the classical matrix groups <code>GL</code>/<code>SL</code>/<code>Sp</code> over GF(q). <code>E-STAB-004</code>, <code>-005</code> and <code>-006</code> are <strong>structural</strong>: the generators do not define a stabilizer code at all (they anticommute, fail <code>H_X · H_Zᵀ = 0</code>, or multiply to <code>−I</code>). <code>E-STAB-008</code> is the exhaustive minimum-distance search past its cap — minimum distance is NP-hard and nothing here approximates it; the answer on offer instead is a <code>Distance</code> with <code>exact == False</code>. <code>E-STAB-013</code> is a result computed, failed against its own invariant, and withheld. A failure raised inside the GF(q) layer keeps its own <code>E-GFQ-*</code> code rather than being relabelled. See <a href="#stabilizer-codes-the-x--z-convention">Stabilizer codes: the <code>(x | z)</code> convention</a></td>
+</tr>
+<tr>
+<td><code>E-THETA-*</code></td>
+<td><code>ThetaError</code></td>
+<td><code>alkahest.experimental</code>&#39;s theta surface — genus-<code>g</code> Riemann theta <code>θ[a;b](z, τ)</code>, the classical modular functions <code>η</code>, <code>j</code>, <code>λ</code>, <code>Δ</code>, the Jacobi theta functions and the Weierstrass family, each returned as a <strong>ball</strong> carrying its own error bound. <code>E-THETA-010</code> is the one to branch on: a value was computed and then <strong>withheld</strong> because its enclosure was too wide to read, and its <code>achieved_bits</code> field separates &quot;needs more precision&quot; from &quot;is exactly zero, and so has no relative accuracy at any precision&quot; (<code>j(ρ)</code>, <code>θ₁(0, τ)</code>) — use <code>Precision.bits(...)</code> and <code>ComplexBall.contains_zero()</code> for those. <code>E-THETA-007</code> / <code>E-THETA-009</code> mean <code>Im(τ)</code> could not be <strong>proved</strong> positive (definite), never that it was disproved. <code>E-THETA-001</code> is a FLINT too old to carry Arb (&lt; 3.1) or <code>acb_theta</code> (&lt; 3.2)</td>
+</tr>
+<tr>
+<td><code>E-LIMIT-*</code></td>
+<td><code>LimitError</code></td>
+<td><code>limit</code> could not be established; <code>E-LIMIT-006</code> is a limit that turns on the sign of a free parameter nothing states — assume it, or declare the symbol <code>Domain.Positive</code>; <code>E-LIMIT-007</code> is a limit of an undefined function <code>f(t)</code> that was not declared <code>continuous=[f(t)]</code>, or whose expression is not jointly continuous at the point</td>
+</tr>
+<tr>
+<td><code>E-SERIES-*</code></td>
+<td><code>SeriesError</code></td>
+<td><code>series</code> and <code>experimental.puiseux_series</code>. <code>003</code> a work ceiling, <code>004</code> an indeterminate coefficient, <code>005</code> no Puiseux expansion exists, <code>006</code> one computed and withheld, <code>007</code> no expansion in <code>1/x</code> at an infinite point</td>
+</tr>
+<tr>
+<td><code>E-LOGIC-*</code></td>
+<td><code>LogicError</code></td>
+<td>Logic. <code>001</code> is Rust-side only (<code>formula_from_expr</code>). The propositional layer (<code>simplify_logic</code>, <code>minimize_logic</code>, <code>to_cnf</code>/<code>to_dnf</code>/<code>to_nnf</code>, <code>bdd</code>, <code>equivalent</code>, <code>truth_table</code>) raises <code>002</code> not a propositional formula (or a propositional counterexample over relations that may be dependent), <code>003</code> a size ceiling (BDD nodes, normal-form terms, SAT decisions) — a refusal, never a truncated answer, <code>004</code> <code>exact=True</code> could not be certified, <code>005</code> a malformed argument, <code>006</code> a failed internal self-check</td>
+</tr>
+<tr>
+<td><code>E-SUM-*</code></td>
+<td><code>SumError</code></td>
+<td>Symbolic summation (<code>sum_indefinite</code>, <code>sum_definite</code>) — not hypergeometric (<code>001</code>), not Gosper-summable / no closed form known (<code>002</code>), or the sum has no value: a term undefined inside the range, a divergent infinite series, an unsupported infinite bound (<code>003</code>)</td>
+</tr>
+<tr>
+<td><code>E-PROD-*</code></td>
+<td><code>ProductError</code></td>
+<td>Symbolic discrete products (<code>product_indefinite</code>, <code>product_definite</code>)</td>
+</tr>
+<tr>
+<td><code>E-REC-*</code></td>
+<td><code>LinearRecurrenceError</code></td>
+<td><code>solve_linear_recurrence_homogeneous</code></td>
+</tr>
+<tr>
+<td><code>E-RSOLVE-*</code></td>
+<td><code>RsolveError</code></td>
+<td>Difference equations (<code>rsolve</code>)</td>
+</tr>
+<tr>
+<td><code>E-HOLO-*</code></td>
+<td><code>HolonomicError</code></td>
+<td>One prefix, five engines: <code>001</code>–<code>008</code> single-index <code>zeilberger</code> plus modular / <code>p</code>-adic evaluation, <code>020</code>–<code>024</code> <code>q_zeilberger</code>, <code>040</code>–<code>042</code> <code>experimental.telescope2d</code> / <code>telescope_md</code>, <code>060</code>–<code>064</code> the continuous (Almkvist–Zeilberger) engine, which has no Python entry point yet. See <a href="/docs/guide/telescoping/">Creative telescoping</a></td>
+</tr>
+<tr>
+<td><code>E-VALIDATED-*</code></td>
+<td><code>ValidatedError</code></td>
+<td>Rigorous Taylor-model bounds. <strong>Every variant is a refusal, never a guess</strong> — see <a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></td>
+</tr>
+<tr>
+<td><code>E-NT-*</code></td>
+<td><code>NumberTheoryError</code> (<code>001</code>–<code>005</code>), <code>ArithmeticError</code> (<code>006</code>)</td>
+<td>FLINT-backed integer number theory (<code>alkahest.number_theory</code>), including the classical arithmetic functions, which are exposed under <code>alkahest.experimental</code> — the partition function, Bernoulli, Euler, Stirling and harmonic numbers, Möbius μ, σ_k and sums of squares. Those refuse with <code>ArithmeticError</code>, which is <code>#[non_exhaustive]</code> and <strong>wraps</strong> a <code>NumberTheoryError</code> when the argument is out of domain, so <code>001</code>/<code>002</code> reach a caller unchanged; in Python it is a <em>subclass</em> of <code>NumberTheoryError</code>, so one <code>except</code> still catches both. <code>E-NT-006</code> is a <strong>work cap</strong>, not a claim that the value does not exist: <code>p(10^9)</code> is a perfectly good integer, this module simply will not spend unbounded time on a call that looked cheap. Note the Bernoulli convention is <code>B₁ = −1/2</code></td>
+</tr>
+<tr>
+<td><code>E-MOD-*</code></td>
+<td><code>ModularError</code></td>
+<td>Modular / CRT reconstruction (<code>alkahest.modular</code>)</td>
+</tr>
+<tr>
+<td><code>E-DIOPH-*</code></td>
+<td><code>DiophantineError</code></td>
+<td>Integer Diophantine solving — linear and quadratic patterns</td>
+</tr>
+<tr>
+<td><code>E-ROOT-*</code></td>
+<td><code>RealRootError</code></td>
+<td>Real root isolation (VAS)</td>
+</tr>
+<tr>
+<td><code>E-RES-*</code></td>
+<td><code>ResultantError</code></td>
+<td>Resultants and the subresultant PRS</td>
+</tr>
+<tr>
+<td><code>E-INTERP-*</code></td>
+<td><code>SparseInterpError</code> (<code>001</code>–<code>004</code>), <code>SparseGcdError</code> (<code>010</code>–<code>012</code>)</td>
+<td>Sparse multivariate interpolation and sparse modular GCD</td>
+</tr>
+<tr>
+<td><code>E-HOMOTOPY-*</code></td>
+<td><code>HomotopyError</code></td>
+<td>Numerical polynomial continuation (<code>solve(..., method=&quot;homotopy&quot;)</code>)</td>
+</tr>
+<tr>
+<td><code>E-PARAMGB-*</code></td>
+<td><code>ParamGroebnerError</code></td>
+<td>Gröbner bases over <code>Q(params)</code> — <code>GroebnerBasis.compute(..., params=[...])</code> and <code>experimental.ParametricGroebnerBasis</code></td>
+</tr>
+<tr>
+<td><code>E-SIMPLIFY-*</code></td>
+<td><code>AssumptionError</code></td>
+<td>An explicit simplification assumption contradicted the active context</td>
+</tr>
+<tr>
+<td><code>E-DEPTH-*</code></td>
+<td><code>DepthLimitError</code></td>
+<td>The expression nesting ceiling. A refusal rather than letting a recursive walk overflow the native stack, which would be a <code>SIGSEGV</code> and not an exception</td>
+</tr>
+</tbody></table></div>
+<p>Some registry codes are <strong>Rust-side only</strong> and have no Python entry point that
+raises them today: <code>E-LOGIC-001</code> (<code>LogicError</code>), <code>E-NFM-*</code> (<code>NormalFormError</code>),
+<code>E-DIFFALG-*</code> (<code>DiffAlgError</code>) and <code>E-HOLO-060…064</code> (<code>DiffTelescopingError</code>).
+<code>E-EVAL-*</code> has no class of its own — the bindings surface it as <code>DomainError</code>,
+<code>E-EVAL-009</code> being &quot;undefined at this point&quot;, which is a <strong>verdict</strong>. <code>E-POLY-008</code>
+… <code>E-POLY-010</code> belong to <code>FactorError</code> rather than <code>ConversionError</code>, which shares
+the prefix.</p>
+<p><code>scripts/check_error_codes.py</code> checks that this table names every prefix in the Rust
+<code>REGISTRY</code>, so a new subsystem cannot land undocumented.</p>
+<h3 id="transforms-a-table-gap-is-not-a-refuted-hypothesis"><a class="hanchor" href="#transforms-a-table-gap-is-not-a-refuted-hypothesis" aria-hidden="true" tabindex="-1">#</a>Transforms: a table gap is not a refuted hypothesis</h3>
+<p><code>E-TRANSFORM-*</code> covers three tables under one prefix and one class — Laplace
+(<code>00x</code>), Fourier (<code>01x</code>), Z (<code>10x</code>) — the way <code>E-ODE-*</code> covers five ODE engines
+under <code>OdeError</code>. The number says which table and which failure; a caller who
+wants only one of them filters on the code.</p>
+<p>The split that matters is not between the tables but <em>inside</em> each of them:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Reading</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-TRANSFORM-001</code> / <code>011</code> / <code>101</code></td>
+<td>No forward rule matched. A fact about <strong>this implementation</strong> — these are table-driven, and a wider table would close it</td>
+</tr>
+<tr>
+<td><code>E-TRANSFORM-002</code> / <code>102</code></td>
+<td>The inverse table does not reach this form. Same kind of fact</td>
+</tr>
+<tr>
+<td><code>E-TRANSFORM-003</code> / <code>012</code> / <code>103</code></td>
+<td>The two variables passed are the same symbol</td>
+</tr>
+<tr>
+<td><code>E-TRANSFORM-004</code></td>
+<td>The unilateral (causality) hypothesis is <strong>refuted</strong></td>
+</tr>
+<tr>
+<td><code>E-TRANSFORM-013</code></td>
+<td>A Fourier entry&#39;s decay hypothesis is <strong>refuted</strong></td>
+</tr>
+</tbody></table></div>
+<p>&quot;Not in the table yet&quot; and &quot;no such transform exists&quot; are opposite instructions.
+The first says rewrite the input or wait for a wider table; the second says stop
+looking. Before 3.10 all of these arrived as a bare <code>ValueError</code> with no <code>.code</code>
+at all, so telling them apart meant matching English prose.</p>
+<p>A <strong>symbolic</strong> parameter is reported as neither. <code>θ(t−a)</code> with a symbolic <code>a</code>
+cannot be decided, so the hypothesis <code>a ≥ 0</code> is recorded rather than assumed or
+refused. It is <strong>not</strong> a field on the returned value — these functions return a
+bare <code>Expr</code>, and there is nowhere in band to hang a hypothesis — so read it from
+the thread-local <code>experimental.transform_side_conditions()</code>, which describes the
+most recent <code>laplace_transform</code>, <code>inverse_laplace_transform</code>,
+<code>fourier_transform</code>, <code>inverse_fourier_transform</code> or <code>inverse_z_transform</code> on this
+thread whether it returned or raised:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> experimental </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ex</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">t, s </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"t"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"s"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># A literal negative edge: refuted, and nothing to find.</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">theta </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.func(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"heaviside"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [t </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)])</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ex.laplace_transform(theta, t, s)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.TransformError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e.code)          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># E-TRANSFORM-004</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e.remediation)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "the unilateral transform integrates over t ≥ 0 only, ..."</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># The control: shift it the other way and the rule applies.</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ex.laplace_transform(pool.func(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"heaviside"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [t </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)]), t, s)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Undecidable: answered, with the hypothesis stated out of band.</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">a </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"a"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ex.laplace_transform(pool.func(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"heaviside"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [t </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> a]), t, s)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># e^{-a·s}/s</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(ex.transform_side_conditions())                          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># ['a ∈ NonNegative']</span></span></code></pre></div><p>An empty list means every branch taken was forced by the input, not that none was
+taken.</p>
+<h3 id="probability-four-ways-not-to-answer"><a class="hanchor" href="#probability-four-ways-not-to-answer" aria-hidden="true" tabindex="-1">#</a>Probability: four ways not to answer</h3>
+<p><code>E-PROB-*</code> is one prefix over one class, and the six numbers exist because
+&quot;there is no closed form&quot;, &quot;<em>this</em> integrator could not find one&quot;, &quot;the
+quantity does not exist&quot; and &quot;one was found and is not trustworthy&quot; call for
+four different next steps. Collapsing them would send a caller looking for a
+better integrator when the integral diverges.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Reading</th>
+<th>What to do next</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-PROB-001</code></td>
+<td>A parameter is a <strong>number</strong> outside the law&#39;s own constraint (<code>sigma &lt;= 0</code>, <code>a &gt;= b</code>, <code>p</code> outside <code>[0, 1]</code>)</td>
+<td>Fix the parameter. A <em>symbolic</em> parameter is never reported here — it cannot be decided, so it is carried on <code>Distribution.constraints()</code> for the caller to discharge</td>
+</tr>
+<tr>
+<td><code>E-PROB-002</code></td>
+<td>Outside the modelled class: a product of two variates (there are no joint laws here), a <code>probability_generating_function</code> for a law that is not on the non-negative integers, a cross-family KL divergence</td>
+<td>Restate the query, or do the joint-law step yourself</td>
+</tr>
+<tr>
+<td><code>E-PROB-003</code></td>
+<td>The reduction integral was built and the symbolic integrator declined it. A fact about <strong>this implementation</strong></td>
+<td>The message names the integral — hand it to quadrature</td>
+</tr>
+<tr>
+<td><code>E-PROB-004</code></td>
+<td>No closed form exists inside this library&#39;s primitive set: the <code>Gamma</code> CDF at non-integer shape (incomplete gamma), the <code>Beta</code> CDF (incomplete beta), the normal quantile (<code>erf⁻¹</code>), the log-normal characteristic function (none at all)</td>
+<td>Use an integer shape parameter where that collapses to a finite sum, or go numeric</td>
+</tr>
+<tr>
+<td><code>E-PROB-005</code></td>
+<td>A closed form <strong>was computed</strong> and is being <strong>withheld</strong>, because quadrature of its own defining integral did not confirm it</td>
+<td>Record it as undecided and report the query. Never a warning: a caller cannot tell a checked value from an unchecked one once it is in hand</td>
+</tr>
+<tr>
+<td><code>E-PROB-006</code></td>
+<td>The quantity <strong>does not exist</strong></td>
+<td>A verdict. Stop looking</td>
+</tr>
+</tbody></table></div>
+<p>Two of these are the reason the surface exists at all. <code>moment_generating_function</code>
+for a <code>LogNormal</code> raises <code>E-PROB-006</code>: <code>E[e^{tX}]</code> is <code>+inf</code> for every <code>t &gt; 0</code>, and a
+CAS that completes the square anyway hands back a clean closed form that is the value
+of no integral. And <code>M_X(t) = lambda/(lambda − t)</code> for an <code>Exponential</code> holds <em>only</em>
+on <code>t &lt; lambda</code> — outside that strip the expression is still finite, still plausible
+and still wrong — so a decidable argument outside the strip raises <code>E-PROB-006</code> and an
+undecidable one publishes the condition on <code>experimental.prob_side_conditions()</code>.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> experimental </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ex</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">t, lam </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"t"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"lam"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ex.Exponential(lam).moment_generating_function(t)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># lam/(lam - t)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(ex.prob_side_conditions())</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># the convergence strip and the parameter constraint: ['lam - t > 0', 'lam > 0']</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ex.LogNormal(pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)).moment_generating_function(t)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ProbabilityError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e.code)        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># E-PROB-006</span></span></code></pre></div><p><code>prob_side_conditions()</code> is the same out-of-band channel as
+<code>transform_side_conditions()</code>, for the same reason: the return value is an <code>Expr</code>,
+so a conditional answer and a theorem look identical at the call site unless the
+hypotheses are published somewhere. A law whose MGF is entire leaves the list
+empty — so empty means <em>checked</em>, not <em>unexamined</em>.</p>
+<h3 id="vector-calculus-and-quaternions"><a class="hanchor" href="#vector-calculus-and-quaternions" aria-hidden="true" tabindex="-1">#</a>Vector calculus and quaternions</h3>
+<p><code>alkahest.experimental</code>&#39;s rigid-body layer refuses in three places where a clean,
+plausible number is available, and that is the point of each of them.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Raised by</th>
+<th>Why a refusal rather than an answer</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-VEC-004</code></td>
+<td><code>Coordinates.from_embedding</code></td>
+<td>Every <code>grad</code>/<code>div</code>/<code>curl</code>/<code>∇²</code> formula in the module is derived for an <strong>orthogonal</strong> frame. On a skew chart they still evaluate, to an expression that looks like a divergence and is not one. So the tangent inner products must be <em>proven</em> to vanish; undecided is a refusal, not an assumption</td>
+</tr>
+<tr>
+<td><code>E-VEC-005</code></td>
+<td><code>Coordinates.from_embedding</code></td>
+<td>A scale factor that is identically zero — or whose non-vanishing could not be established — is divided by in every operator</td>
+</tr>
+<tr>
+<td><code>E-QUAT-002</code></td>
+<td><code>Quaternion.to_axis_angle</code></td>
+<td>The identity rotation has no axis: <em>every</em> unit vector is one. The conventional stand-in <code>(0, 0, 1)</code> is a stated answer to a question with no answer, and nothing downstream can tell it from a real axis</td>
+</tr>
+<tr>
+<td><code>E-QUAT-003</code></td>
+<td><code>Quaternion.from_rotation_matrix</code></td>
+<td>Shepperd&#39;s method returns a perfectly ordinary unit quaternion for a reflection, a scaled matrix or a shear — representing some <em>other</em>, proper rotation. So <code>RᵀR = I</code> and <code>det R = +1</code> are checked, the recovered quaternion is required to reproduce the matrix, and a <strong>symbolic</strong> matrix refuses outright, because the branch selection is a comparison between entries and there is none to make on a symbol</td>
+</tr>
+</tbody></table></div>
+<p>The vector Laplacian is a fourth trap without an error code, because there is a right
+answer: <code>experimental.vector_laplacian</code> is <code>∇(∇·F) − ∇×(∇×F)</code>, which equals the
+componentwise scalar Laplacian in Cartesian coordinates <strong>only</strong>. Applying
+<code>experimental.laplacian</code> to each physical component of a cylindrical or spherical field
+silently drops the terms that come from the basis turning — <code>∇²(φ̂)</code> is <code>−φ̂/ρ²</code>, not <code>0</code>.</p>
+<p><code>E-RESIDUE-005</code> is raised only at the Python boundary — the Rust <code>residue</code> takes an
+already-parsed point and cannot reach that state — so it is deliberately absent from
+<code>alkahest-core</code>&#39;s <code>REGISTRY</code>, on the same footing as <code>E-SMT-001</code>/<code>003</code>/<code>004</code> in
+<code>alkahest/smt.py</code> and <code>E-BATCH-001</code> in <code>alkahest/_batch.py</code>. It exists because
+<code>residue(f, z, a)</code> with a symbolic <code>a</code> reads perfectly well and used to escape as a
+bare <code>AttributeError</code> naming an attribute of the implementation, which is not an
+<code>AlkahestError</code> and so was invisible to <code>except ak.AlkahestError</code>.</p>
+<p>Three of these describe outcomes that are <strong>results rather than malfunctions</strong>, and
+the wording of each is deliberate. <code>E-ANSATZ-003</code> means <em>no member of this family
+satisfies the constraints</em> — for a search loop that is a closed branch worth
+recording, not a failure. <code>E-XCHECK-002</code> means no oracle is installed, and exists
+so that a missing oracle can never be mistaken for agreement. <code>E-SMT-003</code> refuses
+a model containing an algebraic number that cannot be lifted exactly, rather than
+truncating it to a float — a float witness recorded as an exact one is precisely
+the silent-error shape these subsystems exist to prevent.</p>
+<h3 id="e-cert---certificate-policy"><a class="hanchor" href="#e-cert---certificate-policy" aria-hidden="true" tabindex="-1">#</a><code>E-CERT-*</code> — certificate policy</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Meaning</th>
+<th>Remediation</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-CERT-001</code></td>
+<td>A result was required to carry a Lean certificate and none was available</td>
+<td>Pick a certifiable route — see <a href="/docs/guide/certificate-coverage/">Certificate coverage</a> and <code>alkahest.certifiable()</code> — or drop the requirement</td>
+</tr>
+</tbody></table></div>
+<p>This one is unusual: the computation <em>succeeded</em>. What is missing is the
+machine-checkable evidence, so it is a policy failure rather than a
+mathematical one. It is raised only when you ask for it, by
+<code>alkahest.require_certificate(result)</code>, by <code>alkahest.to_lean(result)</code> (which
+never returns an empty string), or ambiently inside
+<code>with alkahest.context(require_certificate=True):</code>. The remediation names the
+blocking rewrite rules where they can be identified.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">require_certificate</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">):</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ak.diff(ak.sin(x), x)              </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># fine — certifies</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ak.diff(ak.log(ak.sin(x)), x)      </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># raises E-CERT-001</span></span></code></pre></div><h3 id="cause-axis"><a class="hanchor" href="#cause-axis" aria-hidden="true" tabindex="-1">#</a>Cause axis</h3>
+<ol>
+<li><strong>User-input</strong> — the expression or argument is outside the supported fragment. Always has a <code>remediation</code>; carries a <code>span</code> once parsing lands.</li>
+<li><strong>Domain</strong> — input is syntactically fine but violates a mathematical side condition. Remediation is &quot;substitute a different value,&quot; not &quot;reformulate.&quot;</li>
+<li><strong>Unsupported</strong> — the operation is not implemented for this case. Must name the missing capability so users can file a feature request.</li>
+<li><strong>Resource/environment</strong> — CUDA device absent, out-of-memory, JIT target mismatch, pool closed. Typically no <code>span</code>; remediation references the environment, not the expression.</li>
+<li><strong>Internal invariant</strong> — a bug. Should never reach users in release; in debug it carries a backtrace. Use <code>E-INTERNAL-001</code>.</li>
+</ol>
+<h3 id="adding-a-new-error-code"><a class="hanchor" href="#adding-a-new-error-code" aria-hidden="true" tabindex="-1">#</a>Adding a new error code</h3>
+<ol>
+<li>Does it fit an existing subsystem? Add a variant and a code one higher than the current max for that prefix.</li>
+<li>Does it name a new subsystem? Add a prefix, a class, and an entry in <code>REGISTRY</code> in the same PR. Do not reuse prefixes across unrelated subsystems.
+2b. <strong>One code, one meaning.</strong> Two <code>AlkahestError</code> impls under the same prefix must not return the same number. <code>REGISTRY</code>&#39;s <code>no_duplicate_codes</code> test cannot catch this — it only sees the registry, and the colliding impl is typically the one that never got registered. <code>scripts/check_error_codes.py</code> compares the impls themselves and fails on any code claimed by two of them; a genuine alias (the same fact reported by two types that share a Python class) goes in its <code>DELIBERATE_ALIASES</code> with the reason.</li>
+<li>Write the <code>remediation</code> before the message — if you cannot say what the user should do, the taxonomy is telling you this is an internal bug, not a user error.</li>
+</ol>
+<p>Users match on subsystem (the exception class); triagers filter on cause (the code suffix and remediation text).</p>
+<h2 id="function-fields-what-is-modelled"><a class="hanchor" href="#function-fields-what-is-modelled" aria-hidden="true" tabindex="-1">#</a>Function fields: what is modelled</h2>
+<h2 id="stabilizer-codes-the-x--z-convention"><a class="hanchor" href="#stabilizer-codes-the-x--z-convention" aria-hidden="true" tabindex="-1">#</a>Stabilizer codes: the <code>(x | z)</code> convention</h2>
+<p><code>E-STAB-*</code> has thirteen numbers and only one of them is about running out of
+room. The rest exist because the commonest failure in this area is not a
+resource limit — it is a set of generators that looks like a stabilizer code,
+type-checks like a stabilizer code, and is not one.</p>
+<p>Everything in this layer writes a Pauli operator as <code>2n</code> bits in <strong><code>(x | z)</code>
+layout</strong>: the first <code>n</code> are the <code>X</code> exponents, the last <code>n</code> the <code>Z</code> exponents,
+with</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>    ⟨(x₁ | z₁), (x₂ | z₂)⟩  =  x₁·z₂ + z₁·x₂     (mod 2)</code></pre></div><p>and two Paulis commuting exactly when that vanishes. The <code>(z | x)</code> layout is
+also in use in the literature. A check matrix transcribed from a paper that uses
+it produces generators that commute, have the right rank, and encode a different
+code — and no error at all. There is nothing this library can do about that
+except say so loudly, which is why the convention is repeated at the top of
+every module in the layer. If a code comes out with the right <code>n</code> and <code>k</code> and
+the wrong distance, suspect the layout before suspecting the search.</p>
+<p>Three of the codes deserve to be read apart from the rest:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>What it means</th>
+<th>What to do</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-STAB-004</code></td>
+<td>Two proposed generators <strong>anticommute</strong></td>
+<td>A stabilizer group is abelian; these two share no <code>+1</code> eigenspace. Check the <code>(x | z)</code> layout, then the transcription</td>
+</tr>
+<tr>
+<td><code>E-STAB-006</code></td>
+<td>A product of the generators is <code>−I</code></td>
+<td>The stabilized subspace is <code>{0}</code>: the code encodes nothing. Only reachable from a <em>dependent</em> generating list. Negate one generator, or drop the dependent one</td>
+</tr>
+<tr>
+<td><code>E-STAB-008</code></td>
+<td>The exhaustive distance search is past its cap</td>
+<td>There is no cleverer algorithm behind the cap — minimum distance is NP-hard and the only method here enumerates <code>2^(n+k)</code> centralizer elements. Take <code>distance_upper_bound()</code>, which returns a <code>Distance</code> with <code>exact == False</code>, and report it <strong>as a bound</strong></td>
+</tr>
+</tbody></table></div>
+<p>The last one is the reason <code>minimum_distance()</code> does not return an <code>int</code>. A
+<code>Distance</code> carries <code>.value</code> and <code>.exact</code>, and the upper-bound path sets <code>.exact</code>
+to <code>False</code>. A caller that stores <code>.value</code> in a field named <code>d</code> has thrown away
+the one fact that made the number safe to publish.</p>
+<p><code>E-FFLD-*</code> is one prefix over one class, and the eleven numbers exist because
+the honest answer to most function-field questions, in most of the space of
+possible inputs, is <em>not this implementation</em>.</p>
+<p>The implemented class is</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>    K = ℚ(x)[y] / (y² − a(x)),    a squarefree,  deg a = 2g + 1 odd,</code></pre></div><p>with divisors supported on <strong>ℚ-rational places</strong> — the degree-one points
+<code>(α, β)</code> with <code>α, β ∈ ℚ</code>, plus the single place at infinity. That is not a
+convenience boundary. The divisor class group here is Cantor arithmetic on
+Mumford pairs, reached through the code the algebraic integrator already uses
+(<code>integrate::algebraic::jacobian_torsion</code>, <code>coates</code>), and that code measures
+every class against <strong>one rational place at infinity</strong>. An even-degree (&quot;real&quot;)
+model has two, and <code>n &gt; 2</code> has no Mumford representation at all.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>What it means</th>
+<th>What to do</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-FFLD-001</code></td>
+<td><code>deg_y f ≠ 2</code>, a non-constant <code>y²</code> coefficient, or a discriminant that is zero or constant</td>
+<td>Restate as <code>c₂y² + c₁(x)y + c₀(x)</code> with <code>c₂</code> a non-zero rational constant. Superelliptic <code>yⁿ = a(x)</code> with <code>n &gt; 2</code> is genuinely not implemented</td>
+</tr>
+<tr>
+<td><code>E-FFLD-002</code></td>
+<td>The <strong>real</strong> (even-degree) model. Two places above <code>x = ∞</code></td>
+<td>The <strong>genus is still returned</strong> — it does not depend on the model. Only divisors, <code>Pic⁰</code> and Riemann–Roch refuse. Sending a rational root of <code>a</code> to infinity moves the model to odd degree</td>
+</tr>
+<tr>
+<td><code>E-FFLD-003</code></td>
+<td>A place of degree ≥ 2 appears — a conjugate pair <code>(α, ±√c)</code> with <code>c</code> a non-square, or a place over an irrational <code>α</code></td>
+<td>Record it as <em>not representable</em>, <strong>never as absent</strong>: dropping the place would silently change <code>deg D</code>. The rational-root search is capped, so this never proves irreducibility. <code>div(y)</code> on <code>y² = x⁵ + 1</code> lands here, because <code>x⁵ + 1</code> has one rational root</td>
+</tr>
+<tr>
+<td><code>E-FFLD-004</code></td>
+<td>A place <code>(α, β)</code> with <code>β² ≠ a(α)</code></td>
+<td>Coordinates are in the <strong>normalised</strong> model — check <code>FunctionField::curve()</code> and <code>normalisation()</code> before assuming they are the ones you wrote</td>
+</tr>
+<tr>
+<td><code>E-FFLD-005</code></td>
+<td>A class-group operation on a divisor of non-zero degree</td>
+<td><code>Pic⁰</code> is the group modelled; subtract <code>deg(D)·∞</code></td>
+</tr>
+<tr>
+<td><code>E-FFLD-006</code></td>
+<td>The torsion order was <strong>not decided</strong>: too few good primes, or a candidate past the exact-confirmation cap</td>
+<td>Record as undecided. <strong>Not</strong> a non-torsion certificate</td>
+</tr>
+<tr>
+<td><code>E-FFLD-007</code></td>
+<td>The class has <strong>infinite order</strong>. A verdict</td>
+<td>Stop looking for a principal multiple. Reduction mod good primes is injective on prime-to-<code>p</code> torsion, so disagreeing orders refute torsion outright</td>
+</tr>
+<tr>
+<td><code>E-FFLD-008</code></td>
+<td><code>div(0)</code></td>
+<td>The zero function has no divisor</td>
+</tr>
+<tr>
+<td><code>E-FFLD-009</code></td>
+<td>Two operands from different function fields</td>
+<td>Rebuild both over one <code>FunctionField</code></td>
+</tr>
+<tr>
+<td><code>E-FFLD-010</code></td>
+<td>A multiplicity, order or linear system past the work cap</td>
+<td>Reduce the divisor</td>
+</tr>
+<tr>
+<td><code>E-FFLD-011</code></td>
+<td>A result was <strong>computed and then withheld</strong> for failing its own check — <code>div(u)</code>&#39;s pole order at infinity disagreeing with the degrees of <code>p</code> and <code>q</code>, or a Riemann–Roch dimension violating Riemann&#39;s inequality</td>
+<td>A bug in this module, not in the input. Report it; the point is that the wrong answer was not returned</td>
+</tr>
+</tbody></table></div>
+<p>The last row is the one worth dwelling on. <code>div(u)</code> derives the multiplicity at
+infinity from <code>deg div(u) = 0</code> and then checks it against
+<code>v_∞(p + qy) = min(−2 deg p, −deg a − 2 deg q)</code>, which is exact on the
+odd-degree model because the two candidates differ in parity. Riemann–Roch
+checks its dimension against <code>dim ≥ deg D + 1 − g</code> and, above the canonical
+degree, against the equality. Neither check can fire on valid input; both exist
+so that a wrong answer arrives as <code>E-FFLD-011</code> rather than as a divisor.</p>
+<h2 id="certified-coding-bounds"><a class="hanchor" href="#certified-coding-bounds" aria-hidden="true" tabindex="-1">#</a>Certified coding bounds</h2>
+<p><code>delsarte_lp_bound(n, d, q)</code> returns an upper bound on <code>A_q(n, d)</code> — the largest
+possible size of <em>any</em> code (linear or not) of length <code>n</code> over an alphabet of
+size <code>q</code> with minimum distance at least <code>d</code>. Every step is exact rational
+arithmetic, but exactness alone is not what makes the number trustworthy: a
+solver that stopped early would report a bound that is too <em>small</em>, and a bound
+that is too small silently rules out codes that exist.</p>
+<p>So the number is read off the <strong>dual</strong> programme and comes with the multipliers
+that prove it. <code>DelsarteBound.certificate()</code> is a vector <code>y ≥ 0</code> satisfying
+<code>Σ_k y_k K_k(i) ≤ −1</code> for every <code>i</code> in <code>d..=n</code>; from that alone, with no
+reference to this implementation, <code>|C| ≤ 1 + Σ_k y_k K_k(0)</code> for every such
+code. <code>DelsarteBound.verify_certificate()</code> re-checks it from scratch, and the
+constructor refuses with <code>E-CODE-007</code> rather than returning a bound whose
+certificate did not pass. A caller who does not trust this crate can re-verify
+the certificate with nothing but a Krawtchouk evaluator.</p>
+<p>This is the plain Delsarte programme. Schrijver&#39;s semidefinite strengthening and
+the extra inequalities that beat it on specific <code>(n, d)</code> are not implemented:
+what is returned is always a valid upper bound, not always the tightest one
+known.</p>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/certificate-coverage/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Certificate coverage</span></a><a class="pager-next" href="/docs/guide/search-plumbing/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Autoresearch / agent loops</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/errors.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#exception-hierarchy">Exception hierarchy</a></li><li class="d2"><a href="#error-attributes">Error attributes</a></li><li class="d2"><a href="#common-errors-and-remediations">Common errors and remediations</a></li><li class="d3"><a href="#conversionerror-e-poly-">ConversionError (E-POLY-*)</a></li><li class="d3"><a href="#domainerror-e-domain-">DomainError (E-DOMAIN-*)</a></li><li class="d3"><a href="#integrationerror-e-int-">IntegrationError (E-INT-*)</a></li><li class="d3"><a href="#solvererror-e-solve-">SolverError (E-SOLVE-*)</a></li><li class="d3"><a href="#pslqerror-e-pslq-">PslqError (E-PSLQ-*)</a></li><li class="d3"><a href="#primarydecompositionerror-e-ideal-">PrimaryDecompositionError (E-IDEAL-*)</a></li><li class="d3"><a href="#refusals-when-alkahest-declines-to-answer">Refusals: when Alkahest declines to answer</a></li><li class="d2"><a href="#catching-errors-by-code">Catching errors by code</a></li><li class="d2"><a href="#error-taxonomy">Error taxonomy</a></li><li class="d3"><a href="#subsystem-axis">Subsystem axis</a></li><li class="d3"><a href="#transforms-a-table-gap-is-not-a-refuted-hypothesis">Transforms: a table gap is not a refuted hypothesis</a></li><li class="d3"><a href="#probability-four-ways-not-to-answer">Probability: four ways not to answer</a></li><li class="d3"><a href="#vector-calculus-and-quaternions">Vector calculus and quaternions</a></li><li class="d3"><a href="#e-cert---certificate-policy">E-CERT-* — certificate policy</a></li><li class="d3"><a href="#cause-axis">Cause axis</a></li><li class="d3"><a href="#adding-a-new-error-code">Adding a new error code</a></li><li class="d2"><a href="#function-fields-what-is-modelled">Function fields: what is modelled</a></li><li class="d2"><a href="#stabilizer-codes-the-x--z-convention">Stabilizer codes: the (x | z) convention</a></li><li class="d2"><a href="#certified-coding-bounds">Certified coding bounds</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/errors.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

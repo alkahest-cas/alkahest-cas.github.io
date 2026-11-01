@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>alkahest.smt · Alkahest Docs</title>
+<meta name="description" content="SMT/SAT bridge — hand a discrete or mixed subproblem to an external solver.">
+<meta property="og:title" content="alkahest.smt · Alkahest Docs">
+<meta property="og:description" content="SMT/SAT bridge — hand a discrete or mixed subproblem to an external solver.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/" class="active" aria-current="page">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API · Submodule</div>
+    <h1>alkahest.smt</h1>
+    <div class="prose-block"><p>SMT/SAT bridge — hand a discrete or mixed subproblem to an external solver.</p>
+<p>P2 item 3 — see <code>docs/mdbook/src/smt.md</code>.</p>
+<p>Discrete and mixed integer/real/boolean problems are not Alkahest&#39;s problem
+class and should not become one.  What a search loop needs is not an in-tree
+solver but a way to <em>hand the subproblem off</em> — and to bring the answer back in
+a form the rest of the toolchain can trust.  This module is that hand-off:</p>
+<p><code>to_smtlib</code>
+    Re-exported from the Rust emitter (<code>alkahest_core::logic::smtlib</code>).  Turns
+    a predicate <a href="/docs/api/core/#Expr"><code>Expr</code></a> into a complete SMT-LIB 2 script.  The
+    emitter is exhaustive over <code>Formula</code> and <code>PredicateKind</code> by construction
+    — <code>rustc</code> refuses to compile a missing case — so a node added later cannot
+    silently emit wrong SMT-LIB.</p>
+<p><code>supported()</code>
+    The plan-ahead predicate, in the spirit of <a href="/docs/api/certificates/#certifiable"><code>certifiable()</code></a>: can
+    this formula be sent at all, is a solver installed, and <em>should</em> it be sent
+    rather than kept in-tree.</p>
+<p><a href="/docs/api/solve/#solve"><code>solve()</code></a>
+    Runs the solver in a subprocess and returns an <code>SmtResult</code>.</p>
+<p>Two asymmetries drive the whole design and are worth stating up front.</p>
+<p><strong><code>sat</code> and <code>unsat</code> are not equally trustworthy.</strong>  A <code>sat</code> model is checkable
+inside Alkahest for free: substitute it back and evaluate the formula exactly.
+<a href="/docs/api/solve/#solve"><code>solve()</code></a> always does this — it is not optional and there is no flag to skip
+it — and a model that fails raises <a href="/docs/api/errors/#SmtError"><code>SmtError</code></a> <code>E-SMT-004</code>
+rather than warning, because a failure there means the bridge or the solver is
+broken.  <code>unsat</code>, by contrast, is not machine-checked here at all: consuming an
+unsat proof is a large project with unstable formats.  So an <code>unsat</code> result gets
+the status <code>EXTERNALLY_ASSERTED</code>, which is deliberately <strong>not</strong> in
+<code>alkahest.research.MACHINE_CHECKED_STATUSES</code>.  &quot;z3 said so&quot; is a fact about
+z3, not a proof, and the claim graph must keep being able to tell the two apart.</p>
+<p><strong>Exactness is where a model reader breaks.</strong>  Rationals lift cleanly; algebraic
+numbers (z3&#39;s <code>root-obj</code>) do not, and the tempting move — round to a float —
+would record an approximation as an exact witness.  That is the precise silent
+error this subsystem exists to prevent, so <code>root-obj</code> is refused with
+<code>E-SMT-003</code> until it can be lifted into the real-algebraic machinery
+(<code>RootInterval</code> / <code>refine_root</code>) that already exists for it.</p>
+</div>
+<section class="sym" id="smt.SmtResult"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">smt.</span><span class="sig-name">SmtResult</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult" aria-label="Link to smt.SmtResult">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L927" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>What an external solver said, and how much of it was checked here.</p>
+<p>Quacks like a <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> (<code>value</code> / <code>steps</code> /
+<code>verification</code> / <code>certificate</code>) so <code>ResearchSession.record</code> accepts it
+unchanged — and so the honest status travels with it.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">status</code><span class="ptype">{&quot;sat&quot;, &quot;unsat&quot;, &quot;unknown&quot;}</span></dt><dd><p>The solver&#39;s verdict.</p>
+</dd></div><div class="param"><dt><code class="pname">model</code><span class="ptype">dict[str, Fraction]</span></dt><dd><p>Exact rational witness, on <code>sat</code>.  Always the values that were
+actually verified.</p>
+</dd></div><div class="param"><dt><code class="pname">model_exprs</code><span class="ptype">dict[str, Expr]</span></dt><dd><p>The same values interned into an <a href="/docs/api/core/#ExprPool"><code>ExprPool</code></a>, when one
+was passed or was active via <code>alkahest.context(pool=...)</code>.  Empty
+otherwise — an <code>Expr</code> carries no reference to its pool, so this is not
+always constructible, and <code>model</code> never depends on it.</p>
+</dd></div><div class="param"><dt><code class="pname">engine</code><span class="ptype">str</span></dt><dd><p>Which solver answered, and at what version.  A result that does not say
+what produced it is not something a loop can weigh.</p>
+</dd></div><div class="param"><dt><code class="pname">logic</code><span class="ptype">str</span></dt><dd><p>The SMT-LIB logic that was sent.</p>
+</dd></div><div class="param"><dt><code class="pname">smtlib</code><span class="ptype">str</span></dt><dd><p>The exact script that was sent.  Also exposed as <code>certificate</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">verification</code><span class="ptype">dict</span></dt><dd><p><code>DerivedResult</code>-shaped: <code>status</code> is <code>exactly_verified</code> for a
+checked <code>sat</code> model, <code>EXTERNALLY_ASSERTED</code> for <code>unsat</code>, and
+<code>unverified</code> for <code>unknown</code>.  It also carries <code>logic</code> and
+<code>sorts</code> — see <code>sorts</code>, and read them before you read
+<code>status</code>: <code>status</code> tells you the answer was checked, <code>sorts</code>
+tells you <em>which question</em> was answered.</p>
+</dd></div><div class="param"><dt><code class="pname">sorts</code><span class="ptype">dict[str, str]</span></dt><dd><p>Symbol name → the SMT-LIB sort it was declared with, <code>&quot;Int&quot;</code> or
+<code>&quot;Real&quot;</code>, read back out of the script that was actually sent.
+This is the difference between an integer feasibility question and its
+real relaxation, and nothing in <code>status</code> or <code>verification</code>
+<code>[&quot;status&quot;]</code> distinguishes the two: a model of the relaxation is a
+genuine model of the formula as emitted, so it verifies exactly and
+reports <code>sat</code> / <code>exactly_verified</code> either way.  A symbol lands in
+<code>Real</code> whenever it was built without an integer domain — check here
+rather than assume.</p>
+</dd></div><div class="param"><dt><code class="pname">badge</code><span class="ptype">str</span></dt><dd><p>The unflattering one-line rendering of <code>verification[&quot;status&quot;]</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">reason_unknown</code><span class="ptype">str or None</span></dt><dd><p>The solver&#39;s own explanation, on <code>unknown</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">elapsed_ms</code><span class="ptype">float</span></dt><dd><p>Wall-clock time spent in the solver process.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="smt.SmtResult.status">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">status</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.status" aria-label="Link to smt.SmtResult.status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L978" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtResult.model">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">model</span><span class="sig-ann">: dict[str, Fraction]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.model" aria-label="Link to smt.SmtResult.model">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L979" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtResult.model_exprs">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">model_exprs</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.model_exprs" aria-label="Link to smt.SmtResult.model_exprs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L980" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtResult.engine">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">engine</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.engine" aria-label="Link to smt.SmtResult.engine">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L981" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtResult.logic">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">logic</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.logic" aria-label="Link to smt.SmtResult.logic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L982" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtResult.smtlib">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">smtlib</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.smtlib" aria-label="Link to smt.SmtResult.smtlib">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L983" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtResult.verification">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.verification" aria-label="Link to smt.SmtResult.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L984" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtResult.reason_unknown">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">reason_unknown</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.reason_unknown" aria-label="Link to smt.SmtResult.reason_unknown">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L985" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtResult.elapsed_ms">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">elapsed_ms</span><span class="sig-ann">: float</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.elapsed_ms" aria-label="Link to smt.SmtResult.elapsed_ms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L986" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtResult.raw_output">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">raw_output</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.raw_output" aria-label="Link to smt.SmtResult.raw_output">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L987" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtResult.steps">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">steps</span><span class="sig-ann">: tuple[dict[str, Any], ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.steps" aria-label="Link to smt.SmtResult.steps">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L988" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtResult.value">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">value</span><span class="sig-ann">: Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.value" aria-label="Link to smt.SmtResult.value">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L991" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The formula that was asked about — <code>DerivedResult</code>-compatible.</p>
+</div>
+</div>
+<div class="member" id="smt.SmtResult.certificate">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certificate</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.certificate" aria-label="Link to smt.SmtResult.certificate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L996" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The SMT-LIB script.  An artifact, explicitly <em>not</em> a checked proof.</p>
+</div>
+</div>
+<div class="member" id="smt.SmtResult.sorts">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">sorts</span><span class="sig-ann">: dict[str, str]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.sorts" aria-label="Link to smt.SmtResult.sorts">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1001" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Symbol name → declared SMT-LIB sort (<code>&quot;Int&quot;</code> / <code>&quot;Real&quot;</code>).</p>
+<p>Recovered from <code>verification</code> so it survives serialisation into a
+<code>ResearchSession</code> record, where the <code>smtlib</code> text may not.</p>
+</div>
+</div>
+<div class="member" id="smt.SmtResult.badge">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">badge</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.badge" aria-label="Link to smt.SmtResult.badge">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1010" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Honest one-line description of what was actually established.</p>
+</div>
+</div>
+<div class="member" id="smt.SmtResult.machine_checked">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">machine_checked</span><span class="sig-ann">: bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.machine_checked" aria-label="Link to smt.SmtResult.machine_checked">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1015" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>True</code> only when a checker ran <strong>in this process</strong>.</p>
+<p><code>unsat</code> is never machine-checked here, however confident the solver
+was.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="smt.SmtSupport"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">smt.</span><span class="sig-name">SmtSupport</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.SmtSupport" aria-label="Link to smt.SmtSupport">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L331" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>The answer to &quot;can I hand this formula to a solver, and should I?&quot;.</p>
+<p>Truthy exactly when <a href="/docs/api/solve/#solve"><code>solve()</code></a> would run, so it drops into
+<code>if supported(f):</code> — but it carries the <em>reason</em>, which is what a
+planning loop actually needs.  This mirrors
+<a href="/docs/api/certificates/#Certifiability"><code>_certificates.Certifiability</code></a>.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">supported</code><span class="ptype">bool</span></dt><dd><p>The verdict: exportable, quantifier-free, and a solver is installed.
+<code>bool(self)</code> is the same value.</p>
+</dd></div><div class="param"><dt><code class="pname">exportable</code><span class="ptype">bool</span></dt><dd><p><a href="/docs/api/autoresearch/#to_smtlib"><code>to_smtlib()</code></a> would succeed.  Independent of solver installation,
+so an emitter-only workflow can rely on it.</p>
+</dd></div><div class="param"><dt><code class="pname">quantified</code><span class="ptype">bool</span></dt><dd><p>The formula contains <code>Forall</code>/<code>Exists</code>.  <a href="/docs/api/autoresearch/#to_smtlib"><code>to_smtlib()</code></a> handles
+these; <a href="/docs/api/solve/#solve"><code>solve()</code></a> refuses them, because it guarantees exact
+in-process model checking and a quantified model has nothing to check.</p>
+</dd></div><div class="param"><dt><code class="pname">solver</code><span class="ptype">str or None</span></dt><dd><p>The solver <a href="/docs/api/solve/#solve"><code>solve()</code></a> would use, or <code>None</code> if none is installed.</p>
+</dd></div><div class="param"><dt><code class="pname">logic</code><span class="ptype">str or None</span></dt><dd><p>The SMT-LIB logic the emitter chose, e.g. <code>&quot;QF_NRA&quot;</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">reason</code><span class="ptype">str</span></dt><dd><p>Stable reason code, and the complete set a caller may branch on:
+<code>&quot;ok&quot;</code>, <code>&quot;outside_fragment&quot;</code>, <code>&quot;quantified&quot;</code>,
+<code>&quot;not_exactly_checkable&quot;</code>, or <code>&quot;no_solver&quot;</code>.
+<code>&quot;not_exactly_checkable&quot;</code> is the one that is easy to miss: the formula
+exports fine, but the kernel cannot evaluate it exactly at a rational
+model (<code>abs</code> is the case you will actually hit), so <a href="/docs/api/solve/#solve"><code>solve()</code></a>
+refuses it rather than return a <code>sat</code> it did not check.</p>
+</dd></div><div class="param"><dt><code class="pname">detail</code><span class="ptype">str</span></dt><dd><p>One-sentence human explanation.</p>
+</dd></div><div class="param"><dt><code class="pname">recommendation</code><span class="ptype">str</span></dt><dd><p><code>&quot;smt&quot;</code> or <code>&quot;prefer_in_tree&quot;</code> — see <code>supported()</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">script</code><span class="ptype">str or None</span></dt><dd><p>The emitted script, handed back so a caller that goes on to use it does
+not pay for the export twice.</p>
+</dd></div><div class="param"><dt><code class="pname">error</code><span class="ptype">SmtError or None</span></dt><dd><p>The refusal <a href="/docs/api/solve/#solve"><code>solve()</code></a> would raise: the export error when
+<code>exportable</code> is <code>False</code> (<code>reason=&quot;outside_fragment&quot;</code>), or the
+<code>E-SMT-002</code> refusal when <code>reason</code> is <code>&quot;not_exactly_checkable&quot;</code>.
+<code>None</code> otherwise — including for <code>&quot;quantified&quot;</code> and <code>&quot;no_solver&quot;</code>.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="smt.SmtSupport.supported">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">supported</span><span class="sig-ann">: bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtSupport.supported" aria-label="Link to smt.SmtSupport.supported">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L377" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtSupport.exportable">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exportable</span><span class="sig-ann">: bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtSupport.exportable" aria-label="Link to smt.SmtSupport.exportable">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L378" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtSupport.quantified">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">quantified</span><span class="sig-ann">: bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtSupport.quantified" aria-label="Link to smt.SmtSupport.quantified">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L379" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtSupport.solver">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">solver</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtSupport.solver" aria-label="Link to smt.SmtSupport.solver">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L380" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtSupport.logic">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">logic</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtSupport.logic" aria-label="Link to smt.SmtSupport.logic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L381" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtSupport.reason">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">reason</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtSupport.reason" aria-label="Link to smt.SmtSupport.reason">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L382" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtSupport.detail">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">detail</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtSupport.detail" aria-label="Link to smt.SmtSupport.detail">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L383" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtSupport.recommendation">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">recommendation</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtSupport.recommendation" aria-label="Link to smt.SmtSupport.recommendation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L384" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtSupport.script">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">script</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtSupport.script" aria-label="Link to smt.SmtSupport.script">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L385" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="smt.SmtSupport.error">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">error</span><span class="sig-ann">: SmtError | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtSupport.error" aria-label="Link to smt.SmtSupport.error">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L386" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="smt.to_smtlib"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">smt.</span><span class="sig-name">to_smtlib</span>(
+    <span class="sig-p">formula</span><span class="sig-ann">: Any</span>,
+    <span class="sig-p">logic</span><span class="sig-ann">: str</span><span class="sig-def">='auto'</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">check_sat</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>,
+    <span class="sig-p">get_model</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>
+)<span class="sig-ret"> → str</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.to_smtlib" aria-label="Link to smt.to_smtlib">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L270" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Export a predicate <a href="/docs/api/core/#Expr"><code>Expr</code></a> as an SMT-LIB 2 script.</p>
+<p>The SMT counterpart of <a href="/docs/api/certificates/#to_lean"><code>to_lean()</code></a>: Alkahest emits a standard
+artifact and an independently maintained external tool consumes it.  The
+emitter itself lives in Rust (<code>alkahest_core::logic::smtlib</code>) so that
+match exhaustiveness over <code>Formula</code> / <code>PredicateKind</code> enforces total
+coverage; this wrapper only maps the error type.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">formula</code><span class="ptype">Expr</span></dt><dd><p>A predicate or quantified expression — built with <code>pool.gt</code>/<code>lt</code>/…
+and <a href="/docs/api/logic/#And"><code>And()</code></a> / <a href="/docs/api/logic/#Or"><code>Or()</code></a> / <a href="/docs/api/logic/#Not"><code>Not()</code></a>,
+or <a href="/docs/api/solve/#Forall"><code>Forall()</code></a> / <a href="/docs/api/solve/#Exists"><code>Exists()</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">logic</code><span class="ptype">str</span></dt><dd><p><code>&quot;auto&quot;</code> (default) infers the weakest logic that fits: <code>QF_LIA</code>,
+<code>QF_NIA</code>, <code>QF_LRA</code>, <code>QF_NRA</code>, <code>QF_LIRA</code>, <code>QF_NIRA</code>, their
+quantified counterparts, or <code>ALL</code>.  Naming a logic too weak for the
+formula is an error (<code>E-SMT-002</code>), not a silent downgrade.</p>
+</dd></div><div class="param"><dt><code class="pname">check_sat, get_model</code><span class="ptype">bool</span></dt><dd><p>Append <code>(check-sat)</code> / <code>(get-model)</code> and set <code>:produce-models</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">SmtError</span></dt><dd><p><code>E-SMT-002</code> when the formula is outside the exportable fragment.  Use
+<code>supported()</code> to ask the same question without raising.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(ak.to_smtlib(ak.And(pool.gt(x, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)), pool.lt(x, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))))</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"> # doctest: +SKIP</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">; alkahest </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">SMT</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">LIB</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> export</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">set</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">logic </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">QF_LRA</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span></span></code></pre></div></div></section>
+<section class="sym" id="smt.EXTERNALLY_ASSERTED"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">smt.</span><span class="sig-name">EXTERNALLY_ASSERTED</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.EXTERNALLY_ASSERTED" aria-label="Link to smt.EXTERNALLY_ASSERTED">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L89" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>EXTERNALLY_ASSERTED = 'externally_asserted'</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="smt.SOLVERS"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">smt.</span><span class="sig-name">SOLVERS</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.SOLVERS" aria-label="Link to smt.SOLVERS">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L140" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>SOLVERS = tuple(_SPECS)</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="smt.STATUS_BADGES"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-prefix">smt.</span><span class="sig-name">STATUS_BADGES</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.STATUS_BADGES" aria-label="Link to smt.STATUS_BADGES">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L93" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>STATUS_BADGES = {'exactly_verified': &quot;the solver's model was substituted back and the kernel evaluated the formula to true exactly&quot;, EXTERNALLY_ASSERTED: 'an external solver…</code></pre><p class="muted nodoc">No docstring.</p></div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/mod-research/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">alkahest.research</span></a><a class="pager-next" href="/docs/api/mod-units/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">alkahest.units</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/blob/main/website/docs/scripts/extract_api.py" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d3"><a href="#smt.SmtResult">smt.SmtResult</a></li><li class="d3"><a href="#smt.SmtSupport">smt.SmtSupport</a></li><li class="d3"><a href="#smt.to_smtlib">smt.to_smtlib</a></li><li class="d3"><a href="#smt.EXTERNALLY_ASSERTED">smt.EXTERNALLY_ASSERTED</a></li><li class="d3"><a href="#smt.SOLVERS">smt.SOLVERS</a></li><li class="d3"><a href="#smt.STATUS_BADGES">smt.STATUS_BADGES</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/blob/main/website/docs/scripts/extract_api.py" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

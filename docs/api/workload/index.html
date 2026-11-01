@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search / workload API · Alkahest Docs</title>
+<meta name="description" content="APIs for running Alkahest inside agent math-search loops: per-call budgets, batch fan-out that never aborts on one bad candidate, and related helpers.">
+<meta property="og:title" content="Search / workload API · Alkahest Docs">
+<meta property="og:description" content="APIs for running Alkahest inside agent math-search loops: per-call budgets, batch fan-out that never aborts on one bad candidate, and related helpers.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/" class="active" aria-current="page">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>Search / workload API</h1>
+    <div class="prose-block"><p>APIs for running Alkahest inside agent math-search loops: per-call budgets,
+batch fan-out that never aborts on one bad candidate, and related helpers.</p>
+<p>Conceptual guide: <code>Autoresearch / agent loops &lt;../search-plumbing.html&gt;</code><em>,
+<code>Budgets &lt;../budgets.html&gt;</code></em>, <code>Batch &lt;../batch.html&gt;</code>_.</p>
+</div>
+<h2 id="budgets"><a class="hanchor" href="#budgets" aria-hidden="true" tabindex="-1">#</a>Budgets</h2>
+<section class="sym" id="Budget"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">Budget</span>(<span class="sig-p">wall_ms</span><span class="sig-def">=None</span>, <span class="sig-p">max_steps</span><span class="sig-def">=None</span>, <span class="sig-p">seed</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Budget" aria-label="Link to Budget">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_budget.py#L101" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A per-call resource budget for search-style workloads.</p>
+<p>Every field is optional; <code>Budget()</code> never trips a cooperative check on
+its own — only <a href="/docs/api/workload/#request_cancel"><code>request_cancel()</code></a> can stop a call entered with a bare
+<code>Budget()</code>. This mirrors the Rust side: entering an otherwise-empty
+budget is how a caller opts a code path into consulting <code>seed</code> without
+also imposing a wall/step limit.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">wall_ms</code><span class="ptype">float, optional</span></dt><dd><p>Wall-clock limit in milliseconds, measured from
+<code>context(budget=...)</code> entry.</p>
+</dd></div><div class="param"><dt><code class="pname">max_steps</code><span class="ptype">int, optional</span></dt><dd><p>Maximum number of cooperative-checkpoint calls the guarded block may
+make (see <code>crate::budget::check</code> on the Rust side).</p>
+</dd></div><div class="param"><dt><code class="pname">seed</code><span class="ptype">int, optional</span></dt><dd><p>Determinism seed available to RNG-consuming samplers via
+<a href="/docs/api/workload/#budget_seed"><code>budget_seed()</code></a> — two runs entering the same <code>Budget(seed=7)</code>
+observe the same seed at every call site that consults it.</p>
+</dd></div><div class="param"><dt><code class="pname">max_bytes</code><span class="ptype">int, optional</span></dt><dd><p>Ceiling, in bytes, on the exact-arithmetic (GMP) memory the guarded
+block may hold live. The memory analogue of <code>wall_ms</code>: the existing
+engine ceilings bound the <em>shape</em> of a linear system (how many
+unknowns) but not the <em>size</em> of its numbers, and it is coefficient
+growth that exhausts memory. Exceeding it raises
+<a href="/docs/api/errors/#BudgetExceededError"><code>BudgetExceededError</code></a> with code <code>E-BUDGET-004</code>.</p>
+<p>Without it, an exact solve that outgrows the machine is <strong>not</strong>
+catchable at all: GMP&#39;s reaction to a failed allocation is
+<code>GNU MP: Cannot allocate memory</code> followed by <code>abort()</code>, which takes
+the interpreter down with it. Independently of this setting, Alkahest
+also refuses (<code>E-BUDGET-005</code>) when the process is about to exhaust a
+finite <code>RLIMIT_AS</code> (<code>ulimit -v</code>, or a container memory limit).</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">budget</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.Budget(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">wall_ms</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">50</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">max_steps</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10_000</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">seed</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">7</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)):</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">     try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">         ak.integrate(hard_expr, x)  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># doctest: +SKIP</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">     except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.BudgetExceededError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">         assert</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e.code.startswith(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"E-BUDGET-"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div><div class="members"><div class="members-title">Properties</div><div class="member" id="Budget.wall_ms">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">wall_ms</span><span class="sig-ann">: float | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Budget.wall_ms" aria-label="Link to Budget.wall_ms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L147" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Budget.max_steps">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">max_steps</span><span class="sig-ann">: int | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Budget.max_steps" aria-label="Link to Budget.max_steps">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L148" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Budget.seed">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">seed</span><span class="sig-ann">: int | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Budget.seed" aria-label="Link to Budget.seed">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L149" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Budget.max_bytes">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">max_bytes</span><span class="sig-ann">: int | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Budget.max_bytes" aria-label="Link to Budget.max_bytes">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L152" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="request_cancel"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">request_cancel</span>()<span class="sig-ret"> → None</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#request_cancel" aria-label="Link to request_cancel">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_budget.py#L446" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Request cancellation of the current cooperative operation(s), process-wide.</p>
+<p>See <code>alkahest_core::budget::request_cancel</code> — checked by every
+cooperative checkpoint on every thread until <a href="/docs/api/workload/#clear_cancel"><code>clear_cancel()</code></a> is
+called.</p>
+</div></section>
+<section class="sym" id="clear_cancel"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">clear_cancel</span>()<span class="sig-ret"> → None</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#clear_cancel" aria-label="Link to clear_cancel">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_budget.py#L456" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Clear a previously requested cancellation.</p>
+<p>Call this before starting the next candidate in a fan-out loop.</p>
+</div></section>
+<section class="sym" id="is_cancelled"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">is_cancelled</span>()<span class="sig-ret"> → bool</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#is_cancelled" aria-label="Link to is_cancelled">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_budget.py#L464" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return <code>True</code> if <a href="/docs/api/workload/#request_cancel"><code>request_cancel()</code></a> was called and not yet cleared.</p>
+</div></section>
+<section class="sym" id="is_budget_active"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">is_budget_active</span>()<span class="sig-ret"> → bool</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#is_budget_active" aria-label="Link to is_budget_active">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_budget.py#L469" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return <code>True</code> if a <a href="/docs/api/workload/#Budget"><code>Budget</code></a> is active on this thread.</p>
+</div></section>
+<section class="sym" id="budget_seed"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">budget_seed</span>()<span class="sig-ret"> → int | None</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#budget_seed" aria-label="Link to budget_seed">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_budget.py#L474" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return the seed of the innermost active <a href="/docs/api/workload/#Budget"><code>Budget</code></a> on this thread.</p>
+<p><code>None</code> if no budget is active or the active budget did not set one.</p>
+</div></section>
+<section class="sym" id="active_budget"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">active_budget</span>()<span class="sig-ret"> → Any | None</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#active_budget" aria-label="Link to active_budget">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_context.py#L365" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return the <a href="/docs/api/workload/#Budget"><code>Budget</code></a> from the innermost active context,
+or <code>None</code> if no context set one.</p>
+<p>The budget is already active in the Rust-side cooperative checkpoint
+while its <code>context(budget=...)</code> block is open (see <a href="/docs/api/core/#context"><code>context()</code></a>);
+this accessor is for introspection, e.g. a fan-out loop wanting to
+log/adjust its own remaining budget.</p>
+</div></section>
+<section class="sym" id="run_with_wall_fallback"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">run_with_wall_fallback</span>(
+    <span class="sig-p">fn</span><span class="sig-ann">: Callable[..., _T]</span>,
+    <span class="sig-sep">/</span>,
+    <span class="sig-p">*args</span><span class="sig-ann">: Any</span>,
+    <span class="sig-p">budget</span><span class="sig-ann">: Budget</span>,
+    <span class="sig-p">**kwargs</span><span class="sig-ann">: Any</span>
+)<span class="sig-ret"> → _T</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#run_with_wall_fallback" aria-label="Link to run_with_wall_fallback">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_budget.py#L313" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Run <code>fn(*args, **kwargs)</code> under <code>budget</code>, raising <code>E-BUDGET-001</code>
+when it overruns <code>budget.wall_ms</code> — but <strong>without</strong> a hard deadline.</p>
+
+<div class="doc-sub">Read this before relying on it</div><p>This turns &quot;the callee quietly gave up early&quot; into a raised, coded error,
+and it re-enters <code>budget</code> on the worker thread so cooperative
+checkpoints actually see it. What it does <strong>not</strong> do is return control at
+<code>wall_ms</code>: the worker is joined before the exception propagates, so for
+a callee that never reaches a cooperative checkpoint —
+<code>time.sleep(3)</code>, a single long FLINT call, third-party code —
+<code>Budget(wall_ms=50)</code> raises the right error <em>after the callee finishes</em>.
+Three seconds, in that example. The error message reports how long control
+was actually withheld, so this is visible in a log rather than inferred.</p>
+<p>Why not just abandon the worker and return at the deadline? Because
+Python cannot kill a thread, so &quot;return early&quot; means leaking a live
+thread that still holds the GIL in bursts, still allocates into the pool,
+and cannot be stopped except through the <strong>process-wide</strong> cancellation
+flag — which would also abort every unrelated in-flight call in the
+process, and which nobody could then safely clear (clearing it before the
+orphan observes it is a no-op; leaving it set poisons every subsequent
+cooperative call). In a multi-day loop that trades a bounded stall for
+unbounded orphan-thread accumulation plus collateral cancellation. Joining
+is the honest lesser evil, so it is what this does.</p>
+
+<div class="doc-sub">What *does* bound wall time</div><ul>
+<li><code>context(budget=...)</code> for engines that check the cooperative budget —
+<a href="/docs/api/diff/#integrate"><code>integrate()</code></a> and <a href="/docs/api/diff/#limit"><code>limit()</code></a> today. That is the
+real mechanism; this function is a reporting shim over it.</li>
+<li>An OS-level bound — a subprocess with a timeout, or a process-level
+watchdog — for anything else. Nothing inside one Python process can
+preempt a thread.</li>
+</ul>
+<p>So: reach for this to get a <em>raise</em> out of a cooperatively-budgeted call
+that would otherwise return a silently-truncated answer (the documented
+case is <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a>, whose <code>DerivedExpr</code> return type has
+no error channel). Do not reach for it to contain an unknown callee.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">fn</code><span class="ptype">callable</span></dt><dd><p>The function to call.</p>
+</dd></div><div class="param"><dt><code class="pname">*args, **kwargs</code></dt><dd><p>Forwarded to <code>fn</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">budget</code><span class="ptype">Budget</span></dt><dd><p>Entered on the worker thread for the duration of the call, so
+<code>max_steps</code> and <code>seed</code> reach cooperative call sites too. If
+<code>budget.wall_ms</code> is <code>None</code>, this is equivalent to
+<code>fn(*args, **kwargs)</code> — no thread is spawned, and the caller&#39;s own
+ambient budget (if any) applies unchanged.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">BudgetExceededError</span></dt><dd><p>(<code>E-BUDGET-001</code>) if <code>fn</code> does not return within <code>budget.wall_ms</code>
+milliseconds. Raised once <code>fn</code> has actually finished — see above.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> b </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.Budget(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">wall_ms</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.run_with_wall_fallback(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">lambda</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: ak.simplify(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">budget</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">b)  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># doctest: +SKIP</span></span></code></pre></div></div></section>
+<h2 id="batch-evaluation"><a class="hanchor" href="#batch-evaluation" aria-hidden="true" tabindex="-1">#</a>Batch evaluation</h2>
+<section class="sym" id="BatchItem"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">BatchItem</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#BatchItem" aria-label="Link to BatchItem">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_batch.py#L108" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>One slot&#39;s outcome from <a href="/docs/api/workload/#batch_map"><code>batch_map()</code></a> or a <code>*_many</code> helper.</p>
+<p>Exactly one of <em>value</em> / <em>error</em> is populated: <code>ok=True</code> implies
+<code>error is None</code> and <code>value</code> is whatever <em>fn</em> returned (often a
+<a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a>); <code>ok=False</code> implies <code>value is None</code>
+and <code>error</code> describes what went wrong.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">index</code><span class="ptype">int</span></dt><dd><p>Position of this item in the <em>original</em> input sequence. Stable
+under <code>parallel=True</code> and under <a href="/docs/api/workload/#batch_map_iter"><code>batch_map_iter()</code></a> streaming in
+completion order — an outcome can always be matched back to its
+input via this field, even when results arrive out of order.</p>
+</dd></div><div class="param"><dt><code class="pname">ok</code><span class="ptype">bool</span></dt><dd><p><code>True</code> iff <em>fn</em> returned normally for this item.</p>
+</dd></div><div class="param"><dt><code class="pname">value</code><span class="ptype">Any or None</span></dt><dd><p><em>fn</em>&#39;s return value on success; <code>None</code> on failure.</p>
+</dd></div><div class="param"><dt><code class="pname">error</code><span class="ptype">dict or None</span></dt><dd><p><code>{&quot;code&quot;, &quot;message&quot;, &quot;remediation&quot;, &quot;type&quot;}</code> on failure, <code>None</code>
+on success.</p>
+<p><code>code</code>
+    The raised exception&#39;s <code>.code</code> (e.g. <code>&quot;E-INT-001&quot;</code>) when it
+    is an <a href="/docs/api/errors/#AlkahestError"><code>AlkahestError</code></a>-like exception
+    — including the native PyO3 error types, which expose the same
+    attribute — otherwise <code>UNEXPECTED_ERROR_CODE</code>
+    (<code>&quot;E-BATCH-001&quot;</code>).
+<code>message</code>
+    <code>str(exc)</code>.
+<code>remediation</code>
+    The exception&#39;s <code>.remediation</code>, or <code>None</code> when it has none.
+<code>type</code>
+    <code>type(exc).__name__</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">elapsed_ms</code><span class="ptype">float or None</span></dt><dd><p>Wall-clock time spent inside <em>fn</em> for this item, in milliseconds.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="BatchItem.index">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">index</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BatchItem.index" aria-label="Link to BatchItem.index">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L147" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="BatchItem.ok">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ok</span><span class="sig-ann">: bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BatchItem.ok" aria-label="Link to BatchItem.ok">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L148" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="BatchItem.value">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">value</span><span class="sig-ann">: Any | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BatchItem.value" aria-label="Link to BatchItem.value">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L149" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="BatchItem.error">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">error</span><span class="sig-ann">: dict[str, Any] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BatchItem.error" aria-label="Link to BatchItem.error">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L150" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="BatchItem.elapsed_ms">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">elapsed_ms</span><span class="sig-ann">: float | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BatchItem.elapsed_ms" aria-label="Link to BatchItem.elapsed_ms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L151" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="batch_map"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">batch_map</span>(
+    <span class="sig-p">fn</span><span class="sig-ann">: Callable[..., Any]</span>,
+    <span class="sig-p">items</span><span class="sig-ann">: Iterable[Any]</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">parallel</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>,
+    <span class="sig-p">max_workers</span><span class="sig-ann">: int | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">**kwargs</span><span class="sig-ann">: Any</span>
+)<span class="sig-ret"> → list[BatchItem]</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#batch_map" aria-label="Link to batch_map">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_batch.py#L199" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Call <code>fn(item, **kwargs)</code> for every item in <em>items</em>, never raising.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">fn</code><span class="ptype">callable</span></dt><dd><p>Called as <code>fn(item, **kwargs)</code> for each item. Any <code>Exception</code>
+it raises is captured into that item&#39;s <a href="/docs/api/workload/#BatchItem"><code>BatchItem</code></a> rather than
+propagating.</p>
+</dd></div><div class="param"><dt><code class="pname">items</code><span class="ptype">iterable</span></dt><dd><p>The candidates to evaluate. Consumed once, eagerly (so a generator
+works, but is fully materialised before any call happens).</p>
+</dd></div><div class="param"><dt><code class="pname">parallel</code><span class="ptype">bool</span></dt><dd><p>Fan out over a <code>ThreadPoolExecutor</code> when
+true. Useful when <em>fn</em> releases the GIL for some or all of its work
+(I/O, or a Rust call that calls <code>py.allow_threads</code>); on pure
+Python, GIL-bound work it will not speed anything up, but it also
+will not make anything incorrect — order is preserved either way,
+and the ambient <code>context(budget=...)</code> is re-entered inside each
+worker so a trip is reported as <code>E-BUDGET-00x</code> on the item that
+tripped, exactly as it would be sequentially (see the module
+docstring for the per-field semantics).</p>
+</dd></div><div class="param"><dt><code class="pname">max_workers</code><span class="ptype">int, optional</span></dt><dd><p>Forwarded to <code>ThreadPoolExecutor</code>. Ignored
+when <code>parallel=False</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">**kwargs</code></dt><dd><p>Forwarded to every call to <em>fn</em>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">list of BatchItem</span></dt><dd><p>Exactly <code>len(items)</code> entries, <strong>in input order</strong> regardless of
+<em>parallel</em> — this is the ordering guarantee <a href="/docs/api/workload/#batch_map_iter"><code>batch_map_iter()</code></a>
+does not make under <code>parallel=True</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> outs </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.batch_map(ak.simplify, [x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 0</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x, ak.log(ak.log(x))])</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [o.ok </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> o </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> outs]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span></code></pre></div></div></section>
+<section class="sym" id="batch_map_iter"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">batch_map_iter</span>(
+    <span class="sig-p">fn</span><span class="sig-ann">: Callable[..., Any]</span>,
+    <span class="sig-p">items</span><span class="sig-ann">: Iterable[Any]</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">parallel</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>,
+    <span class="sig-p">max_workers</span><span class="sig-ann">: int | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">**kwargs</span><span class="sig-ann">: Any</span>
+)<span class="sig-ret"> → Iterator[BatchItem]</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#batch_map_iter" aria-label="Link to batch_map_iter">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_batch.py#L267" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Streaming counterpart of <a href="/docs/api/workload/#batch_map"><code>batch_map()</code></a>.</p>
+
+<div class="doc-sub">Order guarantee</div><ul>
+<li><code>parallel=False</code>: yields <strong>in input order</strong> — item <em>i</em> is fully
+computed and yielded before item <em>i + 1</em> starts, so
+<code>zip(items, batch_map_iter(fn, items))</code> lines up.</li>
+<li><code>parallel=True</code>: yields <strong>in completion order</strong>, not input order.
+This is deliberate: the point of streaming under fan-out is that a
+fast failure surfaces immediately instead of waiting behind a slow
+item that happened to be submitted first. Every yielded
+<a href="/docs/api/workload/#BatchItem"><code>BatchItem</code></a> still carries its original <code>index</code>, so a caller
+that needs input order can sort by it — or just use <a href="/docs/api/workload/#batch_map"><code>batch_map()</code></a>,
+which always returns in input order.</li>
+</ul>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">fn, items, max_workers, **kwargs</code></dt><dd><p>As <a href="/docs/api/workload/#batch_map"><code>batch_map()</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">parallel</code><span class="ptype">bool</span></dt><dd><p>As <a href="/docs/api/workload/#batch_map"><code>batch_map()</code></a>; also selects the completion-order streaming
+behaviour described above.</p>
+</dd></div></dl>
+<div class="doc-sub">Yields</div><dl class="params"><div class="param"><dt><span class="ptype">BatchItem</span></dt></div></dl>
+<div class="doc-sub">Examples</div><p>Sequential streaming preserves input order:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [item.index </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> item </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.batch_map_iter(ak.simplify, [x, x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 0</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x])]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span></code></pre></div></div></section>
+<section class="sym" id="integrate_many"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">integrate_many</span>(
+    <span class="sig-p">exprs</span><span class="sig-ann">: Iterable[Any]</span>,
+    <span class="sig-p">var</span><span class="sig-ann">: Any</span>,
+    <span class="sig-p">*bounds</span><span class="sig-ann">: Any</span>,
+    <span class="sig-p">parallel</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>,
+    <span class="sig-p">max_workers</span><span class="sig-ann">: int | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">**kwargs</span><span class="sig-ann">: Any</span>
+)<span class="sig-ret"> → list[BatchItem]</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#integrate_many" aria-label="Link to integrate_many">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_batch.py#L348" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><a href="/docs/api/workload/#batch_map"><code>batch_map()</code></a> over <a href="/docs/api/diff/#integrate"><code>integrate()</code></a>, one call per integrand.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">exprs</code><span class="ptype">iterable of Expr or DerivedResult</span></dt><dd><p>Integrands, evaluated independently.</p>
+</dd></div><div class="param"><dt><code class="pname">var</code><span class="ptype">Expr</span></dt><dd><p>Integration variable, shared by every call.</p>
+</dd></div><div class="param"><dt><code class="pname">*bounds</code></dt><dd><p>Pass <code>a, b</code> for a definite integral over every integrand (see
+<a href="/docs/api/diff/#integrate"><code>integrate()</code></a>); omit for the indefinite integral.</p>
+</dd></div><div class="param"><dt><code class="pname">parallel, max_workers</code></dt><dd><p>As <a href="/docs/api/workload/#batch_map"><code>batch_map()</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">**kwargs</code></dt><dd><p>Forwarded to <a href="/docs/api/diff/#integrate"><code>integrate()</code></a>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">list of BatchItem</span></dt><dd><p><code>value</code> is the <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> antiderivative (or
+definite value) on success; on failure, <code>error[&quot;code&quot;]</code> is the
+integrator&#39;s own code (typically <code>E-INT-001</code>) rather than
+<code>UNEXPECTED_ERROR_CODE</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> outs </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.integrate_many([x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, ak.log(ak.log(x)), ak.sin(x)], x)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [o.ok </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> o </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> outs]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">False</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span></code></pre></div></div></section>
+<section class="sym" id="simplify_many"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_many</span>(
+    <span class="sig-p">exprs</span><span class="sig-ann">: Iterable[Any]</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">parallel</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>,
+    <span class="sig-p">max_workers</span><span class="sig-ann">: int | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">**kwargs</span><span class="sig-ann">: Any</span>
+)<span class="sig-ret"> → list[BatchItem]</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_many" aria-label="Link to simplify_many">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_batch.py#L397" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><a href="/docs/api/workload/#batch_map"><code>batch_map()</code></a> over <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a>, one call per expression.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">exprs</code><span class="ptype">iterable of Expr or DerivedResult</span></dt><dd><p>Expressions to simplify independently.</p>
+</dd></div><div class="param"><dt><code class="pname">parallel, max_workers</code></dt><dd><p>As <a href="/docs/api/workload/#batch_map"><code>batch_map()</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">**kwargs</code></dt><dd><p>Forwarded to <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a> (e.g. <code>assumptions=</code>).</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">list of BatchItem</span></dt></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> outs </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.simplify_many([x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 0</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x, x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x])</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [o.value.value </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> o </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> outs]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[x, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span></code></pre></div></div></section>
+<section class="sym" id="diff_many"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">diff_many</span>(
+    <span class="sig-p">exprs</span><span class="sig-ann">: Iterable[Any]</span>,
+    <span class="sig-p">var</span><span class="sig-ann">: Any</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">parallel</span><span class="sig-ann">: bool</span><span class="sig-def">=False</span>,
+    <span class="sig-p">max_workers</span><span class="sig-ann">: int | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">**kwargs</span><span class="sig-ann">: Any</span>
+)<span class="sig-ret"> → list[BatchItem]</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#diff_many" aria-label="Link to diff_many">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_batch.py#L436" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><a href="/docs/api/workload/#batch_map"><code>batch_map()</code></a> over <a href="/docs/api/diff/#diff"><code>diff()</code></a>, one call per expression.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">exprs</code><span class="ptype">iterable of Expr or DerivedResult</span></dt><dd><p>Expressions to differentiate independently.</p>
+</dd></div><div class="param"><dt><code class="pname">var</code><span class="ptype">Expr</span></dt><dd><p>Differentiation variable, shared by every call.</p>
+</dd></div><div class="param"><dt><code class="pname">parallel, max_workers</code></dt><dd><p>As <a href="/docs/api/workload/#batch_map"><code>batch_map()</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">**kwargs</code></dt><dd><p>Forwarded to <a href="/docs/api/diff/#diff"><code>diff()</code></a>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">list of BatchItem</span></dt></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> outs </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.diff_many([x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, ak.sin(x)], x)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [o.ok </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> o </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> outs]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span></code></pre></div></div></section>
+<h2 id="schema-constants"><a class="hanchor" href="#schema-constants" aria-hidden="true" tabindex="-1">#</a>Schema constants</h2>
+<section class="sym" id="RESULT_SCHEMA_VERSION"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-name">RESULT_SCHEMA_VERSION</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#RESULT_SCHEMA_VERSION" aria-label="Link to RESULT_SCHEMA_VERSION">#</a></div>
+</div><div class="sym-body"><p class="muted">Documented together with <a href="#STEP_FIELDS_COMPACT"><code>STEP_FIELDS_COMPACT</code></a>.</p></div></section>
+<section class="sym" id="STEPS_SCHEMA_VERSION"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-name">STEPS_SCHEMA_VERSION</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#STEPS_SCHEMA_VERSION" aria-label="Link to STEPS_SCHEMA_VERSION">#</a></div>
+</div><div class="sym-body"><p class="muted">Documented together with <a href="#STEP_FIELDS_COMPACT"><code>STEP_FIELDS_COMPACT</code></a>.</p></div></section>
+<section class="sym" id="STEP_FIELDS"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-name">STEP_FIELDS</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#STEP_FIELDS" aria-label="Link to STEP_FIELDS">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_result_schema.py#L94" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>STEP_FIELDS = ('rule', 'before', 'after', 'side_conditions')</code></pre><p class="muted">Documented together with <a href="#STEP_FIELDS_COMPACT"><code>STEP_FIELDS_COMPACT</code></a>.</p></div></section>
+<section class="sym" id="STEP_FIELDS_COMPACT"><div class="sym-head">
+  <span class="kind kind-data">constant</span>
+  <pre class="sig"><code><span class="sig-name">STEP_FIELDS_COMPACT</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#STEP_FIELDS_COMPACT" aria-label="Link to STEP_FIELDS_COMPACT">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_result_schema.py#L99" rel="noopener">source</a></div>
+</div><div class="sym-body"><pre class="sig sig-value"><code>STEP_FIELDS_COMPACT = ('r', 's')</code></pre><p>Version and field-name tables for <a href="/docs/api/core/#DerivedResult.to_dict"><code>DerivedResult.to_dict()</code></a>. See
+<code>derivation logs &lt;../derivations.html#machine-parseable-output-to_dict--to_json&gt;</code>_.</p>
+</div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/codegen/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Code generation</span></a><a class="pager-next" href="/docs/api/autoresearch/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Autoresearch modules</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/workload.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#budgets">Budgets</a></li><li class="d3"><a href="#Budget">Budget</a></li><li class="d3"><a href="#request_cancel">request_cancel</a></li><li class="d3"><a href="#clear_cancel">clear_cancel</a></li><li class="d3"><a href="#is_cancelled">is_cancelled</a></li><li class="d3"><a href="#is_budget_active">is_budget_active</a></li><li class="d3"><a href="#budget_seed">budget_seed</a></li><li class="d3"><a href="#active_budget">active_budget</a></li><li class="d3"><a href="#run_with_wall_fallback">run_with_wall_fallback</a></li><li class="d2"><a href="#batch-evaluation">Batch evaluation</a></li><li class="d3"><a href="#BatchItem">BatchItem</a></li><li class="d3"><a href="#batch_map">batch_map</a></li><li class="d3"><a href="#batch_map_iter">batch_map_iter</a></li><li class="d3"><a href="#integrate_many">integrate_many</a></li><li class="d3"><a href="#simplify_many">simplify_many</a></li><li class="d3"><a href="#diff_many">diff_many</a></li><li class="d2"><a href="#schema-constants">Schema constants</a></li><li class="d3"><a href="#RESULT_SCHEMA_VERSION">RESULT_SCHEMA_VERSION</a></li><li class="d3"><a href="#STEPS_SCHEMA_VERSION">STEPS_SCHEMA_VERSION</a></li><li class="d3"><a href="#STEP_FIELDS">STEP_FIELDS</a></li><li class="d3"><a href="#STEP_FIELDS_COMPACT">STEP_FIELDS_COMPACT</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/workload.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

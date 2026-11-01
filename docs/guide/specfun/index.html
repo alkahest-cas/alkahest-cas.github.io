@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bessel, Airy, zeta and polylogarithm functions · Alkahest Docs</title>
+<meta name="description" content="Cylinder and spherical Bessel functions, the Airy functions, the Riemann and Hurwitz zeta functions and the polylogarithm are registered primitives…">
+<meta property="og:title" content="Bessel, Airy, zeta and polylogarithm functions · Alkahest Docs">
+<meta property="og:description" content="Cylinder and spherical Bessel functions, the Airy functions, the Riemann and Hurwitz zeta functions and the polylogarithm are registered primitives…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/" class="active" aria-current="page">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <div class="eyebrow">Mathematics</div>
+    <h1>Bessel, Airy, zeta and polylogarithm functions</h1>
+    <p>Cylinder and spherical Bessel functions, the Airy functions, the Riemann and
+Hurwitz zeta functions and the polylogarithm are registered primitives
+(<code>alkahest_cas::specfun</code>). Conventions are DLMF&#39;s — also SymPy&#39;s, mpmath&#39;s and
+Arb&#39;s.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Python</th>
+<th>node</th>
+<th>DLMF</th>
+</tr>
+</thead><tbody><tr>
+<td><code>bessel_j(nu, x)</code>, <code>bessel_y(nu, x)</code></td>
+<td><code>J_ν</code>, <code>Y_ν</code></td>
+<td>10.2</td>
+</tr>
+<tr>
+<td><code>bessel_i(nu, x)</code>, <code>bessel_k(nu, x)</code></td>
+<td><code>I_ν</code>, <code>K_ν</code></td>
+<td>10.25</td>
+</tr>
+<tr>
+<td><code>spherical_jn(n, x)</code>, <code>spherical_yn(n, x)</code></td>
+<td><code>j_n</code>, <code>y_n</code></td>
+<td>10.47</td>
+</tr>
+<tr>
+<td><code>airy_ai</code>, <code>airy_bi</code>, <code>airy_ai_prime</code>, <code>airy_bi_prime</code></td>
+<td><code>Ai</code>, <code>Bi</code>, <code>Ai′</code>, <code>Bi′</code></td>
+<td>9.2</td>
+</tr>
+<tr>
+<td><code>zeta(s)</code>, <code>hurwitz_zeta(s, a)</code></td>
+<td><code>ζ(s)</code>, <code>ζ(s, a)</code></td>
+<td>25.2, 25.11</td>
+</tr>
+<tr>
+<td><code>polylog(s, z)</code></td>
+<td><code>Li_s(z)</code></td>
+<td>25.12</td>
+</tr>
+</tbody></table></div>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> fractions </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> Fraction</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool(); x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">); nu </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"nu"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">); k </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"k"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.bessel_j(Fraction(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), x)     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># sqrt(2)*pi^(-1/2)*x^(-1/2)*sin(x)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.spherical_jn(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, x)              </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># x^-2*sin(x) - x^-1*cos(x)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.bessel_j(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, x)                  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># bessel_j0(x) — one spelling per function</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.diff(ak.bessel_j(nu, x), x)     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1/2*(bessel_j(-1 + nu, x) - bessel_j(1 + nu, x))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.zeta(p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">4</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))              </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1/90*pi^4</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.zeta(p.integer(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))             </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># -1/12</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.polylog(p.integer(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), x)       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># x*(1 - x)^-2</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.sum_definite(k</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, k, p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.pos_infinity())   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># zeta(3)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.sum_definite(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">k</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">k</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, k, p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.pos_infinity())  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># dilog(x), |x| &#x3C; 1 stated</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.sum_definite(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">k</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.gamma(k </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), k, p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.pos_infinity())  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># exp(x)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.integrate(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.bessel_j0(x), x) </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># x*bessel_j1(x)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.evaluate(ak.bessel_k(nu, x), {nu: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.5</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 0</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">j</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, x: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">j</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">})  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># complex value via Arb</span></span></code></pre></div><h2 id="exact-forms"><a class="hanchor" href="#exact-forms" aria-hidden="true" tabindex="-1">#</a>Exact forms</h2>
+<ul>
+<li><strong>Half-integer order</strong> Bessel functions are elementary; the constructors
+expand them by default (<code>expand=False</code> keeps the node; <code>expand_special</code>
+expands later, e.g. after <code>subs</code>). Coefficients come from the three-term
+recurrences over the rationals. Past order 200: <code>E-SPECFN-004</code>.</li>
+<li><strong>Integer order</strong> nodes are canonicalised: <code>J_{−n} = (−1)ⁿJ_n</code>,
+<code>Y_{−n} = (−1)ⁿY_n</code>, <code>I_{−n} = I_n</code>, <code>K_{−ν} = K_ν</code>, <code>J_n(−x) = (−1)ⁿJ_n(x)</code>,
+<code>J_0(0) = I_0(0) = 1</code>, <code>J_ν(0) = I_ν(0) = 0</code> for <code>ν &gt; 0</code>; <code>bessel_j(0, x)</code> and
+<code>bessel_j(1, x)</code> are <code>bessel_j0(x)</code> / <code>bessel_j1(x)</code>.</li>
+<li><strong>ζ</strong>: <code>ζ(2n)</code> is a rational multiple of <code>π^{2n}</code> (Bernoulli numbers),
+<code>ζ(−n) = (−1)ⁿB_{n+1}/(n+1)</code>; odd <code>ζ(2n+1)</code> is kept as <code>zeta(2n+1)</code>.
+<code>ζ(1)</code> is refused (<code>E-SPECFN-006</code>).</li>
+<li><strong>Li_s</strong>: <code>Li_2 = dilog</code>, <code>Li_1(z) = −log(1−z)</code>, <code>Li_0(z) = z/(1−z)</code>,
+<code>Li_{−n}</code> the Eulerian rational function, <code>Li_s(1) = ζ(s)</code>,
+<code>Li_s(−1) = −(1−2^{1−s})ζ(s)</code>.</li>
+</ul>
+<h2 id="derivatives"><a class="hanchor" href="#derivatives" aria-hidden="true" tabindex="-1">#</a>Derivatives</h2>
+<p><code>d/dx</code> only: <code>J′_ν = (J_{ν−1} − J_{ν+1})/2</code> (same for <code>Y</code>),
+<code>I′_ν = (I_{ν−1} + I_{ν+1})/2</code>, <code>K′_ν = −(K_{ν−1} + K_{ν+1})/2</code>,
+<code>j′_n = −j_{n+1} + (n/x)j_n</code>, <code>Ai″ = x·Ai</code>, <code>∂_a ζ(s, a) = −s·ζ(s+1, a)</code>,
+<code>Li′_s(z) = Li_{s−1}(z)/z</code>, <code>ζ′(s) = zeta_prime(s)</code> (exact at <code>0, −1, 2</code> and
+the negative even integers; numeric through Arb&#39;s <code>acb_dirichlet_zeta_jet</code>),
+<code>H′_ν = (H_{ν−1} − H_{ν+1})/2</code> for <code>hankel1</code>/<code>hankel2</code> (<code>J ± iY</code>, complex-valued;
+half-integer orders expand to <code>exp(±ix)</code> forms). A derivative in the order or
+in <code>s</code>, and the second derivative of <code>zeta</code>, raises <code>E-DIFF-001</code> — it has no
+closed form, and is never silently dropped.</p>
+<h2 id="numerics"><a class="hanchor" href="#numerics" aria-hidden="true" tabindex="-1">#</a>Numerics</h2>
+<p><code>f64</code> values are certified to 53 bits by Arb (<code>arb_hypgeom_bessel_*</code>,
+<code>arb_hypgeom_airy</code>, <code>arb_zeta</code>, <code>arb_hurwitz_zeta</code>, <code>arb_polylog</code>); balls are
+rigorous at the requested precision; complex points go through the <code>acb_*</code>
+kernels. A non-real value (<code>Y_ν</code>/<code>K_ν</code> at <code>x &lt; 0</code>, <code>Li_s(x &gt; 1)</code>) or a pole is
+declined by the real evaluators rather than replaced by a real part.</p>
+<h2 id="γ-ψ-polygamma-and-the-named-constants"><a class="hanchor" href="#γ-ψ-polygamma-and-the-named-constants" aria-hidden="true" tabindex="-1">#</a>Γ, ψ, polygamma and the named constants</h2>
+<p><code>EulerGamma</code> (γ), <code>Catalan</code> (G) and <code>Glaisher</code> (A) are exact symbols
+(<code>ak.euler_gamma(pool)</code>, <code>ak.catalan(pool)</code>, <code>ak.glaisher(pool)</code>): they print,
+parse and render (<code>\gamma</code>, <code>G</code>, <code>A</code>), every numeric evaluator resolves them,
+and no symbolic path folds them into a float.</p>
+<p>The Stieltjes constants <code>γₙ</code> (<code>ak.stieltjes_constant(pool, n)</code>, <code>n ≤ 30</code>;
+<code>γ₀</code> is <code>EulerGamma</code>) are the same kind of symbol (<code>StieltjesGamma1</code>, …), and
+<code>series(ak.zeta(s), s, p.integer(1), n)</code> is the Laurent series
+<code>1/(s−1) + γ − γ₁(s−1) + γ₂/2 (s−1)² − …</code> in them. A series coefficient that
+would contain a special function <em>at its pole</em> (<code>ζ(1)</code>, <code>Γ(0)</code>, <code>Y₀(0)</code>, …) is
+refused, never returned.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.simplify(ak.digamma(p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># -EulerGamma (was the float -0.5772…)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.simplify(ak.digamma(p.rational(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))) </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># -EulerGamma - 2*log(2)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.simplify(ak.trigamma(p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))      </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># pi^2/6</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.simplify(ak.trigamma(p.rational(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">4</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># pi^2 + 8*Catalan</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.polygamma(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))               </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># -2*zeta(3)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.diff(ak.trigamma(x), x)                  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># polygamma(2, x)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">eps </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"eps"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">); m </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"m"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.series(ak.gamma(eps), eps, p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1/eps - EulerGamma + (EulerGamma^2/2 + pi^2/12)*eps + O(eps^2)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.series(m</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">eps) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.gamma(eps), eps, p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1/eps - EulerGamma - 2*log(m) + O(eps)</span></span></code></pre></div><p>Exact values: <code>Γ(n) = (n−1)!</code>, <code>Γ(m+½) = r·√π</code>; <code>ψ</code> at every integer shift of
+<code>1, ½, ⅓, ⅔, ¼, ¾, ⅙, ⅚</code> in classical form, and at every other rational <code>p/q</code>
+with <code>q ≤ 100</code> by Gauss&#39;s digamma theorem
+(<code>−γ − log(2q) − (π/2)cot(πp/q) + 2Σ cos(2πkp/q) log sin(πk/q)</code>, with exact
+trigonometric nodes); <code>ψ⁽ⁿ⁾</code> at every rational through
+<code>(−1)ⁿ⁺¹ n! ζ(n+1, a)</code> — in <code>πˢ</code>/<code>ζ(s)</code>/Catalan/<code>√3</code> form at integers,
+half-integers, quarters (<code>ψ″(¼) = −2π³ − 56ζ(3)</code>) and, for even <code>n</code>, thirds
+and sixths; otherwise the exact <code>hurwitz_zeta(n+1, f)</code> value (odd <code>n</code> at
+thirds needs a Clausen value, at quarters <code>β(n+1)</code>). <code>series</code> expands <code>Γ</code>, <code>ψ</code>
+and <code>ψ⁽ⁿ⁾</code> at the poles <code>0, −1, −2, …</code> by shifting them off the pole
+(<code>Γ(u) = Γ(u+k+1)/(u(u+1)⋯(u+k))</code>), so the coefficients are exact in γ, π and
+<code>ζ(3)</code>, <code>ζ(5)</code>, …. <code>polygamma(1/2, x)</code> is <code>E-SPECFN-008</code>.</p>
+<h2 id="loggamma-gammasimp-and-asymptotics-at-infinity-f25"><a class="hanchor" href="#loggamma-gammasimp-and-asymptotics-at-infinity-f25" aria-hidden="true" tabindex="-1">#</a><code>loggamma</code>, <code>gammasimp</code> and asymptotics at infinity (F25)</h2>
+<p><code>loggamma(x)</code> is <code>log Γ(x)</code>: real for <code>x &gt; 0</code>, and for complex <code>x</code> the
+principal branch (the continuation from the positive axis, Arb&#39;s
+<code>acb_lgamma</code>; at <code>x = −1/2</code> it is <code>log(2√π) − 2πi</code>, not <code>log(Γ(−1/2))</code>).
+It is exact at integers up to 100 and at positive half-integers,
+differentiates to <code>digamma</code>, and has f64, ball, complex and Taylor-model
+values. A literal pole raises <code>E-SPECFN-006</code>.</p>
+<p><code>gammasimp</code> rewrites products of <code>Γ</code> with three identities (DLMF 5.5.1, 5.5.3
+and 5.5.5). The recurrence turns <code>Γ(x+n)/Γ(x)</code> into a rising factorial for an
+integer <code>|n| ≤ 64</code>, but only when the two exponents have opposite signs.
+Reflection turns <code>Γ(a)Γ(m−a)</code> into <code>π/sin(πa)</code> times a rising factorial.
+Duplication turns <code>Γ(a)Γ(a+½+k)</code> into <code>2^{1−2a}√π Γ(2a)</code> times a rising
+factorial. Each rewrite is an identity of meromorphic functions. When the
+<code>Γ</code> factors cancel completely (<code>Γ(x+3)/Γ(x) → x(x+1)(x+2)</code>), the result is the
+continuous extension across <code>x ∈ {0, −1, …}</code>, where the quotient itself is
+undefined. <code>beta(a, b)</code> is first written <code>Γ(a)Γ(b)/Γ(a+b)</code> (so <code>beta(x, 1)</code>
+becomes <code>1/x</code>); <code>uppergamma</code>/<code>lowergamma</code> are left alone. <code>is_zero</code> tries <code>gammasimp</code>, so <code>Γ(x)Γ(1−x) − π/sin(πx)</code> is proved
+zero.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.loggamma(p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))                       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># log(24)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.diff(ak.loggamma(x), x).value                </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># digamma(x)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.gammasimp(ak.gamma(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.gamma(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x))     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># pi/sin(pi*x)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.gammasimp(ak.gamma(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.gamma(x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.rational(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 2^(1-2x)*sqrt(pi)*gamma(2x)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.gammasimp(ak.gamma(x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.gamma(x))     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># x*(x+1)*(x+2)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.experimental </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> asymptotic_expand</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">asymptotic_expand(ak.loggamma(x), x, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">6</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [x*log(x), -x, -log(x)/2, log(2*pi)/2, 1/(12*x), -1/(360*x^3)]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">asymptotic_expand(ak.gamma(x), x, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [sqrt(2*pi)*x^(x-1/2)*exp(-x), …/(12*x), …/(288*x^2)]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">asymptotic_expand(ak.bessel_j(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, x), x, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [sqrt(2)*cos(x - pi/4)/(sqrt(pi)*sqrt(x)), sqrt(2)*sin(x - pi/4)/(8*sqrt(pi)*x^(3/2))]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">asymptotic_expand(ak.erfc(x), x, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)      </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [exp(-x^2)/(sqrt(pi)*x), -exp(-x^2)/(2*sqrt(pi)*x^3)]</span></span></code></pre></div><p><code>asymptotic_expand</code> builds these expansions at <code>+∞</code> from exact coefficients:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>function (argument <code>a·x + b</code>, rational <code>a &gt; 0</code>)</th>
+<th>expansion</th>
+<th>DLMF</th>
+</tr>
+</thead><tbody><tr>
+<td><code>loggamma</code>, <code>gamma^e</code>, <code>factorial</code>, <code>binomial</code>, products of <code>Γ</code></td>
+<td>Stirling, <code>B_{k+1}(b)</code></td>
+<td>5.11.3, 5.11.8</td>
+</tr>
+<tr>
+<td><code>digamma</code>, <code>trigamma</code>, <code>polygamma(n, ·)</code></td>
+<td><code>log x + Σ (−1)^{m+1} B_m(b)/(m x^m)</code>, differentiated</td>
+<td>5.15.8</td>
+</tr>
+<tr>
+<td><code>bessel_j/y(ν, a·x)</code>, rational <code>ν</code></td>
+<td>Hankel, <code>cos ω</code>/<code>sin ω</code> with <code>ω = ax − νπ/2 − π/4</code></td>
+<td>10.17.3–4</td>
+</tr>
+<tr>
+<td><code>bessel_i/k(ν, a·x)</code></td>
+<td><code>e^{±ax}</code> times Hankel&#39;s <code>a_k(ν)</code></td>
+<td>10.40.1–2</td>
+</tr>
+<tr>
+<td><code>erfc(a·x)</code>, <code>Ei(a·x)</code></td>
+<td><code>e^{−a²x²}</code>, <code>e^{ax}</code> times the classical series</td>
+<td>7.12.1, 6.12.2</td>
+</tr>
+<tr>
+<td><code>uppergamma(s, a·x)</code>, rational <code>s</code></td>
+<td><code>e^{−ax}(ax)^{s−1} Σ (s−1)⋯(s−k)/(ax)^k</code>; finite at integer <code>s &gt; 0</code></td>
+<td>8.11.2</td>
+</tr>
+<tr>
+<td>Airy <code>Ai</code>, <code>Bi</code>, <code>Ai′</code>, <code>Bi′</code> of <code>a·x</code></td>
+<td><code>e^{∓ζ}</code>, <code>ζ = (2/3)(ax)^{3/2}</code></td>
+<td>9.7.5–8</td>
+</tr>
+</tbody></table></div>
+<p>These also combine. Products with constants, with <code>log(x)^k</code>, with <code>x^q</code> and
+with power-scale cofactors are expanded, and so are sums whose summands share
+one exponential scale (for example <code>loggamma(x) − x·log(x)</code> or
+<code>√x·J₀(x)</code>). Every expansion is checked numerically before it is returned:
+at four large points, using 640-bit balls, the residual must be within 8
+times the first omitted term. A symbolic order, a nonlinear or negative-slope
+argument, a reciprocal such as <code>1/erfc(x)</code>, or a sum of two different scales
+is refused with <code>E-ASYMPT-005</code>.</p>
+<h2 id="generalized-hypergeometric-ₚfq"><a class="hanchor" href="#generalized-hypergeometric-ₚfq" aria-hidden="true" tabindex="-1">#</a>Generalized hypergeometric <code>ₚFq</code></h2>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">z </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"z"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">F </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.hyper([</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], z)        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># hyper(2, 1, 1, 1, 2, z); LaTeX {}_{2}F_{1}(1, 1; 2; z)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.expand_hyper(F)                  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># -log(1 - z)/z</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.expand_hyper(ak.hyper([</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, x], [Fraction(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)], z))   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># a cubic in z</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.expand_hyper(ak.hyper([Fraction(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), Fraction(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)], [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Gauss: Γ…/Γ…</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.diff(F, z)                       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1/2*hyper(2, 1, 2, 2, 3, z)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.eval_expr(F, {z: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.5</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">})           </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1.386294361… (Arb)</span></span></code></pre></div><p>The node is <code>hyper(p, q, a1..ap, b1..bq, z)</code>; <code>d/dz</code> shifts every parameter by
+one, a parameter derivative is refused, values come from Arb
+(<code>arb_hypgeom_0f1/1f1/2f1/pfq</code>, real only). <code>expand_hyper</code> knows terminating
+series, <code>₀F₀</code>, <code>₁F₀</code>, the <code>log</code>/<code>atanh</code>/<code>asin</code> cases of <code>₂F₁</code>, Gauss&#39;s sum at
+<code>z = 1</code> (when <code>c − a − b</code> is a positive literal), <code>₁F₁(1; 2; z)</code>,
+<code>₁F₁(½; 3/2; −w)</code> (erf) and <code>₀F₁</code> (cosh/sinh, Bessel <code>J</code>/<code>I</code>), the
+<code>₂F₁(a, a + ½; c; z)</code> families for <code>c = ½, 3/2, 2a, 2a + 1</code> (A&amp;S 15.1.9–14),
+<code>₁F₁(a; 2a; z)</code> as Bessel <code>I</code>, <code>₁F₁(a; a+1; −w) = a w^{−a} lowergamma(a, w)</code>,
+and any node one Euler, Pfaff or Kummer
+transformation away from one of these (<code>₂F₁(1, 1; 3/2; z)</code>,
+<code>₁F₁(1; 3/2; z) = eᶻ√π erf(√z)/(2√z)</code>); other nodes are kept.</p>
+<p>Complex values (F26): <code>evaluate(F, {z: 3+2j}, mode=&quot;complex&quot;)</code> evaluates
+every <code>ₚFq</code> through Arb&#39;s <code>acb_hypgeom_*</code>. <code>₂F₁</code> is continued analytically to
+the whole cut plane; on the cut <code>[1, ∞)</code> itself the value is the limit from
+below (<code>z − i0</code>, mpmath&#39;s convention: <code>₂F₁(1, 1; 2; 2) = −iπ/2</code>). Other
+<code>p = q + 1</code> families (<code>₃F₂</code>, …) are summed as series only, so <code>|z| ≥ 1</code>
+declines rather than guessing a continuation.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.hyper_transform(ak.hyper([a, b], [c], z), </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"euler"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># (1-z)^(c-a-b) * 2F1(c-a, c-b; c; z)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.hyper_transform(F, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"1/z"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Γ-coefficient connection formula (A&#x26;S 15.3.7)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.hyper_transform(ak.hyper([a], [b], z), </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"kummer"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># exp(z) * 1F1(b-a; b; -z)</span></span></code></pre></div><p><code>hyper_transform(expr, kind)</code> returns the exact right-hand side of <code>&quot;euler&quot;</code>,
+<code>&quot;pfaff&quot;</code> (<code>&quot;z/(z-1)&quot;</code>), <code>&quot;pfaff_b&quot;</code>, the two-term connection formulas
+<code>&quot;1-z&quot;</code>, <code>&quot;1/z&quot;</code>, <code>&quot;1/(1-z)&quot;</code>, <code>&quot;1-1/z&quot;</code> (A&amp;S 15.3.6–9, Gamma prefactors),
+<code>&quot;quadratic&quot;</code> (DLMF 15.8.13, 15.8.15, 15.8.18 — whichever family <code>c = 2b</code>,
+<code>c = a − b + 1</code>, <code>2c = a + b + 1</code> the parameters are in) and <code>&quot;kummer&quot;</code>
+(<code>₁F₁</code>). Each holds on a stated region — <code>z ∉ [1, ∞)</code> for Euler/Pfaff,
+<code>z ∉ (−∞, 0] ∪ [1, ∞)</code> for <code>1−z</code> / <code>1−1/z</code>, <code>z ∉ [0, ∞)</code> for <code>1/z</code> /
+<code>1/(1−z)</code>, <code>|z| &lt; 1</code> / <code>Re z &lt; ½</code> for two of the quadratic ones; a literal
+<code>z</code> outside it, the logarithmic case (<code>a − b</code> or <code>c − a − b</code> an integer),
+and parameters in no quadratic family are <code>E-SPECFN-009</code>.</p>
+<h2 id="beta-and-incomplete-gamma-functions"><a class="hanchor" href="#beta-and-incomplete-gamma-functions" aria-hidden="true" tabindex="-1">#</a>Beta and incomplete gamma functions</h2>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">s, z, a </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"s"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"z"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"a"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.beta(p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1/12; beta(a, 2) = 1/(a*(a + 1)); node otherwise</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.uppergamma(s, z)                     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Γ(s, z) = ∫_z^∞ t^{s−1}e^{−t} dt; LaTeX \Gamma(s, z)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.uppergamma(p.rational(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), z)      </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># sqrt(pi)*erfc(sqrt(z))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.lowergamma(p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), z)          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1 - (z + 1)*exp(-z)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.diff(ak.uppergamma(s, z), z)         </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># -z^(s - 1)*exp(-z); d/ds refused (E-DIFF-001)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.eval_expr(ak.uppergamma(s, z), {s: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2.5</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, z: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.5</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">})   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 0.9305194427… (Arb)</span></span></code></pre></div><p><code>Γ(s, z) + γ(s, z) = Γ(s)</code>; integer orders are elementary, half-integer orders
+reduce to <code>erfc</code>/<code>erf</code> by <code>Γ(s+1, z) = sΓ(s, z) + z^s e^{−z}</code>. Values come from
+Arb (<code>arb_hypgeom_gamma_upper/_lower</code>, <code>arb_gamma</code>·<code>arb_rgamma</code> for <code>B</code>), real
+only. The integrator uses them for Beta-family and incomplete-gamma definite
+integrals (see <em>Calculus</em>).</p>
+<h2 id="not-yet"><a class="hanchor" href="#not-yet" aria-hidden="true" tabindex="-1">#</a>Not yet</h2>
+<p>Taylor models for non-integer Bessel orders, <code>hurwitz_zeta</code>, <code>hyper</code> and
+the spherical Bessel functions (integer-order <code>J/Y/I/K</code>, Airy, <code>zeta</code>,
+<code>polylog</code>, <code>polygamma</code> and the orthogonal polynomials have them). For G11c:
+contiguous relations, the logarithmic cases of the <code>₂F₁</code> connection
+formulas, <code>U(a, b, z)</code> ↔ upper incomplete gamma (no <code>U</code> primitive yet),
+Meijer G.</p>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/noncommutative/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Noncommutative algebra</span></a><a class="pager-next" href="/docs/guide/codegen/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Code generation</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/specfun.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#exact-forms">Exact forms</a></li><li class="d2"><a href="#derivatives">Derivatives</a></li><li class="d2"><a href="#numerics">Numerics</a></li><li class="d2"><a href="#γ-ψ-polygamma-and-the-named-constants">Γ, ψ, polygamma and the named constants</a></li><li class="d2"><a href="#loggamma-gammasimp-and-asymptotics-at-infinity-f25">loggamma, gammasimp and asymptotics at infinity (F25)</a></li><li class="d2"><a href="#generalized-hypergeometric-ₚfq">Generalized hypergeometric ₚFq</a></li><li class="d2"><a href="#beta-and-incomplete-gamma-functions">Beta and incomplete gamma functions</a></li><li class="d2"><a href="#not-yet">Not yet</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/specfun.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

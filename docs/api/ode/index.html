@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ODE and DAE API · Alkahest Docs</title>
+<meta name="description" content="Symbolic ordinary and differential-algebraic equation systems.">
+<meta property="og:title" content="ODE and DAE API · Alkahest Docs">
+<meta property="og:description" content="Symbolic ordinary and differential-algebraic equation systems.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/" class="active" aria-current="page">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>ODE and DAE API</h1>
+    <div class="prose-block"><p>Symbolic ordinary and differential-algebraic equation systems.</p>
+</div>
+<h2 id="ode"><a class="hanchor" href="#ode" aria-hidden="true" tabindex="-1">#</a>ODE</h2>
+<section class="sym" id="ODE"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">ODE</span>(<span class="sig-p">state_vars</span>, <span class="sig-p">rhs</span>, <span class="sig-p">time_var</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ODE" aria-label="Link to ODE">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11816" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Symbolic system of first-order ordinary differential equations.</p>
+<p>Represents the system <code>d(state_vars)/dt = rhs</code> driven by <code>time_var</code>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">state_vars</code><span class="ptype">list[Expr]</span></dt><dd><p>Symbolic state variables (e.g. <code>[x, y]</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">rhs</code><span class="ptype">list[Expr]</span></dt><dd><p>Right-hand side expressions, one per state variable.</p>
+</dd></div><div class="param"><dt><code class="pname">time_var</code><span class="ptype">Expr</span></dt><dd><p>The independent time variable.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><p>p = alkahest.ExprPool()
+t, x = p.symbol(&quot;t&quot;), p.symbol(&quot;x&quot;)
+ode = alkahest.ODE([x], [-x], t)   # dx/dt = -x</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="ODE.order">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">order</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ODE.order" aria-label="Link to ODE.order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11961" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of state variables (the order of the system).</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="ODE.new">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">new</span>(<span class="sig-p">state_vars</span>, <span class="sig-p">rhs</span>, <span class="sig-p">time_var</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#ODE.new" aria-label="Link to ODE.new">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11856" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Build an explicit first-order system <code>d(state_vars)/dt = rhs</code>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">state_vars</code><span class="ptype">list[Expr]</span></dt><dd><p>Symbolic state variables.</p>
+</dd></div><div class="param"><dt><code class="pname">rhs</code><span class="ptype">list[Expr]</span></dt><dd><p>Right-hand sides, one per state variable and in the same order.</p>
+</dd></div><div class="param"><dt><code class="pname">time_var</code><span class="ptype">Expr</span></dt><dd><p>The independent variable.</p>
+</dd></div></dl>
+<p>All three arguments are <strong>positional</strong>; there are no keyword forms.
+<code>ODE(state_vars, rhs, time_var)</code> is accepted as a synonym.
+For an implicit or constrained system use <a href="/docs/api/ode/#DAE"><code>DAE</code></a> instead, and for
+a scalar higher-order equation use <a href="/docs/api/ode/#lower_to_first_order"><code>lower_to_first_order()</code></a>.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Harmonic oscillator as a first-order system: x' = v, v' = -x</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ode </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">ODE</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">.new([x, v], [v, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x], t)</span></span></code></pre></div></div>
+</div>
+<div class="member" id="ODE.from_equations">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">from_equations</span>(<span class="sig-p">equations</span>, <span class="sig-p">functions</span>, <span class="sig-p">time_var</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#ODE.from_equations" aria-label="Link to ODE.from_equations">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11906" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Build the first-order system equivalent to equations written with
+applied functions.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">equations</code><span class="ptype">list[Expr]</span></dt><dd><p>One expression per unknown, each read as <code>= 0</code>, written with
+<code>y(t)</code> and <code>diff(y(t), t)</code> (any order).  They must be affine in
+the highest derivative of each unknown, with an invertible
+coefficient matrix.</p>
+</dd></div><div class="param"><dt><code class="pname">functions</code><span class="ptype">list[Expr]</span></dt><dd><p>The unknowns, <code>[y(t), z(t), ...]</code> (undefined functions of <code>t</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">time_var</code><span class="ptype">Expr</span></dt><dd><p>The independent variable <code>t</code>.</p>
+</dd></div></dl>
+<p>The state of a function with highest derivative of order <code>m</code> is
+<code>[y, y_dot, ...]</code> (<code>m</code> symbols named like
+<a href="/docs/api/diff/#functions_to_symbols"><code>functions_to_symbols()</code></a> names them).  Refusals: <code>E-DIFF-005/007</code>
+for an unknown that is not an undefined function of <code>t</code>; <code>E-ODE-030</code>
+when the system does not reduce (wrong equation count, an unknown that
+is never differentiated, a nonlinear or singular leading part, i.e. a
+DAE).  A leading coefficient that needs <code>!= 0</code> is refused here; pass
+those equations to <code>dsolve_system()</code>, which reports the condition.</p>
+</div>
+</div>
+<div class="member" id="ODE.with_ic">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">with_ic</span>(<span class="sig-p">var</span>, <span class="sig-p">value</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ODE.with_ic" aria-label="Link to ODE.with_ic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11950" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ODE.is_autonomous">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_autonomous</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ODE.is_autonomous" aria-label="Link to ODE.is_autonomous">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11965" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ODE.state_vars">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">state_vars</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ODE.state_vars" aria-label="Link to ODE.state_vars">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11970" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ODE.rhs">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rhs</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ODE.rhs" aria-label="Link to ODE.rhs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11981" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ODE.derivatives">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">derivatives</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ODE.derivatives" aria-label="Link to ODE.derivatives">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11992" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="ODE.simplify_rhs">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">simplify_rhs</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ODE.simplify_rhs" aria-label="Link to ODE.simplify_rhs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12003" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<div class="prose-block"><p><code>experimental.dsolve_system(ode_or_equations, assumptions=None, *, functions=None, t=None, real_form=True)</code>
+   Closed-form solution of <code>y&#39; = A y + f(t)</code>. Accepts an <a href="/docs/api/ode/#ODE"><code>ODE</code></a> or a
+   list of equations in <code>y(t)</code> form (then <code>functions</code> and <code>t</code> are
+   required, and the result carries <code>&quot;functions&quot;: {y(t): expr}</code>). With
+   <code>real_form</code> the closed form of a real system is written with
+   <code>cos</code>/<code>sin</code>/<code>cosh</code>/<code>sinh</code> wherever the imaginary part is proved
+   zero (see <a href="/docs/api/simplify/#to_real_form"><code>to_real_form()</code></a>).</p>
+</div>
+<section class="sym" id="lower_to_first_order"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">lower_to_first_order</span>(<span class="sig-p">var</span>, <span class="sig-p">rhs</span>, <span class="sig-p">order</span>, <span class="sig-p">time_var</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#lower_to_first_order" aria-label="Link to lower_to_first_order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12049" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.lower_to_first_order(var, rhs, order, time_var)</code> — lower a scalar
+higher-order ODE to an equivalent first-order system.</p>
+<p>Takes the <em>pieces</em> of the equation, not an <a href="/docs/api/ode/#ODE"><code>ODE</code></a> object: the scalar
+unknown, the right-hand side, the order of the derivative on the left, and
+the independent variable.  All four are required and positional.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">var</code><span class="ptype">Expr</span></dt><dd><p>The scalar unknown, e.g. <code>x</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">rhs</code><span class="ptype">Expr</span></dt><dd><p>Right-hand side of <code>d^order(var)/dt^order = rhs</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">order</code><span class="ptype">int</span></dt><dd><p>Order of the equation (<code>2</code> for <code>x&#39;&#39;</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">time_var</code><span class="ptype">Expr</span></dt><dd><p>The independent variable.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">ODE</span></dt><dd><p>A first-order system whose state is <code>[var, var&#39;, …, var^(order-1)]</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><p>ode = alkahest.lower_to_first_order(x, -4 * x, 2, t)
+ode.order          # 2</p>
+</dd></div></dl></div></section>
+<h2 id="dae"><a class="hanchor" href="#dae" aria-hidden="true" tabindex="-1">#</a>DAE</h2>
+<section class="sym" id="DAE"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">DAE</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#DAE" aria-label="Link to DAE">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12198" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Symbolic differential-algebraic equation system.</p>
+<p>A DAE is a system of implicit equations mixing differential and algebraic
+constraints: <code>F(t, variables, derivatives) = 0</code>.</p>
+
+<div class="doc-sub">Parameters (via :meth:`DAE.new`)</div><p>equations : list[Expr]
+    Implicit equations (each equals zero).
+variables : list[Expr]
+    Algebraic and state variables.
+derivatives : list[Expr]
+    Derivative expressions corresponding to <code>variables</code>.
+time_var : Expr
+    The independent time variable.</p>
+<p>Use <a href="/docs/api/ode/#pantelides"><code>pantelides()</code></a> to reduce the differential index before simulation.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">n_equations</code><span class="ptype">int</span></dt></div><div class="param"><dt><code class="pname">n_variables</code><span class="ptype">int</span></dt></div><div class="param"><dt><code class="pname">time_var</code><span class="ptype">Expr</span></dt></div><div class="param"><dt><code class="pname">index</code><span class="ptype">int | None</span></dt><dd><p>Differentiation index, set by <a href="/docs/api/ode/#pantelides"><code>pantelides()</code></a> on the DAE it
+returns; <code>None</code> on a DAE that has not been index-reduced.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><p>p = alkahest.ExprPool()
+t, x, dx = p.symbol(&quot;t&quot;), p.symbol(&quot;x&quot;), p.symbol(&quot;dx/dt&quot;)
+dae = alkahest.DAE.new([dx - x], [x], [dx], t)   # x&#39; = x
+dae.equations()      # [-x + dx/dt]</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="DAE.n_equations">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_equations</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DAE.n_equations" aria-label="Link to DAE.n_equations">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12277" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of equations in the system.</p>
+</div>
+</div>
+<div class="member" id="DAE.n_variables">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_variables</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DAE.n_variables" aria-label="Link to DAE.n_variables">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12283" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of dependent variables in the system.</p>
+</div>
+</div>
+<div class="member" id="DAE.time_var">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">time_var</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DAE.time_var" aria-label="Link to DAE.time_var">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12289" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The independent (time) variable.</p>
+</div>
+</div>
+<div class="member" id="DAE.index">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">index</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DAE.index" aria-label="Link to DAE.index">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12303" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Differentiation index, or <code>None</code> if it has not been computed.</p>
+<p><a href="/docs/api/ode/#pantelides"><code>pantelides()</code></a> sets it on the DAE it returns: <code>0</code> for an explicit
+ODE, <code>1</code> for a semi-explicit index-1 system, <code>3</code> for the Cartesian
+pendulum — the number of differentiations needed to determine every
+derivative, including one for the algebraic variables.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="DAE.new">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">new</span>(<span class="sig-p">equations</span>, <span class="sig-p">variables</span>, <span class="sig-p">derivatives</span>, <span class="sig-p">time_var</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#DAE.new" aria-label="Link to DAE.new">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12243" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Build a DAE from implicit equations.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">equations</code><span class="ptype">list[Expr]</span></dt><dd><p>Implicit equations, each meaning <code>g = 0</code>.  Write <code>x&#39; = f</code> as
+<code>dx - f</code>, using a <em>separate symbol</em> for the derivative.</p>
+</dd></div><div class="param"><dt><code class="pname">variables</code><span class="ptype">list[Expr]</span></dt><dd><p>Dependent variables (state and algebraic).</p>
+</dd></div><div class="param"><dt><code class="pname">derivatives</code><span class="ptype">list[Expr]</span></dt><dd><p>Symbol standing for the time derivative of <code>variables[i]</code>, e.g.
+<code>pool.symbol(&quot;dx/dt&quot;)</code>.  Alkahest does not parse the name; the
+positional pairing is what makes it a derivative.  It may be
+<em>shorter</em> than <code>variables</code>: the trailing variables are then
+algebraic (their derivative, if ever needed, is named
+<code>d{name}/dt</code>).  A variable listed as another&#39;s derivative is a jet
+of that unknown, not a new one.</p>
+</dd></div><div class="param"><dt><code class="pname">time_var</code><span class="ptype">Expr</span></dt><dd><p>The independent variable.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">DaeError</span></dt><dd><p><code>E-DAE-004</code> when <code>derivatives</code> is longer than <code>variables</code>, an
+entry is not a symbol, a symbol is repeated, or <code>time_var</code> is
+listed among the unknowns.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><h3 id="x--u-y--w-u---lamx-w---lamy---1-x2--y2--1"><a class="hanchor" href="#x--u-y--w-u---lamx-w---lamy---1-x2--y2--1" aria-hidden="true" tabindex="-1">#</a>x&#39; = u, y&#39; = w, u&#39; = -lam<em>x, w&#39; = -lam</em>y - 1, x<strong>2 + y</strong>2 = 1</h3>
+<p>dae = alkahest.DAE.new(
+    [dx - u, dy - w, du + lam * x, dw + lam * y + one, x<strong>2 + y</strong>2 - one],
+    [x, y, u, w, lam],
+    [dx, dy, du, dw],
+    t,
+)</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="DAE.equations">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">equations</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#DAE.equations" aria-label="Link to DAE.equations">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12311" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The implicit equations, each meaning <code>g = 0</code>.</p>
+<p>After <a href="/docs/api/ode/#pantelides"><code>pantelides()</code></a> or <a href="/docs/api/ode/#rosenfeld_groebner"><code>rosenfeld_groebner()</code></a> this is how you
+see which equations were added by differentiation.</p>
+</div>
+</div>
+<div class="member" id="DAE.variables">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">variables</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#DAE.variables" aria-label="Link to DAE.variables">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12323" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The dependent variables, parallel to <code>derivatives()</code>.</p>
+</div>
+</div>
+<div class="member" id="DAE.derivatives">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">derivatives</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#DAE.derivatives" aria-label="Link to DAE.derivatives">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12338" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The derivative symbols: <code>derivatives()[i]</code> is <code>d(variables()[i])/dt</code>.</p>
+<p>Index reduction appends higher jets here (<code>d2x/dt2</code>, …), so this is
+how the extra variables of a prolonged system get names.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="pantelides"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">pantelides</span>(<span class="sig-p">dae</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#pantelides" aria-label="Link to pantelides">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12390" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.pantelides(dae)</code> — structural index reduction of a DAE.</p>
+<p>Matches equations to unknowns on their <strong>highest</strong> derivatives (Pryce&#39;s
+Σ-method, equivalent to Pantelides&#39; algorithm), differentiates each
+equation as often as that matching requires, and returns the <strong>reduced</strong>
+<a href="/docs/api/ode/#DAE"><code>DAE</code></a> — the original equations followed by their derivatives — not a
+report object.  Read them with <a href="/docs/api/ode/#DAE.equations"><code>DAE.equations()</code></a> and the new jets with
+<a href="/docs/api/ode/#DAE.derivatives"><code>DAE.derivatives()</code></a>.</p>
+<p><a href="/docs/api/ode/#DAE.index"><code>DAE.index</code></a> on the result is the differentiation index: <code>0</code> for an
+explicit ODE, <code>1</code> for a semi-explicit index-1 system, <code>2</code> for
+<code>x&#39; = y, x = sin t</code>, <code>3</code> for the Cartesian pendulum.</p>
+<p>Before returning, the Jacobian of the reduced system with respect to the
+highest derivatives is checked to be non-singular at generic sample points
+(exact rational arithmetic); a structural answer the coefficients
+contradict is refused, never returned.</p>
+
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">DaeError</span></dt><dd><p>(a <code>ValueError</code> subclass) <code>E-DAE-002</code> when an equation would need
+more than 10 differentiations — try <a href="/docs/api/ode/#dae_index_reduce"><code>dae_index_reduce()</code></a>, which
+falls back to <a href="/docs/api/ode/#rosenfeld_groebner"><code>rosenfeld_groebner()</code></a>; <code>E-DAE-003</code> when there is
+not one equation per unknown function or no matching exists;
+<code>E-DAE-004</code> for a malformed DAE; <code>E-DAE-005</code> when the reduced
+Jacobian is singular.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><p>reduced = alkahest.pantelides(dae)
+reduced.index            # 3 for the Cartesian pendulum
+reduced.equations()      # original equations plus the differentiated ones</p>
+</dd></div></dl></div></section>
+<h2 id="sensitivity-analysis"><a class="hanchor" href="#sensitivity-analysis" aria-hidden="true" tabindex="-1">#</a>Sensitivity analysis</h2>
+<section class="sym" id="sensitivity_system"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">sensitivity_system</span>(<span class="sig-p">ode</span>, <span class="sig-p">params</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#sensitivity_system" aria-label="Link to sensitivity_system">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12117" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.sensitivity_system(ode, params)</code> — build the forward sensitivity ODE.</p>
+</div></section>
+<section class="sym" id="adjoint_system"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">adjoint_system</span>(<span class="sig-p">ode</span>, <span class="sig-p">objective_grad</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#adjoint_system" aria-label="Link to adjoint_system">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12142" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.adjoint_system(ode, objective_grad)</code> — build the adjoint ODE.</p>
+</div></section>
+<section class="sym" id="SensitivitySystem"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">SensitivitySystem</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#SensitivitySystem" aria-label="Link to SensitivitySystem">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12080" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>The extended ODE with sensitivity equations attached.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="SensitivitySystem.extended_ode">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">extended_ode</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#SensitivitySystem.extended_ode" aria-label="Link to SensitivitySystem.extended_ode">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12089" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="SensitivitySystem.original_dim">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">original_dim</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#SensitivitySystem.original_dim" aria-label="Link to SensitivitySystem.original_dim">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12097" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="SensitivitySystem.n_params">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_params</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#SensitivitySystem.n_params" aria-label="Link to SensitivitySystem.n_params">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12102" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<h2 id="acausal-modeling"><a class="hanchor" href="#acausal-modeling" aria-hidden="true" tabindex="-1">#</a>Acausal modeling</h2>
+<section class="sym" id="AcausalSystem"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">AcausalSystem</span>(<span class="sig-p">pool</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#AcausalSystem" aria-label="Link to AcausalSystem">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12668" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Acausal component-based modelling system.</p>
+<p>An <a href="/docs/api/ode/#AcausalSystem"><code>AcausalSystem</code></a> aggregates components connected through
+<a href="/docs/api/ode/#Port"><code>Port</code></a> objects (potential/flow pairs).  Add components with
+<code>add_component()</code>, wire ports together with <code>connect()</code>, and
+call <code>flatten()</code> to convert the component network into an equivalent
+<a href="/docs/api/ode/#DAE"><code>DAE</code></a> suitable for simulation or index reduction.</p>
+<p>Example (RC circuit):</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">t </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"t"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">src </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.voltage_source(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"V1"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"Vs"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">res </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.resistor(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"R1"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"R"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cap </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.capacitor(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"C1"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"C"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">sys </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.AcausalSystem(p)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">sys.add_component(src[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"component"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">sys.add_component(res[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"component"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">sys.add_component(cap[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"component"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">sys.connect(src[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"component"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">].port(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"V1.p"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), res[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"component"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">].port(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"R1.p"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">sys.connect(res[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"component"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">].port(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"R1.n"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), cap[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"component"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">].port(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"C1.p"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">sys.connect(cap[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"component"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">].port(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"C1.n"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), src[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"component"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">].port(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"V1.n"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">dae </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> sys.flatten(t)</span></span></code></pre></div><div class="members"><div class="members-title">Methods</div><div class="member" id="AcausalSystem.add_component">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">add_component</span>(<span class="sig-p">component</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#AcausalSystem.add_component" aria-label="Link to AcausalSystem.add_component">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12686" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Add a component (e.g. from <a href="/docs/api/ode/#resistor"><code>resistor()</code></a>, <a href="/docs/api/ode/#capacitor"><code>capacitor()</code></a>,
+<a href="/docs/api/ode/#voltage_source"><code>voltage_source()</code></a>) to the system.</p>
+</div>
+</div>
+<div class="member" id="AcausalSystem.connect">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">connect</span>(<span class="sig-p">port_a</span>, <span class="sig-p">port_b</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#AcausalSystem.connect" aria-label="Link to AcausalSystem.connect">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12694" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Connect two ports: equates their potentials and balances their flows
+(<code>a.potential == b.potential</code>, <code>a.flow + b.flow == 0</code>).</p>
+</div>
+</div>
+<div class="member" id="AcausalSystem.flatten">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">flatten</span>(<span class="sig-p">time_var</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#AcausalSystem.flatten" aria-label="Link to AcausalSystem.flatten">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12701" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Flatten all component and connection equations into a <a href="/docs/api/ode/#DAE"><code>DAE</code></a>.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="Component"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">Component</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Component" aria-label="Link to Component">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12586" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A physical component (resistor, capacitor, voltage source, …) with named
+<a href="/docs/api/ode/#Port"><code>Port</code></a> connectors and internal constitutive equations.</p>
+<p>Construct components via <a href="/docs/api/ode/#resistor"><code>resistor()</code></a>, <a href="/docs/api/ode/#capacitor"><code>capacitor()</code></a>, or
+<a href="/docs/api/ode/#voltage_source"><code>voltage_source()</code></a>, then register them on an <a href="/docs/api/ode/#AcausalSystem"><code>AcausalSystem</code></a>
+with <a href="/docs/api/ode/#AcausalSystem.add_component"><code>AcausalSystem.add_component()</code></a> and wire them together with
+<a href="/docs/api/ode/#AcausalSystem.connect"><code>AcausalSystem.connect()</code></a>.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="Component.name">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">name</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Component.name" aria-label="Link to Component.name">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12594" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Component.n_equations">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_equations</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Component.n_equations" aria-label="Link to Component.n_equations">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12600" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of constitutive equations contributed by this component.</p>
+</div>
+</div>
+<div class="member" id="Component.n_ports">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_ports</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Component.n_ports" aria-label="Link to Component.n_ports">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12606" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of external connection ports.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="Component.ports">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ports</span>()<span class="sig-ret"> → list[Port]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Component.ports" aria-label="Link to Component.ports">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12611" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>All ports, in declaration order.</p>
+</div>
+</div>
+<div class="member" id="Component.port">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">port</span>(<span class="sig-p">name</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Component.port" aria-label="Link to Component.port">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12623" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Look up a port by its full name (e.g. <code>&quot;R1.p&quot;</code>), or <code>None</code> if absent.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="Port"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">Port</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Port" aria-label="Link to Port">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12548" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A connection port on a component (e.g. positive/negative terminals
+of a resistor), exposing <code>potential</code> and <code>flow</code> <a href="/docs/api/core/#Expr"><code>Expr</code></a>
+attributes.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="Port.potential">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">potential</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Port.potential" aria-label="Link to Port.potential">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12556" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Port.flow">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">flow</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Port.flow" aria-label="Link to Port.flow">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12564" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Port.name">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">name</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Port.name" aria-label="Link to Port.name">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12572" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="resistor"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">resistor</span>(<span class="sig-p">name</span>, <span class="sig-p">resistance</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#resistor" aria-label="Link to resistor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12737" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.resistor(name, resistance)</code> — create a resistor component.</p>
+<p>Returns a dict <code>{&quot;name&quot;, &quot;n_equations&quot;, &quot;n_ports&quot;, &quot;component&quot;}</code>; the
+<code>&quot;component&quot;</code> entry is a <a href="/docs/api/ode/#Component"><code>Component</code></a> usable with
+<code>AcausalSystem.add_component</code> and <code>.port(name)</code>.</p>
+</div></section>
+<section class="sym" id="capacitor"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">capacitor</span>(<span class="sig-p">name</span>, <span class="sig-p">capacitance</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#capacitor" aria-label="Link to capacitor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12753" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.capacitor(name, capacitance)</code> — create an ideal capacitor
+component (<code>C * dv/dt = i</code>).</p>
+<p>Returns a dict <code>{&quot;name&quot;, &quot;n_equations&quot;, &quot;n_ports&quot;, &quot;component&quot;}</code>; the
+<code>&quot;component&quot;</code> entry is a <a href="/docs/api/ode/#Component"><code>Component</code></a> usable with
+<code>AcausalSystem.add_component</code> and <code>.port(name)</code>.</p>
+</div></section>
+<section class="sym" id="voltage_source"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">voltage_source</span>(<span class="sig-p">name</span>, <span class="sig-p">voltage</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#voltage_source" aria-label="Link to voltage_source">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12769" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.voltage_source(name, voltage)</code> — create an ideal voltage
+source component (<code>v_p - v_n = V</code>).</p>
+<p>Returns a dict <code>{&quot;name&quot;, &quot;n_equations&quot;, &quot;n_ports&quot;, &quot;component&quot;}</code>; the
+<code>&quot;component&quot;</code> entry is a <a href="/docs/api/ode/#Component"><code>Component</code></a> usable with
+<code>AcausalSystem.add_component</code> and <code>.port(name)</code>.</p>
+</div></section>
+<h2 id="hybrid-systems"><a class="hanchor" href="#hybrid-systems" aria-hidden="true" tabindex="-1">#</a>Hybrid systems</h2>
+<section class="sym" id="HybridODE"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">HybridODE</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#HybridODE" aria-label="Link to HybridODE">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12494" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Ordinary differential equation system with discrete events.</p>
+<p>A <a href="/docs/api/ode/#HybridODE"><code>HybridODE</code></a> wraps a continuous <a href="/docs/api/ode/#ODE"><code>ODE</code></a> and a list of
+<a href="/docs/api/ode/#Event"><code>Event</code></a> objects.  Each event specifies a guard condition and a
+reset map that is applied when the guard crosses zero.</p>
+<p>Construction:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">hybrid </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.HybridODE.new(ode)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">hybrid </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> hybrid.add_event(event)</span></span></code></pre></div>
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">n_events</code><span class="ptype">int</span></dt><dd><p>Number of discrete events attached to this system.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="HybridODE.n_events">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_events</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#HybridODE.n_events" aria-label="Link to HybridODE.n_events">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12521" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Number of registered discrete events.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="HybridODE.new">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">new</span>(<span class="sig-p">ode</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#HybridODE.new" aria-label="Link to HybridODE.new">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12502" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="HybridODE.add_event">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">add_event</span>(<span class="sig-p">event</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#HybridODE.add_event" aria-label="Link to HybridODE.add_event">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12510" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="HybridODE.guards">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">guards</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#HybridODE.guards" aria-label="Link to HybridODE.guards">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12525" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="Event"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">Event</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Event" aria-label="Link to Event">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12421" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A hybrid system event.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">condition</code></dt><dd><p>Expression; event fires when this crosses zero.</p>
+</dd></div><div class="param"><dt><code class="pname">reset</code></dt><dd><p>Dict mapping state variables to their post-event values.</p>
+</dd></div></dl><div class="members"><div class="members-title">Methods</div><div class="member" id="Event.new">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">new</span>(<span class="sig-p">name</span>, <span class="sig-p">condition</span>, <span class="sig-p">reset_map</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#Event.new" aria-label="Link to Event.new">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12448" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Event.rising">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rising</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Event.rising" aria-label="Link to Event.rising">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12462" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="Event.falling">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">falling</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Event.falling" aria-label="Link to Event.falling">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L12466" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<h2 id="differential-algebra"><a class="hanchor" href="#differential-algebra" aria-hidden="true" tabindex="-1">#</a>Differential algebra</h2>
+<section class="sym" id="dae_index_reduce"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">dae_index_reduce</span>(<span class="sig-p">dae</span>, <span class="sig-p">order</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#dae_index_reduce" aria-label="Link to dae_index_reduce">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19185" rel="noopener">source</a></div>
+</div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
+<section class="sym" id="DaeIndexReduction"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">DaeIndexReduction</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#DaeIndexReduction" aria-label="Link to DaeIndexReduction">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L18783" rel="noopener">source</a></div>
+</div><div class="sym-body"><p class="muted nodoc">No docstring.</p><div class="members"><div class="members-title">Properties</div><div class="member" id="DaeIndexReduction.used_pantelides">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">used_pantelides</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DaeIndexReduction.used_pantelides" aria-label="Link to DaeIndexReduction.used_pantelides">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L18794" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="DaeIndexReduction.used_rosenfeld_groebner">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">used_rosenfeld_groebner</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DaeIndexReduction.used_rosenfeld_groebner" aria-label="Link to DaeIndexReduction.used_rosenfeld_groebner">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L18799" rel="noopener">source</a></div></div>
+  
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="DaeIndexReduction.dae">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dae</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#DaeIndexReduction.dae" aria-label="Link to DaeIndexReduction.dae">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L18804" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Pantelides-reduced DAE if Pantelides succeeded; else Rosenfeld working DAE.</p>
+</div>
+</div>
+<div class="member" id="DaeIndexReduction.rosenfeld_groebner_result">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rosenfeld_groebner_result</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#DaeIndexReduction.rosenfeld_groebner_result" aria-label="Link to DaeIndexReduction.rosenfeld_groebner_result">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L18815" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="rosenfeld_groebner"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">rosenfeld_groebner</span>(
+    <span class="sig-p">dae</span>,
+    <span class="sig-p">order</span><span class="sig-def">=None</span>,
+    <span class="sig-p">max_prolong_rounds</span><span class="sig-def">=None</span>,
+    <span class="sig-p">params</span><span class="sig-def">=None</span>,
+    <span class="sig-p">eliminate</span><span class="sig-def">=None</span>,
+    <span class="sig-p">minimal</span><span class="sig-def">=False</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#rosenfeld_groebner" aria-label="Link to rosenfeld_groebner">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L19042" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.rosenfeld_groebner(dae, order=None, max_prolong_rounds=None)</code> —
+Rosenfeld–Gröbner-style differential elimination.</p>
+<p>Prolongs the system (differentiates each equation, introducing higher jets
+as new indeterminates) and computes a Gröbner basis after each round, until
+differentiating adds nothing new to the ideal or the round budget runs out.
+The basis is the set of <em>algebraic consequences</em> of the differential
+system — the input–output relations elimination is after.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">dae</code><span class="ptype">DAE</span></dt><dd><p>The system, polynomial in its variables and derivative symbols.</p>
+</dd></div><div class="param"><dt><code class="pname">order</code><span class="ptype">str, optional</span></dt><dd><p>Monomial order — <code>&quot;grevlex&quot;</code> (default), <code>&quot;grlex&quot;</code> or <code>&quot;lex&quot;</code>.
+Use <code>&quot;lex&quot;</code> when you want elimination-ordered generators.</p>
+</dd></div><div class="param"><dt><code class="pname">max_prolong_rounds</code><span class="ptype">int, optional</span></dt><dd><p>Prolongation budget (default 8).  Nonlinear jets often do not saturate
+in finitely many algebraic steps, so hitting the budget is normal and
+sets <a href="/docs/api/ode/#RosenfeldGroebnerResult.truncated"><code>RosenfeldGroebnerResult.truncated</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">params</code><span class="ptype">list[Expr], optional</span></dt><dd><p>Symbols to put in the <strong>coefficient field</strong> <code>Q(params)</code> rather than in
+the ring (M9).  Without this every free symbol is a ring variable, so a
+model parameter enlarges the monomial order, the pair schedule and the
+staircase — which is the difference between eliminating states from
+<code>Q[states, jets, params]</code> and from <code>Q(params)[states, jets]</code>.  With
+<code>params</code> the return type is
+<code>ParametricRosenfeldGroebnerResult</code> and the basis is
+<code>ParametricGroebnerBasis</code>; without it nothing changes.</p>
+<p>The parameters must not be DAE variables, derivatives or the time
+variable.</p>
+</dd></div><div class="param"><dt><code class="pname">eliminate</code><span class="ptype">list[Expr], optional</span></dt><dd><p>Variables the caller intends to eliminate — typically the unobserved
+states.  Their whole jet chain goes with them: naming <code>x</code> also names
+<code>dx/dt</code>, <code>d2x/dt2</code>, … as prolongation introduces them.  Supplying
+this makes <code>ParametricRosenfeldGroebnerResult.minimal_prolongation_rounds</code>
+available and enables the over-prolongation warning.  Requires
+<code>params</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">minimal</code><span class="ptype">bool, optional</span></dt><dd><p>Stop at the first prolongation round whose elimination ideal with
+respect to <code>eliminate</code> is non-empty, instead of prolonging to the
+budget.  One prolongation too many is expensive out of all proportion —
+on SIR it is 0.002 s and one 4-term relation against 20.9 s and thirteen
+generators of up to 233 terms — and the over-supplied result is correct,
+so nothing else signals it.  Requires <code>eliminate</code>.</p>
+<p>Not a minimality guarantee: see
+<code>ParametricRosenfeldGroebnerResult.minimal_prolongation_rounds</code>
+for the scope, in particular for multi-output models.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">RosenfeldGroebnerResult or ParametricRosenfeldGroebnerResult</span></dt><dd><p>Read the relations with <code>result.final_basis().to_exprs()</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Warns</div><dl class="params"><div class="param"><dt><span class="ptype">UserWarning</span></dt><dd><p>When <code>eliminate</code> is given, the elimination ideal was already non-empty
+at an earlier round, and <code>minimal</code> was not set.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><p>t, x, dx = p.symbol(&quot;t&quot;), p.symbol(&quot;x&quot;), p.symbol(&quot;dx/dt&quot;)
+dae = alkahest.DAE.new([dx - x], [x], [dx], t)
+r = alkahest.rosenfeld_groebner(dae, max_prolong_rounds=1)
+r.consistent                      # True
+r.final_basis().to_exprs()        # the eliminated relations, as Expr</p>
+<p>dae = alkahest.DAE.new([dx - a*x], [x], [dx], t)
+r = alkahest.rosenfeld_groebner(dae, params=[a], max_prolong_rounds=1)
+r.final_basis().conditions()</p>
+</dd></div></dl></div></section>
+<section class="sym" id="RosenfeldGroebnerResult"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">RosenfeldGroebnerResult</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#RosenfeldGroebnerResult" aria-label="Link to RosenfeldGroebnerResult">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L18706" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>V2-13 — result of Rosenfeld–Gröbner-style differential elimination.</p>
+<p>Returned by <a href="/docs/api/ode/#rosenfeld_groebner"><code>rosenfeld_groebner()</code></a>.  The eliminated relations are in
+<code>final_basis()</code>; read them with <code>result.final_basis().to_exprs()</code>.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">consistent</code><span class="ptype">bool</span></dt><dd><p><code>False</code> iff the unit ideal was reached — the system has no common
+jet solution over ℚ, i.e. the equations are contradictory.</p>
+</dd></div><div class="param"><dt><code class="pname">truncated</code><span class="ptype">bool</span></dt><dd><p><code>True</code> if prolongation stopped at <code>max_prolong_rounds</code> rather than
+because the differential chain saturated.  A truncated basis is a
+<em>sound</em> set of consequences of the system but need not be complete, so
+&quot;not in the basis&quot; does not mean &quot;not a consequence&quot;.</p>
+</dd></div><div class="param"><dt><code class="pname">prolongation_rounds</code><span class="ptype">int</span></dt><dd><p>Number of prolongation rounds that contributed new relations.</p>
+</dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="RosenfeldGroebnerResult.consistent">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">consistent</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#RosenfeldGroebnerResult.consistent" aria-label="Link to RosenfeldGroebnerResult.consistent">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L18708" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="RosenfeldGroebnerResult.truncated">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">truncated</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#RosenfeldGroebnerResult.truncated" aria-label="Link to RosenfeldGroebnerResult.truncated">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L18710" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="RosenfeldGroebnerResult.prolongation_rounds">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">prolongation_rounds</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#RosenfeldGroebnerResult.prolongation_rounds" aria-label="Link to RosenfeldGroebnerResult.prolongation_rounds">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L18712" rel="noopener">source</a></div></div>
+  
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="RosenfeldGroebnerResult.working_dae">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">working_dae</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#RosenfeldGroebnerResult.working_dae" aria-label="Link to RosenfeldGroebnerResult.working_dae">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L18725" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The prolonged <a href="/docs/api/ode/#DAE"><code>DAE</code></a>: the input system plus the derivative jets
+introduced while differentiating it.</p>
+</div>
+</div>
+<div class="member" id="RosenfeldGroebnerResult.variables">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">variables</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#RosenfeldGroebnerResult.variables" aria-label="Link to RosenfeldGroebnerResult.variables">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L18737" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The jet variables indexing the basis, in exponent-slot order.</p>
+<p>These are the symbols the elimination actually ran over — the time
+variable, the declared states and derivatives, and every higher jet
+(<code>d2x/dt2</code>, …) introduced by prolongation.</p>
+</div>
+</div>
+<div class="member" id="RosenfeldGroebnerResult.final_basis">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">final_basis</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#RosenfeldGroebnerResult.final_basis" aria-label="Link to RosenfeldGroebnerResult.final_basis">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L18759" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The saturated Gröbner basis, or <code>None</code> when the system is
+inconsistent.</p>
+<p>The returned <a href="/docs/api/solve/#GroebnerBasis"><code>GroebnerBasis</code></a> knows its variable ordering, so
+<code>final_basis().to_exprs()</code> gives the eliminated relations as
+<a href="/docs/api/core/#Expr"><code>Expr</code></a>.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.rosenfeld_groebner(dae, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">max_prolong_rounds</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> eq </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> r.final_basis().to_exprs():</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(eq, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"= 0"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div></div>
+</div></div></div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/matrix/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Matrix</span></a><a class="pager-next" href="/docs/api/solve/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Solver</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/ode.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#ode">ODE</a></li><li class="d3"><a href="#lower_to_first_order">lower_to_first_order</a></li><li class="d2"><a href="#dae">DAE</a></li><li class="d3"><a href="#pantelides">pantelides</a></li><li class="d2"><a href="#sensitivity-analysis">Sensitivity analysis</a></li><li class="d3"><a href="#sensitivity_system">sensitivity_system</a></li><li class="d3"><a href="#adjoint_system">adjoint_system</a></li><li class="d3"><a href="#SensitivitySystem">SensitivitySystem</a></li><li class="d2"><a href="#acausal-modeling">Acausal modeling</a></li><li class="d3"><a href="#AcausalSystem">AcausalSystem</a></li><li class="d3"><a href="#Component">Component</a></li><li class="d3"><a href="#Port">Port</a></li><li class="d3"><a href="#resistor">resistor</a></li><li class="d3"><a href="#capacitor">capacitor</a></li><li class="d3"><a href="#voltage_source">voltage_source</a></li><li class="d2"><a href="#hybrid-systems">Hybrid systems</a></li><li class="d3"><a href="#HybridODE">HybridODE</a></li><li class="d3"><a href="#Event">Event</a></li><li class="d2"><a href="#differential-algebra">Differential algebra</a></li><li class="d3"><a href="#dae_index_reduce">dae_index_reduce</a></li><li class="d3"><a href="#DaeIndexReduction">DaeIndexReduction</a></li><li class="d3"><a href="#rosenfeld_groebner">rosenfeld_groebner</a></li><li class="d3"><a href="#RosenfeldGroebnerResult">RosenfeldGroebnerResult</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/ode.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

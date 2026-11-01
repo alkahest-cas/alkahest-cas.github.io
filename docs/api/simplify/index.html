@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simplification API · Alkahest Docs</title>
+<meta name="description" content="Alkahest provides two simplification engines: a fast rule-based engine and an e-graph (equality saturation) engine. Domain-specific rule sets are also…">
+<meta property="og:title" content="Simplification API · Alkahest Docs">
+<meta property="og:description" content="Alkahest provides two simplification engines: a fast rule-based engine and an e-graph (equality saturation) engine. Domain-specific rule sets are also…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/" class="active" aria-current="page">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>Simplification API</h1>
+    <div class="prose-block"><p>Alkahest provides two simplification engines: a fast rule-based engine and an
+e-graph (equality saturation) engine. Domain-specific rule sets are also available.</p>
+</div>
+<h2 id="rule-based-simplification"><a class="hanchor" href="#rule-based-simplification" aria-hidden="true" tabindex="-1">#</a>Rule-based simplification</h2>
+<section class="sym" id="simplify"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify</span>(<span class="sig-p">expr</span>, <span class="sig-p">assumptions</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify" aria-label="Link to simplify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1461" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Apply the algebraic rewrite-rule simplifier.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div><div class="param"><dt><code class="pname">assumptions</code><span class="ptype">Assumptions, optional</span></dt><dd><p>Explicit assumption context to authorize condition-gated rewrites
+(e.g. <code>sqrt(x**2) -&gt; x</code> under <code>x &gt; 0</code>). When omitted, falls back
+to the active <code>alkahest.context(assumptions=...)</code> (see
+<a href="/docs/api/core/#active_assumptions"><code>_context.active_assumptions()</code></a>), if any. Static
+<code>Domain.Positive</code> / <code>Domain.NonZero</code> symbol domains in <em>expr</em>
+always authorize their rewrites regardless of this argument.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">DerivedResult</span></dt></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool(); x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> simplify(x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">).value   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># x</span></span></code></pre></div></div></section>
+<section class="sym" id="simplify_with"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_with</span>(<span class="sig-p">expr</span>, <span class="sig-p">rules</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_with" aria-label="Link to simplify_with">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10189" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.simplify_with(expr, rules)</code> — simplify using a custom rule list.</p>
+<p><code>rules</code> is a list of <code>RewriteRule</code> objects (e.g. from <code>make_rule</code>).
+The default arithmetic rules are NOT included; combine with
+<code>alkahest.default_rules()</code> if needed.</p>
+</div></section>
+<section class="sym" id="simplify_trig"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_trig</span>(<span class="sig-p">expr</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_trig" aria-label="Link to simplify_trig">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1512" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Trigonometric identity simplifier.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">DerivedResult</span></dt></div></dl></div></section>
+<section class="sym" id="simplify_log_exp"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_log_exp</span>(<span class="sig-p">expr</span>, <span class="sig-p">assumptions</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_log_exp" aria-label="Link to simplify_log_exp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1559" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Logarithm / exponential simplifier.</p>
+<p>Branch-cut identities such as <code>exp(log(x)) → x</code> and
+<code>log(x) + log(y) → log(x*y)</code> require positivity facts from
+<code>assumptions</code> (an <a href="/docs/api/core/#Assumptions"><code>Assumptions</code></a> context) or symbols declared
+with <code>Domain.Positive</code>. Safe identities <code>log(exp(x)) → x</code> and
+<code>exp(x)*exp(y) → exp(x+y)</code> always apply.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div><div class="param"><dt><code class="pname">assumptions</code><span class="ptype">Assumptions, optional</span></dt><dd><p>When omitted, falls back to the active
+<code>alkahest.context(assumptions=...)</code>, if any (see
+<a href="/docs/api/core/#active_assumptions"><code>_context.active_assumptions()</code></a>).</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">DerivedResult</span></dt></div></dl></div></section>
+<section class="sym" id="simplify_expanded"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_expanded</span>(<span class="sig-p">expr</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_expanded" aria-label="Link to simplify_expanded">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1588" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Expand-then-simplify.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">DerivedResult</span></dt></div></dl>
+<div class="doc-sub">Warns</div><dl class="params"><div class="param"><dt><span class="ptype">UserWarning</span></dt><dd><p>When a power of a sum was left unexpanded because its expansion is too
+large (the derivation then carries an <code>expand_pow_limit_reached</code>
+step naming it). Powers whose <em>expansion</em> is small are always expanded:
+<code>simplify_expanded((x+1)**13)</code> is the 14-term polynomial.</p>
+</dd></div></dl></div></section>
+<h2 id="constant-folding-special-values-and-zero-recognition"><a class="hanchor" href="#constant-folding-special-values-and-zero-recognition" aria-hidden="true" tabindex="-1">#</a>Constant folding, special values and zero recognition</h2>
+<div class="prose-block"><p>Every simplifier entry point (<a href="/docs/api/simplify/#simplify"><code>simplify()</code></a>, <a href="/docs/api/simplify/#simplify_trig"><code>simplify_trig()</code></a>,
+<a href="/docs/api/simplify/#simplify_egraph"><code>simplify_egraph()</code></a>, <a href="/docs/api/simplify/#simplify_log_exp"><code>simplify_log_exp()</code></a>,
+<a href="/docs/api/simplify/#simplify_trig_normal_form"><code>simplify_trig_normal_form()</code></a>, <a href="/docs/api/simplify/#simplify_expanded"><code>simplify_expanded()</code></a>) folds exact
+special values — <code>sin</code>/<code>cos</code>/<code>tan</code> at rational multiples of <code>pi</code> with
+denominator 1, 2, 3, 4 or 6, <code>sin(n*pi) = 0</code> and <code>cos(n*pi) = (-1)**n</code> for
+an <code>Integer</code>-domain <code>n</code>, <code>exp(I*pi*q)</code>, inverse trig at the standard
+values, <code>gamma</code> at half-integers, <code>erf(0)</code>, <code>dilog(0, 1, -1, 1/2)</code> —
+radical powers (<code>sqrt(2)**2 = 2</code>, <code>sqrt(8) = 2*sqrt(2)</code>, <code>sqrt(x)**2 = x</code>
+for a provably non-negative <code>x</code>), <code>I**2 = -1</code> inside products,
+cancelling exponentials (<code>exp(-x)*exp(x) = 1</code>), and replaces any sum that is
+identically zero by <code>0</code> (see <a href="/docs/api/simplify/#is_zero"><code>is_zero()</code></a>; the step records <code>d != 0</code>
+for every denominator <code>d</code> it cleared).</p>
+</div>
+<section class="sym" id="is_zero"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">is_zero</span>(<span class="sig-p">expr</span><span class="sig-ann">: Any</span>, <span class="sig-sep">*</span>, <span class="sig-p">assumptions</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>)<span class="sig-ret"> → bool | None</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#is_zero" aria-label="Link to is_zero">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_zero.py#L112" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Decide whether <em>expr</em> is identically zero on its symbols&#39; domains.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div><div class="param"><dt><code class="pname">assumptions</code><span class="ptype">Assumptions, optional</span></dt><dd><p>Extra facts (<code>x &gt; 0</code>, <code>x != 0</code>, …).  Defaults to the active
+<code>alkahest.context(assumptions=...)</code>, if any.  Symbol domains
+(<code>Domain.Positive</code>, <code>Domain.Integer</code>, …) always apply.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">bool or None</span></dt><dd><p><code>True</code> only when proved by exact symbolic reasoning; <code>False</code> when
+proved non-zero (exactly, or by a rigorous Arb ball at an admissible
+point); <code>None</code> when undetermined.  Use <a href="/docs/api/simplify/#equals"><code>equals()</code></a> to see the
+provenance (<code>status</code>, <code>method</code>, <code>evidence</code>).</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool(); x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> is_zero(sin(x)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> cos(x)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> is_zero(sin(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">False</span></span></code></pre></div></div></section>
+<section class="sym" id="equals"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">equals</span>(<span class="sig-p">a</span><span class="sig-ann">: Any</span>, <span class="sig-p">b</span><span class="sig-ann">: Any</span>, <span class="sig-sep">*</span>, <span class="sig-p">assumptions</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>)<span class="sig-ret"> → ZeroTest</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#equals" aria-label="Link to equals">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_zero.py#L142" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Decide whether <code>a == b</code> identically, with provenance.</p>
+<p>Runs the <a href="/docs/api/simplify/#is_zero"><code>is_zero()</code></a> procedure on <code>a - b</code>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">a, b</code><span class="ptype">Expr, DerivedResult or number</span></dt></div><div class="param"><dt><code class="pname">assumptions</code><span class="ptype">Assumptions, optional</span></dt><dd><p>As for <a href="/docs/api/simplify/#is_zero"><code>is_zero()</code></a>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">ZeroTest</span></dt><dd><p><code>.value</code> is <code>True</code> / <code>False</code> / <code>None</code>; <code>.status</code> and
+<code>.method</code> say how it was reached.  <code>status == &quot;probably_zero&quot;</code>
+means numerically indistinguishable but <em>not proved</em> (<code>value</code> is
+<code>None</code>).</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool(); x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> equals(exp(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x), exp(x)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">).value</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span></code></pre></div></div></section>
+<section class="sym" id="to_real_form"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">to_real_form</span>(<span class="sig-p">expr</span>, <span class="sig-p">assumptions</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#to_real_form" aria-label="Link to to_real_form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10366" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.to_real_form(expr, assumptions=None) -&gt; Expr</code></p>
+<p>Rewrite <code>expr</code> into an equal expression with no imaginary unit and no
+square root of a negative quantity: <code>exp(±i·θ)</code> pairs become
+<code>cos</code>/<code>sin</code>, <code>exp(a ± √(−b))</code> with <code>b &gt; 0</code> becomes
+<code>e^a·(cos √b ± i sin √b)</code>, <code>cosh(i·x)</code> becomes <code>cos x</code>, and perfect
+squares leave square roots (<code>√(c²·k)</code> → <code>|c|·√k</code>, → <code>c·√k</code> once
+<code>c ≥ 0</code> is known). The real part is returned only when the imaginary
+part is <em>proved</em> identically zero; otherwise <code>expr</code> comes back
+unchanged. Free symbols must be real (any domain but <code>Complex</code>).</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code></dt><dd><p>the expression to rewrite.</p>
+</dd></div><div class="param"><dt><code class="pname">assumptions</code></dt><dd><p>optional <a href="/docs/api/core/#Assumptions"><code>Assumptions</code></a> (<code>k &gt; 0</code>, <code>a &gt;= 0</code>…);
+the active <code>alkahest.context(assumptions=...)</code> and symbol
+domains always apply.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Expr</span></dt><dd><p>an equal expression, real-valued where it could be proved so.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool(); a </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"a"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> to_real_form(sqrt(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">4</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">a</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> *</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> abs</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(a))</span></span></code></pre></div></div></section>
+<section class="sym" id="rewrite_piecewise"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">rewrite_piecewise</span>(<span class="sig-p">expr</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#rewrite_piecewise" aria-label="Link to rewrite_piecewise">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10416" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.rewrite_piecewise(expr) -&gt; Expr</code></p>
+<p>Lower <code>abs</code>, <code>sign</code>, <code>heaviside</code>, <code>min</code> and <code>max</code> to
+<a href="/docs/api/diff/#piecewise"><code>piecewise()</code></a>, everywhere in <code>expr</code>.</p>
+<p><code>abs(g)</code> becomes <code>Piecewise((g &gt;= 0, g); -g)</code>; <code>min(a, b)</code> becomes
+<code>Piecewise((a &lt;= b, a); b)</code> and <code>max(a, b)</code> the <code>&gt;=</code> form (more than
+two arguments fold to the right); <code>sign</code> and <code>heaviside</code> use their
+registry values at 0 (<code>0</code> and <code>1/2</code>).  The lowered form agrees with the
+original at every point.  <code>floor</code>/<code>ceil</code>/<code>round</code> have infinitely many
+pieces and are left alone.  <a href="/docs/api/diff/#integrate"><code>integrate()</code></a> applies this itself.</p>
+
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool(); x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> rewrite_piecewise(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">abs</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(x))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">Piecewise((x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, x); </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x)</span></span></code></pre></div></div></section>
+<h2 id="parallel-simplification"><a class="hanchor" href="#parallel-simplification" aria-hidden="true" tabindex="-1">#</a>Parallel simplification</h2>
+<div class="prose-block"><p>All three take a single expression and return the same result as
+<a href="/docs/api/simplify/#simplify"><code>simplify()</code></a>; only the schedule differs. Each requires <code>--features parallel</code> at build time and falls back to sequential <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a>
+without it, so the calls are always available. Check
+<code>capabilities()[&quot;features&quot;][&quot;parallel&quot;]</code> to tell which you have.</p>
+</div>
+<section class="sym" id="simplify_par"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_par</span>(<span class="sig-p">expr</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_par" aria-label="Link to simplify_par">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14488" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Simplify an expression using a recursive fork-join traversal.</p>
+<p>Requires the <code>parallel</code> feature at build time; without it this falls back
+to sequential <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a>, so the call is always available. Check
+<code>alkahest.capabilities()[&quot;features&quot;][&quot;parallel&quot;]</code> to tell which you have.</p>
+<p>Fork-join keeps each subtree on one worker, which suits <strong>wide</strong> expressions
+— a large sum or product of independent terms. For deep, narrow expressions
+prefer <a href="/docs/api/simplify/#simplify_redex"><code>simplify_redex()</code></a>, or let <a href="/docs/api/simplify/#simplify_auto"><code>simplify_auto()</code></a> choose.</p>
+<p>The result matches <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a> exactly. The derivation log may vary in
+order between runs, because two workers can reach the same node
+concurrently; <a href="/docs/api/simplify/#simplify_redex"><code>simplify_redex()</code></a> does not have that property.</p>
+</div></section>
+<section class="sym" id="simplify_redex"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_redex</span>(<span class="sig-p">expr</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_redex" aria-label="Link to simplify_redex">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14524" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Simplify an expression by scheduling independent rewrites level by level.</p>
+<p>Requires the <code>parallel</code> feature at build time; without it this falls back
+to sequential <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a>, so the call is always available.</p>
+<p>Nodes are bucketed by height, so every node at a given height is rewritten
+concurrently regardless of its type. That suits <strong>deep</strong> expressions, where
+<a href="/docs/api/simplify/#simplify_par"><code>simplify_par()</code></a> finds no wide node to fork on and ends up running
+essentially sequentially. It also visits each node exactly once, so unlike
+<a href="/docs/api/simplify/#simplify_par"><code>simplify_par()</code></a> the derivation log is <strong>deterministic</strong> — identical
+across runs and across CPU counts.</p>
+<p>The result matches <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a> exactly.</p>
+</div></section>
+<section class="sym" id="simplify_auto"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_auto</span>(<span class="sig-p">expr</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_auto" aria-label="Link to simplify_auto">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14558" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Simplify in parallel, choosing the strategy from the expression&#39;s shape.</p>
+<p>Requires the <code>parallel</code> feature at build time; without it this falls back
+to sequential <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a>, so the call is always available.</p>
+<p>Dispatches to <a href="/docs/api/simplify/#simplify_par"><code>simplify_par()</code></a> for wide expressions when enough CPU
+cores are available, and to <a href="/docs/api/simplify/#simplify_redex"><code>simplify_redex()</code></a> otherwise. Use
+<a href="/docs/api/simplify/#simplify_strategy"><code>simplify_strategy()</code></a> to see which it would pick without running it.</p>
+<p>This is the one to reach for if you do not want to think about shape. The
+result matches <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a> exactly.</p>
+</div></section>
+<section class="sym" id="simplify_strategy"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_strategy</span>(<span class="sig-p">expr</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_strategy" aria-label="Link to simplify_strategy">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14593" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Report which strategy <a href="/docs/api/simplify/#simplify_auto"><code>simplify_auto()</code></a> would use for <code>expr</code>.</p>
+<p>Returns <code>&quot;fork_join&quot;</code> (<a href="/docs/api/simplify/#simplify_par"><code>simplify_par()</code></a>), <code>&quot;level_scheduled&quot;</code>
+(<a href="/docs/api/simplify/#simplify_redex"><code>simplify_redex()</code></a>), or <code>&quot;sequential&quot;</code> when the extension was built
+without the <code>parallel</code> feature and both parallel entry points fall back to
+<a href="/docs/api/simplify/#simplify"><code>simplify()</code></a>.</p>
+<p>The answer depends on the number of worker threads available as well as the
+expression, so it can differ between machines.</p>
+</div></section>
+<h2 id="utility-passes"><a class="hanchor" href="#utility-passes" aria-hidden="true" tabindex="-1">#</a>Utility passes</h2>
+<section class="sym" id="collect_like_terms"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">collect_like_terms</span>(<span class="sig-p">expr</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#collect_like_terms" aria-label="Link to collect_like_terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1627" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Collect like terms in a sum.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">DerivedResult</span></dt></div></dl></div></section>
+<section class="sym" id="poly_normal"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">poly_normal</span>(<span class="sig-p">expr</span>, <span class="sig-p">vars</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#poly_normal" aria-label="Link to poly_normal">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2701" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Expand and collect <em>expr</em> as a polynomial in <em>vars</em>.</p>
+</div></section>
+<section class="sym" id="subs"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">subs</span>(<span class="sig-p">expr</span>, <span class="sig-p">mapping</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#subs" aria-label="Link to subs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1432" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Substitute variables in <em>expr</em> according to <em>mapping</em>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt><dd><p>Source expression.  <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> is auto-coerced to <code>.value</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">mapping</code><span class="ptype">dict[Expr, Expr | DerivedResult | int | float]</span></dt><dd><p>Substitution map. Values (and keys that are symbols) may be
+<a href="/docs/api/core/#Expr"><code>Expr</code></a>, <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a>, or Python <code>int</code>/<code>float</code>
+(coerced into the expression pool).</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Expr</span></dt></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool(); x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> subs(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, {x: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">})         </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># int values coerced — OK</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> r </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> diff(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, x)          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># DerivedResult</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> subs(r, {x: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">})            </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># DerivedResult first arg — OK</span></span></code></pre></div></div></section>
+<h2 id="e-graph-simplification"><a class="hanchor" href="#e-graph-simplification" aria-hidden="true" tabindex="-1">#</a>E-graph simplification</h2>
+<section class="sym" id="simplify_egraph"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_egraph</span>(<span class="sig-p">expr</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_egraph" aria-label="Link to simplify_egraph">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1495" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>E-graph equality-saturation simplifier.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">DerivedResult</span></dt></div></dl></div></section>
+<section class="sym" id="simplify_egraph_with"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_egraph_with</span>(<span class="sig-p">expr</span>, <span class="sig-p">config</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_egraph_with" aria-label="Link to simplify_egraph_with">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5171" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Simplify using the e-graph backend with a custom [<code>EgraphConfig</code>].</p>
+<p>Use this when you want to disable specific rule sets (e.g. trig or log/exp
+rules) or tune the phase iteration counts.</p>
+</div></section>
+<h2 id="pattern-matching-and-rules"><a class="hanchor" href="#pattern-matching-and-rules" aria-hidden="true" tabindex="-1">#</a>Pattern matching and rules</h2>
+<section class="sym" id="make_rule"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">make_rule</span>(<span class="sig-p">lhs</span>, <span class="sig-p">rhs</span>, <span class="sig-p">sequence</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#make_rule" aria-label="Link to make_rule">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10160" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.make_rule(lhs, rhs, sequence=None)</code> — create a rewrite rule from
+two expressions.</p>
+<p>Symbols whose names start with a lower-case letter in <code>lhs</code> are wildcards
+that bind to any sub-expression; the same names in <code>rhs</code> are replaced by
+the bound values.</p>
+<p><code>sequence</code> lists noncommutative symbols of <code>lhs</code> that are <em>sequence
+wildcards</em>: in <code>make_rule(A*X*B, ..., sequence=[X])</code> the symbol <code>X</code>
+matches any contiguous run of noncommutative factors between <code>A</code> and
+<code>B</code> (possibly empty), and <code>X</code> in <code>rhs</code> is replaced by that run.
+Matching is leftmost, and each sequence wildcard takes the shortest run
+that lets the rest match. A sequence rule only fires inside a product of
+at least two noncommutative factors, and applies through <code>simplify_with</code>
+(not <code>nc_rewrite</code>). Raises <code>NcError</code> <code>E-NC-009</code> for a malformed
+pattern.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">rule </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.make_rule(a</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">b </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> a</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">c, a</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(b </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> c))  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># factoring rule</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.simplify_with(expr, [rule])</span></span></code></pre></div></div></section>
+<section class="sym" id="match_pattern"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">match_pattern</span>(<span class="sig-p">pattern_expr</span>, <span class="sig-p">expr</span>, <span class="sig-sep">*</span>, <span class="sig-p">wildcards</span><span class="sig-def">=True</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#match_pattern" aria-label="Link to match_pattern">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10088" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.match_pattern(pattern_expr, expr) -&gt; list[dict[str, Expr]]</code></p>
+<p>Find all AC-aware matches of <code>pattern_expr</code> anywhere in <code>expr</code>.
+Each match is returned as a dict mapping wildcard names to matched
+sub-expressions.  Wildcards are symbols whose names start with a
+lower-case letter.  Set <code>wildcards=False</code> to treat every symbol as a literal
+(e.g. when the pattern is a single variable like <code>x</code>).</p>
+</div></section>
+<section class="sym" id="RewriteRule"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">RewriteRule</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#RewriteRule" aria-label="Link to RewriteRule">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10124" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Opaque handle to a rewrite rule created by <a href="/docs/api/simplify/#make_rule"><code>make_rule()</code></a>.</p>
+</div></section>
+<h2 id="rational-functions"><a class="hanchor" href="#rational-functions" aria-hidden="true" tabindex="-1">#</a>Rational functions</h2>
+<section class="sym" id="apart"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">apart</span>(<span class="sig-p">expr</span>, <span class="sig-p">var</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#apart" aria-label="Link to apart">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1391" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Partial-fraction decomposition of <em>expr</em> as a rational function of <em>var</em>.</p>
+<p>Decomposes <code>p(x)/q(x)</code> into <code>poly_part + Σ A_ij(x) / f_i(x)**j</code> where the
+<code>f_i</code> are the distinct <strong>ℚ-irreducible</strong> factors of the denominator and
+<code>deg A_ij &lt; deg f_i</code>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt><dd><p>A rational function of <em>var</em>.  <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> is coerced to
+<code>.value</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">var</code><span class="ptype">Expr</span></dt><dd><p>The variable to decompose in.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Expr</span></dt></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">ValueError</span></dt><dd><p>If <em>expr</em> is not a rational function of <em>var</em>, or denominator
+factorization fails.</p>
+</dd></div></dl>
+<div class="doc-sub">Notes</div><p>Decomposition is over ℚ: irreducible quadratics (and higher) are kept
+intact, not split into complex/algebraic linear factors.</p>
+
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool(); x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> apart(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> /</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), x)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1/(2(x-1)) - 1/(2(x+1))</span></span></code></pre></div></div></section>
+<section class="sym" id="cancel"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">cancel</span>(<span class="sig-p">expr</span>, <span class="sig-p">vars</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#cancel" aria-label="Link to cancel">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2710" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Combine <em>expr</em> over a common denominator and cancel common polynomial factors.</p>
+<p>Non-polynomial sub-expressions (e.g. <code>sin(x)</code> or symbols not in <em>vars</em>) are
+treated as opaque generators. Accepts <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> as <em>expr</em>.</p>
+<p>If <em>vars</em> is omitted, free symbols of <em>expr</em> are inferred.</p>
+</div></section>
+<section class="sym" id="together"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">together</span>(<span class="sig-p">expr</span>, <span class="sig-p">vars</span><span class="sig-def">=None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#together" aria-label="Link to together">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2724" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Combine <em>expr</em> over a single common denominator (alias of <a href="/docs/api/simplify/#cancel"><code>cancel()</code></a>).</p>
+<p>If <em>vars</em> is omitted, free symbols of <em>expr</em> are inferred.</p>
+</div></section>
+<h2 id="more-rewriting"><a class="hanchor" href="#more-rewriting" aria-hidden="true" tabindex="-1">#</a>More rewriting</h2>
+<section class="sym" id="simplify_trig_normal_form"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_trig_normal_form</span>(<span class="sig-p">expr</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_trig_normal_form" aria-label="Link to simplify_trig_normal_form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1529" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Trigonometric normal-form simplifier.</p>
+<p>Runs the full algebraic core <em>with bounded polynomial expansion</em> plus the
+sin/cos-polynomial trig identities (argument-sign normalization and the
+Pythagorean identity, including its multi-angle case), driven to a fixed
+point.  Unlike <a href="/docs/api/simplify/#simplify_trig"><code>simplify_trig()</code></a> (identities only, no expansion), this
+composes product expansion, constant folding, like-term collection, and
+Pythagorean reduction in a single call.</p>
+<p>The headline use case is verifying orthogonality of a rotation
+(direction-cosine) matrix: every entry of <code>R.T @ R - I</code> collapses to
+<code>0</code>.  It reduces in the sin/cos monomial basis and does not introduce
+compound-angle (<code>sin(2u)</code>, <code>sin(u+v)</code>, …) forms.  This bundle is heavier
+than <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a> and is opt-in.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">DerivedResult</span></dt></div></dl></div></section>
+<section class="sym" id="simplify_clifford_orthogonal"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_clifford_orthogonal</span>(<span class="sig-p">expr</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_clifford_orthogonal" aria-label="Link to simplify_clifford_orthogonal">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15023" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Simplify with default rules plus orthogonal Clifford anticommutation on <code>cliff_e1</code>, <code>cliff_e2</code>.</p>
+</div></section>
+<section class="sym" id="simplify_pauli"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_pauli</span>(<span class="sig-p">expr</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_pauli" aria-label="Link to simplify_pauli">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14992" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Simplify with default arithmetic rules plus the Pauli product table on <code>sx</code>, <code>sy</code>, <code>sz</code>.</p>
+</div></section>
+<section class="sym" id="EgraphConfig"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">EgraphConfig</span>(
+    <span class="sig-p">shrink_iters</span><span class="sig-def">=...</span>,
+    <span class="sig-p">explore_iters</span><span class="sig-def">=...</span>,
+    <span class="sig-p">const_fold_iters</span><span class="sig-def">=...</span>,
+    <span class="sig-p">node_limit</span><span class="sig-def">=None</span>,
+    <span class="sig-p">iter_limit</span><span class="sig-def">=None</span>,
+    <span class="sig-p">include_trig_rules</span><span class="sig-def">=True</span>,
+    <span class="sig-p">include_log_exp_rules</span><span class="sig-def">=True</span>,
+    <span class="sig-p">disjoint_schedule</span><span class="sig-def">=True</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#EgraphConfig" aria-label="Link to EgraphConfig">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5069" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Python-visible configuration for the e-graph simplifier.</p>
+<p>All arguments are keyword-only with the same defaults as the Rust <code>EgraphConfig</code>.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="EgraphConfig.shrink_iters">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">shrink_iters</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EgraphConfig.shrink_iters" aria-label="Link to EgraphConfig.shrink_iters">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5112" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EgraphConfig.explore_iters">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">explore_iters</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EgraphConfig.explore_iters" aria-label="Link to EgraphConfig.explore_iters">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5117" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EgraphConfig.const_fold_iters">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">const_fold_iters</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EgraphConfig.const_fold_iters" aria-label="Link to EgraphConfig.const_fold_iters">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5122" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EgraphConfig.node_limit">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">node_limit</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EgraphConfig.node_limit" aria-label="Link to EgraphConfig.node_limit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5127" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EgraphConfig.iter_limit">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">iter_limit</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EgraphConfig.iter_limit" aria-label="Link to EgraphConfig.iter_limit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5132" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EgraphConfig.include_trig_rules">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">include_trig_rules</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EgraphConfig.include_trig_rules" aria-label="Link to EgraphConfig.include_trig_rules">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5137" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EgraphConfig.include_log_exp_rules">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">include_log_exp_rules</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EgraphConfig.include_log_exp_rules" aria-label="Link to EgraphConfig.include_log_exp_rules">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5142" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="EgraphConfig.disjoint_schedule">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">disjoint_schedule</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#EgraphConfig.disjoint_schedule" aria-label="Link to EgraphConfig.disjoint_schedule">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5147" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="ZeroTest"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">ZeroTest</span>(
+    <span class="sig-p">value</span><span class="sig-ann">: bool | None</span>,
+    <span class="sig-p">status</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">method</span><span class="sig-ann">: str</span>,
+    <span class="sig-p">evidence</span><span class="sig-ann">: list[str]</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ZeroTest" aria-label="Link to ZeroTest">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_zero.py#L37" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Verdict of <a href="/docs/api/simplify/#equals"><code>equals()</code></a> (or of a zero test) with its provenance.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">value</code><span class="ptype">bool or None</span></dt><dd><p><code>True</code> (proved equal / zero), <code>False</code> (proved different / non-zero)
+or <code>None</code> (undetermined).</p>
+</dd></div><div class="param"><dt><code class="pname">status</code><span class="ptype">str</span></dt><dd><p><code>&quot;proved_zero&quot;</code>, <code>&quot;proved_nonzero&quot;</code>, <code>&quot;probably_zero&quot;</code> or
+<code>&quot;unknown&quot;</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">method</code><span class="ptype">str</span></dt><dd><p><code>&quot;simplify&quot;</code>, <code>&quot;rational_normal_form&quot;</code>, <code>&quot;arb_ball&quot;</code>,
+<code>&quot;arb_sampling&quot;</code>, <code>&quot;complex_f64_sampling&quot;</code> or <code>&quot;none&quot;</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">evidence</code><span class="ptype">list[str]</span></dt><dd><p>Human-readable sample points and enclosures, when numeric.</p>
+</dd></div></dl>
+<p><code>bool(test)</code> is the proved verdict; it raises <code>ValueError</code> when the
+verdict is <code>None</code> so that an undecided comparison cannot silently read as
+&quot;different&quot; in an <code>if</code>.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="ZeroTest.proved">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">proved</span><span class="sig-ann">: bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeroTest.proved" aria-label="Link to ZeroTest.proved">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L68" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Whether <code>value</code> is a proof (<code>True</code> or <code>False</code>).</p>
+</div>
+</div></div></div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/core/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Core</span></a><a class="pager-next" href="/docs/api/diff/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Calculus</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/simplify.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#rule-based-simplification">Rule-based simplification</a></li><li class="d3"><a href="#simplify">simplify</a></li><li class="d3"><a href="#simplify_with">simplify_with</a></li><li class="d3"><a href="#simplify_trig">simplify_trig</a></li><li class="d3"><a href="#simplify_log_exp">simplify_log_exp</a></li><li class="d3"><a href="#simplify_expanded">simplify_expanded</a></li><li class="d2"><a href="#constant-folding-special-values-and-zero-recognition">Constant folding, special values and zero recognition</a></li><li class="d3"><a href="#is_zero">is_zero</a></li><li class="d3"><a href="#equals">equals</a></li><li class="d3"><a href="#to_real_form">to_real_form</a></li><li class="d3"><a href="#rewrite_piecewise">rewrite_piecewise</a></li><li class="d2"><a href="#parallel-simplification">Parallel simplification</a></li><li class="d3"><a href="#simplify_par">simplify_par</a></li><li class="d3"><a href="#simplify_redex">simplify_redex</a></li><li class="d3"><a href="#simplify_auto">simplify_auto</a></li><li class="d3"><a href="#simplify_strategy">simplify_strategy</a></li><li class="d2"><a href="#utility-passes">Utility passes</a></li><li class="d3"><a href="#collect_like_terms">collect_like_terms</a></li><li class="d3"><a href="#poly_normal">poly_normal</a></li><li class="d3"><a href="#subs">subs</a></li><li class="d2"><a href="#e-graph-simplification">E-graph simplification</a></li><li class="d3"><a href="#simplify_egraph">simplify_egraph</a></li><li class="d3"><a href="#simplify_egraph_with">simplify_egraph_with</a></li><li class="d2"><a href="#pattern-matching-and-rules">Pattern matching and rules</a></li><li class="d3"><a href="#make_rule">make_rule</a></li><li class="d3"><a href="#match_pattern">match_pattern</a></li><li class="d3"><a href="#RewriteRule">RewriteRule</a></li><li class="d2"><a href="#rational-functions">Rational functions</a></li><li class="d3"><a href="#apart">apart</a></li><li class="d3"><a href="#cancel">cancel</a></li><li class="d3"><a href="#together">together</a></li><li class="d2"><a href="#more-rewriting">More rewriting</a></li><li class="d3"><a href="#simplify_trig_normal_form">simplify_trig_normal_form</a></li><li class="d3"><a href="#simplify_clifford_orthogonal">simplify_clifford_orthogonal</a></li><li class="d3"><a href="#simplify_pauli">simplify_pauli</a></li><li class="d3"><a href="#EgraphConfig">EgraphConfig</a></li><li class="d3"><a href="#ZeroTest">ZeroTest</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/simplify.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

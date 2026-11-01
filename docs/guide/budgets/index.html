@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Budgets, cancellation, and determinism · Alkahest Docs</title>
+<meta name="description" content="A fan-out loop trying thousands of candidate rewrites/integrals/Gröbner bases cannot afford one pathological candidate to hang the whole batch — and an…">
+<meta property="og:title" content="Budgets, cancellation, and determinism · Alkahest Docs">
+<meta property="og:description" content="A fan-out loop trying thousands of candidate rewrites/integrals/Gröbner bases cannot afford one pathological candidate to hang the whole batch — and an…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li class="open"><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/" class="active" aria-current="page">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <div class="eyebrow">Agent loops</div>
+    <h1>Budgets, cancellation, and determinism</h1>
+    <p>A fan-out loop trying thousands of candidate rewrites/integrals/Gröbner bases cannot
+afford one pathological candidate to hang the whole batch — and an orchestrator that
+decides a candidate isn&#39;t worth more time needs a way to <em>stop it now</em>, not wait for an
+OS-level kill (<code>SIGKILL</code>, a process timeout). <code>alkahest.Budget</code> and
+<code>alkahest.context(budget=...)</code> give heavy engines a cheap, structured way to bail out
+honestly — raising <code>BudgetExceededError</code> — instead of running unbounded.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"real"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">budget</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.Budget(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">wall_ms</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">50</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">max_steps</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10_000</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">seed</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">7</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)):</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">        ak.integrate(hard_expr, x)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.BudgetExceededError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">        assert</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e.code.startswith(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"E-BUDGET-"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">        # ... deprioritize this candidate and move on to the next one ...</span></span></code></pre></div><h2 id="there-is-no-default-budget--set-one"><a class="hanchor" href="#there-is-no-default-budget--set-one" aria-hidden="true" tabindex="-1">#</a>There is no default budget — set one</h2>
+<p><strong>No call in Alkahest is time-limited unless you say so.</strong> <code>integrate</code>, <code>solve</code>,
+<code>GroebnerBasis.compute</code> and every other entry point run unbounded when no
+<code>context(budget=...)</code> is active, and some legitimate inputs genuinely take minutes
+(a Gröbner basis of cyclic-6, the Lazard–Rioboo–Trager log part of
+<code>∫(x⁷+3x²−1)/(x¹⁵+x⁴+2x+1)² dx</code>, which works in a degree-15 number field). An
+unattended loop — an agent, a fan-out search, a notebook cell that must come back —
+should therefore always run its candidates inside a budget:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">budget</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.Budget(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">wall_ms</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10_000</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)):</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.integrate(f, x)    </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># BudgetExceededError after ~10 s, never a hang</span></span></code></pre></div><p>A silent default was considered and rejected: a limit short enough to protect an
+agent loop breaks legitimate long computations for everyone else, and one long enough
+not to (minutes) protects nobody. The budget is the caller&#39;s decision, stated in one
+line, and every engine listed below honours it.</p>
+<h2 id="model"><a class="hanchor" href="#model" aria-hidden="true" tabindex="-1">#</a>Model</h2>
+<p>A <code>Budget</code> is an immutable <code>(wall_ms, max_steps, seed, max_bytes)</code> tuple. Every field is
+optional; <code>Budget()</code> never trips a check on its own — only <code>alkahest.request_cancel()</code>
+can stop a call entered with a bare <code>Budget()</code>.</p>
+<p><code>context(budget=...)</code> pushes the budget into a <strong>thread-local</strong> stack on the Rust side
+(<code>alkahest_cas::budget</code>) for the scope of the <code>with</code> block, and pops it on exit —
+including on an exception, matching every other resource the context manager owns.
+Budgets nest like every other <code>context(...)</code> key: only the <em>innermost</em> frame is
+consulted, so a nested <code>context(budget=...)</code> <strong>shadows</strong> the outer one rather than
+combining limits with it. A nested <code>context(...)</code> that omits <code>budget=</code> leaves the outer
+one active (nothing is pushed, so nothing shadows it):</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">budget</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.Budget(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">seed</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">max_steps</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1000</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)):</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ak.budget_seed()   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p):</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">        ak.budget_seed()  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1 — no budget= here, outer frame still active</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">budget</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.Budget(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">max_steps</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)):</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">        ak.budget_seed()  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># None — this frame set no seed; it does not inherit</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ak.budget_seed()   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1 — back to the outer frame</span></span></code></pre></div><h2 id="what-checks-the-budget-today"><a class="hanchor" href="#what-checks-the-budget-today" aria-hidden="true" tabindex="-1">#</a>What checks the budget today</h2>
+<p>The Rust engines call a cheap cooperative checkpoint (<code>alkahest_cas::budget::check</code>) at
+a handful of strategic points — not blanket-inserted into every loop:</p>
+<ul>
+<li><p><strong><code>alkahest.integrate</code></strong> — at the top-level entry (covers every route: algebraic,
+Risch/transcendental, rational-function, log-derivative); at the <code>integrate_inner</code>
+recursion boundary; at every <code>integrate_raw</code> entry, which the sum rule and the
+constant-multiple rule recurse through, so a long sum is bounded <em>between</em>
+summands; once per candidate of the derivative-divides u-substitution search
+(each surviving candidate runs a full recursive <code>integrate</code>, and there are up to
+twelve); at the stage boundaries of the rational-function route (normalisation,
+Hermite reduction, Rothstein–Trager, the partial-fraction pass and each of its
+irreducible factors); and inside the two Euclidean loops that dominate a hard
+rational integrand — the ℚ[x] GCD used to reduce <code>A/D</code> to lowest terms and the
+number-field GCD of Lazard–Rioboo–Trager; and in the undetermined-coefficient
+ansatz of the tower Risch differential equation (per candidate denominator, per
+basis column, per elimination pivot), where <code>∫(2x + log x)^{-1/2} dx</code> used to spend
+400 s before declining and a 3 s budget took 8.6 s to fire. With no budget, the same
+ansatz stops after a fixed number of steps per top-level call (deterministic, not a
+clock) and the integral is declined. Converting a power to a
+dense ℚ[x] polynomial is checked per multiplication and refused past degree 8192,
+so <code>1/(x^(2^31)+1)</code> no longer builds a degree-2³¹ polynomial by repeated
+multiplication under <code>integrate</code> or <code>apart</code>. A trip raises <code>BudgetExceededError</code> —
+integration has a <code>Result</code> return type with a natural place to signal it.</p>
+<p>Those last few are not decoration. See
+<a href="#how-tightly-wall_ms-binds">how tightly <code>wall_ms</code> binds</a> — before they existed a
+300 ms budget on <code>∫ cos x·sin¹²x/(sin⁹x + sin x + 1) dx</code> returned after 3.4 s, and
+the same integrand at degree 40 never returned at all.</p>
+</li>
+<li><p><strong><code>alkahest.limit</code></strong> — at every <code>limit_inner</code> recursion boundary, in the Gruntz
+comparability sweep, in the pole-clearing loop of the <code>x ↦ 1/t</code> substitution, and
+between Taylor coefficients of the local expansion (the loop that can grow without
+bound on nested radicals). <code>LimitError</code> is an exhaustive public enum and cannot grow
+a <code>Budget</code> variant without a major semver break, so a trip is reported internally as
+<code>LimitError::DepthExceeded</code> and the <code>E-BUDGET-*</code> cause is recovered out-of-band
+(<code>alkahest_cas::calculus::limits::last_budget_trip</code>); the Python binding raises
+<code>BudgetExceededError</code> exactly as <code>integrate</code> does. With <strong>no</strong> budget active the
+same paths are bounded by an internal work ceiling, so an unsolvable limit refuses
+with <code>LimitError</code> / <code>E-LIMIT-004</code> instead of running unboundedly.
+An expression with an undefined <em>constant</em> in it (<code>0**-1</code>, <code>log(0)</code>, <code>1/(1-1)</code>)
+is refused up front with <code>E-LIMIT-005</code>: it is undefined at every point, and
+differentiating the unevaluated <code>0**-1</code> for Taylor coefficients grows without
+bound (<code>limit(x*0**-1, x, 1)</code> used to exhaust memory).</p>
+</li>
+<li><p><strong><code>alkahest.number_theory.factorint</code></strong> — <code>fmpz_factor</code> is one uninterruptible FLINT
+call, so under a budget the factorisation instead climbs a ladder of bounded-effort
+<code>fmpz_factor_smooth</code> passes (ECM tuned for factors of 16, 20, …, 60 bits) with a
+check between passes, and hands only cofactors of at most 160 bits to the full
+factoriser. A composite still unsplit when the budget runs out raises
+<code>BudgetExceededError</code>; the overshoot is one pass. With no budget it is unbounded, as
+before — <code>(2⁸⁹−1)(2¹⁰⁷−1)(2¹²⁷−1)</code> can take arbitrarily long.</p>
+</li>
+<li><p><strong><code>alkahest.simplify</code></strong> (and <code>simplify_with</code>, <code>simplify_batch</code>) — once per full
+bottom-up rewrite pass. <code>simplify</code> has <strong>no error channel</strong> (<code>DerivedExpr</code> isn&#39;t a
+<code>Result</code>), so a trip here stops further passes early and returns the best value
+simplified so far — exactly like running out of the existing <code>max_iterations</code> cap
+already does, silently. If you need a hard raise on a <code>simplify</code> call specifically,
+wrap it in <code>alkahest.run_with_wall_fallback</code> (below).</p>
+</li>
+<li><p><strong>Gröbner bases</strong> — <code>GroebnerBasis.compute</code> (Buchberger, and grevlex-then-FGLM for
+<code>&quot;lex&quot;</code>), <code>GroebnerBasis.compute_f5</code>, <code>compute_raw</code> and the parametric engine
+(<code>compute(..., params=...)</code>): once per S-pair, every 16 steps of every division
+loop, while normalising each new basis element, and once per FGLM step. Cyclic-6
+under grevlex, which ran for more than two minutes whatever the budget, stops 0.6 s
+into a 500 ms budget; <code>compute_f5</code> on cyclic-5 (&gt; 100 s) stops at 0.5 s.</p>
+</li>
+<li><p><strong><code>alkahest.solve</code></strong> (<code>method=&quot;groebner&quot;</code>, and the homotopy fallback of
+<code>numeric=True</code>), <strong><code>solve_numerical</code></strong> / <code>method=&quot;homotopy&quot;</code> — the Gröbner basis,
+once per back-substitution branch and per candidate verified against the input, once
+per continuation path and every 16 predictor–corrector steps. The report&#39;s
+<code>solve([x⁷+y⁵−3xy−1, y⁷−x³y+2], [x, y])</code> ran 9.1 s against a 300 ms budget; it now
+stops at 0.55 s against 500 ms.</p>
+</li>
+<li><p><strong><code>primary_decomposition</code>, <code>radical</code>, <code>triangularize</code>, <code>rosenfeld_groebner</code></strong> — every
+Gröbner basis they compute, and once per split of the primary-decomposition
+recursion and per prolongation round.</p>
+</li>
+<li><p><strong><code>alkahest.zeilberger</code></strong> — once per <code>(order, degree)</code> probe and once per column of
+the <code>Q(n)</code> elimination (one probe at a high degree can take minutes). The trip raises
+<code>BudgetExceededError</code>, not <code>HolonomicError</code>/<code>E-HOLO-002</code>, which would read as &quot;no
+certificate up to these bounds&quot;.</p>
+</li>
+<li><p><strong><code>alkahest.guess_holonomic</code></strong> — once per <code>(order, degree)</code> probe.</p>
+</li>
+<li><p><strong><code>alkahest.decide</code></strong> — once per sample cell of the two-variable CAD.</p>
+</li>
+<li><p><strong><code>sos_decompose</code> / <code>prove_nonneg</code></strong> — between SDP solves (already the case before).</p>
+</li>
+<li><p><strong><code>alkahest.number_theory.discrete_log</code></strong> — Pohlig–Hellman over the (budgeted)
+factorisation of <code>p − 1</code>, polling every 4096 group operations of each baby-step
+giant-step / Pollard-rho subgroup solve. It used to be a linear sweep with no
+checkpoint (<code>p = 2³¹−1</code> ran 55 s against a 2 s budget); smooth orders such as
+<code>2¹²⁷−1</code>&#39;s are now instant, and a 61-bit prime order stops at the budget.</p>
+</li>
+<li><p><strong><code>PermutationGroup.order()</code></strong> (and everything built on the stabilizer chain:
+<code>contains</code>, <code>sift</code>, <code>base</code>, …) — every 8 Schreier generators. A budget stop is not
+cached on the group, so the next call starts afresh. Schreier–Sims also re-checks
+only the new Schreier generators when a level is revisited, which brought
+<code>symmetric(100).order()</code> from 74 s down to well under a second.</p>
+</li>
+<li><p><strong><code>bound_on_box</code>, <code>verified_integral</code>, <code>verified_no_roots</code>, <code>verified_sign</code></strong> — these
+run on a worker thread (so Ctrl-C works), and the worker now re-enters what is left
+of the caller&#39;s budget; before, it never saw it (<code>verified_sign</code> on a 2-D
+Black–Scholes box ran 115 s under a wall budget). <code>verified_sign</code> /
+<code>verified_no_roots</code> keep a certified <code>&quot;true&quot;</code>/<code>&quot;false&quot;</code> reached before the trip and
+raise <code>BudgetExceededError</code> instead of an <code>&quot;undecided&quot;</code> caused by the budget.</p>
+</li>
+<li><p><strong>Lattice enumeration</strong> (<code>Lattice.minimum</code>, <code>kissing_number</code>, <code>theta_series</code>,
+<code>closest_vector</code>, …) — every 256 Fincke–Pohst nodes, on top of the node cap.
+<code>Lattice.leech().kissing_number()</code> (8 s) now stops at the wall budget.</p>
+</li>
+</ul>
+<p>Every one of these raises <code>BudgetExceededError</code> on a trip and <strong>never returns what it
+had computed so far</strong>: a basis that stopped part-way is not a Gröbner basis of anything,
+and a partial solution list or an exhausted-looking search would be a wrong answer.</p>
+<p>Still <strong>not</strong> interruptible: a single FLINT call — <code>factor_z</code> on one huge polynomial,
+<code>fmpz_factor</code> outside the budget ladder <code>factorint</code> uses — runs to its end, and the
+budget fires at the next checkpoint after it.</p>
+<h3 id="rust-interrupt-points-for-engines-with-no-error-channel"><a class="hanchor" href="#rust-interrupt-points-for-engines-with-no-error-channel" aria-hidden="true" tabindex="-1">#</a>Rust: interrupt points for engines with no error channel</h3>
+<p><code>GroebnerBasis::compute</code> returns a basis, not a <code>Result</code>, and changing a public
+signature is a semver break. Such engines poll <code>budget::interrupted()</code>, which answers
+<code>false</code> (one thread-local read) unless a caller has <strong>armed</strong> it with <code>budget::arm()</code>.
+A caller that arms promises to read the trip (<code>InterruptGuard::trip</code>) and discard the
+partial value; <code>GroebnerBasis::try_compute</code> / <code>try_compute_lex</code> / <code>try_compute_f5</code> do
+exactly that and return <code>Result&lt;_, BudgetTrip&gt;</code>. Unarmed, the infallible constructors
+behave exactly as before — they ignore the budget. Engines with an exhaustive error
+enum (<code>solve_polynomial_system</code>, <code>primary_decomposition</code>, <code>triangularize</code>,
+<code>rosenfeld_groebner_*</code>, <code>solve_numerical</code>, <code>zeilberger</code>, <code>decide</code>) arm for themselves,
+return their existing carrier variant on a trip and leave the trip in
+<code>budget::take_trip()</code>; <code>ParamGroebnerBasis::compute</code> returns the new
+<code>ParamGroebnerError::Budget</code>.</p>
+<p>Calling <code>check()</code> is cheap when no budget is active and cancellation has not been
+requested (an atomic load, and — only if a budget is active — an <code>Instant::now()</code>), so
+it is safe to sprinkle at more call sites over time without a performance concern
+gating it.</p>
+<h2 id="how-tightly-wall_ms-binds"><a class="hanchor" href="#how-tightly-wall_ms-binds" aria-hidden="true" tabindex="-1">#</a>How tightly <code>wall_ms</code> binds</h2>
+<p><code>wall_ms</code> is <strong>cooperative</strong>: the call stops at the first checkpoint <em>after</em> the
+deadline, so it always overshoots by however long the engine had left in the stretch
+it was in. That makes the useful question &quot;how long is the longest stretch&quot;, not &quot;is
+it exact&quot; — and a budget whose overshoot grows without bound is not a budget at all.</p>
+<p>Measured on <code>∫ cos x·sinⁿx/(sin^d x + sin x + 1) dx</code>, the family that goes through
+the Weierstrass half-angle substitution and then Rothstein–Trager (elapsed until the
+trip, <code>wall_ms=300</code>):</p>
+<div class="table-wrap"><table><thead><tr>
+<th>integrand</th>
+<th>before</th>
+<th>now</th>
+</tr>
+</thead><tbody><tr>
+<td><code>n=12, d=9</code></td>
+<td>3384 ms</td>
+<td>344 ms</td>
+</tr>
+<tr>
+<td><code>n=16, d=9</code></td>
+<td>2107 ms</td>
+<td>360 ms</td>
+</tr>
+<tr>
+<td><code>n=20, d=9</code></td>
+<td>3967 ms</td>
+<td>345 ms</td>
+</tr>
+<tr>
+<td><code>n=24, d=9</code></td>
+<td>3148 ms</td>
+<td>313 ms</td>
+</tr>
+<tr>
+<td><code>n=40, d=17</code></td>
+<td><strong>never returned</strong> (killed at 90 s)</td>
+<td>305 ms</td>
+</tr>
+<tr>
+<td><code>1/(sin⁹x + sin x + 1)</code></td>
+<td>110 s</td>
+<td>333 ms</td>
+</tr>
+</tbody></table></div>
+<p>and across budget sizes on the worst of them (<code>n=40, d=17</code>): 53 ms for <code>wall_ms=50</code>,
+106 ms for 100, 305 ms for 300, 1071 ms for 1000, 3158 ms for 3000 — the overshoot
+is a small additive term, not a multiple of the budget and not a function of the
+problem size.</p>
+<p><strong>What is left, honestly.</strong> The residual granularity is <em>one primitive polynomial
+operation</em>, and past a certain degree that operation is a <strong>FLINT</strong> call —
+factorisation over ℤ, or a bivariate resultant. Those are single foreign-function
+calls: nothing short of an OS-level kill stops one part-way, and adding checkpoints
+around them cannot help. On a degree-62 integrand (<code>1/(sin³¹x + sin x + 1)</code>) one
+such call measured about 2 s, so a 300 ms budget there returns after roughly that
+long. That is the honest floor, and only an <strong>outer process timeout</strong> goes below it —
+not <code>run_with_wall_fallback</code>, which joins the same call rather than preempting it
+(<a href="#it-does-not-bound-wall-time-for-an-uncooperative-callee">below</a>).</p>
+<p>(The pure-Rust loops that used to dominate — the ℚ[x] and number-field Euclidean
+GCDs — <em>are</em> now checkpointed, which is what removed the growth. A per-step check
+was also tried on the ℚ long division underneath them and measured no further
+improvement, so it was dropped rather than kept for the look of it: it would only
+have made <code>max_steps</code> count faster for nothing.)</p>
+<p>So the guarantee worth relying on is: <em>the budget is checked between operations, and
+one operation on a high-degree integrand can take seconds</em>. It is not a hard
+real-time deadline, and no cooperative mechanism can make it one.</p>
+<h2 id="cancellation"><a class="hanchor" href="#cancellation" aria-hidden="true" tabindex="-1">#</a>Cancellation</h2>
+<p><code>alkahest.request_cancel()</code> sets a single <strong>process-wide</strong> flag — deliberately not
+scoped to a thread or a <code>Budget</code> frame. It models &quot;the orchestrator wants the current
+heavy operation to stop right now&quot;, e.g. because a fan-out loop decided a candidate has
+used enough wall time, and the operation might be running on a different thread than the
+one that decided to give up on it. <code>alkahest.is_cancelled()</code> reads it;
+<code>alkahest.clear_cancel()</code> resets it — call this before starting the next candidate, or
+every subsequent call trips <code>E-BUDGET-003</code> immediately.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> threading</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">def</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> watchdog</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">():</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    time.sleep(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.05</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ak.request_cancel()</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">threading.Thread(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">target</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">watchdog, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">daemon</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">).start()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ak.integrate(hard_expr, x)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.BudgetExceededError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    assert</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e.code </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">==</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "E-BUDGET-003"</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">finally</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ak.clear_cancel()</span></span></code></pre></div><h3 id="the-watchdog-runs-while-the-call-runs"><a class="hanchor" href="#the-watchdog-runs-while-the-call-runs" aria-hidden="true" tabindex="-1">#</a>The watchdog runs <em>while</em> the call runs</h3>
+<p>For that example to mean anything, the watchdog thread has to be able to execute
+during the call it is trying to cancel. <code>alkahest.integrate</code> and <code>alkahest.limit</code> —
+the two budget-honouring engines — therefore <strong>release the GIL</strong> around their core
+call (<code>py.allow_threads</code>, the same idiom <code>simplify_par</code> uses for its Rayon workers).
+Without that the flag was only ever observed if it had been set <em>before</em> the call:
+the watchdog could not run a single bytecode until the operation it wanted to stop
+had already finished, which is the opposite of what a fan-out search loop needs.</p>
+<p>Two things that follow, and one that does not:</p>
+<ul>
+<li><strong>Cancellation is cooperative, not preemptive.</strong> The flag is observed at the
+checkpoints listed above, so the call stops at the next one — not instantly. An
+engine stretch with no checkpoint runs to its end.</li>
+<li><strong>Releasing the GIL is not the same as honouring the budget.</strong> The other heavy
+entry points — <code>simplify</code> and its variants, <code>diff</code>, <code>solve</code>, <code>cancel</code> /
+<code>together</code> / <code>apart</code>, the <code>sum_*</code> / <code>product_*</code> family, <code>rsolve</code>, <code>evaluate</code>,
+<code>factor_z</code>, <code>GroebnerBasis.compute*</code> and the symbolic <code>Matrix</code> operations — now
+release the GIL for their core call too, so a thread pool overlaps them. But
+<code>request_cancel()</code> now stops a running Gröbner basis or homotopy continuation too
+(see the list above); a single FLINT call still runs to its end. The work stays
+on the calling thread either way, so the thread-local budget frame, ambient
+assumptions and every <code>*_side_conditions()</code> channel are the caller&#39;s.</li>
+<li><strong>Nothing about pool safety changes.</strong> <code>ExprPool</code> is <code>Send + Sync</code> and interns
+through a lock-free index; releasing the GIL around a call that holds only a shared
+<code>&amp;ExprPool</code> is strictly weaker than the concurrent Rayon access <code>simplify_par</code>
+already performs on the same structure.</li>
+</ul>
+<h2 id="determinism-seed"><a class="hanchor" href="#determinism-seed" aria-hidden="true" tabindex="-1">#</a>Determinism seed</h2>
+<p><code>Budget(seed=...)</code> doesn&#39;t do anything by itself — it makes the seed available via
+<code>alkahest.budget_seed()</code> (Rust: <code>alkahest_cas::budget::seed()</code>) to any RNG-consuming
+sampler that chooses to consult it, instead of threading an explicit seed parameter
+through every call in a pipeline. Two runs entering <code>Budget(seed=7)</code> observe the same
+<code>budget_seed()</code> at every call site that reads it, so a search loop that seeds its own
+sampling from the ambient budget is reproducible run-to-run.</p>
+<h2 id="budgets-and-threads"><a class="hanchor" href="#budgets-and-threads" aria-hidden="true" tabindex="-1">#</a>Budgets and threads</h2>
+<p>The budget frame is <strong>thread-local</strong>; the cancellation flag is <strong>process-wide</strong>. Every
+surprise in this area follows from that pair, so it is worth stating plainly:</p>
+<ul>
+<li>A worker thread does <strong>not</strong> inherit the budget its parent entered. Handing work to a
+<code>concurrent.futures.ThreadPoolExecutor</code> yourself runs it unbudgeted unless you
+re-enter the budget inside the worker.</li>
+<li><code>alkahest.batch_map</code> / <code>batch_map_iter</code> / the <code>*_many</code> helpers do that for you under
+<code>parallel=True</code>: the active budget is snapshotted on the calling thread and re-entered
+in each worker task, so a trip is reported as <code>E-BUDGET-00x</code> on the item that tripped,
+exactly as it would be sequentially. <code>wall_ms</code> stays a single sweep-wide deadline;
+<code>max_steps</code> becomes per-item (the Rust step counter is not readable from Python).
+See <a href="/docs/guide/batch/#combining-with-budgets">Batch and streaming evaluation</a>.</li>
+<li><code>alkahest.run_with_wall_fallback</code> likewise enters its <code>budget</code> argument <em>on the worker
+thread</em> it spawns, so cooperative call sites there actually observe it.</li>
+<li><code>request_cancel()</code> needs no propagation, and that cuts both ways: it stops every
+in-flight cooperative call in the process, not just the one you had in mind. A single
+candidate&#39;s budget trip therefore never sets it — nothing in <code>batch_map</code> touches the
+flag.</li>
+</ul>
+<h2 id="the-python-layer-wall-clock-fallback"><a class="hanchor" href="#the-python-layer-wall-clock-fallback" aria-hidden="true" tabindex="-1">#</a>The Python-layer wall-clock fallback</h2>
+<p>Because <code>simplify</code> cannot raise through its own return type, <code>context(budget=...)</code>
+<em>alone</em> only bounds it the same way <code>max_iterations</code> already does — silently, by
+returning early. <code>alkahest.run_with_wall_fallback</code> turns that silent truncation into a
+raised, coded error: it runs the call on a worker thread (with <code>budget</code> entered on that
+thread) and raises <code>BudgetExceededError</code> (<code>E-BUDGET-001</code>) when the call overruns
+<code>wall_ms</code>.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.run_with_wall_fallback(ak.simplify, big_expr, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">budget</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.Budget(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">wall_ms</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">200</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span></code></pre></div><h3 id="it-does-not-bound-wall-time-for-an-uncooperative-callee"><a class="hanchor" href="#it-does-not-bound-wall-time-for-an-uncooperative-callee" aria-hidden="true" tabindex="-1">#</a>It does not bound wall time for an uncooperative callee</h3>
+<p>Read this before putting it in a loop. <code>run_with_wall_fallback</code> <strong>joins its worker
+before the exception propagates</strong>, so it returns control when the callee returns — not
+at <code>wall_ms</code>. Measured: <code>run_with_wall_fallback(time.sleep, 3.0, budget=Budget(wall_ms=50))</code>
+raises <code>E-BUDGET-001</code> after <strong>3000 ms</strong>. The error message reports the real elapsed time
+(&quot;returned control after 3000 ms&quot;) precisely so this shows up in a log instead of being
+inferred later.</p>
+<p>For a callee that <em>does</em> reach a cooperative checkpoint the wait is short, because the
+worker now runs inside the budget and stops on it (<code>integrate</code> on a hard integrand:
+<code>wall_ms=300</code> returns in about 320 ms) — but that is the case where
+<code>context(budget=...)</code> alone would already have bounded it. The uncooperative case, the
+one this function looks like it exists for, is the one it cannot bound.</p>
+<p>Why not return at the deadline and let the worker run on? Python cannot kill a thread,
+so &quot;return early&quot; means leaking a live thread that still takes the GIL in bursts, still
+allocates into the pool, and can only be asked to stop through the <strong>process-wide</strong>
+cancel flag — which aborts every unrelated in-flight call, and which nobody can then
+clear safely (clearing it before the orphan observes it is a no-op; leaving it set makes
+every later cooperative call fail with <code>E-BUDGET-003</code>). In a multi-day loop that trades a
+bounded stall for unbounded orphan accumulation plus collateral cancellation. Joining is
+the lesser evil, so it is what the function does.</p>
+<p><strong>What actually bounds wall time</strong>, in order of preference:</p>
+<ol>
+<li><code>context(budget=...)</code> around an engine that checks the cooperative budget —
+<code>integrate</code> and <code>limit</code> today. This is the real mechanism; <code>run_with_wall_fallback</code> is
+a reporting shim over it.</li>
+<li>An <strong>OS-level bound</strong> for anything else: run the work in a subprocess with a timeout,
+or put a process-level watchdog around the loop. Nothing inside one Python process can
+preempt a thread mid-FLINT-call — see
+<a href="#how-tightly-wall_ms-binds">what is left, honestly</a>.</li>
+</ol>
+<p>So reach for <code>run_with_wall_fallback</code> to get a <em>raise</em> out of a cooperatively-budgeted
+call that would otherwise hand back a silently truncated answer. Do not reach for it to
+contain an unknown callee.</p>
+<h2 id="exprpool-never-reclaims"><a class="hanchor" href="#exprpool-never-reclaims" aria-hidden="true" tabindex="-1">#</a><code>ExprPool</code> never reclaims</h2>
+<p><code>Budget</code> bounds <em>time</em> and <em>steps</em>. <strong>Nothing bounds memory</strong>, and the shape of the
+memory growth is the single most likely way a multi-day loop dies. This section is as
+important as everything above it.</p>
+<h3 id="the-mechanism"><a class="hanchor" href="#the-mechanism" aria-hidden="true" tabindex="-1">#</a>The mechanism</h3>
+<p><code>ExprPool</code> is an <strong>append-only</strong> hash-consed arena. It has no <code>clear</code>, no <code>truncate</code>, no
+refcount and no garbage collector; the underlying storage cannot shrink. <strong>The only way
+to reclaim interned nodes is to drop the entire pool.</strong> And every <code>Expr</code>, <code>Matrix</code>,
+<code>Series</code> and <code>DerivedResult</code> holds a <em>strong</em> reference to the pool it came from, so
+keeping one interesting result alive keeps every node ever interned alive with it — which
+is exactly the usage pattern a research loop has.</p>
+<p>Measured on this machine, 20 000 <code>integrate</code> calls with a distinct integrand each time:</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>one shared pool for the whole loop ......  1 992 bytes/call, forever, linear
+a fresh pool per iteration ..............      0 bytes/call</code></pre></div><p>Two properties make this nastier than an ordinary leak:</p>
+<ul>
+<li><strong>Time stays flat.</strong> Per-call latency does not degrade as the pool grows, so there is
+no early warning — the loop runs at full speed until the OOM killer arrives. Growth is
+O(n) in memory with O(1) time.</li>
+<li><strong>You cannot measure it from Python.</strong> <code>ExprPool</code> exposes no <code>__len__</code> and no <code>stats()</code>,
+so a loop cannot watch its own footprint and decide to recycle.</li>
+</ul>
+<p>Per-call cost depends on the operation. As a rough guide, roughly 200 bytes of resident
+memory per interned node, and on the order of 0.8 KB/call for <code>diff</code> or <code>simplify</code>,
+2–3.5 KB for <code>integrate</code>, ~8 KB for a <code>crosscheck.check</code>, ~12.5 KB for a <code>series</code> of
+order 6. At one <code>integrate</code> per second on one pool that is gigabytes within a day.</p>
+<h3 id="the-supported-pattern-one-pool-per-problem"><a class="hanchor" href="#the-supported-pattern-one-pool-per-problem" aria-hidden="true" tabindex="-1">#</a>The supported pattern: one pool per problem</h3>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> problem </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> problems:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()             </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># fresh pool per iteration</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">budget</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.Budget(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">wall_ms</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">500</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)):</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">        result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.integrate(build(pool, problem), x)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">        record(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">str</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(result.value))    </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># keep a *string* / dict, not the Expr</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    del</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool, x, result              </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># dropping the pool reclaims everything</span></span></code></pre></div><p>The critical line is <code>record(str(result.value))</code>. Holding the <code>Expr</code> (or the
+<code>DerivedResult</code>, or a <code>Matrix</code> derived from it) pins the pool and defeats the whole
+scheme. <code>DerivedResult.to_dict()</code> / <code>.to_json()</code> exist partly for this: they give you a
+plain-Python envelope that outlives the pool. Do not carry live <code>Expr</code> handles between
+iterations of an unattended loop; re-parse or rebuild them in the new pool if you need
+them again.</p>
+<h3 id="one-operation-grows-even-on-identical-input"><a class="hanchor" href="#one-operation-grows-even-on-identical-input" aria-hidden="true" tabindex="-1">#</a>One operation grows even on identical input</h3>
+<p><code>Matrix.eigenvals()</code> mints a fresh gensym (<code>__eigen_lambda_N</code>) into the pool on <strong>every</strong>
+call, so re-asking the same eigenvalue question keeps allocating for no new information —
+measured at about 1.9 KB/call on the same 2×2 integer matrix over 20 000 calls, where
+<code>simplify</code> on identical input is exactly 0. Cache eigenvalue results yourself rather than
+recomputing them in a loop. (Every other Python-facing entry point measured is flat on
+repeated input.)</p>
+<h3 id="if-you-enable-the-llvm-jit"><a class="hanchor" href="#if-you-enable-the-llvm-jit" aria-hidden="true" tabindex="-1">#</a>If you enable the LLVM JIT</h3>
+<p>The <code>jit</code> (LLVM) feature leaks a whole LLVM <code>Context</code> per compile — a true leak with no
+pool to drop, on the error paths as well as the success path. Cranelift (the default
+wheel&#39;s JIT) is unaffected. Do not compile in a loop under a <code>+jit</code> / <code>+full</code> build.</p>
+<h2 id="memory-max_bytes-and-why-an-oom-used-to-kill-the-process"><a class="hanchor" href="#memory-max_bytes-and-why-an-oom-used-to-kill-the-process" aria-hidden="true" tabindex="-1">#</a>Memory: <code>max_bytes</code>, and why an OOM used to kill the process</h2>
+<p><code>wall_ms</code> bounds how long a call may run. Nothing bounded how much memory it could ask
+for — and the answer to <em>that</em> question was not an exception:</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>GNU MP: Cannot allocate memory (size=8)
+timeout: the monitored command dumped core          # SIGABRT, exit 134</code></pre></div><p>GMP&#39;s reaction to a failed allocation is to print that line and call <code>abort()</code>. The Rust
+allocator&#39;s is <code>memory allocation of N bytes failed</code> and the same <code>abort()</code>. Neither is
+catchable, so an exact-rational solve that outgrew the machine took the whole
+interpreter with it — and an unattended loop lost every result it was holding, not just
+the offending call. It was reachable from <em>default arguments</em> (<code>telescope_md</code> on the
+<code>m = 4</code> multinomial).</p>
+<p>This cannot be fixed inside the allocator. GMP&#39;s contract for a replacement allocation
+function forbids returning <code>NULL</code> — the library has no failure path to take — and a Rust
+<code>panic!</code> may not cross a C frame. So Alkahest <strong>counts</strong> GMP&#39;s allocations (a wrapper
+that delegates to GMP&#39;s own functions and does nothing else) and <strong>refuses at its own
+cooperative checkpoints</strong>, before the allocation that would have died:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">budget</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.Budget(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">max_bytes</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">512</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> *</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 1024</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> *</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 1024</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)):</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">        telescope_md(term, n, xs)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.BudgetExceededError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">        assert</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e.code </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">==</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "E-BUDGET-004"</span></span></code></pre></div><p><code>max_bytes</code> counts bytes of GMP (exact integer/rational) memory held live <em>by the
+guarded block</em> — the total now, less the total when the block was entered. It is the
+missing size budget: the engines&#39; existing ceilings bound the <em>shape</em> of a linear system
+(how many unknowns), and it is the <em>size of its numbers</em> that exhausts memory.</p>
+<h3 id="the-address-space-guard-e-budget-005-which-needs-no-budget-at-all"><a class="hanchor" href="#the-address-space-guard-e-budget-005-which-needs-no-budget-at-all" aria-hidden="true" tabindex="-1">#</a>The address-space guard (<code>E-BUDGET-005</code>), which needs no budget at all</h3>
+<p>If the process runs under a finite <code>RLIMIT_AS</code> — <code>ulimit -v</code>, a container memory limit,
+a batch scheduler — Alkahest refuses when it climbs to within a reserve of that limit,
+<strong>whether or not a budget is active</strong>. The operator already said how much the process
+may have; stopping inside that number is strictly better than dying at it, and it is
+what makes the default-arguments case survivable. With no limit set the guard is inert
+and behaviour is unchanged.</p>
+<p>The reserve is a flat floor (32 MiB, up to 256 MiB for large limits) widened by the
+address-space growth observed between the last two probes, so it tightens exactly when a
+workload accelerates.</p>
+<h3 id="what-this-does-not-do"><a class="hanchor" href="#what-this-does-not-do" aria-hidden="true" tabindex="-1">#</a>What this does not do</h3>
+<p>The guard is checkpoint-granular. A single allocation large enough to cross the whole
+reserve between two consecutive checkpoints still aborts — nothing short of a fallible
+allocator can prevent that, and GMP does not have one. Address-space <em>usage</em> is only
+observable on Linux (<code>/proc/self/statm</code>); elsewhere the guard degrades to <code>max_bytes</code>
+alone. And <code>max_bytes</code> counts GMP memory, not Rust-side allocations.</p>
+<h2 id="error-codes"><a class="hanchor" href="#error-codes" aria-hidden="true" tabindex="-1">#</a>Error codes</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Cause</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-BUDGET-001</code></td>
+<td>The active budget&#39;s wall-clock limit elapsed</td>
+</tr>
+<tr>
+<td><code>E-BUDGET-002</code></td>
+<td>The active budget&#39;s step counter exceeded <code>max_steps</code></td>
+</tr>
+<tr>
+<td><code>E-BUDGET-003</code></td>
+<td><code>request_cancel()</code> was called and not yet cleared</td>
+</tr>
+<tr>
+<td><code>E-BUDGET-004</code></td>
+<td>The active budget&#39;s <code>max_bytes</code> ceiling was reached</td>
+</tr>
+<tr>
+<td><code>E-BUDGET-005</code></td>
+<td>The process is about to exhaust its address-space limit</td>
+</tr>
+<tr>
+<td><code>E-BUDGET-006</code></td>
+<td>One result would exceed physical memory, or GMP&#39;s largest integer</td>
+</tr>
+</tbody></table></div>
+<p>All six are <code>Cause::Resource</code> in the Rust registry (<code>alkahest_cas::errors::codes</code>) —
+a budget/cancellation trip is an environment/policy limit, not a statement about the
+mathematics, so it is never conflated with e.g. <code>IntegrationError::NonElementary</code> (a
+proof that no elementary antiderivative exists). <code>alkahest.integrate</code> and
+<code>alkahest.limit</code> raise <code>BudgetExceededError</code> directly rather than wrapping it in
+<code>IntegrationError</code> / <code>LimitError</code>, so callers can catch it uniformly regardless of which
+engine tripped it:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ak.integrate(hard_expr, x)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.BudgetExceededError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    ...</span><span style="--shiki-light:#6A737D;--shiki-dark:#768390">  # deprioritize and move on</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.IntegrationError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    ...</span><span style="--shiki-light:#6A737D;--shiki-dark:#768390">  # a genuine "no elementary antiderivative" or "not implemented" verdict</span></span></code></pre></div><h2 id="api-reference"><a class="hanchor" href="#api-reference" aria-hidden="true" tabindex="-1">#</a>API reference</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Name</th>
+<th>Kind</th>
+<th>Description</th>
+</tr>
+</thead><tbody><tr>
+<td><code>Budget(wall_ms=None, max_steps=None, seed=None)</code></td>
+<td>class</td>
+<td>Immutable budget triple</td>
+</tr>
+<tr>
+<td><code>context(budget=...)</code></td>
+<td>context manager</td>
+<td>Push/pop the budget for a <code>with</code> block</td>
+</tr>
+<tr>
+<td><code>active_budget()</code></td>
+<td>function</td>
+<td>The <code>Budget</code> from the innermost active context, or <code>None</code></td>
+</tr>
+<tr>
+<td><code>budget_seed()</code></td>
+<td>function</td>
+<td>The seed of the innermost active budget, or <code>None</code></td>
+</tr>
+<tr>
+<td><code>is_budget_active()</code></td>
+<td>function</td>
+<td><code>True</code> if a budget is active on this thread</td>
+</tr>
+<tr>
+<td><code>request_cancel()</code></td>
+<td>function</td>
+<td>Set the process-wide cancellation flag</td>
+</tr>
+<tr>
+<td><code>clear_cancel()</code></td>
+<td>function</td>
+<td>Clear it</td>
+</tr>
+<tr>
+<td><code>is_cancelled()</code></td>
+<td>function</td>
+<td>Read it</td>
+</tr>
+<tr>
+<td><code>run_with_wall_fallback(fn, *args, budget, **kwargs)</code></td>
+<td>function</td>
+<td>Raises <code>E-BUDGET-001</code> when <code>fn</code> overruns <code>wall_ms</code> — after joining its worker, so it does <strong>not</strong> bound wall time for an uncooperative callee (<a href="#it-does-not-bound-wall-time-for-an-uncooperative-callee">above</a>)</td>
+</tr>
+<tr>
+<td><code>BudgetExceededError</code></td>
+<td>exception</td>
+<td><code>E-BUDGET-001..003</code>, subclass of <code>AlkahestError</code></td>
+</tr>
+</tbody></table></div>
+<p>On the Rust side (<code>alkahest_cas::budget</code>): <code>Budget</code>, <code>enter</code>, <code>BudgetGuard</code>, <code>check</code>,
+<code>seed</code>, <code>is_active</code>, <code>request_cancel</code>, <code>clear_cancel</code>, <code>is_cancelled</code>, <code>BudgetError</code>.</p>
+<h2 id="see-also"><a class="hanchor" href="#see-also" aria-hidden="true" tabindex="-1">#</a>See also</h2>
+<ul>
+<li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a></li>
+<li><a href="/docs/guide/batch/">Batch and streaming evaluation</a> — budgets compose with <code>*_many</code> /
+<code>batch_map</code>, including under <code>parallel=True</code>; a trip becomes one failed <code>BatchItem</code>
+carrying <code>E-BUDGET-00x</code>, not a killed process and not a mathematical verdict</li>
+<li><a href="/docs/guide/errors/">Error handling</a> — <code>E-BUDGET-*</code> in the exception hierarchy</li>
+<li><a href="/docs/guide/claim-graphs/">Claim graphs</a> — session-level provenance around budgeted calls</li>
+</ul>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/search-plumbing/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Autoresearch / agent loops</span></a><a class="pager-next" href="/docs/guide/batch/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Batch and streaming evaluation</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/budgets.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#there-is-no-default-budget--set-one">There is no default budget — set one</a></li><li class="d2"><a href="#model">Model</a></li><li class="d2"><a href="#what-checks-the-budget-today">What checks the budget today</a></li><li class="d3"><a href="#rust-interrupt-points-for-engines-with-no-error-channel">Rust: interrupt points for engines with no error channel</a></li><li class="d2"><a href="#how-tightly-wall_ms-binds">How tightly wall_ms binds</a></li><li class="d2"><a href="#cancellation">Cancellation</a></li><li class="d3"><a href="#the-watchdog-runs-while-the-call-runs">The watchdog runs while the call runs</a></li><li class="d2"><a href="#determinism-seed">Determinism seed</a></li><li class="d2"><a href="#budgets-and-threads">Budgets and threads</a></li><li class="d2"><a href="#the-python-layer-wall-clock-fallback">The Python-layer wall-clock fallback</a></li><li class="d3"><a href="#it-does-not-bound-wall-time-for-an-uncooperative-callee">It does not bound wall time for an uncooperative callee</a></li><li class="d2"><a href="#exprpool-never-reclaims">ExprPool never reclaims</a></li><li class="d3"><a href="#the-mechanism">The mechanism</a></li><li class="d3"><a href="#the-supported-pattern-one-pool-per-problem">The supported pattern: one pool per problem</a></li><li class="d3"><a href="#one-operation-grows-even-on-identical-input">One operation grows even on identical input</a></li><li class="d3"><a href="#if-you-enable-the-llvm-jit">If you enable the LLVM JIT</a></li><li class="d2"><a href="#memory-max_bytes-and-why-an-oom-used-to-kill-the-process">Memory: max_bytes, and why an OOM used to kill the process</a></li><li class="d3"><a href="#the-address-space-guard-e-budget-005-which-needs-no-budget-at-all">The address-space guard (E-BUDGET-005), which needs no budget at all</a></li><li class="d3"><a href="#what-this-does-not-do">What this does not do</a></li><li class="d2"><a href="#error-codes">Error codes</a></li><li class="d2"><a href="#api-reference">API reference</a></li><li class="d2"><a href="#see-also">See also</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/budgets.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

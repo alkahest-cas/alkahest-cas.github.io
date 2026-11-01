@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Units API · Alkahest Docs</title>
+<meta name="description" content="Physical units, quantities and dimensional analysis (units(~/api/mod-units/)). Every scale is exact — a rational times a power of π — so no conversion ever…">
+<meta property="og:title" content="Units API · Alkahest Docs">
+<meta property="og:description" content="Physical units, quantities and dimensional analysis (units(~/api/mod-units/)). Every scale is exact — a rational times a power of π — so no conversion ever…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/" class="active" aria-current="page">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>Units API</h1>
+    <div class="prose-block"><p>Physical units, quantities and dimensional analysis (<a href="/docs/api/mod-units/"><code>units</code></a>).
+Every scale is exact — a rational times a power of π — so no conversion ever
+introduces a float. See the <em>Units and dimensional analysis</em> chapter of the
+user guide for the full list of units and rules.</p>
+</div>
+<h2 id="units"><a class="hanchor" href="#units" aria-hidden="true" tabindex="-1">#</a>Units</h2>
+<section class="sym" id="Unit"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">Unit</span>(<span class="sig-p">spec</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Unit" aria-label="Link to Unit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L47" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A physical unit: a product of named units with rational exponents, an
+exact scale relative to SI, and a dimension over the seven SI base
+dimensions.</p>
+<p>Build one from a string — <code>Unit(&quot;mg*h/L&quot;)</code>, <code>Unit(&quot;m/s^2&quot;)</code>,
+<code>Unit(&quot;kg m s^-2&quot;)</code>, <code>Unit(&quot;m^(1/2)&quot;)</code>, <code>Unit(&quot;µg/mL&quot;)</code> — or by
+combining units with <code>*</code>, <code>/</code> and <code>**</code> (rational exponent).</p>
+<p>Equality is <em>semantic</em>: <code>Unit(&quot;N&quot;) == Unit(&quot;kg*m/s^2&quot;)</code> is <code>True</code>;
+<code>str(u)</code> keeps the spelling. <code>degC</code> / <code>degF</code> are affine scales and
+may only stand alone and be converted (<code>E-UNIT-003</code> otherwise).</p>
+<p>Raises <code>UnitError</code> (<code>E-UNIT-002</code>) on an unknown or malformed unit.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="Unit.name">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">name</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Unit.name" aria-label="Link to Unit.name">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L106" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The unit&#39;s spelling as a product, e.g. <code>&quot;mg*h/L&quot;</code>.</p>
+</div>
+</div>
+<div class="member" id="Unit.dimension">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dimension</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Unit.dimension" aria-label="Link to Unit.dimension">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L112" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The dimension, e.g. <code>&quot;mass/length^3&quot;</code> or <code>&quot;dimensionless&quot;</code>.</p>
+</div>
+</div>
+<div class="member" id="Unit.dimension_exponents">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dimension_exponents</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Unit.dimension_exponents" aria-label="Link to Unit.dimension_exponents">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L118" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>{base_dimension: Fraction}</code> for the non-zero exponents.</p>
+</div>
+</div>
+<div class="member" id="Unit.factors">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">factors</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Unit.factors" aria-label="Link to Unit.factors">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L131" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>[(name, Fraction exponent), …]</code> as written.</p>
+</div>
+</div>
+<div class="member" id="Unit.scale">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">scale</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Unit.scale" aria-label="Link to Unit.scale">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L142" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>(ratio, pi_power)</code>: one of this unit is <code>ratio · π**pi_power</code> of the
+coherent SI unit of the same dimension (both <code>Fraction</code>).</p>
+</div>
+</div>
+<div class="member" id="Unit.is_affine">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_affine</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Unit.is_affine" aria-label="Link to Unit.is_affine">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L148" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>True</code> for <code>degC</code> / <code>degF</code>.</p>
+</div>
+</div>
+<div class="member" id="Unit.is_pure_number">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_pure_number</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Unit.is_pure_number" aria-label="Link to Unit.is_pure_number">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L154" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>True</code> when dimensionless with scale 1 (<code>1</code>, <code>rad</code>, <code>m/m</code>).</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="Unit.dimensionless">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dimensionless</span>()</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#Unit.dimensionless" aria-label="Link to Unit.dimensionless">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L100" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The unit of a pure number, written <code>1</code>.</p>
+</div>
+</div>
+<div class="member" id="Unit.same_dimension">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">same_dimension</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Unit.same_dimension" aria-label="Link to Unit.same_dimension">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L159" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>True</code> when <code>other</code> has the same dimension.</p>
+</div>
+</div>
+<div class="member" id="Unit.check_same_dimension">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">check_same_dimension</span>(<span class="sig-p">other</span>, <span class="sig-p">operation</span><span class="sig-def">=&quot;add&quot;</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Unit.check_same_dimension" aria-label="Link to Unit.check_same_dimension">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L167" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Raise <code>UnitError</code> <code>E-UNIT-001</code> (naming both dimensions) unless
+<code>other</code> has the same dimension.</p>
+</div>
+</div>
+<div class="member" id="Unit.require_pure_number">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">require_pure_number</span>(<span class="sig-p">context</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Unit.require_pure_number" aria-label="Link to Unit.require_pure_number">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L176" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Raise <code>UnitError</code> <code>E-UNIT-004</code> unless this is a pure number;
+<code>context</code> names where the value is used (<code>&quot;argument of exp&quot;</code>).</p>
+</div>
+</div>
+<div class="member" id="Unit.conversion">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">conversion</span>(<span class="sig-p">target</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Unit.conversion" aria-label="Link to Unit.conversion">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L197" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The exact map <code>x [self] = ratio·π**pi_power·x + shift [target]</code> as
+<code>(ratio, pi_power, shift)</code> (<code>Fraction</code>s; <code>shift</code> is <code>0</code> except
+between affine temperature scales). <code>E-UNIT-001</code> on a dimension
+mismatch.</p>
+</div>
+</div>
+<div class="member" id="Unit.to_base">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_base</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Unit.to_base" aria-label="Link to Unit.to_base">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L213" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The coherent SI unit of the same dimension in base units
+(<code>Unit(&quot;J&quot;).to_base()</code> is <code>kg*m^2/s^2</code>).</p>
+</div>
+</div>
+<div class="member" id="Unit.simplify">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">simplify</span>(<span class="sig-p">derived</span><span class="sig-def">=False</span>, <span class="sig-p">allowed</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Unit.simplify" aria-label="Link to Unit.simplify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L224" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Merge factors of equal dimension (<code>mg/kg*g → mg</code>); returns
+<code>(ratio, pi_power, unit)</code> with <code>x [self] = ratio·π**pi_power·x [unit]</code>.</p>
+<p>With <code>derived=True</code> the merged unit is also renamed to the named SI
+derived unit it exactly equals (<code>kg*m/s^2 → N</code>), see
+<code>to_derived()</code>; <code>allowed</code> restricts the candidate names.</p>
+</div>
+</div>
+<div class="member" id="Unit.to_derived">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_derived</span>(<span class="sig-p">allowed</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Unit.to_derived" aria-label="Link to Unit.to_derived">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L260" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The named SI derived unit this unit exactly equals, or <code>None</code>.</p>
+<p><code>Unit(&quot;kg*m/s^2&quot;).to_derived()</code> is <code>N</code>; <code>g*m/s^2</code> is <code>mN</code>
+(prefixes in steps of 1000 only); <code>kg*cm/s^2</code> is not renamed (its
+scale is not a power of 1000 times <code>N</code>). The candidates are <code>N, Pa, J, W, C, V, ohm, F, H, T, Wb, S, Hz` (`allowed</code> restricts them). A
+unit that is already one named factor, is dimensionless or affine, or
+contains a dimensionless factor (<code>rad/s</code> is not <code>Hz</code>) is left
+alone, and <code>Gy</code>/<code>Sv</code>/<code>Bq</code> are never produced (they share a
+dimension with <code>m^2/s^2</code> and <code>Hz</code>). <code>N*m</code> is a <code>J</code>.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="parse_unit"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">parse_unit</span>(<span class="sig-p">spec</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#parse_unit" aria-label="Link to parse_unit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L377" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Parse a unit string into a <a href="/docs/api/units/#Unit"><code>Unit</code></a>.</p>
+<p>Accepts products and quotients (<code>&quot;mg*h/L&quot;</code>, <code>&quot;kg m s^-2&quot;</code>,
+<code>&quot;kg*m^2/(s^2*A)&quot;</code>), exponents with <code>^</code> or <code>**</code> (fractional ones in
+parentheses, <code>&quot;m^(1/2)&quot;</code>) or Unicode superscripts (<code>&quot;m s⁻²&quot;</code>), SI
+prefixes from yocto to yotta (<code>µ</code>, <code>μ</code> and <code>u</code> all mean micro), and
+exact numeric factors (<code>&quot;1000*m&quot;</code>). <code>/</code> divides by the single factor that
+follows it.</p>
+<p>Raises <code>UnitError</code>: <code>E-UNIT-002</code> for a malformed string or an unknown
+name (<code>&quot;m2&quot;</code> is refused, not read as <code>m^2</code>), <code>E-UNIT-003</code> for an
+affine temperature unit inside a compound unit (<code>&quot;degC/s&quot;</code>).</p>
+
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> parse_unit(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"mg*h/L"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">).dimension</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'mass*time/length^3'</span></span></code></pre></div></div></section>
+<h2 id="quantities"><a class="hanchor" href="#quantities" aria-hidden="true" tabindex="-1">#</a>Quantities</h2>
+<section class="sym" id="Quantity"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">Quantity</span>(<span class="sig-p">value</span>, <span class="sig-p">unit</span><span class="sig-def">='1'</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Quantity" aria-label="Link to Quantity">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/units.py#L143" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A value together with its <a href="/docs/api/units/#Unit"><code>Unit</code></a>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">value</code><span class="ptype">Expr, int, Fraction or float</span></dt><dd><p>The magnitude. Use <code>int</code> / <code>Fraction</code> / <code>Expr</code> for exact work; a
+<code>float</code> is kept as given (conversions never introduce one).</p>
+</dd></div><div class="param"><dt><code class="pname">unit</code><span class="ptype">Unit or str, default <code>&quot;1&quot;</code></span></dt><dd><p>The unit, e.g. <code>&quot;mg&quot;</code>, <code>&quot;L/h&quot;</code>, <code>Unit(&quot;m/s^2&quot;)</code>.</p>
+</dd></div></dl>
+<p>Arithmetic checks dimensions (see the module docstring). Comparison with
+<code>==</code> is identity; compare <code>convert(a, b.unit).value</code> with <code>b.value</code>
+instead.</p>
+
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> m </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> Quantity(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"kg"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">); a </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> Quantity(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"m/s^2"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (m </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> a).unit </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">==</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> Unit(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"N"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span></span></code></pre></div><div class="members"><div class="members-title">Properties</div><div class="member" id="Quantity.dimension">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dimension</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Quantity.dimension" aria-label="Link to Quantity.dimension">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L180" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The dimension of <code>unit</code>, e.g. <code>&quot;mass/length^3&quot;</code>.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="Quantity.convert">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">convert</span>(<span class="sig-p">unit</span>, <span class="sig-sep">*</span>, <span class="sig-p">_like</span><span class="sig-def">=None</span>)<span class="sig-ret"> → Quantity</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Quantity.convert" aria-label="Link to Quantity.convert">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L185" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Express in <code>unit</code> (exact). See <code>convert()</code>.</p>
+</div>
+</div>
+<div class="member" id="Quantity.to_base">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_base</span>()<span class="sig-ret"> → Quantity</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Quantity.to_base" aria-label="Link to Quantity.to_base">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L191" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Express in coherent SI base units (<code>J → kg*m^2/s^2</code>).</p>
+</div>
+</div>
+<div class="member" id="Quantity.simplify_units">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">simplify_units</span>(<span class="sig-p">derived</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>, <span class="sig-p">allowed</span><span class="sig-def">=None</span>)<span class="sig-ret"> → Quantity</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Quantity.simplify_units" aria-label="Link to Quantity.simplify_units">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L195" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Merge factors of equal dimension (<code>mg/kg*g → mg</code>, <code>km/m → 1</code>)
+and, with <code>derived=True</code> (default), rename an exact match to a named
+SI derived unit (<code>kg*m/s^2 → N</code>). See <a href="/docs/api/units/#simplify_units"><code>simplify_units()</code></a>.</p>
+</div>
+</div>
+<div class="member" id="Quantity.simplify">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">simplify</span>()<span class="sig-ret"> → Quantity</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Quantity.simplify" aria-label="Link to Quantity.simplify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L204" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Simplify the value (<code>alkahest.simplify</code>); the unit is unchanged.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="convert_units"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">convert_units</span>(<span class="sig-p">q</span><span class="sig-ann">: Quantity</span>, <span class="sig-p">unit</span>)<span class="sig-ret"> → Quantity</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#convert_units" aria-label="Link to convert_units">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/units.py#L322" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Express <code>q</code> in <code>unit</code>, exactly.</p>
+<p>The value is multiplied by the exact ratio of the two scales (and, between
+<code>degC</code>/<code>degF</code>/<code>K</code>/<code>degR</code>, shifted by the exact offset).</p>
+<p>Raises <code>UnitError</code> <code>E-UNIT-001</code> when the dimensions differ.</p>
+
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> convert(Quantity(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">100</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"degC"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"degF"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">).value</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">212</span></span></code></pre></div></div></section>
+<section class="sym" id="to_base_units"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">to_base_units</span>(<span class="sig-p">q</span><span class="sig-ann">: Quantity</span>)<span class="sig-ret"> → Quantity</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#to_base_units" aria-label="Link to to_base_units">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/units.py#L338" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Express <code>q</code> in coherent SI base units (<code>kg</code>, <code>m</code>, <code>s</code>, <code>A</code>,
+<code>K</code>, <code>mol</code>, <code>cd</code>); <code>degC</code>/<code>degF</code> go to <code>K</code>.</p>
+</div></section>
+<section class="sym" id="simplify_units"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">simplify_units</span>(<span class="sig-p">q</span><span class="sig-ann">: Quantity</span>, <span class="sig-p">derived</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>, <span class="sig-p">allowed</span><span class="sig-def">=None</span>)<span class="sig-ret"> → Quantity</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_units" aria-label="Link to simplify_units">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/units.py#L344" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Merge the factors of <code>q.unit</code> that share a dimension into the first
+one (<code>mg/kg*g → mg</code>, <code>L/h*min → L</code>, <code>km/m → 1</code>), folding the exact
+conversion ratio into the value; then, unless <code>derived=False</code>, rename the
+result to the named SI derived unit it <strong>exactly</strong> equals.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">q</code><span class="ptype">Quantity</span></dt></div><div class="param"><dt><code class="pname">derived</code><span class="ptype">bool, default True</span></dt><dd><p><code>kg*m/s^2 → N</code>, <code>kg*m^2/s^2 → J</code>, <code>A*s → C</code>, <code>kg*m^2/(A*s^3) → V`; a power-of-1000 prefix is allowed (`g*m/s^2 → mN</code>). The
+candidates are <code>N, Pa, J, W, C, V, ohm, F, H, T, Wb, S, Hz</code> (their
+dimensions are pairwise distinct, so there is no ambiguity among them;
+<code>N*m</code> is a <code>J</code>). A unit that is already a single named factor,
+carries a dimensionless factor (<code>rad/s</code> is not <code>Hz</code>) or whose scale
+is not a power of 1000 times the derived unit (<code>kg*cm/s^2</code>) is left
+as is. <code>Gy</code>, <code>Sv</code> and <code>Bq</code> are never produced.</p>
+</dd></div><div class="param"><dt><code class="pname">allowed</code><span class="ptype">iterable of str, optional</span></dt><dd><p>Restrict the candidates, e.g. <code>allowed=[&quot;N&quot;, &quot;J&quot;]</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> simplify_units(Quantity(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"kg*m/s^2"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)).unit</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">Unit(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'N'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> simplify_units(Quantity(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"kg*m/s^2"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">derived</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">False</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">).unit</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">Unit(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'kg*m/s^2'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div></div></section>
+<h2 id="logarithmic-scales"><a class="hanchor" href="#logarithmic-scales" aria-hidden="true" tabindex="-1">#</a>Logarithmic scales</h2>
+<div class="prose-block"><p><code>dB</code>, <code>Np</code> and <code>pH</code> are not units (<code>Unit(&quot;dB&quot;)</code> is <code>E-UNIT-002</code>);
+they are converted explicitly in <a href="/docs/api/mod-units/"><code>units</code></a>.</p>
+</div>
+<section class="sym" id="db_to_ratio"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">db_to_ratio</span>(<span class="sig-p">db</span>, <span class="sig-p">kind</span><span class="sig-def">=&quot;power&quot;</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#db_to_ratio" aria-label="Link to db_to_ratio">#</a></div>
+</div><div class="sym-body"><p class="muted">Documented together with <a href="#ratio_to_np"><code>ratio_to_np</code></a>.</p></div></section>
+<section class="sym" id="ratio_to_db"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">ratio_to_db</span>(<span class="sig-p">ratio</span>, <span class="sig-p">kind</span><span class="sig-def">=&quot;power&quot;</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ratio_to_db" aria-label="Link to ratio_to_db">#</a></div>
+</div><div class="sym-body"><p class="muted">Documented together with <a href="#ratio_to_np"><code>ratio_to_np</code></a>.</p></div></section>
+<section class="sym" id="np_to_ratio"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">np_to_ratio</span>(<span class="sig-p">np_</span>, <span class="sig-p">kind</span><span class="sig-def">=&quot;field&quot;</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#np_to_ratio" aria-label="Link to np_to_ratio">#</a></div>
+</div><div class="sym-body"><p class="muted">Documented together with <a href="#ratio_to_np"><code>ratio_to_np</code></a>.</p></div></section>
+<section class="sym" id="ratio_to_np"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">ratio_to_np</span>(<span class="sig-p">ratio</span>, <span class="sig-p">kind</span><span class="sig-def">=&quot;field&quot;</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ratio_to_np" aria-label="Link to ratio_to_np">#</a></div>
+</div><div class="sym-body"><p><code>10**(db/10)</code> (power) or <code>10**(db/20)</code> (field) and its inverse;
+<code>exp(np)</code> (field) or <code>exp(2 np)</code> (power) and its inverse. Exact for
+exact powers of ten, symbolic otherwise, a float only for a float input.</p>
+</div></section>
+<section class="sym" id="ph_to_concentration"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">ph_to_concentration</span>(<span class="sig-p">ph</span>)<span class="sig-ret"> → Quantity</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#ph_to_concentration" aria-label="Link to ph_to_concentration">#</a></div>
+</div><div class="sym-body"><p class="muted">Documented together with <a href="#concentration_to_ph"><code>concentration_to_ph</code></a>.</p></div></section>
+<section class="sym" id="concentration_to_ph"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">concentration_to_ph</span>(<span class="sig-p">c</span><span class="sig-ann">: Quantity</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#concentration_to_ph" aria-label="Link to concentration_to_ph">#</a></div>
+</div><div class="sym-body"><p><code>10**(-pH)</code> in <code>mol/L</code> and <code>-log10(c / (1 mol/L))</code>.</p>
+</div></section>
+<h2 id="dimensional-analysis"><a class="hanchor" href="#dimensional-analysis" aria-hidden="true" tabindex="-1">#</a>Dimensional analysis</h2>
+<section class="sym" id="dimension_of"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">dimension_of</span>(<span class="sig-p">expr</span>, <span class="sig-p">units</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#dimension_of" aria-label="Link to dimension_of">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/units.rs#L422" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>The unit of a symbolic formula, given the unit of each of its symbols.</p>
+<p>Checks the <strong>dimensional consistency</strong> of <code>expr</code> and returns the unit
+its value is in when every symbol is given in its listed unit.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr</span></dt><dd><p>The formula.</p>
+</dd></div><div class="param"><dt><code class="pname">units</code><span class="ptype">dict[Expr, Unit | str]</span></dt><dd><p>The unit of each symbol. Keys may be any sub-expression, e.g. an
+applied undefined function <code>C(t)</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Unit</span></dt></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">UnitError</span></dt><dd><p><code>E-UNIT-001</code> the terms of a sum have different dimensions (both are
+named); <code>E-UNIT-004</code> the argument of <code>exp</code>/<code>log</code>/<code>sin</code>/… or a
+non-literal exponent is not a pure number (an angle must be in <code>rad</code>);
+<code>E-UNIT-005</code> a symbol or function with no known unit; <code>E-UNIT-006</code>
+the terms of a sum share a dimension but not a unit (<code>h</code> and <code>min</code>);
+<code>E-UNIT-003</code> an affine temperature inside arithmetic.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool(); D, V </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"D"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"V"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> dimension_of(D </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> V, {D: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"mg"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, V: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"L"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">})</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">Unit(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'mg/L'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div></div></section>
+<section class="sym" id="units.unify_units"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-prefix">units.</span><span class="sig-name">unify_units</span>(<span class="sig-p">expr</span>, <span class="sig-p">units</span>, <span class="sig-p">prefer</span><span class="sig-ann">: str</span><span class="sig-def">='finest'</span>)<span class="sig-ret"> → Quantity</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#units.unify_units" aria-label="Link to units.unify_units">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/units.py#L375" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Like <a href="/docs/api/units/#dimension_of"><code>dimension_of()</code></a>, but convert a sum whose terms share a
+dimension and differ in unit instead of refusing it (<code>E-UNIT-006</code>).</p>
+<p><code>a</code> in <code>h</code> plus <code>b</code> in <code>min</code> becomes <code>60*a + b</code> in <code>min</code>: each
+such term is multiplied by the exact ratio of its unit to the target unit
+given by <code>prefer</code> — <code>&quot;finest&quot;</code> (default, the smallest unit among the
+terms, so factors are integers wherever possible), <code>&quot;coarsest&quot;</code> or
+<code>&quot;first&quot;</code> (the first term in canonical order). <code>min</code>/<code>max</code>/<code>atan2</code>
+arguments and <code>Piecewise</code> values are treated the same way.</p>
+<p>Returns a <a href="/docs/api/units/#Quantity"><code>Quantity</code></a> whose <code>value</code> is the rewritten formula and
+whose <code>unit</code> is the unit that value is in when every symbol is in its
+listed unit. A formula without mixed sums comes back unchanged; every other
+refusal of <a href="/docs/api/units/#dimension_of"><code>dimension_of()</code></a> stands (<code>E-UNIT-001</code>, <code>-003</code>, <code>-004</code>,
+<code>-005</code>, <code>-007</code>).</p>
+
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool(); a, b </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"a"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"b"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> q </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> unify_units(a </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> b, {a: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"h"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, b: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"min"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">})   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 60*a + b</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> str</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(q.unit)</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'min'</span></span></code></pre></div></div></section>
+<h2 id="calculus-with-units"><a class="hanchor" href="#calculus-with-units" aria-hidden="true" tabindex="-1">#</a>Calculus with units</h2>
+<div class="prose-block"><p><code>alkahest.units.diff(q, var)</code> and <code>alkahest.units.integrate(q, var, lower=None, upper=None)` take the variable as a `Quantity</code> whose value is a
+symbol, and return <code>q.unit / var.unit</code> and <code>q.unit · var.unit</code>
+respectively. Bounds are quantities (converted into the variable&#39;s unit) or the
+unit-free <code>0</code> and <code>±oo</code>. <code>alkahest.units.exp</code>, <code>log</code>, <code>sin</code>, … (and
+<code>apply(f, q)</code>) require a dimensionless argument and convert <code>deg</code>/<code>%</code> to a
+pure number first.</p>
+<p>Refusals raise <a href="/docs/api/errors/#UnitError"><code>UnitError</code></a> (<code>E-UNIT-001</code> … <code>E-UNIT-007</code>); see
+<code>errors</code>.</p>
+</div>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/pari/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">PARI/GP interop</span></a><a class="pager-next" href="/docs/api/tensor/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Tensor calculus</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/units.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#units">Units</a></li><li class="d3"><a href="#Unit">Unit</a></li><li class="d3"><a href="#parse_unit">parse_unit</a></li><li class="d2"><a href="#quantities">Quantities</a></li><li class="d3"><a href="#Quantity">Quantity</a></li><li class="d3"><a href="#convert_units">convert_units</a></li><li class="d3"><a href="#to_base_units">to_base_units</a></li><li class="d3"><a href="#simplify_units">simplify_units</a></li><li class="d2"><a href="#logarithmic-scales">Logarithmic scales</a></li><li class="d3"><a href="#db_to_ratio">db_to_ratio</a></li><li class="d3"><a href="#ratio_to_db">ratio_to_db</a></li><li class="d3"><a href="#np_to_ratio">np_to_ratio</a></li><li class="d3"><a href="#ratio_to_np">ratio_to_np</a></li><li class="d3"><a href="#ph_to_concentration">ph_to_concentration</a></li><li class="d3"><a href="#concentration_to_ph">concentration_to_ph</a></li><li class="d2"><a href="#dimensional-analysis">Dimensional analysis</a></li><li class="d3"><a href="#dimension_of">dimension_of</a></li><li class="d3"><a href="#units.unify_units">units.unify_units</a></li><li class="d2"><a href="#calculus-with-units">Calculus with units</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/units.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tensor calculus API · Alkahest Docs</title>
+<meta name="description" content="Metric → Christoffel → Riemann / Ricci / Einstein / Weyl on a coordinate chart, and an abstract-index layer with Einstein summation (tensor).">
+<meta property="og:title" content="Tensor calculus API · Alkahest Docs">
+<meta property="og:description" content="Metric → Christoffel → Riemann / Ricci / Einstein / Weyl on a coordinate chart, and an abstract-index layer with Einstein summation (tensor).">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/" class="active" aria-current="page">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>Tensor calculus API</h1>
+    <div class="prose-block"><p>Metric → Christoffel → Riemann / Ricci / Einstein / Weyl on a coordinate chart,
+and an abstract-index layer with Einstein summation (<code>tensor</code>).</p>
+<p>Every component is computed in an <strong>exact</strong> field: integer polynomials over the
+coordinates, the parameters and one generator per transcendental atom
+(<code>sin</code>/<code>cos</code>, <code>sinh</code>/<code>cosh</code>, <code>exp</code>, <code>log</code>, radicals, undefined
+functions such as <code>a(t)</code> and their <code>Derivative</code> nodes), with
+<code>sin² = 1 − cos²</code>, <code>cosh² − sinh² = 1</code>, <code>i² = −1</code> and <code>(√b)² = b</code>
+applied and every denominator made free of <code>sin</code>, radicals and <code>i</code>. That
+normal form is canonical, so a component that vanishes identically is the
+literal <code>0</code> and a non-zero one is never reported as zero — no sampling, no
+floats. Only independent components are computed; the rest follow by symmetry.</p>
+<p>Conventions (MTW / Carroll / Wald):
+<code>Γ^a_{bc} = ½ g^{ad}(∂_b g_{dc} + ∂_c g_{db} − ∂_d g_{bc})</code>,
+<code>R^a_{bcd} = ∂_c Γ^a_{db} − ∂_d Γ^a_{cb} + Γ^a_{ce}Γ^e_{db} − Γ^a_{de}Γ^e_{cb}</code>,
+<code>R_{bd} = R^a_{bad}</code>, <code>G_{ab} = R_{ab} − ½ R g_{ab}</code>,
+<code>K = R_{abcd}R^{abcd}</code>; the 2-sphere of radius <code>ρ</code> has <code>R = 2/ρ²</code>.</p>
+</div>
+<h2 id="metric"><a class="hanchor" href="#metric" aria-hidden="true" tabindex="-1">#</a>Metric</h2>
+<section class="sym" id="Metric"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">Metric</span>(<span class="sig-p">g</span><span class="sig-ann">: Any</span>, <span class="sig-p">coords</span><span class="sig-ann">: Sequence[Expr]</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Metric" aria-label="Link to Metric">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/tensor.py#L623" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A (pseudo-)Riemannian metric <code>g_{ab}</code> on the chart <code>coords</code>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">g</code><span class="ptype">list of lists or Matrix</span></dt><dd><p>The symmetric components <code>g[a][b]</code> (<code>Expr</code>, <code>int</code> or <code>Fraction</code>).</p>
+</dd></div><div class="param"><dt><code class="pname">coords</code><span class="ptype">sequence of Expr</span></dt><dd><p>Distinct coordinate symbols, one per row.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">TensorError</span></dt><dd><p><code>E-TENSOR-001</code> (shape / coordinates), <code>E-TENSOR-002</code> (not symmetric),
+<code>E-TENSOR-003</code> (determinant identically zero), <code>E-TENSOR-004</code> (a float
+entry), <code>E-TENSOR-005</code> (<code>Piecewise</code> or another node the exact field
+cannot hold).</p>
+</dd></div></dl>
+<p>Every curvature method is computed once and cached; <code>timings()</code> reports
+the wall time of each stage.</p>
+<div class="members"><div class="members-title">Methods</div><div class="member" id="Metric.as_tensor">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">as_tensor</span>()<span class="sig-ret"> → Tensor</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.as_tensor" aria-label="Link to Metric.as_tensor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L680" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>g_{ab}</code> as a <a href="/docs/api/tensor/#Tensor"><code>Tensor</code></a> (variance <code>&quot;dd&quot;</code>).</p>
+</div>
+</div>
+<div class="member" id="Metric.inverse">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">inverse</span>()<span class="sig-ret"> → Tensor</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.inverse" aria-label="Link to Metric.inverse">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L684" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>g^{ab}</code> (variance <code>&quot;uu&quot;</code>).</p>
+</div>
+</div>
+<div class="member" id="Metric.determinant">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">determinant</span>()<span class="sig-ret"> → Expr</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.determinant" aria-label="Link to Metric.determinant">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L688" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>det g</code>.</p>
+</div>
+</div>
+<div class="member" id="Metric.christoffel">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">christoffel</span>()<span class="sig-ret"> → list</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.christoffel" aria-label="Link to Metric.christoffel">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L692" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Christoffel symbols of the second kind: <code>out[a][b][c] = Γ^a_{bc}</code>.</p>
+</div>
+</div>
+<div class="member" id="Metric.christoffel_first_kind">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">christoffel_first_kind</span>()<span class="sig-ret"> → list</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.christoffel_first_kind" aria-label="Link to Metric.christoffel_first_kind">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L696" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Christoffel symbols of the first kind: <code>out[a][b][c] = Γ_{abc} = g_{ad}Γ^d_{bc}</code>.</p>
+</div>
+</div>
+<div class="member" id="Metric.riemann">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">riemann</span>()<span class="sig-ret"> → Tensor</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.riemann" aria-label="Link to Metric.riemann">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L700" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>R^a_{bcd}</code> (variance <code>&quot;uddd&quot;</code>).</p>
+</div>
+</div>
+<div class="member" id="Metric.riemann_lower">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">riemann_lower</span>()<span class="sig-ret"> → Tensor</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.riemann_lower" aria-label="Link to Metric.riemann_lower">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L704" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>R_{abcd}</code> (variance <code>&quot;dddd&quot;</code>).</p>
+</div>
+</div>
+<div class="member" id="Metric.ricci">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ricci</span>()<span class="sig-ret"> → Tensor</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.ricci" aria-label="Link to Metric.ricci">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L710" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>R_{ab} = R^c_{acb}</code> (variance <code>&quot;dd&quot;</code>).</p>
+</div>
+</div>
+<div class="member" id="Metric.ricci_scalar">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ricci_scalar</span>()<span class="sig-ret"> → Expr</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.ricci_scalar" aria-label="Link to Metric.ricci_scalar">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L714" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>R = g^{ab} R_{ab}</code>.</p>
+</div>
+</div>
+<div class="member" id="Metric.einstein">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">einstein</span>()<span class="sig-ret"> → Tensor</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.einstein" aria-label="Link to Metric.einstein">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L718" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>G_{ab} = R_{ab} − ½ R g_{ab}</code> (variance <code>&quot;dd&quot;</code>).</p>
+</div>
+</div>
+<div class="member" id="Metric.weyl">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">weyl</span>()<span class="sig-ret"> → Tensor</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.weyl" aria-label="Link to Metric.weyl">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L722" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The Weyl tensor <code>C_{abcd}</code> (variance <code>&quot;dddd&quot;</code>); <code>E-TENSOR-008</code> for <code>n &lt; 3</code>.</p>
+</div>
+</div>
+<div class="member" id="Metric.kretschmann">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">kretschmann</span>()<span class="sig-ret"> → Expr</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.kretschmann" aria-label="Link to Metric.kretschmann">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L726" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>K = R_{abcd} R^{abcd}</code>.</p>
+</div>
+</div>
+<div class="member" id="Metric.is_ricci_flat">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_ricci_flat</span>()<span class="sig-ret"> → bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.is_ricci_flat" aria-label="Link to Metric.is_ricci_flat">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L730" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>True</code> iff every <code>R_{ab}</code> is exactly zero — a proof, not a sample.</p>
+</div>
+</div>
+<div class="member" id="Metric.geodesic_equations">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">geodesic_equations</span>(<span class="sig-p">velocities</span><span class="sig-ann">: Sequence[Any] | None</span><span class="sig-def">=None</span>)<span class="sig-ret"> → list</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.geodesic_equations" aria-label="Link to Metric.geodesic_equations">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L734" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Coordinate accelerations <code>d²x^a/dτ² = −Γ^a_{bc} ẋ^b ẋ^c</code>.</p>
+<p><code>velocities</code> defaults to fresh symbols <code>&lt;coord&gt;_dot</code>; any expressions
+may be passed (e.g. <code>ak.diff(x(τ), τ)</code>).  Returns one <code>Expr</code> per
+coordinate.</p>
+</div>
+</div>
+<div class="member" id="Metric.tensor">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">tensor</span>(<span class="sig-p">components</span><span class="sig-ann">: Any</span>, <span class="sig-p">variance</span><span class="sig-ann">: str | Sequence[Any]</span>)<span class="sig-ret"> → Tensor</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.tensor" aria-label="Link to Metric.tensor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L746" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>A <a href="/docs/api/tensor/#Tensor"><code>Tensor</code></a> bound to this metric (for raising/lowering).</p>
+</div>
+</div>
+<div class="member" id="Metric.simplify">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">simplify</span>(<span class="sig-p">expr</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.simplify" aria-label="Link to Metric.simplify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L752" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Canonical form of <code>expr</code> in the exact component field (<code>0</code> iff zero).</p>
+</div>
+</div>
+<div class="member" id="Metric.is_zero">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_zero</span>(<span class="sig-p">expr</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.is_zero" aria-label="Link to Metric.is_zero">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L758" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Exact zero test in the component field.</p>
+</div>
+</div>
+<div class="member" id="Metric.diff">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">diff</span>(<span class="sig-p">expr</span><span class="sig-ann">: Any</span>, <span class="sig-p">coord</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.diff" aria-label="Link to Metric.diff">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L762" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>∂expr/∂coord</code> in canonical form (<code>coord</code> an index or a coordinate).</p>
+</div>
+</div>
+<div class="member" id="Metric.timings">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">timings</span>()<span class="sig-ret"> → dict[str, float]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Metric.timings" aria-label="Link to Metric.timings">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L769" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Wall time in seconds of every stage computed so far.</p>
+</div>
+</div></div></div></section>
+<h2 id="abstract-indices"><a class="hanchor" href="#abstract-indices" aria-hidden="true" tabindex="-1">#</a>Abstract indices</h2>
+<section class="sym" id="tensor_indices"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">tensor_indices</span>(<span class="sig-p">names</span><span class="sig-ann">: str | Iterable[str]</span>)<span class="sig-ret"> → tuple[TensorIndex, ...]</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#tensor_indices" aria-label="Link to tensor_indices">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/tensor.py#L146" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Make indices from <code>&quot;a b c&quot;</code> (spaces or commas) or a list of names.</p>
+<p>Returns a tuple of contravariant <a href="/docs/api/tensor/#TensorIndex"><code>TensorIndex</code></a>; negate one for the
+covariant position.</p>
+</div></section>
+<section class="sym" id="Tensor"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">Tensor</span>(
+    <span class="sig-p">components</span><span class="sig-ann">: Any</span>,
+    <span class="sig-p">variance</span><span class="sig-ann">: str | Sequence[Any]</span>,
+    <span class="sig-p">metric</span><span class="sig-ann">: Metric | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#Tensor" aria-label="Link to Tensor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/tensor.py#L201" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Components of a tensor with a fixed variance per slot.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">components</code><span class="ptype">nested lists</span></dt><dd><p><code>components[i][j]...</code> (rank-many levels; a bare <code>Expr</code> for rank 0).</p>
+</dd></div><div class="param"><dt><code class="pname">variance</code><span class="ptype">str</span></dt><dd><p>One character per slot: <code>&quot;u&quot;</code> (contravariant) or <code>&quot;d&quot;</code> (covariant),
+e.g. <code>&quot;uddd&quot;</code> for <code>R^a_{bcd}</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">metric</code><span class="ptype">Metric, optional</span></dt><dd><p>Used to raise/lower slots when indexed in the other variance, and to
+simplify components.</p>
+</dd></div></dl>
+<p><code>T[0, 1]</code> (integers) is a component; <code>T[-a, -b]</code> (indices) is an
+<a href="/docs/api/tensor/#IndexedTensor"><code>IndexedTensor</code></a>.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="Tensor.components">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">components</span><span class="sig-ann">: Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Tensor.components" aria-label="Link to Tensor.components">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L239" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Nested lists of components (zeros as <code>0</code>).</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="Tensor.component">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">component</span>(<span class="sig-p">*idx</span><span class="sig-ann">: int</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Tensor.component" aria-label="Link to Tensor.component">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L245" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The component at integer indices <code>idx</code>.</p>
+</div>
+</div>
+<div class="member" id="Tensor.nonzero">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">nonzero</span>()<span class="sig-ret"> → dict[tuple[int, ...], Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Tensor.nonzero" aria-label="Link to Tensor.nonzero">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L251" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>{index tuple: component}</code> for every non-zero component.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="IndexedTensor"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">IndexedTensor</span>(
+    <span class="sig-p">data</span><span class="sig-ann">: dict[tuple[int, ...], Any]</span>,
+    <span class="sig-p">free</span><span class="sig-ann">: Sequence[TensorIndex]</span>,
+    <span class="sig-p">dim</span><span class="sig-ann">: int</span>,
+    <span class="sig-p">metric</span><span class="sig-ann">: Metric | None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#IndexedTensor" aria-label="Link to IndexedTensor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/tensor.py#L280" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A tensor with named free indices, the result of indexing a <a href="/docs/api/tensor/#Tensor"><code>Tensor</code></a>.</p>
+<p>Supports <code>+</code>, <code>-</code>, <code>*</code> (outer product with Einstein summation over a
+repeated index, once up once down), scalar <code>*</code>/<code>/</code>,
+<code>symmetrize()</code>, <code>antisymmetrize()</code>, and <code>tensor()</code> /
+<code>components</code> to read the result.  Components are kept in the
+metric&#39;s canonical form, so a combination that vanishes is <code>0</code>.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="IndexedTensor.components">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">components</span><span class="sig-ann">: Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#IndexedTensor.components" aria-label="Link to IndexedTensor.components">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L569" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Nested lists of components, slots in <code>free</code> order.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="IndexedTensor.symmetrize">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">symmetrize</span>(<span class="sig-p">*idx</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → IndexedTensor</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#IndexedTensor.symmetrize" aria-label="Link to IndexedTensor.symmetrize">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L546" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>T_{(ab)} = ½(T_{ab} + T_{ba})</code> over the named free indices.</p>
+</div>
+</div>
+<div class="member" id="IndexedTensor.antisymmetrize">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">antisymmetrize</span>(<span class="sig-p">*idx</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → IndexedTensor</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#IndexedTensor.antisymmetrize" aria-label="Link to IndexedTensor.antisymmetrize">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L550" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>T_{[ab]} = ½(T_{ab} − T_{ba})</code> over the named free indices.</p>
+</div>
+</div>
+<div class="member" id="IndexedTensor.tensor">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">tensor</span>()<span class="sig-ret"> → Tensor</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#IndexedTensor.tensor" aria-label="Link to IndexedTensor.tensor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L556" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>A <a href="/docs/api/tensor/#Tensor"><code>Tensor</code></a> with slots in <code>free</code> order.</p>
+</div>
+</div>
+<div class="member" id="IndexedTensor.component">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">component</span>(<span class="sig-p">*idx</span><span class="sig-ann">: int</span>)<span class="sig-ret"> → Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#IndexedTensor.component" aria-label="Link to IndexedTensor.component">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L573" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The component at integer indices (slots in <code>free</code> order).</p>
+</div>
+</div>
+<div class="member" id="IndexedTensor.is_zero">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_zero</span>()<span class="sig-ret"> → bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#IndexedTensor.is_zero" aria-label="Link to IndexedTensor.is_zero">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L577" rel="noopener">source</a></div></div>
+  <div class="member-body"><p><code>True</code> when every component is exactly zero (canonical form).</p>
+</div>
+</div></div></div></section>
+<div class="prose-block"><p>Refusals are <a href="/docs/api/errors/#TensorError"><code>TensorError</code></a> (<code>E-TENSOR-001</code> … <code>E-TENSOR-010</code>); see
+<code>errors</code>.</p>
+</div>
+<h2 id="indices"><a class="hanchor" href="#indices" aria-hidden="true" tabindex="-1">#</a>Indices</h2>
+<section class="sym" id="TensorIndex"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">TensorIndex</span>(<span class="sig-p">name</span><span class="sig-ann">: str</span>, <span class="sig-p">up</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#TensorIndex" aria-label="Link to TensorIndex">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/tensor.py#L119" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>An abstract index.  <code>+a</code> (or <code>a</code>) is contravariant, <code>-a</code> covariant.</p>
+</div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/units/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Units</span></a><a class="pager-next" href="/docs/api/controls/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Controls</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/tensor.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#metric">Metric</a></li><li class="d2"><a href="#abstract-indices">Abstract indices</a></li><li class="d3"><a href="#tensor_indices">tensor_indices</a></li><li class="d3"><a href="#Tensor">Tensor</a></li><li class="d3"><a href="#IndexedTensor">IndexedTensor</a></li><li class="d2"><a href="#indices">Indices</a></li><li class="d3"><a href="#TensorIndex">TensorIndex</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/tensor.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SMT/SAT bridge · Alkahest Docs</title>
+<meta name="description" content="Discrete and mixed integer/real/boolean subproblems are not Alkahest's problem class, and the fastest way to make Alkahest worse would be to pretend…">
+<meta property="og:title" content="SMT/SAT bridge · Alkahest Docs">
+<meta property="og:description" content="Discrete and mixed integer/real/boolean subproblems are not Alkahest's problem class, and the fastest way to make Alkahest worse would be to pretend…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li class="open"><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/" class="active" aria-current="page">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <div class="eyebrow">Agent loops</div>
+    <h1>SMT/SAT bridge</h1>
+    <p>Discrete and mixed integer/real/boolean subproblems are <strong>not Alkahest&#39;s problem class</strong>,
+and the fastest way to make Alkahest worse would be to pretend otherwise. What a search
+loop needs is not an in-tree SAT solver but a way to <em>hand the subproblem off</em> — and,
+crucially, a way to bring the answer back in a form the rest of the toolchain can trust.</p>
+<p>That is what this bridge is. <code>alkahest.to_smtlib</code> emits standard SMT-LIB 2 text; an
+external solver (z3, cvc5, …) consumes it; <code>alkahest.smt.solve</code> reads the answer back,
+lifts the model into exact rationals, and <strong>checks it</strong>. It is the same shape as
+<a href="/docs/guide/lean-certs/">Lean certificates</a>: Alkahest emits a standard artifact, and an
+independently maintained tool it does not control does the hard part.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"n"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"integer"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># x is real, n is an integer, x sits strictly between n and sqrt(10) — mixed</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># integer/real, which is exactly what neither CAD nor `diophantine` handles.</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">f </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.And(pool.gt(x, n), ak.And(pool.lt(x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)), pool.gt(n, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))))</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool):</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.smt.solve(f, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">budget</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.Budget(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">wall_ms</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5000</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(result.status)        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'sat'</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(result.model)         </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># {'x': Fraction(3, 1), 'n': Fraction(2, 1)}</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(result.engine)        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'z3 Z3 version 4.13.0 - 64 bit'</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(result.badge)         </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'the solver's model was substituted back and ...'</span></span></code></pre></div><h2 id="the-two-asymmetries"><a class="hanchor" href="#the-two-asymmetries" aria-hidden="true" tabindex="-1">#</a>The two asymmetries</h2>
+<p>Everything else on this page follows from these.</p>
+<h3 id="1-sat-and-unsat-have-different-trust-stories"><a class="hanchor" href="#1-sat-and-unsat-have-different-trust-stories" aria-hidden="true" tabindex="-1">#</a>1. <code>sat</code> and <code>unsat</code> have different trust stories</h3>
+<p>A <code>sat</code> model is checkable inside Alkahest <strong>for free</strong>: substitute it back and evaluate
+the formula exactly. <code>solve</code> always does this. There is no flag to turn it off, and a
+model that fails raises <code>SmtError</code> <code>E-SMT-004</code> rather than warning — a failure there means
+the emitter mistranslated the formula or the solver returned an unsound model, and neither
+belongs in a log line.</p>
+<p><code>unsat</code> is a different matter: checking it means consuming an unsat proof, which is a large
+project against unstable formats. So an <code>unsat</code> result carries the status
+<strong><code>externally_asserted</code></strong>, whose badge reads:</p>
+<blockquote><p>an external solver asserted this; NO proof was checked and nothing in Alkahest verified it</p>
+</blockquote>
+<p>and which is deliberately <strong>absent</strong> from <code>alkahest.research.MACHINE_CHECKED_STATUSES</code>.
+That set means <em>a checker actually ran in this process</em>. Quietly widening it to include
+&quot;z3 said so&quot; would erode the one guarantee <a href="/docs/guide/claim-graphs/"><code>research.py</code></a> makes.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Solver says</th>
+<th><code>verification[&quot;status&quot;]</code></th>
+<th>Counted as machine-checked?</th>
+</tr>
+</thead><tbody><tr>
+<td><code>sat</code></td>
+<td><code>exactly_verified</code></td>
+<td><strong>yes</strong> — the model was substituted back in-process</td>
+</tr>
+<tr>
+<td><code>unsat</code></td>
+<td><code>externally_asserted</code></td>
+<td><strong>no</strong> — nothing checked it</td>
+</tr>
+<tr>
+<td><code>unknown</code></td>
+<td><code>unverified</code></td>
+<td>no</td>
+</tr>
+</tbody></table></div>
+<h3 id="2-exactness-is-where-a-model-reader-breaks"><a class="hanchor" href="#2-exactness-is-where-a-model-reader-breaks" aria-hidden="true" tabindex="-1">#</a>2. Exactness is where a model reader breaks</h3>
+<p>Rationals lift cleanly. <code>(/ 25.0 4.0)</code> becomes <code>Fraction(25, 4)</code>; <code>0.1</code> becomes
+<code>Fraction(1, 10)</code> — parsed from the <strong>string</strong>, so it is the exact decimal rational the
+solver meant and never the nearest binary double.</p>
+<p>Algebraic numbers do not lift. Ask z3 for a witness to <code>x² = 2 ∧ x &gt; 0</code> and it answers
+<code>(root-obj (+ (^ x 2) (- 2)) 2)</code>. The tempting move is to evaluate that to <code>1.41421356…</code>
+and carry on. <strong>A float witness recorded as an exact one is precisely the silent error this
+bridge exists to prevent</strong> — a loop would go on to build a hundred derived results on a
+value that does not actually satisfy the constraints, and its own consistency checks would
+happily confirm them. So <code>root-obj</code> is refused with <code>E-SMT-003</code>, and lifting it into the
+existing real-algebraic machinery (<code>RootInterval</code> / <code>refine_root</code>) is future work.</p>
+<h2 id="planning-ahead-supported"><a class="hanchor" href="#planning-ahead-supported" aria-hidden="true" tabindex="-1">#</a>Planning ahead: <code>supported()</code></h2>
+<p><code>supported</code> is to this module what <a href="/docs/guide/certificate-coverage/"><code>certifiable</code></a> is to Lean
+export: a loop must be able to choose a route <em>before</em> it commits.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">support </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.smt.supported(f)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">bool</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(support)            </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># would solve() run?</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">support.exportable       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># would to_smtlib() succeed? (independent of solver install)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">support.logic            </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'QF_NIRA'</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">support.reason           </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'ok' | 'outside_fragment' | 'quantified' |</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">                         # 'not_exactly_checkable' | 'no_solver'</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">support.recommendation   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'smt' | 'prefer_in_tree'</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">support.script           </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># the emitted script, so you don't pay for it twice</span></span></code></pre></div><p><code>recommendation</code> is the part worth reading, and it cuts against the usual instinct:</p>
+<ul>
+<li><strong><code>prefer_in_tree</code></strong> for real arithmetic with no integer variables (<code>QF_LRA</code> / <code>QF_NRA</code>).
+<a href="/docs/guide/positivity/"><code>prove_nonneg</code> / <code>sos_decompose</code></a> return a <code>PositivityCertificate</code> that
+composes with <code>to_lean</code>, and <code>decide</code> returns a verdict plus a verified witness. z3&#39;s
+<code>nlsat</code> returns an answer and <strong>no artifact</strong>. Reach for SMT here as a <em>fallback</em> when
+the in-tree route refuses or exceeds its budget — and note that it genuinely does
+refuse: <code>decide</code> is not complete, it raises <code>E-CAD-001</code> outside its fragment and on
+sentences whose only solutions sit at an irrational boundary point
+(<a href="/docs/guide/positivity/#decide-refuses-rather-than-guessing">details</a>). <code>nlsat</code> is complete
+over the reals and is the right escalation when that happens.</li>
+<li><strong><code>smt</code></strong> for anything with integer variables — mixed integer/real/boolean is the
+genuinely new capability, and neither CAD nor <code>diophantine</code> covers it.</li>
+</ul>
+<h2 id="what-gets-emitted"><a class="hanchor" href="#what-gets-emitted" aria-hidden="true" tabindex="-1">#</a>What gets emitted</h2>
+<p><code>to_smtlib</code> produces a complete, runnable script:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(ak.to_smtlib(ak.And(pool.gt(x, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)), pool.lt(x, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))))</span></span></code></pre></div><div class="code" data-lang="lisp"><span class="code-lang">SMT-LIB</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">; alkahest SMT-LIB 2 export</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(set-logic QF_LRA)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(set-option </span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50">:produce-models</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> true)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(declare-fun x () </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">Real</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">assert</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">and</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) (</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">&#x3C;</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(check-sat)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(get-model)</span></span></code></pre></div><p>The emitter lives in Rust (<code>alkahest-core/src/logic/smtlib.rs</code>) next to <code>Formula</code>, for the
+same reason the Lean emitter lives in <code>alkahest-core/src/lean/</code>: it must be <strong>exhaustive</strong>
+over <code>Formula</code> and <code>PredicateKind</code>, and <code>rustc</code>&#39;s match-exhaustiveness check is the
+enforcement mechanism. There is no <code>_ =&gt;</code> arm anywhere in that file, and <code>tests/test_smt.py</code>
+asserts that from the outside as well, so a node added to the kernel later fails to compile
+rather than silently emitting plausible-but-wrong SMT-LIB.</p>
+<h3 id="logic-selection"><a class="hanchor" href="#logic-selection" aria-hidden="true" tabindex="-1">#</a>Logic selection</h3>
+<p><code>logic=&quot;auto&quot;</code> (the default) infers the weakest logic that fits:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Formula</th>
+<th>Logic</th>
+</tr>
+</thead><tbody><tr>
+<td>linear, reals only</td>
+<td><code>QF_LRA</code></td>
+</tr>
+<tr>
+<td>nonlinear, reals only</td>
+<td><code>QF_NRA</code></td>
+</tr>
+<tr>
+<td>linear, integers only</td>
+<td><code>QF_LIA</code></td>
+</tr>
+<tr>
+<td>nonlinear, integers only</td>
+<td><code>QF_NIA</code></td>
+</tr>
+<tr>
+<td>mixed int/real</td>
+<td><code>QF_LIRA</code> / <code>QF_NIRA</code></td>
+</tr>
+<tr>
+<td>any of the above with <code>Forall</code>/<code>Exists</code></td>
+<td>same name without the <code>QF_</code> prefix</td>
+</tr>
+</tbody></table></div>
+<p>You may name a logic explicitly (<code>ak.to_smtlib(f, &quot;QF_NRA&quot;)</code>), and one that is <strong>too weak</strong>
+for the formula is an error, not a silent downgrade — sending a nonlinear problem under
+<code>QF_LRA</code> would ask a different question than the one you have. The names accepted are
+<code>QF_LIA</code>, <code>QF_NIA</code>, <code>QF_LRA</code>, <code>QF_NRA</code>, <code>QF_LIRA</code>, <code>QF_NIRA</code>, their quantified forms
+without the <code>QF_</code> prefix, <code>AUFLIRA</code>, <code>AUFNIRA</code>, and <code>ALL</code>.</p>
+<h4 id="the-mixed-names-are-solver-facing-not-catalog-standard"><a class="hanchor" href="#the-mixed-names-are-solver-facing-not-catalog-standard" aria-hidden="true" tabindex="-1">#</a>The mixed names are solver-facing, not catalog-standard</h4>
+<p><code>QF_LIRA</code> / <code>QF_NIRA</code> / <code>LIRA</code> / <code>NIRA</code> are <strong>not</strong> in the official SMT-LIB 2.7 logic
+catalog, which stops at <code>AUFLIRA</code> / <code>AUFNIRA</code> for mixed <code>Int</code>/<code>Real</code>. Alkahest emits them
+anyway, and that is a deliberate contract rather than an oversight:</p>
+<ul>
+<li>they are the names the solvers this bridge drives actually use for the mixed fragment.
+z3 accepts them silently (an unrecognised name draws <code>ignoring unsupported logic</code>), Yices
+documents <code>QF_LIRA</code> / <code>QF_NIRA</code> among the names it recognises beyond the official set,
+and SMT-COMP runs <code>QF_LIRA</code> / <code>QF_NIRA</code> divisions over SMT-LIB benchmarks;</li>
+<li>the catalog alternatives are strictly worse for what is emitted here. <code>AUFLIRA</code> /
+<code>AUFNIRA</code> are <em>quantified</em> logics that additionally carry arrays and free function
+symbols, so naming one for a quantifier-free mixed formula discards the <code>QF_</code> hint that
+decides which solver core runs and claims a far larger fragment than is in use.</li>
+</ul>
+<p>If you are feeding a consumer that accepts catalog names only, ask for one explicitly:
+<code>ak.to_smtlib(f, &quot;AUFLIRA&quot;)</code> (linear) or <code>ak.to_smtlib(f, &quot;AUFNIRA&quot;)</code> (nonlinear) — both are
+sound supersets of everything the emitter produces — or <code>ALL</code>. <code>tests/test_smt.py</code> pins that
+the installed solver accepts the names alkahest emits, so a regression in that contract
+fails the suite rather than the user&#39;s pipeline.</p>
+<p>Getting this right is load-bearing, not cosmetic: under <code>(set-logic QF_NRA)</code> z3 has no
+<code>Int</code> sort at all, and under a <code>Reals_Ints</code> logic an integer numeral in a real position
+needs an explicit <code>to_real</code>. The emitter tracks sorts and inserts exactly the coercions the
+chosen theory requires — and none where they would not parse.</p>
+<h3 id="translation-table"><a class="hanchor" href="#translation-table" aria-hidden="true" tabindex="-1">#</a>Translation table</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Alkahest</th>
+<th>SMT-LIB 2</th>
+</tr>
+</thead><tbody><tr>
+<td><code>Symbol</code> (Real / Positive / NonNegative / NonZero)</td>
+<td><code>(declare-fun x () Real)</code></td>
+</tr>
+<tr>
+<td><code>Symbol</code> (Integer)</td>
+<td><code>(declare-fun n () Int)</code></td>
+</tr>
+<tr>
+<td><code>Positive</code> / <code>NonNegative</code> / <code>NonZero</code> refinement</td>
+<td>an extra <code>(assert (&gt; x 0))</code> / <code>(&gt;= x 0)</code> / <code>(not (= x 0))</code></td>
+</tr>
+<tr>
+<td><code>Integer(-3)</code></td>
+<td><code>(- 3)</code></td>
+</tr>
+<tr>
+<td><code>Rational(-1, 3)</code></td>
+<td><code>(/ (- 1) 3)</code></td>
+</tr>
+<tr>
+<td><code>Add</code> / <code>Mul</code></td>
+<td><code>(+ …)</code> / <code>(* …)</code></td>
+</tr>
+<tr>
+<td><code>Pow(x, 3)</code></td>
+<td><code>(* x x x)</code> — SMT-LIB 2 has no portable <code>^</code></td>
+</tr>
+<tr>
+<td><code>Pow(x, -1)</code></td>
+<td><code>(/ 1 x)</code> for a <code>Real</code> base; <code>(/ (to_real 1) (to_real n))</code> for an <code>Int</code> base</td>
+</tr>
+<tr>
+<td><code>Piecewise</code></td>
+<td><code>(ite c v …)</code></td>
+</tr>
+<tr>
+<td><code>Lt/Le/Gt/Ge/Eq</code></td>
+<td><code>(&lt; …)</code> / <code>(&lt;= …)</code> / <code>(&gt; …)</code> / <code>(&gt;= …)</code> / <code>(= …)</code></td>
+</tr>
+<tr>
+<td><code>Ne</code></td>
+<td><code>(not (= …))</code></td>
+</tr>
+<tr>
+<td><code>And</code> / <code>Or</code> / <code>Not</code></td>
+<td><code>(and …)</code> / <code>(or …)</code> / <code>(not …)</code></td>
+</tr>
+<tr>
+<td><code>Forall</code> / <code>Exists</code></td>
+<td><code>(forall ((x Real)) …)</code> / <code>(exists ((x Real)) …)</code></td>
+</tr>
+</tbody></table></div>
+<p>A refined domain travels with its binder under a quantifier: <code>∀ x:Positive . P</code> becomes
+<code>(forall ((x Real)) (=&gt; (&gt; x 0) P))</code> and the existential takes <code>(and …)</code>. Getting that
+backwards would be a soundness bug, so both are written out explicitly in the emitter.</p>
+<p>A negative power over an <code>Int</code> base is coerced rather than emitted as <code>(/ 1 n)</code>, and the
+reason is semantic rather than cosmetic: in SMT-LIB <code>/</code> is <strong>real</strong> division and <code>div</code> is
+integer division, so <code>n^-1</code> for an integer <code>n</code> is the real reciprocal the kernel means, not
+integer division. The emitter therefore lifts both operands with <code>to_real</code> — which is also
+why such a formula selects a <code>Reals_Ints</code> logic even though only one sort appears in the
+source expression.</p>
+<h3 id="what-is-refused"><a class="hanchor" href="#what-is-refused" aria-hidden="true" tabindex="-1">#</a>What is refused</h3>
+<p>The emitter is <strong>total-or-refuse</strong>. Everything below raises <code>SmtError</code> <code>E-SMT-002</code>:</p>
+<ul>
+<li><strong>Float literals.</strong> <code>0.1</code> is a binary double, not the exact question it looks like.
+Write <code>pool.rational(1, 10)</code>; exporting the dyadic expansion would silently change what
+is being asked.</li>
+<li><strong>Complex-domain symbols</strong> — SMT-LIB arithmetic is ordered and real.</li>
+<li><strong>Transcendental function heads</strong> (<code>sin</code>, <code>exp</code>, <code>log</code>, …). Only <code>abs</code> has an exact
+SMT-LIB rendering.</li>
+<li><strong>Non-integer or very large exponents.</strong> Powers become products, so the expansion is
+<em>bounded</em> (<code>MAX_POW_EXPANSION</code>, 128) — a loop must never be able to ask for a megabyte
+of <code>x</code>.</li>
+<li><strong><code>BigO</code>, <code>RootSum</code>, predicates in term position</strong>, and symbol names containing <code>|</code>.</li>
+<li><strong>Two symbols sharing a name but not a domain</strong> — SMT-LIB has one namespace.</li>
+</ul>
+<h2 id="driving-a-solver"><a class="hanchor" href="#driving-a-solver" aria-hidden="true" tabindex="-1">#</a>Driving a solver</h2>
+<p>Solver discovery, subprocess management, and model parsing live in Python
+(<code>python/alkahest/smt.py</code>), where they iterate faster. This mirrors the Lean split
+exactly: emission in Rust, harness in Python.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.smt.solvers()</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># {'z3': 'Z3 version 4.13.0 - 64 bit', 'cvc5': None}</span></span></code></pre></div><p>Absence is reported <strong>negatively and explicitly</strong>, so an agent can tell before it plans
+that the hand-off is unavailable. <code>PATH</code> is searched, plus the running interpreter&#39;s script
+directory — a <code>pip install z3-solver</code> into a venv that was never <code>activate</code>d still gets
+found.</p>
+<p>If no solver is installed, <code>solve</code> raises <code>E-SMT-001</code>. It does <strong>not</strong> fall back to
+<code>alkahest.satisfiable</code>: that decides only the purely propositional fragment and
+single-variable interval arithmetic — neither of which overlaps what is asked here — so it
+would answer <code>None</code> and look for all the world like a solver had run and found nothing.</p>
+<h3 id="smtresult"><a class="hanchor" href="#smtresult" aria-hidden="true" tabindex="-1">#</a><code>SmtResult</code></h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody><tr>
+<td><code>status</code></td>
+<td><code>&quot;sat&quot;</code> / <code>&quot;unsat&quot;</code> / <code>&quot;unknown&quot;</code></td>
+</tr>
+<tr>
+<td><code>model</code></td>
+<td><code>dict[str, Fraction]</code> — the exact witness, and exactly what was verified</td>
+</tr>
+<tr>
+<td><code>model_exprs</code></td>
+<td>the same values interned into a pool, when one was passed or is active</td>
+</tr>
+<tr>
+<td><code>engine</code></td>
+<td>which solver answered, and at what version</td>
+</tr>
+<tr>
+<td><code>logic</code></td>
+<td>the logic that was sent</td>
+</tr>
+<tr>
+<td><code>sorts</code></td>
+<td>symbol name → the sort it was declared with, <code>&quot;Int&quot;</code> or <code>&quot;Real&quot;</code></td>
+</tr>
+<tr>
+<td><code>smtlib</code> / <code>certificate</code></td>
+<td>the script that was sent — an artifact, not a checked proof</td>
+</tr>
+<tr>
+<td><code>verification</code></td>
+<td><code>DerivedResult</code>-shaped, so <code>ResearchSession.record</code> takes it unchanged; also carries <code>logic</code> and <code>sorts</code></td>
+</tr>
+<tr>
+<td><code>badge</code></td>
+<td>the honest one-line rendering of the status</td>
+</tr>
+<tr>
+<td><code>machine_checked</code></td>
+<td><code>True</code> only when a checker ran <strong>in this process</strong></td>
+</tr>
+<tr>
+<td><code>reason_unknown</code></td>
+<td>the solver&#39;s own explanation, on <code>unknown</code></td>
+</tr>
+<tr>
+<td><code>elapsed_ms</code></td>
+<td>wall-clock time in the solver process</td>
+</tr>
+</tbody></table></div>
+<p><code>SmtResult</code> has no <code>__bool__</code> on purpose: <code>unsat</code> and <code>unknown</code> would both be falsy, and a
+loop writing <code>if not result:</code> would conflate &quot;proved impossible&quot; with &quot;gave up&quot;. Branch on
+<code>.status</code>.</p>
+<p><code>model</code> is keyed by symbol name and holds <code>Fraction</code>s rather than <code>Expr</code>s because an <code>Expr</code>
+carries no reference to its pool; <code>model_exprs</code> is populated when <code>solve(..., pool=…)</code> is
+given one or <code>alkahest.context(pool=…)</code> is active. The <code>Fraction</code> map is always present and
+always the thing that was checked, so nothing about the guarantee depends on ambient
+context.</p>
+<h3 id="read-sorts-before-you-read-status"><a class="hanchor" href="#read-sorts-before-you-read-status" aria-hidden="true" tabindex="-1">#</a>Read <code>sorts</code> before you read <code>status</code></h3>
+<p><code>status</code> tells you the answer was checked. <code>sorts</code> tells you <strong>which question</strong> was
+answered — and no status field distinguishes the two:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">result.sorts        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># {'x': 'Int', 'y': 'Int', 'z': 'Int'}  — integer feasibility</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">result.sorts        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># {'x': 'Real', 'y': 'Real', 'z': 'Real'} — the real relaxation</span></span></code></pre></div><p>A symbol declared <code>Real</code> where you meant <code>Int</code> turns an integer feasibility question into
+its real relaxation. That is not a soundness bug — the model <em>does</em> satisfy the formula as
+emitted, so it back-substitutes cleanly and reports <code>status=&#39;sat&#39;</code> with
+<code>verification[&#39;status&#39;] == &#39;exactly_verified&#39;</code> — but it answers a strictly weaker question.
+<code>z = 252/13</code> is a perfectly good real witness and a useless integer one. Since every status
+field stays green either way, <code>sorts</code> (mirrored into <code>verification</code> so it survives
+recording into a claim graph) is the field that tells you.</p>
+<p>The sort comes from the symbol&#39;s domain, and both symbol constructors now agree about it:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">domain</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.Domain.Integer):</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)            </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Int</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"y"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Int — takes the ambient domain too</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    z </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"z"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"real"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Real — explicit argument still wins</span></span></code></pre></div><p>Before this, <code>pool.symbol</code> ignored the ambient <code>domain</code> and always produced a <code>Real</code> symbol,
+so the two constructors silently disagreed. Outside a <code>context(domain=…)</code> block the default
+is unchanged: <code>Domain.Real</code>, hence <code>Real</code>.</p>
+<h3 id="how-a-sat-model-is-checked"><a class="hanchor" href="#how-a-sat-model-is-checked" aria-hidden="true" tabindex="-1">#</a>How a <code>sat</code> model is checked</h3>
+<p>Two independent exact checks, both mandatory:</p>
+<ol>
+<li>Substitute the model into the <strong>original Alkahest formula</strong> and evaluate it exactly
+through the kernel. This is the invariant the bridge rests on, and
+<code>tests/test_smt.py</code> asserts it as a property test over generated formulas rather than
+a handful of examples.</li>
+<li>Evaluate every assertion in the <strong>script that was actually sent</strong>, over exact
+rationals. A mistranslation in the emitter would have to fool both to slip through, and
+this pass also re-checks the refined-domain side conditions, which are separate
+assertions.</li>
+</ol>
+<p>A model missing a &quot;don&#39;t care&quot; variable is completed with <code>0</code> and then checked, so the
+witness a caller receives is always total and always substitutable.</p>
+<p>Because the guarantee is unconditional, <code>solve</code> refuses <strong>up front</strong> — before the solver
+runs — for a formula the kernel cannot evaluate exactly (<code>E-SMT-002</code>, reason
+<code>not_exactly_checkable</code>). <code>abs</code> is the case you will actually hit: it exports fine, so
+<code>to_smtlib</code> handles it, but <code>evaluate(..., mode=&quot;exact&quot;)</code> does not, and a refusal that
+arrives only after paying for the solver run reads like a bug in the solver.</p>
+<p>For the same reason <code>solve</code> takes <strong>quantifier-free formulas only</strong> (<code>E-SMT-002</code>, reason
+<code>quantified</code>). <code>to_smtlib</code> exports quantified ones happily.</p>
+<h3 id="does-there-exist-x-y-z-such-that--drop-the-quantifiers"><a class="hanchor" href="#does-there-exist-x-y-z-such-that--drop-the-quantifiers" aria-hidden="true" tabindex="-1">#</a>&quot;Does there exist x, y, z such that…&quot; — drop the quantifiers</h3>
+<p><code>Exists</code> is exported at top level and wrapping the question in it is the natural way to
+<em>write</em> it, so this is the refusal you are most likely to hit first:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">f </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.Exists(x, ak.Exists(y, ak.Exists(z, body)))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.smt.solve(f)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [E-SMT-002] solve() takes quantifier-free formulas only; this one is quantified</span></span></code></pre></div><p><strong>The fix is to delete them and pass <code>body</code>.</strong> <code>solve</code> asks a <em>satisfiability</em> question, so
+the free variables of <code>body</code> are already implicitly existentially quantified: <code>∃x∃y∃z. body</code>
+and <code>body</code> ask <code>solve</code> the same question, and the <code>sat</code> model is the witness for <code>x</code>, <code>y</code>,
+<code>z</code>. Nothing is lost by dropping them.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.smt.solve(body)     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># same question, and now it answers</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">result.model                    </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># {'x': Fraction(...), 'y': …, 'z': …} — the witness</span></span></code></pre></div><p>This works only for a <strong>prefix of <code>Exists</code> over a quantifier-free body</strong>. Under a <code>Forall</code>
+— or for an <code>Exists</code> beneath one — the rewrite is not meaning-preserving and there is
+nothing to strip. <code>solve</code> does not strip the prefix for you either: its guarantee is that
+every <code>sat</code> model is back-substituted and checked exactly against <em>the formula it was
+given</em>, and silently answering about a different expression than the one handed in is the
+kind of substitution this bridge exists to avoid.</p>
+<p>For a genuinely quantified question, export it with <code>to_smtlib</code> and drive the solver
+yourself, or use <code>alkahest.decide</code> for real quantifier elimination within its fragment
+(≤ 2 variables, ≤ 2-quantifier prefix, polynomial bodies, and refusing rather than guessing
+at irrational boundary points — see
+<a href="/docs/guide/positivity/#decide-refuses-rather-than-guessing"><code>decide</code> refuses rather than guessing</a>).</p>
+<h2 id="budgets"><a class="hanchor" href="#budgets" aria-hidden="true" tabindex="-1">#</a>Budgets</h2>
+<p><code>solve(..., budget=ak.Budget(wall_ms=…))</code> passes the limit to the solver&#39;s own timeout flag
+<em>and</em> enforces a parent-side deadline as a backstop. A trip raises <code>BudgetExceededError</code>
+(<code>E-BUDGET-001</code>), not a bare <code>unknown</code>, so the loop gets the structured
+&quot;hard, not hung&quot; distinction <a href="/docs/guide/budgets/">budgets</a> were built for:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.smt.solve(candidate, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">budget</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.Budget(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">wall_ms</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">250</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.BudgetExceededError:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    log.info(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"deprioritising: hard, not hung"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div><p>Without a budget, a solver <code>unknown</code> is returned as a result with <code>reason_unknown</code> set —
+a real answer (&quot;I could not decide this&quot;), distinct from a resource verdict.</p>
+<h2 id="recording-into-a-claim-graph"><a class="hanchor" href="#recording-into-a-claim-graph" aria-hidden="true" tabindex="-1">#</a>Recording into a claim graph</h2>
+<p><code>SmtResult</code> quacks like a <code>DerivedResult</code>, so it records unchanged:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.research.session(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">title</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"mixed feasibility"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> s:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.smt.solve(f, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">budget</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.Budget(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">wall_ms</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5000</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    claim </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> s.record(result, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">method</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"smt.solve"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">claim.statement        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># the formula itself — the thing the model was checked against</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">claim.status           </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'exactly_verified' for sat, 'externally_asserted' for unsat</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">claim.machine_checked  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># True only for the checked sat case</span></span></code></pre></div><p>Record it <strong>as itself</strong>, as above. A <code>statement=</code> argument is free text and nothing
+relates it to the formula the solver was handed, so a re-worded claim does not inherit
+the machine-checked status:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">claim </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> s.record(result, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">statement</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"the system is feasible"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">method</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"smt.solve"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">claim.status                            </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'asserted', not 'exactly_verified'</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">claim.machine_checked                   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># False</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">claim.verification[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"result_status"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'exactly_verified' — the *result* was checked</span></span></code></pre></div><p><code>&quot;the system is feasible&quot;</code> may well be the right English for <code>f</code>, but that is a
+translation nobody checked, and <code>machine_checked</code> is read by tooling as &quot;a machine
+verified this sentence&quot;. To keep the status on a re-worded claim, attach the <code>check</code>
+recipe that re-establishes the link and let
+<a href="/docs/guide/claim-graphs/"><code>ClaimGraph.verify()</code></a> run it.</p>
+<h2 id="what-is-not-here-and-why"><a class="hanchor" href="#what-is-not-here-and-why" aria-hidden="true" tabindex="-1">#</a>What is <em>not</em> here, and why</h2>
+<ul>
+<li><strong>No vendored solver.</strong> No libz3 in the Rust build: it keeps the wheel small, the
+licensing simple, and — the real reason — an in-tree solver would become a soundness
+liability the project has to defend, in a problem class that is not Alkahest&#39;s.</li>
+<li><strong>No unsat-proof checking.</strong> See the first asymmetry above; the status vocabulary is
+honest about it rather than papering over it.</li>
+<li><strong><code>dpll_sat</code> is not wired in.</strong> <code>alkahest_cas::logic::dpll_sat</code> remains a standalone CNF
+utility, sound and complete for the propositional problem it is <em>handed</em>, and it is
+deliberately not an engine behind this bridge. The only route from a <code>Formula</code> to it is
+to abstract each arithmetic atom to a fresh proposition, and that abstraction is sound in
+one direction only: it can confirm <code>unsat</code>, but it calls <code>x &gt; 0 ∧ x &lt; 0</code> <em>sat</em> and hands
+back a meaningless model. Under a bridge whose whole premise is that every <code>sat</code> model is
+checked exactly, that is the silent error the design is built to exclude — so a missing
+solver is a refusal (<code>E-SMT-001</code>), not a degradation.</li>
+</ul>
+<h2 id="error-codes"><a class="hanchor" href="#error-codes" aria-hidden="true" tabindex="-1">#</a>Error codes</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Raised by</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-SMT-001</code></td>
+<td>Python driver</td>
+<td>No solver binary found. A refusal, never a fallback.</td>
+</tr>
+<tr>
+<td><code>E-SMT-002</code></td>
+<td>Rust emitter + driver</td>
+<td>Formula outside the supported fragment (or an unusable logic, a quantified formula passed to <code>solve</code>, or one the kernel cannot check exactly).</td>
+</tr>
+<tr>
+<td><code>E-SMT-003</code></td>
+<td>Python driver</td>
+<td>A model value (<code>root-obj</code>) cannot be lifted exactly. Refused, not rounded.</td>
+</tr>
+<tr>
+<td><code>E-SMT-004</code></td>
+<td>Python driver</td>
+<td>A model failed back-substitution. Always raised, never warned.</td>
+</tr>
+<tr>
+<td><code>E-BUDGET-001</code></td>
+<td>Python driver</td>
+<td>The solver hit <code>Budget.wall_ms</code>.</td>
+</tr>
+</tbody></table></div>
+<p>Only <code>E-SMT-002</code> appears in <code>alkahest_cas::errors::codes::REGISTRY</code>, because it is the only
+one Rust raises; <code>scripts/check_error_codes.py</code> requires the registry and the Rust
+<code>AlkahestError</code> impls to agree exactly, so codes raised only from Python stay out of it
+(<code>E-BATCH-001</code> in <code>alkahest/_batch.py</code> is the same precedent).</p>
+<h2 id="see-also"><a class="hanchor" href="#see-also" aria-hidden="true" tabindex="-1">#</a>See also</h2>
+<ul>
+<li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a></li>
+<li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li>
+<li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li>
+<li><a href="/docs/guide/lean-certs/">Lean certificates</a></li>
+<li><a href="/docs/guide/errors/">Error handling</a></li>
+</ul>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/crosscheck/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Cross-CAS differential testing</span></a><a class="pager-next" href="/docs/guide/pari/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">PARI/GP interop (optional)</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/smt.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#the-two-asymmetries">The two asymmetries</a></li><li class="d3"><a href="#1-sat-and-unsat-have-different-trust-stories">1. sat and unsat have different trust stories</a></li><li class="d3"><a href="#2-exactness-is-where-a-model-reader-breaks">2. Exactness is where a model reader breaks</a></li><li class="d2"><a href="#planning-ahead-supported">Planning ahead: supported()</a></li><li class="d2"><a href="#what-gets-emitted">What gets emitted</a></li><li class="d3"><a href="#logic-selection">Logic selection</a></li><li class="d3"><a href="#translation-table">Translation table</a></li><li class="d3"><a href="#what-is-refused">What is refused</a></li><li class="d2"><a href="#driving-a-solver">Driving a solver</a></li><li class="d3"><a href="#smtresult">SmtResult</a></li><li class="d3"><a href="#read-sorts-before-you-read-status">Read sorts before you read status</a></li><li class="d3"><a href="#how-a-sat-model-is-checked">How a sat model is checked</a></li><li class="d3"><a href="#does-there-exist-x-y-z-such-that--drop-the-quantifiers">&quot;Does there exist x, y, z such that…&quot; — drop the quantifiers</a></li><li class="d2"><a href="#budgets">Budgets</a></li><li class="d2"><a href="#recording-into-a-claim-graph">Recording into a claim graph</a></li><li class="d2"><a href="#what-is-not-here-and-why">What is not here, and why</a></li><li class="d2"><a href="#error-codes">Error codes</a></li><li class="d2"><a href="#see-also">See also</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/smt.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exact linear and integer programming · Alkahest Docs</title>
+<meta name="description" content="alkahest.linprog, alkahest.milp and alkahest.linprog_expr solve linear and mixed-integer programmes exactly over the rationals and return every status with…">
+<meta property="og:title" content="Exact linear and integer programming · Alkahest Docs">
+<meta property="og:description" content="alkahest.linprog, alkahest.milp and alkahest.linprog_expr solve linear and mixed-integer programmes exactly over the rationals and return every status with…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/" class="active" aria-current="page">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <div class="eyebrow">Solving and optimisation</div>
+    <h1>Exact linear and integer programming</h1>
+    <p><code>alkahest.linprog</code>, <code>alkahest.milp</code> and <code>alkahest.linprog_expr</code> solve linear and
+mixed-integer programmes <strong>exactly over the rationals</strong> and return every status
+with a certificate that proves it. Nothing in the solver is a float.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> fractions </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> Fraction</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># max 3a + 5b  s.t.  a ≤ 4,  2b ≤ 12,  3a + 2b ≤ 18,  a, b ≥ 0</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.linprog([</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">A_ub</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">b_ub</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">4</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">12</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">18</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">sense</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"max"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r.status          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'optimal'</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r.x, r.fun        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># ([2, 6], 36)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r.ineqlin         </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [0, Fraction(3, 2), 1]   — shadow prices of the three rows</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r.verify()        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># True (re-checks the certificate exactly)</span></span></code></pre></div><p>The calling convention is <code>scipy.optimize.linprog</code>&#39;s: minimise <code>c @ x</code> subject to
+<code>A_ub @ x &lt;= b_ub</code>, <code>A_eq @ x == b_eq</code> and <code>bounds</code> (one <code>(lower, upper)</code> pair for
+all variables or one per variable, <code>None</code> or <code>±inf</code> for &quot;no bound&quot;, default
+<code>(0, None)</code>), with <code>sense=&quot;max&quot;</code> to maximise. Coefficients must be exact — <code>int</code>,
+<code>fractions.Fraction</code>, <code>&quot;p/q&quot;</code> strings or rational <code>Expr</code>s. A float is refused with
+<code>E-LP-002</code>: a certificate for its nearest rational would certify a different
+programme.</p>
+<h2 id="certificates"><a class="hanchor" href="#certificates" aria-hidden="true" tabindex="-1">#</a>Certificates</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>status</th>
+<th>certificate</th>
+<th>what it proves</th>
+</tr>
+</thead><tbody><tr>
+<td><code>optimal</code></td>
+<td><code>x</code>, <code>fun</code>, and multipliers <code>ineqlin</code>, <code>eqlin</code>, <code>lower</code>, <code>upper</code></td>
+<td><code>c = A_ubᵀ·ineqlin + A_eqᵀ·eqlin + lower + upper</code> with the sign conditions of the sense (minimising: <code>ineqlin ≤ 0</code>, <code>lower ≥ 0</code>, <code>upper ≤ 0</code>; reversed when maximising — SciPy&#39;s <code>marginals</code> convention), complementary slackness, and dual objective = <code>fun</code>. Weak duality then makes <code>x</code> optimal.</td>
+</tr>
+<tr>
+<td><code>infeasible</code></td>
+<td><code>farkas</code> — weights <code>ineqlin ≥ 0</code>, <code>eqlin</code>, <code>lower ≥ 0</code>, <code>upper ≥ 0</code></td>
+<td>the weighted sum of the constraints reads <code>0·x ≤ (negative number)</code>.</td>
+</tr>
+<tr>
+<td><code>unbounded</code></td>
+<td><code>x</code> (feasible) and <code>ray</code></td>
+<td><code>A_ub·ray ≤ 0</code>, <code>A_eq·ray = 0</code>, the ray respects every finite bound, and <code>c·ray &lt; 0</code> (<code>&gt; 0</code> when maximising).</td>
+</tr>
+</tbody></table></div>
+<p>The solver checks its own certificate exactly before returning; one that fails
+is withheld as <code>E-LP-006</code> rather than returned.</p>
+<p>Two exact simplex methods are available through <code>method=</code>:</p>
+<ul>
+<li><code>&quot;dense&quot;</code> — a two-phase tableau over <code>rug::Rational</code> with <strong>Bland&#39;s rule</strong>,
+which cannot cycle (Beale&#39;s classical cycling example terminates);</li>
+<li><code>&quot;revised&quot;</code> — a revised simplex that keeps <code>A</code> sparse and holds <code>B⁻¹</code> as an
+exact product-form (eta-file) factorisation, rebuilt periodically. It prices
+by Dantzig&#39;s rule and falls back to Bland&#39;s rule after a run of degenerate
+pivots, so it cannot cycle either. It starts from a slack crash basis;</li>
+<li><code>&quot;auto&quot;</code> (default) — dense for at most 12 rows, revised otherwise.</li>
+</ul>
+<p>The active <code>ak.context(budget=ak.Budget(...))</code> is checked at every pivot of
+either method and a trip raises <code>BudgetExceededError</code>.</p>
+<p>On random sparse programmes (5 non-zeros per row, <code>0 ≤ x ≤ 10</code>, maximising;
+release build, one core) the revised method is what makes medium sizes
+practical:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>rows × columns</th>
+<th><code>≤</code> rows only: dense</th>
+<th>revised</th>
+<th>half <code>≥</code> rows (phase 1): dense</th>
+<th>revised</th>
+</tr>
+</thead><tbody><tr>
+<td>25 × 25</td>
+<td>0.10 s</td>
+<td>0.001 s</td>
+<td>0.04 s</td>
+<td>0.01 s</td>
+</tr>
+<tr>
+<td>50 × 50</td>
+<td>1.7 s</td>
+<td>0.006 s</td>
+<td>1.0 s</td>
+<td>0.04 s</td>
+</tr>
+<tr>
+<td>100 × 100</td>
+<td>47.5 s</td>
+<td>0.013 s</td>
+<td>21.4 s</td>
+<td>0.97 s</td>
+</tr>
+<tr>
+<td>200 × 200</td>
+<td>—</td>
+<td>0.17 s</td>
+<td>—</td>
+<td>6.2 s</td>
+</tr>
+<tr>
+<td>300 × 300</td>
+<td>—</td>
+<td>0.35 s</td>
+<td>—</td>
+<td>52 s</td>
+</tr>
+<tr>
+<td>500 × 500</td>
+<td>—</td>
+<td>3.4 s</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody></table></div>
+<p>(The dense tableau updates every entry at every pivot and its entries grow;
+the revised method touches only the pivot column and the eta file. Run with
+<code>cargo test -p alkahest-cas --release --lib bench_revised_vs_dense -- --ignored --nocapture</code>.)</p>
+<h3 id="warm-starts"><a class="hanchor" href="#warm-starts" aria-hidden="true" tabindex="-1">#</a>Warm starts</h3>
+<p>Every <code>LPResult</code> carries its final <code>basis</code> — a list of <code>(kind, index)</code> pairs
+(<code>(&quot;x&quot;, j)</code>, <code>(&quot;x-&quot;, j)</code> for the negative part of a free variable,
+<code>(&quot;slack&quot;, i)</code>, <code>(&quot;upper&quot;, j)</code>), named in the caller&#39;s terms so it carries over
+to a modified programme. Pass it back with <code>basis=</code> (or pass the result
+itself):</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r1 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.linprog(c, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">A_ub</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">A, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">b_ub</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">b, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">sense</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"max"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r2 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.linprog(c, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">A_ub</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">A </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [cut], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">b_ub</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">b </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [rhs], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">sense</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"max"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">basis</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r1)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r2.warm_started   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># True — the old basis was dual feasible, so a dual simplex ran</span></span></code></pre></div><p>A basis that is still primal feasible goes straight to phase 2; one that is
+still dual feasible (after a right-hand-side change, a tightened bound or an
+added row) runs the <strong>dual simplex</strong>, which proves infeasibility with a Farkas
+vector read off a row of <code>B⁻¹</code>; anything else falls back to a cold start.
+Labels that do not exist in the new programme are ignored. The certificates
+are the same, and verified the same way, whichever path ran.</p>
+<h2 id="integer-programmes"><a class="hanchor" href="#integer-programmes" aria-hidden="true" tabindex="-1">#</a>Integer programmes</h2>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 0/1 knapsack</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.milp([</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">13</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">7</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">8</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">A_ub</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">4</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">6</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">b_ub</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">12</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">bounds</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">sense</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"max"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r.x, r.fun, r.gap   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># ([1, 0, 1, 1], 25, 0)</span></span></code></pre></div><p><code>integrality</code> takes one flag per variable (<code>1</code> integer, <code>0</code> continuous — SciPy&#39;s
+convention) or a single bool; the default makes every variable an integer.
+Branch and bound runs depth-first until it has an incumbent, then best-bound,
+solving every node LP exactly with its certificate checked. The outcomes are:</p>
+<ul>
+<li><code>optimal</code> — the search tree closed, so <code>gap == 0</code> and <code>bound == fun</code>;</li>
+<li><code>infeasible</code> — every leaf was LP-infeasible (each with a verified Farkas vector);</li>
+<li><code>unbounded</code> — <code>x</code> is integer-feasible and <code>ray</code> is integral, so every
+<code>x + t·ray</code> (<code>t ∈ ℕ</code>) is integer-feasible with unboundedly better objective
+(Meyer&#39;s theorem makes this sound for rational data).</li>
+</ul>
+<h3 id="gomory-cuts-cut-and-branch"><a class="hanchor" href="#gomory-cuts-cut-and-branch" aria-hidden="true" tabindex="-1">#</a>Gomory cuts (cut-and-branch)</h3>
+<p>Before branching, <code>milp</code> rounds the bounds of integer variables inward and
+then runs up to <code>cut_rounds</code> (default 8) rounds of <strong>Gomory mixed-integer
+cuts</strong>, at most <code>max_cuts</code> (default 200) in all: each round solves the root
+relaxation with the revised simplex, reads a GMI cut off each tableau row
+whose basic variable is an integer at a fractional value, appends the cuts as
+<code>A_ub</code> rows and re-solves from the previous basis. Exact rationals make every
+cut valid — a column is treated as integer only when it is an integer at
+every integer-feasible point (an integer variable with an integer bound
+shift, the slack of a row with integer data over integer variables), anything
+else as continuous, which only weakens a cut — so <strong>no cut removes an
+integer-feasible point</strong>. When every variable in a cut is an integer it is
+also scaled to coprime integer coefficients and its right-hand side rounded
+down (a Chvátal–Gomory step). The cuts are returned in <code>MILPResult.cuts</code> as
+<code>(row, rhs)</code> pairs, so they can be checked; <code>cut_rounds=0</code> turns cutting off.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.milp([</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">A_ub</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">b_ub</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">sense</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"max"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r.fun, r.cuts, r.nodes   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># (1, [([1, 1], 1)], 1) — the cut closes the gap at the root</span></span></code></pre></div><p>Node LPs are warm-started from their parent&#39;s basis (<code>warm_start=True</code>): a
+branching bound leaves the parent basis dual feasible, so each child is a few
+dual-simplex pivots.</p>
+<p>The search stops at <code>max_nodes</code> node LPs (default 100 000) with <strong><code>E-LP-005</code></strong>,
+and at a budget trip with <code>BudgetExceededError</code>. Neither is an answer: both
+exceptions carry <code>incumbent</code> (the best integer point found, <em>unproven</em>),
+<code>incumbent_fun</code>, and <code>bound</code> (the best open bound), which bracket the optimum.</p>
+<h2 id="programmes-from-expressions"><a class="hanchor" href="#programmes-from-expressions" aria-hidden="true" tabindex="-1">#</a>Programmes from expressions</h2>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool(); x, y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"y"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.linprog_expr(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">y,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">                    [p.le(x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y, p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">4</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)), p.le(x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 3</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">y, p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">6</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)),</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">                     p.ge(x, p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)), p.ge(y, p.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))],</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">                    [x, y], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">sense</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"max"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r.solution        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># {x: 4, y: 0}</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r.program()       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># the rows the relations became</span></span></code></pre></div><p>The objective and both sides of every relation must be affine in the listed
+variables with rational coefficients. Variables are <strong>free</strong> unless a
+constraint bounds them. Each <code>≤</code>/<code>≥</code> becomes one <code>A_ub</code> row and each <code>==</code> one
+<code>A_eq</code> row, in order, so the multipliers line up with the constraints.
+<code>integer=True</code> (or a list of variables) solves it as a MILP instead. Refusals:
+<code>E-LP-003</code> for a non-affine term or a symbol that is not a decision variable,
+<code>E-LP-002</code> for a float or irrational coefficient, <code>E-LP-004</code> for a strict
+inequality (which in general has no optimum) or a non-relation.</p>
+<h2 id="parametric-programmes"><a class="hanchor" href="#parametric-programmes" aria-hidden="true" tabindex="-1">#</a>Parametric programmes</h2>
+<p><code>linprog_parametric</code> solves a programme whose right-hand side <strong>or</strong> objective
+is affine in one parameter <code>θ</code>, for every <code>θ</code> at once:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># max x + y  s.t.  x + 2y ≤ 4 + θ,  3x + y ≤ 6,  x, y ≥ 0</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.linprog_parametric([</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">A_ub</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">b_ub</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">4</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">6</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">],</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">                          b_ub_theta</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">sense</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"max"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r.breakpoints                        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [-4, -2, 8]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[g[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"status"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">] </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> g </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> r.regions]     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># ['infeasible', 'optimal', 'optimal', 'optimal']</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[g[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"value"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">] </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> g </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> r.regions[</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:]]</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [(4, 1), (Fraction(14, 5), Fraction(2, 5)), (6, 0)]   i.e. 4 + θ, (14 + 2θ)/5, 6</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r.value_at(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)                        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Fraction(14, 5)</span></span></code></pre></div><p>Pass <code>c_theta</code> for an objective <code>(c + θ·c_theta) @ x</code>, or <code>b_ub_theta</code> /
+<code>b_eq_theta</code> for right-hand sides <code>b + θ·δb</code> — not both (<code>E-LP-007</code>).
+<code>theta_range=(lo, hi)</code> restricts <code>θ</code> (<code>None</code> for an infinite end). Each region
+is a dict with <code>theta</code>, <code>status</code>, and for optimal regions the affine <code>value</code>,
+<code>x</code>, multipliers (<code>ineqlin</code>, <code>eqlin</code>, <code>lower</code>, <code>upper</code>) as pairs <code>(a, b)</code>
+meaning <code>a + θ·b</code>, and the optimal <code>basis</code>. Optimal regions are closed;
+infeasible (RHS case) and unbounded (objective case) regions are open at the
+end they share with an optimal one.</p>
+<p>The interval of <code>θ</code> with an optimum comes from two auxiliary LPs (feasibility
+in <code>(x, θ)</code>, or dual feasibility in <code>(y, z, θ)</code>); inside it the solver walks
+from basis to basis, each breakpoint an exact ratio, and re-optimises at a
+breakpoint by Bland pivots on the programme perturbed to <code>θ + ε</code>, so every
+region has positive length. <strong>Each optimal region&#39;s certificate is verified
+for every <code>θ</code> in it</strong>, not sampled: every certificate condition is affine in
+<code>θ</code>, so it is checked at both ends, and for an infinite end its slope is
+checked as the optimality certificate of a derived programme.</p>
+<p>With expressions, <code>linprog_expr(..., parameter=t, parameter_range=(lo, hi))</code>
+returns the same result; <code>t</code> may appear in the objective&#39;s coefficients
+(<code>(2 + t)*x</code>) or in the constraints&#39; constant terms (<code>x + y &lt;= 4 + t</code>).
+<code>E-LP-007</code> refuses what this does not handle: <code>t</code> multiplying a variable
+inside a constraint (a moving constraint matrix), <code>t</code> entering non-linearly
+(<code>t**2</code>, <code>sin(t)</code>), <code>t</code> in both the objective and the right-hand side, or a
+parameter together with <code>integer=</code>.</p>
+<h2 id="error-codes"><a class="hanchor" href="#error-codes" aria-hidden="true" tabindex="-1">#</a>Error codes</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-LP-001</code></td>
+<td>Malformed shapes (row length, right-hand side count, bounds, integrality, sense)</td>
+</tr>
+<tr>
+<td><code>E-LP-002</code></td>
+<td>An inexact coefficient (float, irrational constant)</td>
+</tr>
+<tr>
+<td><code>E-LP-003</code></td>
+<td>Not affine in the decision variables</td>
+</tr>
+<tr>
+<td><code>E-LP-004</code></td>
+<td>A constraint that is not <code>&lt;=</code>, <code>&gt;=</code> or <code>==</code></td>
+</tr>
+<tr>
+<td><code>E-LP-005</code></td>
+<td>Branch and bound reached <code>max_nodes</code>; incumbent and bound attached</td>
+</tr>
+<tr>
+<td><code>E-LP-006</code></td>
+<td>A certificate failed its exact check; the result was withheld (a bug)</td>
+</tr>
+<tr>
+<td><code>E-LP-007</code></td>
+<td>An unsupported parametric form (parameter in the constraint matrix, non-linear, in both objective and right-hand side, or with integers)</td>
+</tr>
+</tbody></table></div>
+<h2 id="rust"><a class="hanchor" href="#rust" aria-hidden="true" tabindex="-1">#</a>Rust</h2>
+<p>The same API lives in <code>alkahest_cas::linprog</code>: <code>linprog(&amp;LinearProgram) -&gt; LpOutcome</code> (<code>Optimal(OptimalCertificate)</code>, <code>Infeasible(FarkasCertificate)</code>,
+<code>Unbounded(UnboundedCertificate)</code>, each with an exact <code>verify</code>),
+<code>linprog_with(&amp;LinearProgram, &amp;LpOptions) -&gt; LpSolution</code> (method choice,
+warm-start <code>LpBasis</code>, final basis), <code>milp(&amp;LinearProgram, &amp;MilpOptions) -&gt; MilpOutcome</code> (default cuts and warm starts), <code>milp_with(&amp;lp, &amp;MilpOptions, &amp;CutOptions) -&gt; MilpReport</code> (<code>cut_rounds</code>, <code>max_cuts</code>, <code>warm_start</code>; returns
+the outcome and the root cuts),
+<code>linprog_parametric(&amp;lp, &amp;ParametricDelta, lower, upper) -&gt; ParametricSolution</code>, and <code>program_from_exprs</code> / <code>parametric_from_exprs</code> /
+<code>linear_form</code> for the expression front end.</p>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/positivity/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Positivity certificates (SOS)</span></a><a class="pager-next" href="/docs/guide/interop/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Interoperability</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/linear-programming.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#certificates">Certificates</a></li><li class="d3"><a href="#warm-starts">Warm starts</a></li><li class="d2"><a href="#integer-programmes">Integer programmes</a></li><li class="d3"><a href="#gomory-cuts-cut-and-branch">Gomory cuts (cut-and-branch)</a></li><li class="d2"><a href="#programmes-from-expressions">Programmes from expressions</a></li><li class="d2"><a href="#parametric-programmes">Parametric programmes</a></li><li class="d2"><a href="#error-codes">Error codes</a></li><li class="d2"><a href="#rust">Rust</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/linear-programming.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

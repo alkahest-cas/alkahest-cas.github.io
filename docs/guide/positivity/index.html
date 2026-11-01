@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Positivity certificates (SOS / Positivstellensatz) · Alkahest Docs</title>
+<meta name="description" content="decide answers real-algebraic questions by CAD, and pays doubly-exponential cost for it. Most positivity questions that actually arise — is this bound…">
+<meta property="og:title" content="Positivity certificates (SOS / Positivstellensatz) · Alkahest Docs">
+<meta property="og:description" content="decide answers real-algebraic questions by CAD, and pays doubly-exponential cost for it. Most positivity questions that actually arise — is this bound…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/" class="active" aria-current="page">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <div class="eyebrow">Solving and optimisation</div>
+    <h1>Positivity certificates (SOS / Positivstellensatz)</h1>
+    <p><code>decide</code> answers real-algebraic questions by CAD, and pays doubly-exponential
+cost for it. Most positivity questions that actually arise — is this bound
+valid, is this Lyapunov candidate non-negative, is this inequality true on a
+box — do not need a decision procedure at all. They need a <strong>certificate</strong>: a
+short algebraic identity that makes the answer checkable by anyone, including a
+proof assistant.</p>
+<blockquote><p><code>decide</code> is <strong>not</strong> complete in this implementation: on some sentences it
+refuses with <code>E-CAD-001</code> rather than answering. See
+<a href="#decide-refuses-rather-than-guessing"><code>decide</code> refuses rather than guessing</a>
+below — this changed in 3.8 and it changed because the alternative was
+answering wrongly.</p>
+</blockquote>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x, y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"y"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.sos_decompose(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">y, [x, y])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.kind        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "sos"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.identity    </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># p = 1*(x - y)^2</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.verify()    </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># True — re-expands to the target exactly</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.to_lean()   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Lean 4 rendering, or None</span></span></code></pre></div><p>Constrained, on a basic semialgebraic set:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">g1, g2 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># the box 0 ≤ x ≤ 1</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.prove_nonneg(x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x, [x], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">constraints</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[g1, g2])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.kind        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "handelman"  —  x − x² = x·(1 − x)</span></span></code></pre></div><h2 id="three-outcomes-deliberately-kept-apart"><a class="hanchor" href="#three-outcomes-deliberately-kept-apart" aria-hidden="true" tabindex="-1">#</a>Three outcomes, deliberately kept apart</h2>
+<p>This is the part that matters for a search loop, and the part most CAS get
+wrong by collapsing:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Outcome</th>
+<th>Meaning</th>
+<th>What a loop should do</th>
+</tr>
+</thead><tbody><tr>
+<td><code>PositivityCertificate</code></td>
+<td><strong>Proved</strong> non-negative, with a checkable witness</td>
+<td>Record it; cite it</td>
+</tr>
+<tr>
+<td><code>SosError</code> <code>E-SOS-003</code></td>
+<td><strong>Proved not</strong> non-negative — a witness point is in the message</td>
+<td>The conjecture is false; kill the branch</td>
+</tr>
+<tr>
+<td><code>SosError</code> <code>E-SOS-002</code></td>
+<td><strong>Undecided</strong>: no certificate of this shape at this degree</td>
+<td>Record <code>unknown</code>; raise the degree, or fall back to <code>decide</code></td>
+</tr>
+</tbody></table></div>
+<blockquote><p><strong><code>E-SOS-002</code> must be recorded as <code>unknown</code>, never as &quot;not SOS&quot;.</strong>
+It reports that <em>this</em> search — the LP-representable subcone described below,
+at <em>this</em> <code>basis_degree</code> (or <code>level</code>) — found nothing. Three different worlds
+produce it and the error cannot tell them apart: <code>p</code> is SOS but its Gram
+matrix lies outside the subcone; <code>p</code> is SOS only at a higher basis degree;
+<code>p</code> is non-negative but genuinely not SOS. A loop that maps <code>E-SOS-002</code> to
+&quot;the conjecture is false&quot; or &quot;<code>p</code> is not a sum of squares&quot; closes a branch on
+evidence that does not support it, and a wrongly closed branch is invisible —
+nothing downstream will ever contradict it. Only <code>E-SOS-003</code> is a refutation,
+and it carries a witness point.</p>
+</blockquote>
+<p><code>E-SOS-002</code> is <em>not</em> a claim that the polynomial is not a sum of squares, and
+certainly not that it is negative. The canonical illustration is the
+<strong>Motzkin polynomial</strong> <code>x⁴y² + x²y⁴ − 3x²y² + 1</code>, which is non-negative
+everywhere but provably not a sum of squares <em>itself</em> — asked to decompose it
+<em>directly</em> (no multiplier), this module refuses with <code>E-SOS-002</code>, correctly:
+it does not report it as negative, and it does not invent a decomposition.
+<code>sos_decompose</code>&#39;s full pipeline does not stop there, though (see &quot;What the
+search actually covers&quot; below) — it also tries multiplying by a power of
+<code>x²+y²</code> before giving up, and that succeeds for Motzkin, so the <em>end-to-end</em>
+call returns a certificate, not a refusal. The <em>homogeneous</em> 3-variable form
+of Motzkin now certifies too, at multiplier power <code>N = 1</code> — which is the
+classical fact:</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>(x²+y²+z²)(x⁴y²+x²y⁴−3x²y²z²+z⁶)
+  = (½x³y+xy³−3⁄2xyz²)² + ¾(x³y−xyz²)² + (xy²z−xz³)² + (x²yz−yz³)² + (x²y²−z⁴)²</code></pre></div><blockquote><p><strong>Correction (2026-08-20).</strong> Earlier releases of this page said the
+homogeneous ternary form &quot;is still out of reach&quot; and that the classical
+fact &quot;needs <code>N = 2</code>, not <code>N = 1</code>&quot;. Both statements were wrong: the identity
+above is exactly why Motzkin is the standard example of a PSD non-SOS form
+that becomes SOS after one multiplication by <code>Σxᵢ²</code>. What was missing was a
+half-Newton-polytope reduction in the search — see &quot;What the search
+actually covers&quot; below.</p>
+</blockquote>
+<p>The general point stands regardless of which examples are currently
+reachable: <strong>an <code>E-SOS-002</code> refusal is a property of the search, not of the
+polynomial</strong>, and which polynomials it applies to shifts as the search grows
+more complete.</p>
+<p>The three-way branch a loop should write:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.sos_decompose(p, [x, y])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    verdict, evidence </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "nonneg"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, cert    </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># proved, with a checkable identity</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.SosError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    if</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e.code </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">==</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "E-SOS-003"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">        verdict, evidence </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "negative"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">str</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># refuted; witness point in the message</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    else</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">        verdict, evidence </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "unknown"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">str</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e)    </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># E-SOS-002 lands here — leave the branch open</span></span></code></pre></div><h2 id="what-the-search-actually-covers"><a class="hanchor" href="#what-the-search-actually-covers" aria-hidden="true" tabindex="-1">#</a>What the search actually covers</h2>
+<p>A sum-of-squares decomposition <code>p = zᵀQz</code> over the monomial basis <code>z</code> exists
+iff there is a <strong>positive semidefinite</strong> Gram matrix <code>Q</code> matching <code>p</code>&#39;s
+coefficients. Deciding general PSD feasibility is a semidefinite programme,
+and no floating-point SDP solver is ever trusted with a certificate here — a
+rounded <code>Q</code> is not a proof.</p>
+<p>The search tries three things, in order, before refusing:</p>
+<ol>
+<li><strong>The diagonally-dominant (DSOS) subcone</strong> — non-negative combinations of
+squares of a fixed generator set, <code>(e_i)²</code> and <code>(a·e_i ± b·e_j)²</code> for small
+coprime <code>(a, b)</code>, solved with the exact rational simplex in <code>real::sos::lp</code>
+(Bland&#39;s rule, so termination is unconditional and there are no epsilon
+tolerances). Every generator is <em>literally a square</em>, so a feasible point
+is sound by construction — but the cone is a strict subset of the SOS
+cone: diagonal dominance is not invariant under scaling the basis, so a
+perfect square as ordinary as <code>(x/2 + 1/3)²</code> has a Gram matrix — its only
+one — that is PSD but not DD.</li>
+<li><strong>The full PSD Gram cone</strong>, when DSOS fails (<code>real::sos::psd::psd_search</code>).
+The monomial basis is cut down first: to the monomials of degree exactly
+<code>d/2</code> when <code>p</code> is homogeneous of degree <code>d</code>, and then to the lattice
+points of <code>½·Newton(p)</code> — Reznick&#39;s theorem says the support of every
+square in every SOS decomposition of <code>p</code> already lies there, so this loses
+no certificate while removing free parameters quadratically. It then leans
+on a floating-point search
+(Jacobi eigendecomposition, PSD-cone projection, an annealed schedule of
+shrinking eigenvalue floors with several random restarts —
+<code>real::sos::sdp</code>) to <em>propose</em> a Gram matrix, which is then rounded to
+nearby rationals and re-expanded to check it equals <code>p</code> exactly before
+anything is returned. A <code>Some</code> here is always sound regardless of what the
+numeric search converged to; a <code>None</code> means only &quot;the search did not turn
+up a certificate&quot;, never &quot;not SOS&quot;.</li>
+<li><strong>A Reznick multiplier search</strong>, when even step 2 fails on <code>p</code> itself:
+tries <code>(x_1²+…+x_n²)^N·p</code> for <code>N = 1..4</code> and reruns step 2 on the product.
+Some positive-definite forms are not SOS at all (Hilbert 1888 — this is
+what Motzkin&#39;s polynomial witnesses), but Reznick&#39;s theorem guarantees
+<code>(Σxᵢ²)^N·p</code> is SOS for <em>some</em> <code>N</code>; the search does not know <code>N</code> in advance
+and reports budget exhaustion honestly rather than a disproof.</li>
+</ol>
+<p><code>E-SOS-002</code> at the end of all three is phrased as a statement about the
+search, not the polynomial — the search&#39;s incompleteness, at any step.</p>
+<p><strong>Step 3&#39;s search has to work harder than plain alternating projection</strong>,
+because the multiplier certificates it exists for are frequently <em>tight</em> —
+Motzkin&#39;s polynomial and Robinson&#39;s form (the textbook PSD-not-SOS examples)
+both have witnessing Gram matrices that are <em>singular</em>, sitting exactly on
+the boundary of the PSD cone rather than its interior. A first version of
+this search (annealed alternating projection with several random restarts)
+converged toward that boundary monotonically (confirmed by a diagnostic
+trajectory) but never reliably closed the last, asymptotically slow stretch —
+the textbook behaviour of alternating projection at a tangential
+(non-transversal) set intersection. The search now also tries
+Douglas–Rachford splitting with over-relaxation and a facial-reduction step —
+both standard escapes for exactly this stall — and with them, both
+<code>(x²+y²)·Motzkin(x,y)</code> and <code>(x²+y²+z²)·Robinson(x,y,z)</code> are found and
+exactly re-verified.</p>
+<p><strong>The half-Newton-polytope reduction is what closed the homogeneous cases.</strong>
+The <em>homogeneous</em> ternary Motzkin form at <code>N = 1</code> used to refuse, and the
+refusal was misdiagnosed as numerical hardness: a great deal of extra search
+machinery (symmetry reduction, an exact zero-vector restriction, 6,000,000
+Douglas–Rachford iterations) was spent on the wrong multiplier power. The
+actual cause was dimension. <code>(x²+y²+z²)·Motzkin_hom</code> has a 15-monomial
+degree-4 basis of which only 9 lie in <code>½·Newton</code>; the 75-parameter family
+over the unreduced basis leaves the numeric search about <code>0.96</code> away from
+the true certificate in parameter space — far too far to round onto it —
+while the 18-parameter family over the reduced basis lands on it exactly.
+Note what this is <em>not</em>: on both bases the certificate is the unique PSD
+point of the affine family, rank 5, minimum eigenvalue exactly 0, so <code>λ_min</code>
+does not distinguish them and more iterations do not help (4× the
+Douglas–Rachford budget on the unreduced family still fails to round). With
+the reduction, <code>(Σxᵢ²)·Motzkin_hom</code> and <code>(Σxᵢ²)·Choi–Lam</code> both certify at
+<code>N = 1</code> in seconds.</p>
+<p><strong>What&#39;s still open:</strong> larger copositivity forms — the Horn/C₅ form (5
+variables) and the C₇ form (7 variables) both admit <code>N = 1</code> certificates that
+this search does not reach. Their Newton polytopes are already full, so the
+reduction does not help, and their <code>N = 1</code> affine families have 420 and 2646
+free parameters respectively — above <code>psd_search</code>&#39;s numeric-search ceiling of
+200, so no search is attempted at those powers at all. That is now <em>reported</em>
+in the <code>E-SOS-002</code> message (lines marked <code>NOT SEARCHED</code>) rather than being
+indistinguishable from an exhausted search. Closing these needs a real
+interior-point SDP solve on the reduced family, not more alternating
+projection.</p>
+<h2 id="constrained-certificates"><a class="hanchor" href="#constrained-certificates" aria-hidden="true" tabindex="-1">#</a>Constrained certificates</h2>
+<p>With constraints <code>g_i ≥ 0</code>, <code>prove_nonneg</code> searches for a <strong>Handelman</strong>
+certificate</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>p = Σ_α c_α · Π_i g_i^{α_i},    c_α ≥ 0 rational,   Σ_i α_i ≤ level</code></pre></div><p>which is again an exact LP in the weights <code>c_α</code>. <code>level</code> is a user-visible
+parameter; exceeding it is a refusal (<code>E-SOS-002</code>), not a failure. Handelman
+is complete for polytopes given a high enough level, but the level needed is
+not known in advance — so raising it on refusal is a meaningful retry.</p>
+<h2 id="putinar-certificates-quadratic-module"><a class="hanchor" href="#putinar-certificates-quadratic-module" aria-hidden="true" tabindex="-1">#</a>Putinar certificates (quadratic module)</h2>
+<p>Handelman&#39;s constant multipliers cannot express the ordinary certificate for an
+inequality on a curved set: <code>1 − x² ≥ 0</code> on the unit disk is
+<code>y² + 1·(1 − x² − y²)</code>, and <code>y²</code> is a sum of squares, not a constant.
+<code>prove_nonneg_on</code> searches the <strong>quadratic module</strong> instead:</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>f = σ₀ + Σᵢ σᵢ·gᵢ + Σⱼ λⱼ·hⱼ      σ's sums of squares, λ's arbitrary polynomials</code></pre></div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">disk </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 1</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.prove_nonneg_on(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">4</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">4</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [x, y], [disk])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.kind          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "putinar"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.identity      </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 1 - x^4 - y^4 = ... + (1 - x^2 - y^2)*(...)^2 + ...</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.multipliers   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># [(weight, [(c, q), ...]), ...] — every σ as explicit squares</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">cert.verify()      </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># True</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.prove_nonneg_on(pool.rational(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">y, [x, y], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">equalities</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">])</span></span></code></pre></div><ul>
+<li><code>constraints</code> items are <code>g</code> (meaning <code>g ≥ 0</code>) or a comparison from
+<code>pool.ge</code>/<code>pool.le</code>/<code>pool.gt</code>/<code>pool.lt</code>/<code>pool.pred_eq</code>; strict comparisons are
+relaxed to their closure (sound). <code>equalities</code> items are <code>h</code> (meaning <code>h = 0</code>).
+An equality appears in the certificate as the pair <code>h ≥ 0</code>, <code>−h ≥ 0</code>, with
+<code>λ = σ⁺ − σ⁻</code> written as two explicit sums of squares.</li>
+<li><code>level=k</code> is the relaxation order: every summand has degree <code>≤ 2k</code>, <code>σᵢ</code> is a
+Gram form over the monomials of degree <code>≤ ⌊(2k − deg gᵢ)/2⌋</code>. <code>None</code> tries the
+smallest level that can represent the target and two more. Some claims need a
+higher level than their degree suggests: <code>1 − x²</code> on <code>{1 − x ≥ 0, 1 + x ≥ 0}</code>
+is refused at level 1 and certified at level 2.</li>
+<li>Each level is searched by an exact LP over scaled diagonally dominant Gram
+blocks first, then by the numeric block-diagonal PSD search shared with
+<code>sos_decompose</code> (with facial reduction); every candidate is rounded to
+rationals, each block is decided PSD by an exact <code>LDLᵀ</code>, and the identity is
+re-expanded in ℚ before anything is returned.</li>
+<li><strong>Archimedean check.</strong> Putinar&#39;s theorem guarantees a certificate at <em>some</em>
+level for every <code>f &gt; 0</code> on the set only when the module contains <code>N − Σxᵢ²</code>.
+When a level fails, the search looks for such an <code>N</code> (left free). If found,
+it retries with <code>N − Σxᵢ²</code> as an extra generator and composes the result back
+into a certificate over your constraints only; either way the <code>E-SOS-002</code>
+message says whether the module was found to be Archimedean — when it is not
+(e.g. the orthant), raising the level carries no guarantee.</li>
+<li>A false claim raises <code>E-SOS-003</code>; the exception&#39;s <code>witness</code> attribute maps
+each variable to an exact rational point of the set where <code>f &lt; 0</code>.</li>
+</ul>
+<h2 id="verification"><a class="hanchor" href="#verification" aria-hidden="true" tabindex="-1">#</a>Verification</h2>
+<p>Every certificate is re-expanded in exact rational arithmetic and compared
+against the target <strong>identically</strong> before it is returned. A candidate that
+fails is refused (<code>E-SOS-005</code>), never returned with a caveat. <code>verify()</code> runs
+the same check on demand so a downstream consumer never has to trust the
+search that produced the certificate.</p>
+<h2 id="when-to-use-this-versus-decide"><a class="hanchor" href="#when-to-use-this-versus-decide" aria-hidden="true" tabindex="-1">#</a>When to use this versus <code>decide</code></h2>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th><code>sos_decompose</code> / <code>prove_nonneg</code></th>
+<th><code>decide</code> (CAD)</th>
+</tr>
+</thead><tbody><tr>
+<td>Answers</td>
+<td>Non-negativity, with a certificate</td>
+<td>Real-algebraic sentences in ≤ 2 variables with a ≤ 2-quantifier prefix</td>
+</tr>
+<tr>
+<td>Completeness</td>
+<td>No — refuses honestly (<code>E-SOS-002</code>)</td>
+<td>No — refuses honestly (<code>E-CAD-001</code>)</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>LP in exact rationals</td>
+<td>Doubly exponential</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>Checkable identity, Lean-exportable</td>
+<td>Truth value (+ witness)</td>
+</tr>
+</tbody></table></div>
+<p>The intended pattern is: try the certificate route first because it is cheap
+and its output is citable; fall back to <code>decide</code> on <code>E-SOS-002</code> when you need a
+verdict rather than a certificate and can afford the cost. Note that neither
+route is complete, so &quot;both refused&quot; is a real and expected outcome — it means
+<em>undecided by these methods</em>, not <em>false</em>.</p>
+<h2 id="decide-refuses-rather-than-guessing"><a class="hanchor" href="#decide-refuses-rather-than-guessing" aria-hidden="true" tabindex="-1">#</a><code>decide</code> refuses rather than guessing</h2>
+<p><code>decide</code> implements CAD over a <strong>bounded fragment</strong>: purely polynomial bodies over
+ℚ in one or two real variables, with a quantifier prefix of at most two. Outside
+that fragment it raises <code>CadError</code> (<code>E-CAD-001</code>). Inside it, there is one further
+refusal, and it is the important one.</p>
+<p>The CAD sample set is built from rational points — bracket endpoints, refined
+brackets, midpoints. For a <strong>strict</strong> atom (<code>&lt;</code>, <code>&gt;</code>) that is complete: strict
+solution sets are open, so if a solution exists, a whole interval of rational
+points solves it too. For a <strong>non-strict</strong> atom (<code>=</code>, <code>≠</code>, <code>≤</code>, <code>≥</code>) the solution
+set can be a single boundary point, and if that point is irrational it is never in
+the sample set. Concluding &quot;no sample satisfied it, therefore unsatisfiable&quot; would
+then be a claim about a point that was never tested — and via <code>∀x. φ ≡ ¬∃x. ¬φ</code>,
+that fabricated <code>false</code> becomes a machine-checked-looking proof of a false
+universal theorem.</p>
+<p>So when a boundary root has not been shown rational and the body has a non-strict
+atom, <code>decide</code> refuses:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Rational double root: found exactly, so the verdict is real.</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">body </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.gt((pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.decide(ak.Forall(x, body))        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># (False, None) — false at x = -2/3</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Irrational double root at ±sqrt(2): refuses instead of answering.</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">irr </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.gt((x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">try</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ak.decide(ak.Forall(x, irr))</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">except</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.CadError </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(e.code)                     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># E-CAD-001</span></span></code></pre></div><p>Three consequences worth planning for:</p>
+<ul>
+<li><strong><code>E-CAD-001</code> is &quot;I did not establish this&quot;, not &quot;false&quot;.</strong> A search loop must not
+record it as a closed branch. It is the same class of answer as <code>E-SOS-002</code>.</li>
+<li><strong>Witnesses are verified.</strong> When <code>decide</code> reports <code>(True, {...})</code> for an
+existential, the point is substituted back and checked; if it does not satisfy the
+sentence the witness is reported as <code>None</code> rather than as a certificate that fails.
+<code>∃x. 3x − 2 = 0</code> gives <code>(True, {&#39;x&#39;: &#39;2/3&#39;})</code>; <code>∃x. x² = 2</code> gives <code>(True, None)</code>,
+because no rational witness exists and a midpoint of the isolating interval is
+not one.</li>
+<li><strong>Mixed-alternation sentences refuse more often</strong> than same-flavour ones. <code>∀x∃y. p &gt; 0</code>
+is decided through <code>¬∃x∀y. p ≤ 0</code>, and De Morgan turns a strict body into a
+non-strict one, so it can land in the refusal case even though the original body
+was strict.</li>
+</ul>
+<p>If you need an answer where <code>decide</code> refuses, the routes are: a positivity
+certificate (above), <code>alkahest.smt</code> with a nonlinear-real solver, or rigorous
+numerics (<a href="/docs/guide/validated-bounds/">validated bounds</a>) if a <em>quantified-over-a-box</em>
+statement is good enough.</p>
+<h2 id="scope-of-this-release"><a class="hanchor" href="#scope-of-this-release" aria-hidden="true" tabindex="-1">#</a>Scope of this release</h2>
+<p>Shipped: exact rational SOS over the DSOS generator cone, a general PSD Gram
+search (floating-point proposal, exact rational verification) for cases DSOS
+alone refuses — with Douglas–Rachford splitting and a facial-reduction step
+alongside the original annealed alternating projection, specifically so
+boundary-only (singular Gram matrix) certificates are reachable — a Reznick
+multiplier search (<code>(Σxᵢ²)^N·p</code> for <code>N ≤ 4</code>) on top of that (finds both
+Motzkin&#39;s polynomial and Robinson&#39;s form), Handelman certificates on basic
+semialgebraic sets, exact verification, and Lean export.</p>
+<p>Not yet shipped: reliable certification of <em>every</em> boundary-case example —
+the Horn/C₅ and C₇ copositivity forms are the ones currently out of reach,
+and for a reason the error message now states outright (their affine families
+are over the numeric-search ceiling, so no search runs) — a proper
+interior-point solver that would close them more systematically, and
+Putinar-style certificates with
+genuine SOS — rather than non-negative constant — multipliers on the
+<em>constraints</em>. <code>CertificateKind::Putinar</code> exists in the certificate type so
+those can be added without a shape change.</p>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/solving/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Polynomial system solving</span></a><a class="pager-next" href="/docs/guide/linear-programming/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Exact linear and integer programming</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/positivity.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#three-outcomes-deliberately-kept-apart">Three outcomes, deliberately kept apart</a></li><li class="d2"><a href="#what-the-search-actually-covers">What the search actually covers</a></li><li class="d2"><a href="#constrained-certificates">Constrained certificates</a></li><li class="d2"><a href="#putinar-certificates-quadratic-module">Putinar certificates (quadratic module)</a></li><li class="d2"><a href="#verification">Verification</a></li><li class="d2"><a href="#when-to-use-this-versus-decide">When to use this versus decide</a></li><li class="d2"><a href="#decide-refuses-rather-than-guessing">decide refuses rather than guessing</a></li><li class="d2"><a href="#scope-of-this-release">Scope of this release</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/positivity.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cross-CAS differential testing · Alkahest Docs</title>
+<meta name="description" content="Lean certificates cover the fragment where Alkahest can prove its answer. Outside that fragment nothing is checking the answer at all, and the failure that…">
+<meta property="og:title" content="Cross-CAS differential testing · Alkahest Docs">
+<meta property="og:description" content="Lean certificates cover the fragment where Alkahest can prove its answer. Outside that fragment nothing is checking the answer at all, and the failure that…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li class="open"><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/" class="active" aria-current="page">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <div class="eyebrow">Agent loops</div>
+    <h1>Cross-CAS differential testing</h1>
+    <p><a href="/docs/guide/lean-certs/">Lean certificates</a> cover the fragment where Alkahest can <em>prove</em> its
+answer. Outside that fragment nothing is checking the answer at all, and the failure that
+matters for a search loop is not a crash but a <strong>silent error</strong>: a confident, plausible,
+wrong result that the loop then builds a hundred derived claims on top of. An independent
+implementation is the cheapest instrument that catches exactly those — the ones
+certificates do not cover.</p>
+<p><code>alkahest.crosscheck</code> runs one query through Alkahest and through an oracle and reports
+whether they agree.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.crosscheck </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> check, oracles</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(oracles())          </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># {'sympy': '1.14.0'} — or {'sympy': None} if not installed</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.context(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool):</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    out </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> check(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"integrate"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, ak.sin(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.cos(x), x)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(out.outcome, out.rung_name, out.reason)</span></span></code></pre></div><div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>agree invariant invariant_holds</code></pre></div><p><code>sin(x)·cos(x)</code> has three standard antiderivatives that differ by constants; that is why
+the check settled on the <strong>invariant</strong> rung and not by comparing forms.</p>
+<h2 id="four-outcomes-and-two-of-them-are-not-clean"><a class="hanchor" href="#four-outcomes-and-two-of-them-are-not-clean" aria-hidden="true" tabindex="-1">#</a>Four outcomes, and two of them are not &quot;clean&quot;</h2>
+<p><code>CrossCheck.outcome</code> is four-valued, never a boolean:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Outcome</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody><tr>
+<td><code>agree</code></td>
+<td>Both systems answered and a named rung settled it</td>
+</tr>
+<tr>
+<td><code>diverge</code></td>
+<td>Both answered and the answers are not the same</td>
+</tr>
+<tr>
+<td><code>incomparable</code></td>
+<td>The question could not be posed identically to both systems</td>
+</tr>
+<tr>
+<td><code>unavailable</code></td>
+<td>No oracle is installed</td>
+</tr>
+</tbody></table></div>
+<p><strong><code>incomparable</code> and <code>unavailable</code> are not weaker forms of <code>agree</code>.</strong> They say the check
+did not happen. Code that treats them as clean has reintroduced the exact failure this
+module exists to prevent: <em>a loop that believes it is cross-checking, and is not, is worse
+off than one that knows it isn&#39;t.</em> Two API decisions enforce that:</p>
+<ul>
+<li><code>CrossCheck</code> deliberately defines <strong>no <code>__bool__</code></strong>, so <code>if check(...):</code> does not
+compile into a silent &quot;it agreed&quot;;</li>
+<li><code>CrossCheck.checked</code> is <code>True</code> only for <code>agree</code> and <code>diverge</code>, so the common mistake has
+to be written out explicitly.</li>
+</ul>
+<p>With SymPy absent, <code>check</code> returns <code>outcome=&quot;unavailable&quot;</code> and <code>reason=&quot;no_oracle&quot;</code>. It
+never returns <code>agree</code>. Call <code>oracles()</code> at session start to find out <strong>before</strong> you plan
+around a check that will only ever return <code>unavailable</code> — it reports every <em>known</em> oracle,
+including the absent ones, as <code>None</code>.</p>
+<h2 id="the-comparison-ladder"><a class="hanchor" href="#the-comparison-ladder" aria-hidden="true" tabindex="-1">#</a>The comparison ladder</h2>
+<p>Structural equality is useless: the two systems normalise differently, and a naive
+comparison of antiderivatives, solution sets or factorisations produces nothing but noise.
+So comparison is a ladder, it is <strong>per-operation</strong>, and the rung that settled a check is
+always recorded on <code>CrossCheck.rung</code>.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Rung</th>
+<th>Name</th>
+<th>What it does</th>
+<th>What it licenses</th>
+</tr>
+</thead><tbody><tr>
+<td>1</td>
+<td><code>syntactic</code></td>
+<td>Compare canonical forms after translation</td>
+<td>Proof of agreement</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>symbolic</code></td>
+<td><code>simplify(a − b) == 0</code>, attempted <strong>independently in both systems</strong> — either one proving it counts</td>
+<td>Proof of agreement</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>rigorous_numeric</code></td>
+<td>Sample and evaluate with <code>ArbBall</code> / <code>interval_eval</code></td>
+<td>Rigorous <strong>refutation</strong>; agreement only &quot;not refuted at these points&quot;</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>invariant</code></td>
+<td>The operation&#39;s own defining property, checked on both answers</td>
+<td>Proof of agreement</td>
+</tr>
+</tbody></table></div>
+<p><strong>Rung 4 leads wherever it exists.</strong> It sidesteps equal-up-to-a-constant,
+up-to-ordering and up-to-a-unit entirely — the three things that make naive comparison
+useless.</p>
+<p>Rung 3 is where Alkahest has an unfair advantage over a float-only harness:
+<a href="/docs/guide/ball-arithmetic/">ball arithmetic</a> distinguishes &quot;differs by 1e-16 of float noise&quot;
+from &quot;genuinely differs by 1e-16&quot;. Note the asymmetry, which the record carries: a ball is
+a <em>rigorous</em> enclosure of the Alkahest answer, so a value outside it is a real
+disagreement — but agreement at sampled points is only a failure to refute, and rung-3
+agreement is therefore reported with <code>conclusive=False</code> rather than being promoted or
+discarded.</p>
+<h3 id="the-invariants-per-operation"><a class="hanchor" href="#the-invariants-per-operation" aria-hidden="true" tabindex="-1">#</a>The invariants, per operation</h3>
+<div class="table-wrap"><table><thead><tr>
+<th>Operation</th>
+<th>Rungs</th>
+<th>Rung-4 invariant</th>
+</tr>
+</thead><tbody><tr>
+<td><code>integrate</code> (indefinite)</td>
+<td>4, 1, 2, 3</td>
+<td><code>d/dx F − f ≡ 0</code>, in each system</td>
+</tr>
+<tr>
+<td><code>simplify</code>, <code>simplify_expanded</code></td>
+<td>4, 1, 2, 3</td>
+<td><code>out − in ≡ 0</code> — a simplifier&#39;s whole contract</td>
+</tr>
+<tr>
+<td><code>sum_indefinite</code></td>
+<td>4, 1, 2, 3</td>
+<td><code>S(k+1) − S(k) − t(k) ≡ 0</code> — Gosper&#39;s defining property</td>
+</tr>
+<tr>
+<td><code>solve</code></td>
+<td>4</td>
+<td>Substitute every solution back, <strong>then</strong> compare set sizes</td>
+</tr>
+<tr>
+<td><code>diff</code></td>
+<td>1, 2, 3</td>
+<td>— (integrating back is weaker than the derivative it would check)</td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>1, 2, 3</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>series</code></td>
+<td>1, 2, 3</td>
+<td>— (the <code>O()</code> remainder is stripped first; that is a normalisation, not a rung)</td>
+</tr>
+<tr>
+<td><code>integrate</code> (definite)</td>
+<td>1, 2, 3</td>
+<td>—</td>
+</tr>
+</tbody></table></div>
+<p><code>solve</code> is worth spelling out. Solution <em>sets</em> compare badly by construction: ordering,
+radical form and branch choice all differ. Substituting back checks each system&#39;s answers
+on their own terms, and only <em>then</em> does the set comparison mean something — with both
+sides verified, a size difference is a genuinely <strong>missed solution</strong>, not a formatting
+artefact.</p>
+<p>An operation with no entry in <code>OPERATIONS</code> raises <code>E-XCHECK-003</code> rather than falling back
+to a generic structural comparison. The fallback is deliberately absent: it is precisely
+how a harness starts reporting two normal forms as a divergence.</p>
+<h2 id="a-divergence-names-two-suspects"><a class="hanchor" href="#a-divergence-names-two-suspects" aria-hidden="true" tabindex="-1">#</a>A divergence names two suspects</h2>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">out </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> check(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"integrate"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, integrand, x)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">if</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> out.outcome </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">==</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "diverge"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    d </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> out.divergence</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(d.statement())</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(d.point)             </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># {'x': 1.257...} — the witness</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(d.alkahest_value, d.oracle_value)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(d.support)           </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'unresolved' | 'alkahest_supported' | 'oracle_supported'</span></span></code></pre></div><p>The record carries the witness point and <strong>both</strong> values, and the wording never implies
+Alkahest is right. <code>Divergence.support</code> carries whatever the rigorous escalation could
+establish, and its default is <code>unresolved</code>:</p>
+<ul>
+<li><code>alkahest_supported</code> — the oracle&#39;s answer fails the operation invariant while
+Alkahest&#39;s satisfies it;</li>
+<li><code>oracle_supported</code> — <strong>Alkahest&#39;s answer fails the invariant under rigorous ball
+arithmetic</strong> while the oracle&#39;s satisfies it. This is a silent-error finding. The
+residual is built entirely from Alkahest expressions, so there is no oracle float in it
+to blame, and <code>Divergence.silent_error_candidate</code> is <code>True</code> exactly here;</li>
+<li><code>unresolved</code> — the two disagree and the evidence does not say which is at fault. Most
+findings start here, and that is the honest default.</li>
+</ul>
+<p>When <a href="/docs/guide/validated-bounds/"><code>verified_sign</code></a> can certify that the failing residual keeps
+one sign across the whole sampling box, <code>Divergence.region</code> records the box — upgrading a
+finding from &quot;wrong at this point&quot; to &quot;wrong on this interval&quot;, which is a much shorter
+argument to hand a reviewer.</p>
+<p>A <code>silent_error_candidate</code> should be routed into <code>tests/silent_errors/corpus/</code>. That
+routing is the whole point of the feature: it converts a fuzzing signal into a permanent
+regression gate.</p>
+<p><strong>An honest refusal is never a divergence.</strong> If Alkahest declines
+(<code>E-INT-004: no elementary antiderivative exists</code>, an interior-pole definite integral, a
+two-sided limit at a pole) the outcome is <code>incomparable</code> with <code>reason=&quot;alkahest_refused&quot;</code>.
+The same holds in the other direction: SymPy returning an unevaluated <code>Integral</code> is a
+refusal, scored <code>reason=&quot;oracle_refused&quot;</code>, not an answer to compare against.</p>
+<h2 id="one-translator-total-or-refuse"><a class="hanchor" href="#one-translator-total-or-refuse" aria-hidden="true" tabindex="-1">#</a>One translator, total-or-refuse</h2>
+<p>A divergence is only informative if both systems were asked the same question, and the
+ways to accidentally ask a <em>different</em> one are well known: branch cuts, assumption
+handling, <code>∞</code>, unnormalised forms. So:</p>
+<ul>
+<li>every tag <code>Expr.node()</code> can emit appears in an explicit table
+(<code>Translator._DISPATCH</code>, total over <code>NODE_TAGS</code>), and an unknown tag raises
+<strong><code>E-XCHECK-001</code></strong>;</li>
+<li>every primitive is either in <code>FUNCTION_MAP</code> or in <code>REFUSED_FUNCTIONS</code> <strong>with the reason
+spelt out</strong> — <code>heaviside</code> (SymPy fixes <code>Heaviside(0) = 1/2</code> and Alkahest fixes nothing
+there), the elliptic integrals (modulus-vs-parameter convention), <code>round</code> (no documented
+half-way rule to compare against);</li>
+<li>quantifiers refuse: SymPy has no term-level <code>∀</code>, and encoding one as something SymPy
+<em>will</em> accept produces an object no rung can use;</li>
+<li>an active <code>Assumptions</code> context that cannot be mapped faithfully refuses too.</li>
+</ul>
+<p><strong>False divergences are worse than no signal</strong> — they train both the loop and the team to
+ignore the alarm, and a best-effort translator manufactures them by construction.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.crosscheck </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> to_sympy</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">to_sympy(ak.sqrt(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))                       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># sqrt(x**2)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">to_sympy(ak.sqrt(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)), </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">assumptions</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">positive) </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># x</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">to_sympy(pool.func(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"heaviside"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [x]))                       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># raises E-XCHECK-001</span></span></code></pre></div><p><code>to_sympy</code> is the one translator this package ships. The four hand-rolled <code>_expr_to_sympy</code>
+helpers in <code>tests/</code> (<code>test_eigen_v217.py</code>, <code>test_oracle.py</code>, <code>test_gruntz_v217.py</code>,
+<code>test_diophantine_v219.py</code>) are meant to migrate onto it; that duplication <em>is</em> what this
+item exists to remove. Building the QA harness and the runtime mode separately would
+produce two translators that disagree, which is the worst possible outcome for a tool
+whose entire job is detecting disagreement.</p>
+<h3 id="assumptions"><a class="hanchor" href="#assumptions" aria-hidden="true" tabindex="-1">#</a>Assumptions</h3>
+<p>Only sign and non-zero conditions on a <strong>bare symbol</strong> map onto oracle symbol flags:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Alkahest predicate</th>
+<th>SymPy symbol flag</th>
+</tr>
+</thead><tbody><tr>
+<td><code>x &gt; 0</code></td>
+<td><code>positive=True</code></td>
+</tr>
+<tr>
+<td><code>x &gt;= 0</code></td>
+<td><code>nonnegative=True</code></td>
+</tr>
+<tr>
+<td><code>x &lt; 0</code></td>
+<td><code>negative=True</code></td>
+</tr>
+<tr>
+<td><code>x &lt;= 0</code></td>
+<td><code>nonpositive=True</code></td>
+</tr>
+<tr>
+<td><code>x != 0</code></td>
+<td><code>nonzero=True</code></td>
+</tr>
+</tbody></table></div>
+<p>Anything else — a relation between two symbols, a condition on a composite, a disjunction
+— has no per-symbol counterpart, so it raises rather than being dropped. Dropping it would
+ask the oracle a <em>weaker</em> question, and every legitimate refinement would then look like a
+divergence.</p>
+<h2 id="opt-in-per-call-site-not-a-context-flag"><a class="hanchor" href="#opt-in-per-call-site-not-a-context-flag" aria-hidden="true" tabindex="-1">#</a>Opt-in per call site, not a context flag</h2>
+<p>There is deliberately <strong>no</strong> <code>context(crosscheck=True)</code>. That is the obvious design and
+the wrong one: it puts an oracle round-trip on every call, and stage-2 falsification runs
+millions of times where SymPy is orders of magnitude slower. Call <code>check</code> where you want
+it — at <a href="/docs/guide/claim-graphs/">claim-recording</a> frequency, hundreds of times, not millions.
+That is &quot;falsify fast, certify slow&quot; applied to the QA layer.</p>
+<h2 id="two-tiers-in-ci"><a class="hanchor" href="#two-tiers-in-ci" aria-hidden="true" tabindex="-1">#</a>Two tiers in CI</h2>
+<p>A randomised sweep cannot be a per-PR gate: it is nondeterministic, and a SymPy upgrade
+would turn it red for reasons unrelated to the pull request. So the arrangement mirrors
+how <code>tests/silent_errors/</code> relates to <code>agent-benchmark/</code>:</p>
+<h3 id="tier-1--the-seeded-nightly-sweep"><a class="hanchor" href="#tier-1--the-seeded-nightly-sweep" aria-hidden="true" tabindex="-1">#</a>Tier 1 — the seeded nightly sweep</h3>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.crosscheck </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> sweep</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">report </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> sweep(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">cases</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">200</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">seed</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">None</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># seed defaults to budget_seed(), then to DEFAULT_SEED</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(report.summary())                </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># prints the seed — always</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> finding </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> report.silent_error_candidates:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(finding.divergence.statement())</span></span></code></pre></div><p>The seed is recorded on the report and printed by <code>summary()</code>, because a sweep is only
+useful as a bug report if the run that found something can be reproduced exactly. Under
+<code>context(budget=Budget(seed=...))</code> the sweep takes its seed from the
+<a href="/docs/guide/budgets/">budget</a>, so a nightly job and a local reproduction share one knob.
+<code>SweepReport.to_dict()</code> is JSON-serialisable and suitable for filing as a CI artifact.</p>
+<p><strong>Give each sweep its own pool.</strong> A <code>sweep</code> interns thousands of generated expressions,
+and <code>check</code> costs on the order of 8 KB of pool per call — the highest of any entry point,
+because it builds both sides plus the comparison. <code>ExprPool</code> never reclaims, so a nightly
+job that reuses one module-scope pool across runs grows without bound; construct the pool
+inside the sweep&#39;s scope and drop it afterwards. (SymPy&#39;s own global cache also warms up
+to a few MB and then stops; that part is bounded.) See
+<a href="/docs/guide/budgets/#exprpool-never-reclaims"><code>ExprPool</code> never reclaims</a>.</p>
+<p><strong>Neither side of a check is bounded, and this module does not pretend otherwise.</strong> Most
+heavy engines have no cooperative checkpoint, so a non-terminating call in one of them
+cannot be timed out from Python — a worker thread cannot be stopped, and abandoning one
+leaves it burning a core (and holding its pool) for the life of the process. SymPy is no better placed. So:</p>
+<ul>
+<li>run the nightly job under an <strong>OS-level timeout</strong>;</li>
+<li>wrap the sweep in <code>context(budget=…)</code> for the engines that <em>are</em> cooperative
+(<code>integrate</code> and <code>limit</code>, and best-effort <code>simplify</code> — see <a href="/docs/guide/budgets/">Budgets</a>),
+where a trip surfaces as <code>reason=&quot;alkahest_refused&quot;</code> with an <code>E-BUDGET-00x</code> code, which
+is a fine answer. Those two also release the GIL for their core call, so
+<code>request_cancel()</code> from a watchdog thread reaches one that is already running;</li>
+<li><code>SWEEP_OPERATIONS</code> still excludes <code>limit</code>, now only because the comparator for it is
+weaker than for the three it does cover — not because the call cannot be bounded.</li>
+</ul>
+<h3 id="tier-2--the-frozen-corpus"><a class="hanchor" href="#tier-2--the-frozen-corpus" aria-hidden="true" tabindex="-1">#</a>Tier 2 — the frozen corpus</h3>
+<p><code>FROZEN_CORPUS</code> is a tuple of <code>FrozenCase</code>s re-run on every pull request:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.crosscheck </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> run_frozen_corpus</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> case, outcome </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> run_frozen_corpus():</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    if</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> outcome </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">is</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> None</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">        ...</span><span style="--shiki-light:#6A737D;--shiki-dark:#768390">   # skipped: does not apply to the installed oracle version</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">    else</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">:</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">        assert</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> outcome.outcome </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">==</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> case.expected</span></span></code></pre></div><p>Every case records the <strong>oracle version range</strong> its expectation was established against
+(<code>oracle_versions=&quot;&gt;=1.12,&lt;2&quot;</code>). Without that the corpus rots silently the first time the
+oracle changes an answer — which it will — and a red gate would then be indistinguishable
+from a real regression. A case whose range excludes the installed version is <em>skipped</em>,
+never quietly passed. Cases carry <code>found_by</code> (a seed, or a provenance note) and <code>note</code>
+(what the case protects), and both are asserted non-empty.</p>
+<p><strong>The ratchet</strong>: a divergence the nightly sweep finds must be promoted into a
+<code>FrozenCase</code> with <code>found_by</code> naming the seed, or it only ever gets exercised by a job
+nobody reads. Cases are added, never silently deleted — an expectation that changes is a
+re-pin with a new <code>oracle_versions</code> range, and the old range records what used to be true.</p>
+<h3 id="visible-from-the-session-start-probe"><a class="hanchor" href="#visible-from-the-session-start-probe" aria-hidden="true" tabindex="-1">#</a>Visible from the session-start probe</h3>
+<p><code>capabilities()[&quot;verification&quot;]</code> reports the installed oracles and SMT solvers, so an
+agent can see them from the probe it already makes at session start rather than
+importing <code>alkahest.crosscheck</code> to find out:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">caps </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.capabilities()[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"verification"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">caps[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"oracles"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]      </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># {"sympy": "1.14.0"}  — absent oracles appear as None</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">caps[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"smt_solvers"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># {"z3": "4.13.0", "cvc5": None}</span></span></code></pre></div><p>Absent tools are reported <strong>negatively</strong> rather than omitted, so &quot;not installed&quot; stays
+distinguishable from &quot;agreed&quot;. Both keys probe the environment — detecting an oracle
+imports it — so they are cached for the life of the process; see the note on
+<a href="/docs/api/"><code>capabilities()</code></a>.</p>
+<h3 id="not-yet-wired"><a class="hanchor" href="#not-yet-wired" aria-hidden="true" tabindex="-1">#</a>Not yet wired</h3>
+<ul>
+<li>A nightly workflow that runs <code>sweep</code>, prints the seed, and files
+<code>SweepReport.to_dict()</code> as an artifact. SymPy already ships in the <code>ci-extras</code>
+dependency group, so this is a job, not a new dependency.</li>
+</ul>
+<h2 id="oracles-are-a-plugin-interface"><a class="hanchor" href="#oracles-are-a-plugin-interface" aria-hidden="true" tabindex="-1">#</a>Oracles are a plugin interface</h2>
+<p><code>Oracle</code> is an ABC and <code>SymPyOracle</code> is the first implementation. The comparator talks to
+oracles <em>only</em> through that interface, so a second backend is a class plus one
+<code>register_oracle</code> call — no change to the ladder, the outcomes, or the corpus machinery.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.crosscheck </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> Oracle, register_oracle</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">class</span><span style="--shiki-light:#6F42C1;--shiki-dark:#F69D50"> WolframOracle</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#6CB6FF">Oracle</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">):</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    name </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF"> "wolfram"</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">    ...</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">register_oracle(WolframOracle)</span></span></code></pre></div><p>Designing the second oracle in later would mean rewriting the comparator. With two
+present, two-out-of-three voting turns &quot;someone is wrong&quot; into &quot;Alkahest is probably
+wrong&quot;, which is a materially more useful signal.</p>
+<p>Every method may answer &quot;I don&#39;t know&quot; — <code>is_zero</code> returns <code>None</code>, <code>run</code> raises — and the
+comparator turns that into <code>incomparable</code> rather than guessing.</p>
+<h2 id="error-codes"><a class="hanchor" href="#error-codes" aria-hidden="true" tabindex="-1">#</a>Error codes</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-XCHECK-001</code></td>
+<td>A node, a primitive, or an active assumption has no faithful translation. Surfaces as <code>outcome=&quot;incomparable&quot;</code>, <code>reason=&quot;untranslatable&quot;</code></td>
+</tr>
+<tr>
+<td><code>E-XCHECK-002</code></td>
+<td>No oracle is installed. Surfaces as <code>outcome=&quot;unavailable&quot;</code> — <strong>never</strong> as agreement</td>
+</tr>
+<tr>
+<td><code>E-XCHECK-003</code></td>
+<td>The operation has no defined comparison rung — a caller error, raised before any oracle is consulted</td>
+</tr>
+<tr>
+<td><code>E-XCHECK-004</code></td>
+<td>The oracle itself declined, raised, or returned an unevaluated form — not a divergence</td>
+</tr>
+</tbody></table></div>
+<p>An unknown <em>operation</em> raises out of <code>check</code> rather than becoming an outcome: that is a
+caller mistake, not a property of the mathematics. Untranslatable input and missing
+oracles are outcomes, because a loop has to be able to keep going.</p>
+<h2 id="see-also"><a class="hanchor" href="#see-also" aria-hidden="true" tabindex="-1">#</a>See also</h2>
+<ul>
+<li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a></li>
+<li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a> — the engine behind rung 3</li>
+<li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a> — <code>verified_sign</code>, used to widen a
+pointwise refutation to a region</li>
+<li><a href="/docs/guide/claim-graphs/">Claim graphs</a> — where a check belongs in a research session</li>
+<li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a> — the other half: where Alkahest can
+prove rather than compare</li>
+<li><a href="/docs/guide/errors/">Error handling</a></li>
+</ul>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/ansatz/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Ansatz families and conjecture generation</span></a><a class="pager-next" href="/docs/guide/smt/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">SMT/SAT bridge</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/crosscheck.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#four-outcomes-and-two-of-them-are-not-clean">Four outcomes, and two of them are not &quot;clean&quot;</a></li><li class="d2"><a href="#the-comparison-ladder">The comparison ladder</a></li><li class="d3"><a href="#the-invariants-per-operation">The invariants, per operation</a></li><li class="d2"><a href="#a-divergence-names-two-suspects">A divergence names two suspects</a></li><li class="d2"><a href="#one-translator-total-or-refuse">One translator, total-or-refuse</a></li><li class="d3"><a href="#assumptions">Assumptions</a></li><li class="d2"><a href="#opt-in-per-call-site-not-a-context-flag">Opt-in per call site, not a context flag</a></li><li class="d2"><a href="#two-tiers-in-ci">Two tiers in CI</a></li><li class="d3"><a href="#tier-1--the-seeded-nightly-sweep">Tier 1 — the seeded nightly sweep</a></li><li class="d3"><a href="#tier-2--the-frozen-corpus">Tier 2 — the frozen corpus</a></li><li class="d3"><a href="#visible-from-the-session-start-probe">Visible from the session-start probe</a></li><li class="d3"><a href="#not-yet-wired">Not yet wired</a></li><li class="d2"><a href="#oracles-are-a-plugin-interface">Oracles are a plugin interface</a></li><li class="d2"><a href="#error-codes">Error codes</a></li><li class="d2"><a href="#see-also">See also</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/crosscheck.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

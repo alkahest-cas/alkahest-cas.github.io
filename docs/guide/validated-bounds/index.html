@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rigorous global bounds (Taylor models) · Alkahest Docs</title>
+<meta name="description" content="Ball arithmetic gives rigorous pointwise enclosures: evaluate f at a ball and the true value is inside the ball you get back. A research loop routinely…">
+<meta property="og:title" content="Rigorous global bounds (Taylor models) · Alkahest Docs">
+<meta property="og:description" content="Ball arithmetic gives rigorous pointwise enclosures: evaluate f at a ball and the true value is inside the ball you get back. A research loop routinely…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li class="open"><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/" class="active" aria-current="page">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <div class="eyebrow">Numerics and codegen</div>
+    <h1>Rigorous global bounds (Taylor models)</h1>
+    <p><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a> gives rigorous <strong>pointwise</strong> enclosures:
+evaluate <code>f</code> at a ball and the true value is inside the ball you get back. A
+research loop routinely needs rigorous <strong>global</strong> statements instead:</p>
+<ul>
+<li>the maximum of <code>f</code> on <code>[a,b]×[c,d]</code> is at most <code>M</code>;</li>
+<li><code>∫_a^b f dx</code> lies in <code>[I₁, I₂]</code>;</li>
+<li><code>f</code> has no root anywhere in this box.</li>
+</ul>
+<p>These turn a numeric observation into a theorem, which is exactly the step that
+takes a candidate from &quot;survived the sweep&quot; to &quot;established&quot;.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.bound_on_box(x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x), [(x, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r.lower, r.upper        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># encloses the true range [0, 1/4]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r.budget_exhausted      </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># False — converged within the work budget</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.verified_integral(ak.sin(x), x, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3.14159</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Enclosure containing ~2</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.verified_no_roots(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), [(x, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)])   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "true"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.verified_sign(ak.exp(x), [(x, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)], </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"positive"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "true"</span></span></code></pre></div><h2 id="the-soundness-contract"><a class="hanchor" href="#the-soundness-contract" aria-hidden="true" tabindex="-1">#</a>The soundness contract</h2>
+<p><strong>Every returned enclosure is a rigorous outer bound.</strong> Rounding is outward at
+every step, and any operation whose remainder cannot be bounded rigorously
+refuses rather than returning something plausible.</p>
+<p>The consequence worth internalising: an enclosure may be <strong>wide</strong>, but it is
+never <strong>wrong</strong>. A wide-but-true bound is a fine answer for a loop — it just
+means &quot;not settled yet&quot;. A tight-but-false one is a poisoned lemma that
+everything downstream inherits.</p>
+<p>Running out of work budget is therefore <em>not</em> an error. The enclosure is
+returned anyway, with <code>budget_exhausted = True</code>, still sound.</p>
+<h2 id="why-not-just-use-interval-arithmetic"><a class="hanchor" href="#why-not-just-use-interval-arithmetic" aria-hidden="true" tabindex="-1">#</a>Why not just use interval arithmetic</h2>
+<p>Naive interval evaluation is rigorous but suffers the <strong>dependency problem</strong>:
+it forgets that the two <code>x</code>s in <code>x - x</code> are the same number.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Expression, box</th>
+<th>Naive intervals</th>
+<th>Taylor model</th>
+</tr>
+</thead><tbody><tr>
+<td><code>x - x</code>, <code>x ∈ [-1,1]</code></td>
+<td><code>[-2, 2]</code></td>
+<td><code>{0}</code></td>
+</tr>
+<tr>
+<td><code>x(1-x)</code>, <code>x ∈ [0,1]</code></td>
+<td><code>[0, 1]</code></td>
+<td><code>[0, 1/4]</code></td>
+</tr>
+</tbody></table></div>
+<p>A Taylor model carries a polynomial in the box&#39;s normalised coordinates plus a
+rigorously enclosing remainder interval, so cancellation happens <em>symbolically</em>
+in the polynomial part and only the genuinely uncertain residue stays in the
+interval.</p>
+<h2 id="branch-and-bound"><a class="hanchor" href="#branch-and-bound" aria-hidden="true" tabindex="-1">#</a>Branch-and-bound</h2>
+<p><code>bound_on_box</code> runs Moore–Skelboe branch-and-bound: one pass for the minimum,
+one for the maximum. Each keeps a rigorous bound on the extremum and <strong>prunes</strong>
+sub-boxes whose enclosure proves they cannot contain it, so work concentrates
+where the extremum actually is.</p>
+<p>This pruning is not an optimisation detail, it is what makes the module usable.
+A stopping rule that instead required every sub-box&#39;s enclosure to be narrower
+than <code>tol</code> would be demanding a pointwise-tight model <em>everywhere</em>, which no
+finite budget achieves for a function with a wide range — <code>exp</code> on <code>[-5,5]</code>
+would exhaust the budget and still return an enclosure loose enough to straddle
+zero, so even <code>exp &gt; 0</code> would come back undecided.</p>
+<h2 id="three-valued-predicates"><a class="hanchor" href="#three-valued-predicates" aria-hidden="true" tabindex="-1">#</a>Three-valued predicates</h2>
+<p><code>verified_no_roots</code> and <code>verified_sign</code> return one of <code>&quot;true&quot;</code>, <code>&quot;false&quot;</code>,
+<code>&quot;undecided&quot;</code>. The third is never collapsed into the other two.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Verdict</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody><tr>
+<td><code>&quot;true&quot;</code></td>
+<td>Certified: the property holds everywhere on the box</td>
+</tr>
+<tr>
+<td><code>&quot;false&quot;</code></td>
+<td>Certified: it fails — proved by the enclosure, or by a rigorously evaluated witness point</td>
+</tr>
+<tr>
+<td><code>&quot;undecided&quot;</code></td>
+<td>Neither could be established within the budget and precision</td>
+</tr>
+</tbody></table></div>
+<p>A sign predicate is a universally quantified claim, so a single point where it
+provably fails disproves it. <code>verified_sign</code> uses that: it evaluates the
+expression rigorously at the box centre, the per-axis endpoints and (in low
+dimension) the corners, and reports <code>&quot;false&quot;</code> when one of those point
+enclosures lies strictly on the wrong side. Without it, <code>x &gt; 0</code> on <code>[-1,1]</code> —
+plainly false — could only ever be <code>&quot;undecided&quot;</code>, since the range enclosure
+straddles zero by construction.</p>
+<h3 id="proving-a-root-exists"><a class="hanchor" href="#proving-a-root-exists" aria-hidden="true" tabindex="-1">#</a>Proving a root <em>exists</em></h3>
+<p><code>verified_no_roots</code> returns <code>&quot;false&quot;</code> only with a proof in hand, and the proof
+is the intermediate value theorem. The full-box enclosure succeeding is already
+a continuity certificate — a Taylor model is only ever built where every
+elementary step stayed strictly inside its domain — and a box is convex. So if
+two points of the box can be found where <code>f</code> is <em>rigorously proven</em> to have
+opposite signs, the segment between them stays in the box and <code>f</code> vanishes
+somewhere on it.</p>
+<p>The two points do not have to be the box&#39;s own endpoints, and that is what makes
+the test usable: the search subdivides the box, records the sign of any sub-box
+whose enclosure has a determined one, and samples the centres of the rest.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Box</th>
+<th>Roots inside</th>
+<th>Endpoint signs</th>
+<th>Verdict</th>
+</tr>
+</thead><tbody><tr>
+<td><code>x²−2</code> on <code>[-2,0]</code></td>
+<td>1</td>
+<td>+ → −</td>
+<td><code>&quot;false&quot;</code></td>
+</tr>
+<tr>
+<td><code>x²−2</code> on <code>[-2,2]</code></td>
+<td>2</td>
+<td>+ → +</td>
+<td><code>&quot;false&quot;</code></td>
+</tr>
+<tr>
+<td><code>x²−2</code> on <code>[-10,10]</code></td>
+<td>2</td>
+<td>+ → +</td>
+<td><code>&quot;false&quot;</code></td>
+</tr>
+<tr>
+<td><code>(x²−2)(x²+1)</code> on <code>[-2,2]</code></td>
+<td>2</td>
+<td>+ → +</td>
+<td><code>&quot;false&quot;</code></td>
+</tr>
+<tr>
+<td><code>x−y</code> on <code>[-1,1]²</code></td>
+<td>a whole line</td>
+<td>—</td>
+<td><code>&quot;false&quot;</code></td>
+</tr>
+<tr>
+<td><code>(x−1)²</code> on <code>[0,2]</code></td>
+<td>1 (double)</td>
+<td>+ → +</td>
+<td><code>&quot;false&quot;</code></td>
+</tr>
+<tr>
+<td><code>(x−1)²</code> on <code>[0,3/2]</code></td>
+<td>1 (double)</td>
+<td>+ → +</td>
+<td><code>&quot;undecided&quot;</code></td>
+</tr>
+</tbody></table></div>
+<p>The last two rows are the honest limit, and the difference between them is
+worth understanding. A double root never changes sign, so the intermediate
+value theorem has nothing to work with either time. What settles <code>[0,2]</code> is the
+<em>other</em> proof: <code>1</code> is the exact midpoint of that box, and substituting it
+symbolically gives a literal <code>0</code>, so a point of the box is <strong>proven</strong> to be a
+root and no continuity argument is needed. On <code>[0,3/2]</code> the root is at no
+distinguished point and no dyadic bisection ever lands on it, so nothing is
+proven and <code>&quot;undecided&quot;</code> is the answer — never upgraded to <code>&quot;false&quot;</code> on the
+strength of an enclosure that merely touches zero.</p>
+<h3 id="inequalities-that-are-tight-at-an-endpoint"><a class="hanchor" href="#inequalities-that-are-tight-at-an-endpoint" aria-hidden="true" tabindex="-1">#</a>Inequalities that are tight at an endpoint</h3>
+<p>The interesting inequalities are usually the sharp ones, and sharp means the
+margin goes to zero somewhere. Subdivision alone cannot certify those: where the
+margin vanishes, every enclosure of the range straddles zero however fine the
+boxes get.</p>
+<p>Two separate things are done about it. <code>tol</code> is an <strong>absolute</strong> width, so it is
+the wrong stopping rule for a sign question — an expression whose minimum is
+<code>10⁻¹³</code> meets a <code>1e-9</code> tolerance while its enclosure still straddles zero.
+<code>verified_sign</code> therefore re-runs the search with the sign itself as the goal,
+refining while the bound straddles zero rather than to a fixed width. And where
+the margin genuinely reaches zero, the box is <strong>split</strong>: a collar <code>[a, a+δ]</code> at
+the endpoint is handled by a truncated Taylor expansion with a proven Lagrange
+remainder, the rest by ordinary branch-and-bound. The pieces are closed and
+share the join point, so their union is the original box.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Cusa–Huygens, denominator cleared: x(2 + cos x) − 3 sin x ≥ 0, tight at x = 0</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">f </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.cos(x)) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.sin(x)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.verified_sign(f, [(x, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.5</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)], </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"nonnegative"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "true"</span></span></code></pre></div><p>Mitrinović–Adamović, Wilker, Huygens and Jordan&#39;s inequality behave the same
+way. The remainder is <em>proven</em>, not assumed: a Taylor coefficient counts as zero
+only when substitution and <code>simplify</code> land on a literal integer <code>0</code> — no numeric
+enclosure can prove a value is zero — and the tail is bounded by
+<code>sup|g⁽ᵐ⁾|/m!</code> enclosed over the whole collar, with analyticity certified by
+requiring every derivative up to <code>g⁽ᵐ⁾</code> to enclose successfully there.</p>
+<p>The limits are worth knowing:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Case</th>
+<th>Verdict</th>
+<th>Why</th>
+</tr>
+</thead><tbody><tr>
+<td>tight at an endpoint of the box</td>
+<td><code>&quot;true&quot;</code></td>
+<td>the expansion applies there</td>
+</tr>
+<tr>
+<td>leading coefficient proven negative</td>
+<td><code>&quot;false&quot;</code></td>
+<td><code>g &lt; 0</code> just inside the endpoint</td>
+</tr>
+<tr>
+<td><code>&quot;positive&quot;</code> where <code>g</code> provably vanishes</td>
+<td><code>&quot;false&quot;</code></td>
+<td>a strict claim fails at that point</td>
+</tr>
+<tr>
+<td>tight in the <strong>interior</strong></td>
+<td><code>&quot;undecided&quot;</code></td>
+<td>the expansion does not apply</td>
+</tr>
+</tbody></table></div>
+<p><code>(x − 7/10)²(x + 1)</code> on <code>[0, 3/2]</code> is non-negative and touches zero in the
+middle; it stays <code>&quot;undecided&quot;</code> rather than being upgraded on the strength of an
+enclosure that merely touches zero.</p>
+<h3 id="undecided-is-not-monotone-in-the-box"><a class="hanchor" href="#undecided-is-not-monotone-in-the-box" aria-hidden="true" tabindex="-1">#</a><code>&quot;undecided&quot;</code> is not monotone in the box</h3>
+<p><code>&quot;true&quot;</code> on a box <em>logically</em> implies <code>&quot;true&quot;</code> on every sub-box, but this is a
+search and the search does not have that property. The collar is planted at the
+box&#39;s own endpoint, and its strength comes from <code>simplify</code> proving the low-order
+Taylor coefficients there exactly zero. Back the box off the tight point by a
+whisker and nothing vanishes exactly any more: the leading coefficient becomes
+<code>g(δ)</code>, a number that has to beat both the cancellation noise of evaluating <code>g</code>
+near a zero of order <code>j</code> and the linear term of the tail bound. For Cusa–Huygens
+(<code>g ~ x⁵/60</code>) that failed for every left endpoint between about <code>10⁻³⁰⁰</code> and
+<code>10⁻⁹</code>, while <code>[0, π/2]</code> and <code>[10⁻⁶, π/2]</code> both came back <code>&quot;true&quot;</code> — a dead band
+in the middle of two <code>&quot;true&quot;</code> regions.</p>
+<p>An <code>&quot;undecided&quot;</code> box that stops short of <code>x = 0</code> is therefore retried with the
+collar planted at <code>0</code> — <code>&quot;true&quot;</code> on the larger box implies <code>&quot;true&quot;</code> on the
+box asked about, so the retry is sound, and only <code>&quot;true&quot;</code> is taken from it. That
+closes the band for the classical inequalities, all of which are tight at <code>0</code>.
+A statement tight at some <em>other</em> point still shows the effect: if <code>[a, b]</code>
+comes back <code>&quot;undecided&quot;</code>, try the larger box whose endpoint is the point the
+inequality is tight at before concluding it is out of reach.</p>
+<h2 id="which-functions-are-covered--ask-before-you-build-the-workload"><a class="hanchor" href="#which-functions-are-covered--ask-before-you-build-the-workload" aria-hidden="true" tabindex="-1">#</a>Which functions are covered — ask before you build the workload</h2>
+<p>Taylor models reach the <strong>elementary fragment</strong>: <code>exp</code>, <code>log</code>, <code>sqrt</code>, <code>sin</code>,
+<code>cos</code>, <code>tan</code>, <code>asin</code>, <code>acos</code>, <code>atan</code>, <code>sinh</code>, <code>cosh</code>, <code>tanh</code>, <code>asinh</code>,
+<code>acosh</code>, <code>atanh</code>, <code>abs</code>, plus arithmetic and integer/rational powers — and,
+since 3.9.0, <code>erf</code> and <code>erfc</code> — and it reaches beyond it: <code>gamma</code>, <code>digamma</code>,
+<code>trigamma</code>, <code>lambert_w</code>, <code>bessel_j0</code>, <code>bessel_j1</code>, <code>dilog</code>, <code>Si</code>, <code>Ci</code>, <code>Shi</code>,
+<code>Chi</code>, <code>Ei</code>, <code>li</code>, <code>fresnels</code> and <code>fresnelc</code> all carry a rule with a rigorous
+remainder as well. Outside it are the elliptic integrals, <code>floor</code>, <code>ceil</code>,
+<code>sign</code>, <code>round</code> and <code>heaviside</code> — none of which is differentiable, so no
+Lagrange remainder exists for them at any order — and so is any two-argument
+function such as <code>atan2</code>.</p>
+<p>Do not read that list as fixed. <code>taylor_model</code> and <code>bounds_supported</code> are
+derived by <em>running</em> the Taylor evaluator, so the query below is the answer and
+this paragraph is only a summary of it.</p>
+<p>The three inverse hyperbolics carry the domain restriction their branch has:
+<code>acosh</code> needs the whole box strictly above <code>1</code> and <code>atanh</code> needs it strictly
+inside <code>(-1, 1)</code>. A box that only <em>touches</em> the boundary is refused with
+<code>E-VALIDATED-003</code>, because the derivative is unbounded there and no Taylor
+remainder exists — that is a statement about the box, not about coverage, so
+<code>bounds_supported</code> still answers <code>True</code>.</p>
+<p>That boundary is queryable, so a search loop can choose a certifiable route
+instead of discovering it by hitting <code>E-VALIDATED-001</code>:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.bounds_supported(ak.sin(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.exp(x))     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># truthy</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.bounds_supported(ak.bessel_j0(x))           </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># truthy since 3.9.0</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">answer </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.bounds_supported(ak.floor(x))</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">bool</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(answer), answer.functions                  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># (False, ['floor'])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">answer.blocker                                  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># "function `floor`"</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Per primitive, in the agent contract:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">{row[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"name"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">] </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> row </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.capabilities()[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"primitives"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">] </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">if</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> row[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"taylor_model"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]}</span></span></code></pre></div><p><strong><code>numeric_ball</code> is not this flag.</strong> It reports pointwise ball arithmetic; a
+Taylor model additionally needs a rule with a rigorous Lagrange remainder, and
+the two bits move independently. <code>floor</code> is the clean example: its ball rule is
+exact — <code>floor</code> of a ball straddling an integer returns an interval covering
+both values — and it still has <code>taylor_model = False</code>, because it has no
+derivative to bound. The elliptic integrals have neither. Both bits are honest,
+and they answer different questions. <code>taylor_model</code> and <code>bounds_supported</code> are
+derived by <em>running</em> the Taylor evaluator, not from a maintained list, so
+neither can drift from what <code>bound_on_box</code> accepts.</p>
+<p>A <code>True</code> answer means &quot;will not be refused with <code>E-VALIDATED-001</code>&quot;. It is not
+a promise of success: a covered function can still hit a domain violation or
+an infinite enclosure on a <em>particular</em> box, which is a property of the box
+and not of the expression.</p>
+<h2 id="refusals"><a class="hanchor" href="#refusals" aria-hidden="true" tabindex="-1">#</a>Refusals</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody><tr>
+<td><code>E-VALIDATED-001</code></td>
+<td>No rigorous Taylor model rule for some primitive in the expression (ask <code>bounds_supported</code> first — see above)</td>
+</tr>
+<tr>
+<td><code>E-VALIDATED-002</code></td>
+<td>A free symbol has no interval in the box</td>
+</tr>
+<tr>
+<td><code>E-VALIDATED-003</code></td>
+<td>A singularity or branch cut inside the box (e.g. <code>1/x</code> over a box containing 0)</td>
+</tr>
+<tr>
+<td><code>E-VALIDATED-004</code></td>
+<td>An enclosure overflowed to infinity</td>
+</tr>
+<tr>
+<td><code>E-VALIDATED-005</code></td>
+<td>Malformed request (empty box, inverted interval, bad order)</td>
+</tr>
+<tr>
+<td><code>E-VALIDATED-006</code></td>
+<td><code>verified_ode</code>: step size underflow — no a-priori enclosure could be validated (finite-time blow-up, singularity ahead, non-Lipschitz point)</td>
+</tr>
+<tr>
+<td><code>E-VALIDATED-007</code></td>
+<td><code>verified_ode</code>: the enclosure grew wider than `max_rel_width · max(1,</td>
+</tr>
+<tr>
+<td><code>E-VALIDATED-008</code></td>
+<td><code>verified_ode</code>: more than <code>max_steps</code> steps would be needed (typically a stiff problem)</td>
+</tr>
+</tbody></table></div>
+<p>For <code>E-VALIDATED-003</code> the search first tries bisecting <em>away</em> from the trouble,
+since a domain violation on a wide box is often a boundary effect rather than a
+genuine interior pole. Only after the box has been bisected far enough for that
+explanation to be exhausted does it refuse — which is the right answer for a
+real interior singularity, where the range is not a bounded interval at all.</p>
+<h2 id="removable-singularities-in-verified_integral"><a class="hanchor" href="#removable-singularities-in-verified_integral" aria-hidden="true" tabindex="-1">#</a>Removable singularities in <code>verified_integral</code></h2>
+<p><code>∫₀¹ ln(1+x)/x dx = π²/12</code> has nothing singular about it — only the <em>expression</em>
+is singular at <code>x = 0</code>, and the integrand extends continuously to 1 there. A
+Taylor model still refuses, because the reciprocal&#39;s enclosure contains zero.</p>
+<p><code>verified_integral</code> recognises this shape. If the integrand splits as <code>N(x)/D(x)</code>
+and there is a point <code>p</code> of the offending sub-interval at which <code>N</code> and <code>D</code> both
+vanish, it enclosures that piece with <strong>Cauchy&#39;s mean value theorem</strong> instead:</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>N(p) = D(p) = 0,  D' ≠ 0 on J   ⟹   ∀ x ∈ J\{p} :  N(x)/D(x) = N'(ξ)/D'(ξ)  for some ξ ∈ J
+                                ⟹   ∫_J N/D dx ∈ |J| · range(N'/D' on J)</code></pre></div><p>so the piece is bounded by an enclosure of <code>N&#39;/D&#39;</code>, which is perfectly regular.
+The number returned is the integral of the continuous extension.</p>
+<p>When <code>D&#39;</code> vanishes at <code>p</code> as well, the step is <strong>repeated</strong> — up to a small
+fixed depth — provided <code>N&#39;</code> vanishes there too. That is what covers a
+higher-order removable singularity such as <code>(1 − cos x)/x²</code>, whose value at
+<code>x = 0</code> is <code>1/2</code> but whose denominator has a double zero: only <code>D&#39;&#39; = 2</code> is
+bounded away from zero, and <code>N&#39;&#39;/D&#39;&#39; = cos(x)/2</code> is the quotient that gets
+enclosed.</p>
+<p>Three guards keep this from swallowing a genuine pole:</p>
+<ul>
+<li><code>N⁽ᵏ⁾(p) = 0</code> and <code>D⁽ᵏ⁾(p) = 0</code> are established <strong>symbolically</strong> at every
+level the descent passes (substitute the exact rational <code>p</code>, simplify,
+require a literal zero). No numeric enclosure can prove a value is exactly
+zero, so none is asked to.</li>
+<li>Some <code>D⁽ᵈ⁾</code> must be <em>certified non-vanishing</em> on the sub-interval. That is
+what fails for <code>sin(x)/x²</code>: <code>D&#39; = 2x</code> vanishes at <code>0</code> but <code>N&#39; = cos x</code> does
+not, so the descent stops with nothing proven — as it must, since the
+integral does not converge.</li>
+<li><code>N⁽ᵏ⁾</code> and <code>D⁽ᵏ⁾</code> must each have a successful enclosure over the whole
+sub-interval, which certifies they are analytic — and hence that the symbolic
+derivatives really are their derivatives.</li>
+</ul>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.verified_integral(ak.log(pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x, x, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># ≈ π²/12</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.verified_integral(ak.sin(x) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x, x, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)                   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># ≈ 1.8921661</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.verified_integral(pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x, x, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)             </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># refuses: N(0) ≠ 0</span></span></code></pre></div><h2 id="bounded-integrands-whose-taylor-model-runs-out-of-domain"><a class="hanchor" href="#bounded-integrands-whose-taylor-model-runs-out-of-domain" aria-hidden="true" tabindex="-1">#</a>Bounded integrands whose Taylor model runs out of domain</h2>
+<p><code>asin</code> on <code>[0, 1]</code> is bounded and continuous on the closed interval —
+<code>asin(1) = π/2</code> — but the Taylor rule for <code>asin</code> needs a bound on
+<code>1/√(1−x²)</code>, and there is none at <code>x = 1</code>. Bisecting does not help: every
+sub-interval that still touches <code>1</code> refuses, however narrow. The same happens
+for <code>√x</code> and <code>xˣ</code> at <code>x = 0</code>.</p>
+<p>Those panels are closed with a <strong><code>width × range</code></strong> bound instead. A range needs
+no derivative, so it survives the domain boundary, and it is computed by
+directed-rounding interval arithmetic over the extended reals — which is what
+lets <code>log([0, h]) = [−∞, log h]</code> be composed with the factor that tames it, so
+<code>xˣ = exp(x·log x) ∈ [0, 1]</code> comes out bounded. By the time a panel needs this
+it has been bisected down to a width of order <code>2⁻⁶⁰</code> of the interval, so the
+crude bound costs essentially nothing in accuracy.</p>
+<p>The soundness argument is that an integrand which is genuinely unbounded on the
+panel has no bounded range either, so the fallback still refuses on it. Nothing
+is clamped into a domain it is not proven to be in: <code>√</code> and <code>log</code> of an
+interval whose lower endpoint is <em>strictly</em> negative are refused, and only a
+closed endpoint sitting exactly on the domain boundary is accepted.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Integral</th>
+<th>Value</th>
+<th>Status</th>
+</tr>
+</thead><tbody><tr>
+<td><code>∫₀¹ asin(x) dx</code></td>
+<td><code>π/2 − 1</code></td>
+<td>enclosed (<code>width × range</code> on the last panel)</td>
+</tr>
+<tr>
+<td><code>∫₀¹ √(1−x²) dx</code></td>
+<td><code>π/4</code></td>
+<td>enclosed, same</td>
+</tr>
+<tr>
+<td><code>∫₀¹ √x dx</code></td>
+<td><code>2/3</code></td>
+<td>enclosed, same</td>
+</tr>
+<tr>
+<td><code>∫₀¹ xˣ dx</code></td>
+<td>0.78343…</td>
+<td>enclosed, same</td>
+</tr>
+<tr>
+<td><code>∫₀¹ (x−1)/ln x dx</code></td>
+<td><code>ln 2</code></td>
+<td>enclosed — removable at <code>1</code>, bounded at <code>0</code></td>
+</tr>
+<tr>
+<td><code>∫₀¹ (1−cos x)/x² dx</code></td>
+<td>0.48638…</td>
+<td>enclosed (order-2 removable)</td>
+</tr>
+</tbody></table></div>
+<h3 id="what-is-still-refused"><a class="hanchor" href="#what-is-still-refused" aria-hidden="true" tabindex="-1">#</a>What is still refused</h3>
+<p>An <strong>unbounded</strong> integrand is refused, whether or not the integral converges,
+and the message names the rule that stopped rather than implying the integral
+does not exist:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Integral</th>
+<th>Value</th>
+<th>Status</th>
+</tr>
+</thead><tbody><tr>
+<td><code>∫₀¹ ln(1+x)/x dx</code></td>
+<td><code>π²/12</code></td>
+<td>enclosed (removable)</td>
+</tr>
+<tr>
+<td><code>∫_{-1}^{1} sin(x)/x dx</code></td>
+<td><code>2·Si(1)</code></td>
+<td>enclosed (removable)</td>
+</tr>
+<tr>
+<td><code>∫₀¹ −ln x dx</code></td>
+<td>1</td>
+<td>refused — unbounded at <code>0</code>, and not a <code>0/0</code> quotient</td>
+</tr>
+<tr>
+<td><code>∫₀¹ (ln x)² dx</code></td>
+<td>2</td>
+<td>refused, same reason</td>
+</tr>
+<tr>
+<td><code>∫₀¹ dx/√(1−x²) dx</code></td>
+<td><code>π/2</code></td>
+<td>refused — unbounded at <code>1</code>, numerator does not vanish</td>
+</tr>
+<tr>
+<td><code>∫₀¹ ln(x)·ln(1−x) dx</code></td>
+<td><code>2 − π²/6</code></td>
+<td>refused — unbounded at both ends</td>
+</tr>
+</tbody></table></div>
+<p>These need an integrable-tail bound or a singularity-removing substitution,
+neither of which can be derived rigorously from the expression alone today. The
+refusal is the honest answer; widening an enclosure to make them pass would
+break the contract that makes the module worth using.</p>
+<h2 id="relation-to-the-rest-of-the-stack"><a class="hanchor" href="#relation-to-the-rest-of-the-stack" aria-hidden="true" tabindex="-1">#</a>Relation to the rest of the stack</h2>
+<p>This is the slow, certifying half of <em>falsify fast, certify slow</em>:</p>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th>JIT / <code>numpy_eval</code></th>
+<th>Ball arithmetic</th>
+<th>Validated bounds</th>
+</tr>
+</thead><tbody><tr>
+<td>Answers</td>
+<td>Approximate values, fast</td>
+<td>Rigorous at a point</td>
+<td>Rigorous over a region</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>~µs</td>
+<td>~ms</td>
+<td>seconds, adaptive</td>
+</tr>
+<tr>
+<td>Use</td>
+<td>Kill 99% of candidates</td>
+<td>Distinguish near-miss from hit</td>
+<td>Promote a survivor to a theorem</td>
+</tr>
+</tbody></table></div>
+<p><code>verified_integral</code> complements the symbolic <code>integrate_definite</code>: use the
+symbolic path when you want a closed form, and this one when you want a
+guaranteed numeric interval — including for integrands with no elementary
+antiderivative.</p>
+<h2 id="scope-of-this-release"><a class="hanchor" href="#scope-of-this-release" aria-hidden="true" tabindex="-1">#</a>Scope of this release</h2>
+<p>Shipped: Taylor model arithmetic over a box (arithmetic, powers, division, and
+the elementary functions with rigorous remainders), range enclosure by
+branch-and-bound, verified 1-D definite integrals including removable
+singularities, root absence, root existence and sign predicates.</p>
+<p>Also shipped: validated ODE integration (<code>verified_ode</code>, below).</p>
+<p>Not shipped: multivariate verified quadrature (<code>verified_integral</code> is 1-D),
+improper integrals, integrable-but-not-removable singularities, backward-in-time
+and implicit (stiff) validated ODE methods.</p>
+<h2 id="validated-ode-integration--verified_ode"><a class="hanchor" href="#validated-ode-integration--verified_ode" aria-hidden="true" tabindex="-1">#</a>Validated ODE integration — <code>verified_ode</code></h2>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x, y, z </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"y"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"z"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">lorenz </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x), x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">28</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> z) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y, x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.rational(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">8</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> z]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">sol </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.verified_ode(lorenz, [x, y, z], </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">None</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], (</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">sol.enclosure(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># three (lo, hi) pairs, each ~4e-13 wide, guaranteed to</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">                     # contain the true solution</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">sol.times, sol.enclosures, sol.max_width</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Interval initial values enclose *every* solution starting in the box.</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">t </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"t"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.verified_ode([ak.sin(t) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> /</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 10</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], [y], t, [(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.9</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)], (</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">ak.verified_ode([y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], [y], </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">None</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], (</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># ValidatedError [E-VALIDATED-006] step size underflow at t = 0.99999999998…</span></span></code></pre></div><p><code>verified_ode(rhs, vars, t, y0, t_span, *, order=20, prec=128, tol=1e-16, max_steps=20000, h_min=None, max_rel_width=1.0)</code> encloses the solution of
+<code>y&#39; = f(t, y)</code>, <code>y(t0) ∈ y0</code>, on <code>[t0, t1]</code>. Each step from <code>t_j</code> to
+<code>t_j + h</code>:</p>
+<ol>
+<li><strong>Existence (Picard–Lindelöf).</strong> A box <code>B</code> is found with
+<code>Y_j + [0,h]·f([t_j, t_j+h], B) ⊂ int B</code>, with <code>∂f/∂y</code> enclosed by a finite
+ball on <code>B</code> (so <code>f</code> is Lipschitz there). Every solution from <code>Y_j</code> then
+exists on the whole step and stays in <code>B</code>. If no <code>B</code> validates, <code>h</code> is
+halved; below <code>h_min</code> the call refuses with <code>E-VALIDATED-006</code>.</li>
+<li><strong>Taylor series.</strong> The Taylor coefficients <code>F_k</code> of the solution come from
+automatic differentiation of <code>f</code> (recurrences for <code>exp</code>, <code>log</code>, <code>sin</code>/<code>cos</code>,
+powers, …) in ball arithmetic; the remainder is
+<code>h^(p+1) · F_(p+1)</code> evaluated over <code>B</code>.</li>
+<li><strong>Wrapping effect (Lohner).</strong> The set is carried as <code>ŷ + A·r</code> with <code>A</code> the
+orthogonal factor of a QR of <code>mid(S·A)</code>, <code>S = I + Σ h^k ∂F_k/∂y</code>. <code>A⁻¹</code> is
+enclosed by a Neumann-series bound, so the floating-point QR never costs
+soundness. On a pure rotation this keeps the width flat where a plain
+interval method would double it every few steps.</li>
+</ol>
+<p>The grid times are exact binary64 numbers, bounds are rounded outward, and
+<code>enclosure(t)</code> evaluates the step&#39;s Taylor polynomial in mean-value form plus
+its remainder, intersected with the step&#39;s a-priori box — so it is rigorous at
+any <code>t</code>, not only on the grid. <code>tol</code> and <code>order</code> steer the step size and hence
+the width, never soundness. The active <code>Budget</code> is checked once per step.</p>
+<p>Supported in <code>rhs</code>: <code>+</code>, <code>*</code>, <code>/</code>, integer / rational / real-constant powers,
+symbolic powers (via <code>exp(b·log a)</code>, needing <code>a &gt; 0</code>), <code>exp</code>, <code>log</code>, <code>sqrt</code>,
+<code>sin</code>, <code>cos</code>, <code>tan</code>, <code>sinh</code>, <code>cosh</code>, <code>tanh</code>, <code>atan</code>, and the constants <code>pi</code>,
+<code>EulerGamma</code>, <code>Catalan</code>; anything else is <code>E-VALIDATED-001</code>.</p>
+<p>Limits: forward integration only (<code>t0 &lt; t1</code>; substitute <code>t → −t</code> to go
+backwards); an explicit Taylor method needs <code>h ≈ 1/‖∂f/∂y‖</code>, so stiff systems
+hit <code>max_steps</code> (<code>E-VALIDATED-008</code>) rather than produce a result; on chaotic
+systems the width grows like <code>e^(λt)</code> and eventually trips <code>E-VALIDATED-007</code>.</p>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/ball-arithmetic/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Ball arithmetic</span></a><a class="pager-next" href="/docs/guide/ode-dae/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">ODE and DAE modeling</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/validated-bounds.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#the-soundness-contract">The soundness contract</a></li><li class="d2"><a href="#why-not-just-use-interval-arithmetic">Why not just use interval arithmetic</a></li><li class="d2"><a href="#branch-and-bound">Branch-and-bound</a></li><li class="d2"><a href="#three-valued-predicates">Three-valued predicates</a></li><li class="d3"><a href="#proving-a-root-exists">Proving a root exists</a></li><li class="d3"><a href="#inequalities-that-are-tight-at-an-endpoint">Inequalities that are tight at an endpoint</a></li><li class="d3"><a href="#undecided-is-not-monotone-in-the-box">&quot;undecided&quot; is not monotone in the box</a></li><li class="d2"><a href="#which-functions-are-covered--ask-before-you-build-the-workload">Which functions are covered — ask before you build the workload</a></li><li class="d2"><a href="#refusals">Refusals</a></li><li class="d2"><a href="#removable-singularities-in-verified_integral">Removable singularities in verified_integral</a></li><li class="d2"><a href="#bounded-integrands-whose-taylor-model-runs-out-of-domain">Bounded integrands whose Taylor model runs out of domain</a></li><li class="d3"><a href="#what-is-still-refused">What is still refused</a></li><li class="d2"><a href="#relation-to-the-rest-of-the-stack">Relation to the rest of the stack</a></li><li class="d2"><a href="#scope-of-this-release">Scope of this release</a></li><li class="d2"><a href="#validated-ode-integration--verified_ode">Validated ODE integration — verified_ode</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/validated-bounds.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

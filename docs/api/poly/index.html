@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polynomial API · Alkahest Docs</title>
+<meta name="description" content="Explicit polynomial representation types backed by FLINT.">
+<meta property="og:title" content="Polynomial API · Alkahest Docs">
+<meta property="og:description" content="Explicit polynomial representation types backed by FLINT.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+<link rel="stylesheet" href="/docs/assets/katex/katex.min.css">
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/" class="active" aria-current="page">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>Polynomial API</h1>
+    <div class="prose-block"><p>Explicit polynomial representation types backed by FLINT.</p>
+</div>
+<h2 id="unipoly"><a class="hanchor" href="#unipoly" aria-hidden="true" tabindex="-1">#</a>UniPoly</h2>
+<section class="sym" id="UniPoly"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">UniPoly</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#UniPoly" aria-label="Link to UniPoly">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5229" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Dense univariate polynomial with exact integer or rational coefficients,
+backed by FLINT&#39;s <code>fmpq_poly_t</code>.</p>
+<p>All arithmetic operators are supported: <code>+</code>, <code>-</code>, <code>*</code>, <code>**</code>
+(integer exponent), <code>//</code> (exact quotient), <code>%</code> (remainder):</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> UniPoly.from_symbolic(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), x)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">q </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> UniPoly.from_symbolic(x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), x)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> q)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># x^3 - x^2 - x + 1</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">//</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> q)  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># x + 1</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">%</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> q)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 0</span></span></code></pre></div><div class="members"><div class="members-title">Properties</div><div class="member" id="UniPoly.leading_coeff">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">leading_coeff</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#UniPoly.leading_coeff" aria-label="Link to UniPoly.leading_coeff">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5460" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Leading (highest-degree) coefficient, as an exact Python <code>int</code>.</p>
+<p><code>0</code> for the zero polynomial, matching <code>degree == -1</code> there.  Lossless
+for coefficients of any size, as <code>coefficients()</code> also now is — so both
+are safe on the output of <code>factor_z</code>, resultants and pseudo-division,
+where the coefficients grow past 64 bits.</p>
+<p>A property, not a method: it is a single FLINT coefficient read.</p>
+</div>
+</div>
+<div class="member" id="UniPoly.degree">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">degree</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#UniPoly.degree" aria-label="Link to UniPoly.degree">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5466" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Degree of the polynomial (<code>-1</code> for the zero polynomial).</p>
+</div>
+</div>
+<div class="member" id="UniPoly.is_zero">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_zero</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#UniPoly.is_zero" aria-label="Link to UniPoly.is_zero">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5472" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>True if this is the zero polynomial.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="UniPoly.from_symbolic">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">from_symbolic</span>(<span class="sig-p">expr</span>, <span class="sig-p">var</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#UniPoly.from_symbolic" aria-label="Link to UniPoly.from_symbolic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5364" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Convert a symbolic expression to a univariate polynomial in <em>var</em>.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> UniPoly.from_symbolic(x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), x)</span></span></code></pre></div>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">ConversionError</span></dt><dd><p>If <em>expr</em> contains non-polynomial terms.</p>
+</dd></div></dl></div>
+</div>
+<div class="member" id="UniPoly.from_coefficients">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">from_coefficients</span>(<span class="sig-p">coefficients</span>, <span class="sig-p">var</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#UniPoly.from_coefficients" aria-label="Link to UniPoly.from_coefficients">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5390" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Construct a <code>UniPoly</code> from coefficients (constant term first).</p>
+<p>Each coefficient may be a Python <code>int</code> or an integer <code>Expr</code> from the
+same pool as <em>var</em>.</p>
+<p>`` `python
+p = ExprPool()
+x = p.symbol(&quot;x&quot;)</p>
+<p>poly = UniPoly.from_coefficients([-1, 0, 1], x)</p>
+<h3 id="also-accepted"><a class="hanchor" href="#also-accepted" aria-hidden="true" tabindex="-1">#</a>also accepted:</h3>
+<p>poly = UniPoly.from_coefficients([p.integer(-1), p.integer(0), p.integer(1)], x)
+` ``</p>
+<p>Raises <code>TypeError</code> if any coefficient is not an int / integer expression.
+Raises <code>OverflowError</code> if any coefficient overflows <code>i64</code>.</p>
+</div>
+</div>
+<div class="member" id="UniPoly.coefficients">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coefficients</span>()<span class="sig-ret"> → list</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#UniPoly.coefficients" aria-label="Link to UniPoly.coefficients">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5443" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Coefficients in ascending degree order, as exact Python <code>int</code>s.</p>
+<p>Lossless for coefficients of any size. This used to go through
+<code>coefficients_i64()</code>, which does not merely saturate — it returned <code>0</code>
+for anything past <code>i64</code>, so <code>2**100 * x**2 + 1</code> came back as
+<code>[1, 0, 0]</code>: a quadratic reading as the constant <code>1</code>, with no exception
+and no flag. That is exactly the silent-error class this project gates
+against, and it is reachable from ordinary use, since <code>factor_z</code>,
+resultants and pseudo-division all grow coefficients past 64 bits.</p>
+</div>
+</div>
+<div class="member" id="UniPoly.gcd">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">gcd</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#UniPoly.gcd" aria-label="Link to UniPoly.gcd">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5518" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Compute the GCD via FLINT&#39;s subresultant PRS.</p>
+</div>
+</div>
+<div class="member" id="UniPoly.factor_z">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">factor_z</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#UniPoly.factor_z" aria-label="Link to UniPoly.factor_z">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5533" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Factor over ℤ (FLINT; <code>x**n ± 1</code> and <code>u**n * x**n ± v**n</code> through
+cyclotomic polynomials).</p>
+<p><code>factor_list()</code> is in a canonical order that depends only on the
+factors: ascending degree, then coefficients compared as signed
+integers from the leading term down, then multiplicity. <code>x**12 - 1</code>
+gives <code>x - 1, x + 1, x**2 - x + 1, x**2 + 1, x**2 + x + 1, x**4 - x**2 + 1</code>.</p>
+</div>
+</div></div></div></section>
+<h2 id="multipoly"><a class="hanchor" href="#multipoly" aria-hidden="true" tabindex="-1">#</a>MultiPoly</h2>
+<section class="sym" id="MultiPoly"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">MultiPoly</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#MultiPoly" aria-label="Link to MultiPoly">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5234" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Sparse multivariate polynomial over ℤ. Terms are stored as a map from
+exponent vectors to coefficients.</p>
+<p><code>+</code>, <code>-</code>, <code>*</code> are supported between <code>MultiPoly</code> objects with
+the same variable list.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="MultiPoly.is_zero">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_zero</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiPoly.is_zero" aria-label="Link to MultiPoly.is_zero">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5587" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>True if this is the zero polynomial.</p>
+</div>
+</div>
+<div class="member" id="MultiPoly.total_degree">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">total_degree</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiPoly.total_degree" aria-label="Link to MultiPoly.total_degree">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5593" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Highest total degree over all terms (<code>0</code> for the zero polynomial).</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="MultiPoly.from_symbolic">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">from_symbolic</span>(<span class="sig-p">expr</span>, <span class="sig-p">vars</span><span class="sig-def">=None</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#MultiPoly.from_symbolic" aria-label="Link to MultiPoly.from_symbolic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5565" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Build a multivariate polynomial from a symbolic expression.</p>
+<p>If <em>vars</em> is omitted, free symbols of <em>expr</em> are used (sorted by
+internal id for a deterministic order).</p>
+</div>
+</div>
+<div class="member" id="MultiPoly.integer_content">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">integer_content</span>()<span class="sig-ret"> → int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiPoly.integer_content" aria-label="Link to MultiPoly.integer_content">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5597" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Return the GCD of all coefficients.</p>
+</div>
+</div>
+<div class="member" id="MultiPoly.primitive_part">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">primitive_part</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiPoly.primitive_part" aria-label="Link to MultiPoly.primitive_part">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5644" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="MultiPoly.gcd">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">gcd</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiPoly.gcd" aria-label="Link to MultiPoly.gcd">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5652" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>GCD over ℤ (multivariate FLINT).</p>
+</div>
+</div>
+<div class="member" id="MultiPoly.factor_z">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">factor_z</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiPoly.factor_z" aria-label="Link to MultiPoly.factor_z">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5673" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Factor over ℤ (multivariate FLINT).</p>
+<p><code>factor_list()</code> is in a canonical order that depends only on the
+factors: ascending total degree, then coefficients over the monomials
+in descending lexicographic order (variables in ring order), then
+multiplicity.</p>
+</div>
+</div></div></div></section>
+<h2 id="sparse-interpolation"><a class="hanchor" href="#sparse-interpolation" aria-hidden="true" tabindex="-1">#</a>Sparse interpolation</h2>
+<section class="sym" id="sparse_interp_univariate"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">sparse_interp_univariate</span>(<span class="sig-p">eval</span>, <span class="sig-p">term_bound</span>, <span class="sig-p">prime</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#sparse_interp_univariate" aria-label="Link to sparse_interp_univariate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15594" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Recover a sparse univariate polynomial over <code>F_p</code> from black-box
+evaluations using the Ben-Or/Tiwari (Prony-style) algorithm.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">eval</code><span class="ptype">callable</span></dt><dd><p>Black-box oracle <code>x ↦ f(x) mod p</code>.  Called with a single
+<code>int</code> argument and must return an <code>int</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">term_bound</code><span class="ptype">int</span></dt><dd><p>Upper bound <code>T</code> on the number of nonzero terms.  Exactly
+<code>2·T</code> oracle calls are made.</p>
+</dd></div><div class="param"><dt><code class="pname">prime</code><span class="ptype">int</span></dt><dd><p>Field characteristic <code>p</code>.  Must satisfy <code>p &gt; 2·T</code> and
+<code>p &gt; max_degree(f)</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">list[tuple[int, int]]</span></dt><dd><p>List of <code>(coefficient, exponent)</code> pairs.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">SparseInterpError</span></dt><dd><p>On invalid prime, prime too small, or inconsistent oracle.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><p>p = 997
+def f(x): return (x<strong>100 + 3*x</strong>17 + 5) % p
+terms = sparse_interp_univariate(f, 3, p)</p>
+<h3 id="terms--1-100-3-17-5-0"><a class="hanchor" href="#terms--1-100-3-17-5-0" aria-hidden="true" tabindex="-1">#</a>terms ≈ [(1, 100), (3, 17), (5, 0)]</h3>
+</dd></div></dl></div></section>
+<section class="sym" id="sparse_interp"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">sparse_interp</span>(
+    <span class="sig-p">eval</span>,
+    <span class="sig-p">vars</span>,
+    <span class="sig-p">term_bound</span>,
+    <span class="sig-p">degree_bound</span>,
+    <span class="sig-p">prime</span>,
+    <span class="sig-p">seed</span><span class="sig-def">=0</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#sparse_interp" aria-label="Link to sparse_interp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15675" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Recover a sparse multivariate polynomial over <code>F_p</code> from black-box
+evaluations using Zippel&#39;s variable-by-variable algorithm.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">eval</code><span class="ptype">callable</span></dt><dd><p>Black-box oracle <code>(x₁, …, xₙ) ↦ f(x₁, …, xₙ) mod p</code>.
+Called with a Python <code>list[int]</code> (one int per variable) and
+must return an <code>int</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">vars</code><span class="ptype">list[Expr]</span></dt><dd><p>Symbolic variable expressions in the same order as the
+coordinates passed to <code>eval</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">term_bound</code><span class="ptype">int</span></dt><dd><p>Upper bound <code>T</code> on the number of nonzero terms.</p>
+</dd></div><div class="param"><dt><code class="pname">degree_bound</code><span class="ptype">int</span></dt><dd><p>Upper bound <code>D</code> on the degree of each individual variable.
+For the dense fallback, set <code>D ≤ T</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">prime</code><span class="ptype">int</span></dt><dd><p>Field characteristic <code>p</code>.  Must satisfy <code>p &gt; 2·T</code> and
+<code>p &gt; D</code>.</p>
+</dd></div><div class="param"><dt><code class="pname">seed</code><span class="ptype">int, optional</span></dt><dd><p>PRNG seed for random evaluation points (default 0).  Change
+the seed to recover from occasional Vandermonde singularities.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">MultiPolyFp</span></dt><dd><p>Recovered polynomial with coefficients in <code>[0, p)</code>.
+On 20-variable inputs this is typically ≥ 5× faster in oracle
+calls than dense interpolation.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">SparseInterpError</span></dt><dd><p>On invalid prime, prime too small, or inconsistent oracle.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><p>pool = ExprPool()
+x, y = pool.symbol(&quot;x&quot;), pool.symbol(&quot;y&quot;)
+p = 1009
+def f(pt):
+    x_, y_ = pt
+    return (x_ * y_ + 3) % p
+result = sparse_interp(f, [x, y], term_bound=4, degree_bound=3, prime=p)</p>
+</dd></div></dl></div></section>
+<section class="sym" id="gcd_sparse"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">gcd_sparse</span>(<span class="sig-p">f</span>, <span class="sig-p">g</span>, <span class="sig-p">term_bound</span>, <span class="sig-p">degree_bound</span>, <span class="sig-p">seed</span><span class="sig-def">=0</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#gcd_sparse" aria-label="Link to gcd_sparse">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15756" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Compute the primitive GCD of two multivariate polynomials over ℤ using
+sparse interpolation and the Chinese Remainder Theorem (Zippel method).</p>
+<p>Both polynomials must have the same variable list.  The result is the
+primitive part of <code>gcd(f, g)</code> with positive leading coefficient.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">f, g</code><span class="ptype">MultiPoly</span></dt><dd><p>Input polynomials with the same variable list.</p>
+</dd></div><div class="param"><dt><code class="pname">term_bound</code><span class="ptype">int</span></dt><dd><p>Upper bound on the number of nonzero terms in the GCD.</p>
+</dd></div><div class="param"><dt><code class="pname">degree_bound</code><span class="ptype">int</span></dt><dd><p>Upper bound on the per-variable degree of the GCD in <code>x₂,…,xₙ</code>.
+The degree in <code>x₁</code> is probed automatically.</p>
+</dd></div><div class="param"><dt><code class="pname">seed</code><span class="ptype">int, optional</span></dt><dd><p>PRNG seed.  Change on failure (default 0).</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">MultiPoly</span></dt><dd><p>The primitive GCD with positive leading coefficient.</p>
+</dd></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">SparseGcdError</span></dt><dd><p>If the interpolation fails or the variable lists are incompatible.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x, y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"y"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">f </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> MultiPoly.from_symbolic((x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y), [x, y])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">g </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> MultiPoly.from_symbolic((x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y), [x, y])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">h </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> gcd_sparse(f, g, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">term_bound</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">4</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">degree_bound</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># h represents x + y</span></span></code></pre></div></div></section>
+<h2 id="rationalfunction"><a class="hanchor" href="#rationalfunction" aria-hidden="true" tabindex="-1">#</a>RationalFunction</h2>
+<section class="sym" id="RationalFunction"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">RationalFunction</span>(<span class="sig-p">numer</span>, <span class="sig-p">denom</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#RationalFunction" aria-label="Link to RationalFunction">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5721" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Construct a <code>RationalFunction</code> from two <code>UniPoly</code> numerator / denominator.</p>
+<p><code>`python p = ExprPool() x = p.symbol(&quot;x&quot;) numer = UniPoly.from_coefficients([p.integer(-1), p.integer(0), p.integer(1)], x)  # x²-1 denom = UniPoly.from_coefficients([p.integer(-1), p.integer(1)], x)                # x-1 rf = RationalFunction(numer, denom)  # → (x+1)  after GCD reduction `</code></p>
+<p>Raises <code>ValueError</code> if <code>denom</code> is the zero polynomial.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="RationalFunction.is_zero">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_zero</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#RationalFunction.is_zero" aria-label="Link to RationalFunction.is_zero">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5772" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>True if the numerator is the zero polynomial.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="RationalFunction.from_symbolic">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">from_symbolic</span>(<span class="sig-p">numer</span>, <span class="sig-p">denom</span>, <span class="sig-p">vars</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#RationalFunction.from_symbolic" aria-label="Link to RationalFunction.from_symbolic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5752" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Construct a rational function and normalize by GCD.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># (x^2 - 1) / (x - 1) → normalized to x + 1</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">rf </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> RationalFunction.from_symbolic(</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">),</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">),</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    [x]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(rf)  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># x + 1</span></span></code></pre></div></div>
+</div>
+<div class="member" id="RationalFunction.numer">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">numer</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#RationalFunction.numer" aria-label="Link to RationalFunction.numer">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5776" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="RationalFunction.denom">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">denom</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#RationalFunction.denom" aria-label="Link to RationalFunction.denom">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5783" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<h2 id="polynomial-utilities"><a class="hanchor" href="#polynomial-utilities" aria-hidden="true" tabindex="-1">#</a>Polynomial utilities</h2>
+<section class="sym" id="horner"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">horner</span>(<span class="sig-p">expr</span>, <span class="sig-p">var</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#horner" aria-label="Link to horner">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14625" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Convert a polynomial expression to Horner form.</p>
+<p><code>expr</code> must be a univariate polynomial in <code>var</code>.
+Returns a new <code>Expr</code> in Horner form <code>a₀ + x*(a₁ + x*(…))</code>.</p>
+</div></section>
+<h2 id="roots-resultants-and-factorisation"><a class="hanchor" href="#roots-resultants-and-factorisation" aria-hidden="true" tabindex="-1">#</a>Roots, resultants and factorisation</h2>
+<section class="sym" id="real_roots"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">real_roots</span>(<span class="sig-p">poly</span>, <span class="sig-p">var</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#real_roots" aria-label="Link to real_roots">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15409" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Isolate all real roots of a polynomial expression.</p>
+<p>Returns a list of <a href="/docs/api/poly/#RootInterval"><code>RootInterval</code></a> objects sorted by lower endpoint.
+Each interval contains exactly one real root of the squarefree part of
+<code>poly</code>.  Repeated roots appear once each.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">poly</code><span class="ptype">Expr</span></dt><dd><p>A univariate polynomial expression with integer coefficients.</p>
+</dd></div><div class="param"><dt><code class="pname">var</code><span class="ptype">Expr</span></dt><dd><p>The polynomial variable.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">list[RootInterval]</span></dt></div></dl>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">RealRootError</span></dt><dd><p>If <code>poly</code> is not a polynomial with integer coefficients, or is the
+zero polynomial.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><p>pool = ExprPool()
+x = pool.symbol(&quot;x&quot;)
+roots = real_roots(x**2 - pool.integer(4), x)</p>
+</dd></div></dl></div></section>
+<section class="sym" id="refine_root"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">refine_root</span>(<span class="sig-p">poly</span>, <span class="sig-p">interval</span>, <span class="sig-p">var</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#refine_root" aria-label="Link to refine_root">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15526" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Refine a <a href="/docs/api/poly/#RootInterval"><code>RootInterval</code></a> to at least <code>prec</code> bits of precision.</p>
+<p>Uses bisection with floating-point Horner evaluation.  For exact rational
+roots (<code>lo == hi</code>), returns a zero-radius ball.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">poly</code><span class="ptype">Expr</span></dt><dd><p>The same polynomial passed to <a href="/docs/api/poly/#real_roots"><code>real_roots()</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">interval</code><span class="ptype">RootInterval</span></dt><dd><p>One element of the list returned by <a href="/docs/api/poly/#real_roots"><code>real_roots()</code></a>.</p>
+</dd></div><div class="param"><dt><code class="pname">var</code><span class="ptype">Expr</span></dt><dd><p>The polynomial variable.</p>
+</dd></div><div class="param"><dt><code class="pname">prec</code><span class="ptype">int</span></dt><dd><p>Desired precision in bits (minimum 53, clamped to <code>max(53, prec)</code>).</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">ArbBall</span></dt><dd><p>Rigorous floating-point ball containing the root.</p>
+</dd></div><div class="param"><dt><code class="pname">Example</code><span class="ptype">:</span></dt><dd><p>pool = ExprPool()
+x = pool.symbol(&quot;x&quot;)
+ivs = real_roots(x<strong>2 - pool.integer(2), x)
+ball = refine_root(x</strong>2 - pool.integer(2), ivs[1], x, 53)</p>
+</dd></div></dl></div></section>
+<section class="sym" id="RootInterval"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">RootInterval</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#RootInterval" aria-label="Link to RootInterval">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15331" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A closed rational interval <code>[lo, hi]</code> isolating exactly one real root.</p>
+<p>For an exact rational root <code>r</code>, <code>lo == hi == r</code>.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="RootInterval.lo">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">lo</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#RootInterval.lo" aria-label="Link to RootInterval.lo">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15339" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Lower bound as a float (may be slightly inexact).</p>
+</div>
+</div>
+<div class="member" id="RootInterval.hi">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">hi</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#RootInterval.hi" aria-label="Link to RootInterval.hi">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15345" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Upper bound as a float (may be slightly inexact).</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="RootInterval.lo_exact">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">lo_exact</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#RootInterval.lo_exact" aria-label="Link to RootInterval.lo_exact">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15350" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Exact lower bound as <code>(numerator_str, denominator_str)</code>.</p>
+</div>
+</div>
+<div class="member" id="RootInterval.hi_exact">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">hi_exact</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#RootInterval.hi_exact" aria-label="Link to RootInterval.hi_exact">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15355" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Exact upper bound as <code>(numerator_str, denominator_str)</code>.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="resultant"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">resultant</span>(<span class="sig-p">p</span>, <span class="sig-p">q</span>, <span class="sig-p">var</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#resultant" aria-label="Link to resultant">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15260" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Compute the resultant of two polynomial expressions with respect to a
+variable.</p>
+<p>Both <code>p</code> and <code>q</code> must be polynomial expressions with integer
+coefficients.  The returned expression is:</p>
+<ul>
+<li>An integer constant in the <strong>univariate</strong> case (only <code>var</code> appears).</li>
+<li>A polynomial in the remaining variables in the <strong>multivariate</strong> case
+(<code>var</code> has been eliminated).</li>
+</ul>
+<p>The returned <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> carries a <code>&quot;Resultant&quot;</code> derivation
+step tagged with the Lean 4 theorem
+<code>Polynomial.resultant_eq_zero_iff_common_root</code>.</p>
+<p>Raises <a href="/docs/api/errors/#ResultantError"><code>ResultantError</code></a> if either input is not a polynomial with
+integer coefficients.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"y"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">q </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">r </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> resultant(p, q, y)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># r.value == 2*x^2 - 1</span></span></code></pre></div></div></section>
+<section class="sym" id="subresultant_prs"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">subresultant_prs</span>(<span class="sig-p">p</span>, <span class="sig-p">q</span>, <span class="sig-p">var</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#subresultant_prs" aria-label="Link to subresultant_prs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15298" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Compute the subresultant polynomial remainder sequence of two univariate
+polynomials with integer coefficients.</p>
+<p>Returns a Python <code>list</code> of <a href="/docs/api/core/#Expr"><code>Expr</code></a> objects ordered
+<code>[p, q, S₂, S₃, …, Sₖ]</code>.</p>
+<p>Both polynomials must be <strong>univariate</strong> in <code>var</code> with integer
+coefficients.  Multivariate inputs raise <a href="/docs/api/errors/#ResultantError"><code>ResultantError</code></a>.</p>
+<p>Example:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">q </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">prs </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> subresultant_prs(p, q, x)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># prs == [p, q, last_element]</span></span></code></pre></div></div></section>
+<section class="sym" id="routh_hurwitz"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">routh_hurwitz</span>(<span class="sig-p">poly</span>, <span class="sig-p">var</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#routh_hurwitz" aria-label="Link to routh_hurwitz">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16910" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Symbolic / parametric Routh–Hurwitz stability analysis.</p>
+<p>Given a characteristic polynomial <code>poly</code> in the analysis variable <code>var</code>
+whose coefficients may be symbolic expressions in free parameters, returns a
+dict with:</p>
+<ul>
+<li><code>&quot;degree&quot;</code>: the degree of <code>poly</code> in <code>var</code>;</li>
+<li><code>&quot;first_column&quot;</code>: the Routh-array first-column entries (top to bottom) as
+<code>Expr</code> objects in the parameters;</li>
+<li><code>&quot;condition&quot;</code>: the stability condition as a single predicate <code>Expr</code> — a
+conjunction of <code>entry &gt; 0</code> over the non-trivial first-column entries.</li>
+</ul>
+<p>For example <code>s**2 + a*s + b</code> yields the condition <code>a &gt; 0 ∧ b &gt; 0</code> and
+<code>s**3 + a*s**2 + b*s + c</code> yields <code>a &gt; 0 ∧ a*b - c &gt; 0 ∧ c &gt; 0</code>.</p>
+</div></section>
+<section class="sym" id="factor_univariate_mod_p"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">factor_univariate_mod_p</span>(<span class="sig-p">coeffs</span>, <span class="sig-p">modulus</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#factor_univariate_mod_p" aria-label="Link to factor_univariate_mod_p">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15550" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Factor a dense univariate polynomial over <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="double-struck">F</mi><mi>p</mi></msub></mrow><annotation encoding="application/x-tex">\mathbb{F}_p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.975em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathbb">F</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span> from ascending
+integer coefficients (reduced mod <code>p</code>).</p>
+<p><code>p</code> must be prime (<code>E-POLY-009</code> otherwise) and the polynomial non-zero
+mod <code>p</code> (<code>E-POLY-008</code>). The factors are monic; <code>.unit</code> is the leading
+coefficient that restores the input. <code>factor_list()</code> is sorted by
+ascending degree, then by the residues from the leading term down.</p>
+</div></section>
+<section class="sym" id="UniPolyFactorization"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">UniPolyFactorization</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#UniPolyFactorization" aria-label="Link to UniPolyFactorization">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5249" rel="noopener">source</a></div>
+</div><div class="sym-body"><p class="muted nodoc">No docstring.</p><div class="members"><div class="members-title">Properties</div><div class="member" id="UniPolyFactorization.unit">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">unit</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#UniPolyFactorization.unit" aria-label="Link to UniPolyFactorization.unit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5257" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="UniPolyFactorization.verification">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#UniPolyFactorization.verification" aria-label="Link to UniPolyFactorization.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5271" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Exact in-kernel reconstruction evidence for this factorization.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="UniPolyFactorization.factor_list">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">factor_list</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#UniPolyFactorization.factor_list" aria-label="Link to UniPolyFactorization.factor_list">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5261" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="UniPolyFactorModP"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">UniPolyFactorModP</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#UniPolyFactorModP" aria-label="Link to UniPolyFactorModP">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5333" rel="noopener">source</a></div>
+</div><div class="sym-body"><p class="muted nodoc">No docstring.</p><div class="members"><div class="members-title">Properties</div><div class="member" id="UniPolyFactorModP.modulus">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">modulus</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#UniPolyFactorModP.modulus" aria-label="Link to UniPolyFactorModP.modulus">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5341" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="UniPolyFactorModP.unit">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">unit</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#UniPolyFactorModP.unit" aria-label="Link to UniPolyFactorModP.unit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5348" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>The leading coefficient <code>u</code> of the input mod <code>p</code>: the input is
+<code>u * prod(f**e for f, e in factor_list())</code> with every <code>f</code> monic.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="UniPolyFactorModP.factor_list">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">factor_list</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#UniPolyFactorModP.factor_list" aria-label="Link to UniPolyFactorModP.factor_list">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5352" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<section class="sym" id="MultiPolyFactorization"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">MultiPolyFactorization</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#MultiPolyFactorization" aria-label="Link to MultiPolyFactorization">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5277" rel="noopener">source</a></div>
+</div><div class="sym-body"><p class="muted nodoc">No docstring.</p><div class="members"><div class="members-title">Properties</div><div class="member" id="MultiPolyFactorization.unit">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">unit</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiPolyFactorization.unit" aria-label="Link to MultiPolyFactorization.unit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5285" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="MultiPolyFactorization.verification">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiPolyFactorization.verification" aria-label="Link to MultiPolyFactorization.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5307" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Exact in-kernel reconstruction evidence for this factorization.</p>
+</div>
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="MultiPolyFactorization.factor_list">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">factor_list</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiPolyFactorization.factor_list" aria-label="Link to MultiPolyFactorization.factor_list">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5289" rel="noopener">source</a></div></div>
+  
+</div></div></div></section>
+<h2 id="modular-arithmetic"><a class="hanchor" href="#modular-arithmetic" aria-hidden="true" tabindex="-1">#</a>Modular arithmetic</h2>
+<section class="sym" id="binomial_mod"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">binomial_mod</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>, <span class="sig-p">p</span>, <span class="sig-p">k</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#binomial_mod" aria-label="Link to binomial_mod">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21551" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>binomial(a, b) mod p**k</code>, exactly, for <code>p</code> prime.</p>
+<p>Uses the Andrew Granville / Davis–Webb factorisation of <code>n!</code> into its
+<code>p</code>-free part, which at <code>k = 1</code> is Lucas&#39; theorem exactly. The cost is
+<code>O(p·k³ + log_p(a)·p·k)</code> and does not grow with <code>a</code> beyond the
+logarithm, so <code>a</code> far larger than <code>p</code> is the ordinary case rather than
+the hard one.</p>
+<p><code>b &lt; 0</code> and <code>b &gt; a</code> are not errors: the binomial coefficient is <code>0</code>.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.binomial_mod(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> *</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 11</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">11</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Wolstenholme</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.binomial_mod(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1_000_000</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">7</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">4</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2261</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.binomial_mod(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">9</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">7</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">4</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span></span></code></pre></div>
+<div class="doc-sub">Raises</div><dl class="params"><div class="param"><dt><span class="ptype">HolonomicError</span></dt><dd><p><code>E-HOLO-006</code> when <code>p</code> is not prime, <code>k &lt; 1</code>, or <code>p**k &gt;= 2**62</code>; <code>E-HOLO-008</code> when the work budget would be exceeded.</p>
+</dd></div></dl></div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/diff/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Calculus</span></a><a class="pager-next" href="/docs/api/numerics/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Numerics and evaluation</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/poly.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#unipoly">UniPoly</a></li><li class="d2"><a href="#multipoly">MultiPoly</a></li><li class="d2"><a href="#sparse-interpolation">Sparse interpolation</a></li><li class="d3"><a href="#sparse_interp_univariate">sparse_interp_univariate</a></li><li class="d3"><a href="#sparse_interp">sparse_interp</a></li><li class="d3"><a href="#gcd_sparse">gcd_sparse</a></li><li class="d2"><a href="#rationalfunction">RationalFunction</a></li><li class="d2"><a href="#polynomial-utilities">Polynomial utilities</a></li><li class="d3"><a href="#horner">horner</a></li><li class="d2"><a href="#roots-resultants-and-factorisation">Roots, resultants and factorisation</a></li><li class="d3"><a href="#real_roots">real_roots</a></li><li class="d3"><a href="#refine_root">refine_root</a></li><li class="d3"><a href="#RootInterval">RootInterval</a></li><li class="d3"><a href="#resultant">resultant</a></li><li class="d3"><a href="#subresultant_prs">subresultant_prs</a></li><li class="d3"><a href="#routh_hurwitz">routh_hurwitz</a></li><li class="d3"><a href="#factor_univariate_mod_p">factor_univariate_mod_p</a></li><li class="d3"><a href="#UniPolyFactorization">UniPolyFactorization</a></li><li class="d3"><a href="#UniPolyFactorModP">UniPolyFactorModP</a></li><li class="d3"><a href="#MultiPolyFactorization">MultiPolyFactorization</a></li><li class="d2"><a href="#modular-arithmetic">Modular arithmetic</a></li><li class="d3"><a href="#binomial_mod">binomial_mod</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/poly.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

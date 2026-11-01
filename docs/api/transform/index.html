@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transformation API · Alkahest Docs</title>
+<meta name="description" content="JAX-style composable transformations over the Alkahest kernel.">
+<meta property="og:title" content="Transformation API · Alkahest Docs">
+<meta property="og:description" content="JAX-style composable transformations over the Alkahest kernel.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="api">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>API reference</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="" aria-selected="false">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="selected" aria-selected="true">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide" hidden><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api"><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/" class="active" aria-current="page">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc doc-api">
+    <div class="eyebrow">Python API</div>
+    <h1>Transformation API</h1>
+    <div class="prose-block"><p>JAX-style composable transformations over the Alkahest kernel.</p>
+</div>
+<h2 id="tracing"><a class="hanchor" href="#tracing" aria-hidden="true" tabindex="-1">#</a>Tracing</h2>
+<section class="sym" id="trace"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">trace</span>(
+    <span class="sig-p">pool</span><span class="sig-ann">: ExprPool</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">names</span><span class="sig-ann">: Sequence[str] | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">domain</span><span class="sig-ann">: str</span><span class="sig-def">='real'</span>
+)<span class="sig-ret"> → Callable</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#trace" aria-label="Link to trace">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_transform.py#L274" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Decorator that symbolically traces a Python function.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">pool</code><span class="ptype">ExprPool</span></dt><dd><p>The expression pool to use for symbolic variables.</p>
+</dd></div><div class="param"><dt><code class="pname">names</code><span class="ptype">sequence of str, optional</span></dt><dd><p>Names for the symbolic arguments.  Inferred from the function
+signature when omitted.</p>
+</dd></div><div class="param"><dt><code class="pname">domain</code><span class="ptype">str</span></dt><dd><p>Domain for the symbolic variables (<code>&quot;real&quot;</code>, <code>&quot;complex&quot;</code> …).</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">Callable</span></dt><dd><p>A decorator; when applied to a function it returns a
+<a href="/docs/api/transform/#TracedFn"><code>TracedFn</code></a>.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> @</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">alkahest.trace(p)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> def</span><span style="--shiki-light:#6F42C1;--shiki-dark:#DCBDFB"> f</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(x, y):</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">...</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">     return</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.sin(y)</span></span></code></pre></div></div></section>
+<section class="sym" id="trace_fn"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">trace_fn</span>(
+    <span class="sig-p">fn</span><span class="sig-ann">: Callable</span>,
+    <span class="sig-p">pool</span><span class="sig-ann">: ExprPool</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">names</span><span class="sig-ann">: Sequence[str] | None</span><span class="sig-def">=None</span>,
+    <span class="sig-p">domain</span><span class="sig-ann">: str</span><span class="sig-def">='real'</span>
+)<span class="sig-ret"> → TracedFn</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#trace_fn" aria-label="Link to trace_fn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_transform.py#L390" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Trace <code>fn</code> without using it as a decorator.</p>
+<p>Equivalent to <code>trace(pool, names=names, domain=domain)(fn)</code>.</p>
+</div></section>
+<h2 id="gradient"><a class="hanchor" href="#gradient" aria-hidden="true" tabindex="-1">#</a>Gradient</h2>
+<div class="prose-block"><blockquote><p><strong>Note</strong> 
+<strong><code>grad</code> here is not <code>symbolic_grad</code>.</strong> <a href="/docs/api/diff/#symbolic_grad"><code>symbolic_grad()</code></a> (see
+<code>diff</code>) takes an <a href="/docs/api/core/#Expr"><code>Expr</code></a> and variable list and returns symbolic
+partials. <a href="/docs/api/transform/#grad"><code>grad()</code></a> below operates on a <a href="/docs/api/transform/#TracedFn"><code>TracedFn</code></a> from
+<a href="/docs/api/transform/#trace"><code>trace()</code></a> and is composable with <a href="/docs/api/transform/#jit"><code>jit()</code></a>.</p>
+</blockquote>
+</div>
+<section class="sym" id="grad"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">grad</span>(<span class="sig-p">fn</span><span class="sig-ann">: TracedFn | Callable</span>, <span class="sig-sep">*</span>, <span class="sig-p">wrt</span><span class="sig-ann">: Sequence[Expr] | None</span><span class="sig-def">=None</span>)<span class="sig-ret"> → GradTracedFn</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#grad" aria-label="Link to grad">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_transform.py#L323" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Return a new callable that computes the gradient of a <a href="/docs/api/transform/#TracedFn"><code>TracedFn</code></a>.</p>
+<p>This is the <strong>JAX-style</strong> transform applied after <a href="/docs/api/transform/#trace"><code>trace()</code></a>. It is <strong>not</strong>
+<a href="/docs/api/diff/#symbolic_grad"><code>symbolic_grad()</code></a>, which takes an <a href="/docs/api/core/#Expr"><code>Expr</code></a> and a
+list of variables and returns symbolic partial expressions.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">fn</code><span class="ptype">TracedFn or callable decorated with <a href="/docs/api/transform/#trace"><code>trace()</code></a></span></dt><dd><p>The function to differentiate.</p>
+</dd></div><div class="param"><dt><code class="pname">wrt</code><span class="ptype">sequence of Expr, optional</span></dt><dd><p>Variables to differentiate with respect to.  Defaults to all
+input variables of <code>fn</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">GradTracedFn</span></dt><dd><p>Callable returning <code>[∂f/∂wrt[0], ∂f/∂wrt[1], …]</code> as floats at a point.
+Compose with <a href="/docs/api/transform/#jit"><code>jit()</code></a> for LLVM-backed evaluation.</p>
+</dd></div></dl>
+<p><strong>See also</strong></p>
+<ul>
+<li><a href="/docs/api/diff/#symbolic_grad"><code>symbolic_grad</code></a> — partial derivatives of an <a href="/docs/api/core/#Expr"><code>Expr</code></a> (no <a href="/docs/api/transform/#TracedFn"><code>TracedFn</code></a>).</li>
+</ul>
+</div></section>
+<h2 id="jit-compilation"><a class="hanchor" href="#jit-compilation" aria-hidden="true" tabindex="-1">#</a>JIT compilation</h2>
+<section class="sym" id="jit"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">jit</span>(<span class="sig-p">fn</span><span class="sig-ann">: TracedFn | GradTracedFn | Callable</span>)<span class="sig-ret"> → CompiledTracedFn | CompiledGradTracedFn</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#jit" aria-label="Link to jit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_transform.py#L359" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>JIT-compile a <a href="/docs/api/transform/#TracedFn"><code>TracedFn</code></a> or <a href="/docs/api/transform/#GradTracedFn"><code>GradTracedFn</code></a> using the LLVM backend.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">fn</code><span class="ptype">TracedFn, GradTracedFn, or callable decorated with <a href="/docs/api/transform/#trace"><code>trace()</code></a></span></dt><dd><p>The forward function or its symbolic gradient to compile.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">CompiledTracedFn or CompiledGradTracedFn</span></dt><dd><p>Callables backed by LLVM JIT (or the Rust interpreter if <code>--features jit</code> was not enabled at build time).</p>
+</dd></div></dl></div></section>
+<h2 id="composing"><a class="hanchor" href="#composing" aria-hidden="true" tabindex="-1">#</a>Composing</h2>
+<div class="prose-block"><p>Transformations stack freely:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Compiled gradient</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">fast_df </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.jit(alkahest.grad(f))</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Second derivative</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">d2f </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.grad(alkahest.grad(f))</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># Vectorised compiled gradient</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> numpy </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> np</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">xs </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> np.linspace(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1_000_000</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.jit(alkahest.grad(f))(xs, xs)</span></span></code></pre></div></div>
+<h2 id="tracedfn"><a class="hanchor" href="#tracedfn" aria-hidden="true" tabindex="-1">#</a>TracedFn</h2>
+<section class="sym" id="TracedFn"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">TracedFn</span>(
+    <span class="sig-p">expr</span><span class="sig-ann">: Expr</span>,
+    <span class="sig-p">pool</span><span class="sig-ann">: ExprPool</span>,
+    <span class="sig-p">symbols</span><span class="sig-ann">: list[Expr]</span>,
+    <span class="sig-sep">*</span>,
+    <span class="sig-p">names</span><span class="sig-ann">: list[str] | None</span><span class="sig-def">=None</span>
+)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#TracedFn" aria-label="Link to TracedFn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_transform.py#L45" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A symbolic function produced by tracing a Python callable.</p>
+<p>The callable is invoked <em>once</em> with symbolic <a href="/docs/api/core/#Expr"><code>Expr</code></a> arguments to
+capture the computation graph.  Subsequent numeric evaluations run through
+the Rust interpreter or (if <a href="/docs/api/transform/#jit"><code>jit()</code></a> is applied) the LLVM JIT.</p>
+
+<div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr</span></dt><dd><p>The symbolic output expression.</p>
+</dd></div><div class="param"><dt><code class="pname">pool</code><span class="ptype">ExprPool</span></dt><dd><p>The expression pool that owns all nodes.</p>
+</dd></div><div class="param"><dt><code class="pname">symbols</code><span class="ptype">list[Expr]</span></dt><dd><p>The symbolic input variables, one per positional argument.</p>
+</dd></div></dl><div class="members"><div class="members-title">Methods</div><div class="member" id="TracedFn.__call__">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">__call__</span>(<span class="sig-p">*values</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#TracedFn.__call__" aria-label="Link to TracedFn.__call__">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L85" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Evaluate numerically.</p>
+<p>Values may be plain Python floats <em>or</em> NumPy / JAX / PyTorch arrays.
+When array inputs are detected, the call is automatically vectorised
+via the batch path (same as <a href="/docs/api/numerics/#numpy_eval"><code>numpy_eval()</code></a>).</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="CompiledTracedFn"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">CompiledTracedFn</span>(<span class="sig-p">traced</span><span class="sig-ann">: TracedFn</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#CompiledTracedFn" aria-label="Link to CompiledTracedFn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_transform.py#L123" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>A <a href="/docs/api/transform/#TracedFn"><code>TracedFn</code></a> whose evaluation is backed by LLVM JIT.</p>
+<p>Created via <a href="/docs/api/transform/#jit"><code>jit()</code></a>.  Falls back to the Rust interpreter if the
+<code>jit</code> feature is not compiled in.</p>
+<div class="members"><div class="members-title">Properties</div><div class="member" id="CompiledTracedFn.expr">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">expr</span><span class="sig-ann">: Expr</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledTracedFn.expr" aria-label="Link to CompiledTracedFn.expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L135" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="CompiledTracedFn.pool">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">pool</span><span class="sig-ann">: ExprPool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledTracedFn.pool" aria-label="Link to CompiledTracedFn.pool">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L139" rel="noopener">source</a></div></div>
+  
+</div>
+<div class="member" id="CompiledTracedFn.symbols">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">symbols</span><span class="sig-ann">: list[Expr]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledTracedFn.symbols" aria-label="Link to CompiledTracedFn.symbols">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L143" rel="noopener">source</a></div></div>
+  
+</div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="CompiledTracedFn.__call__">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">__call__</span>(<span class="sig-p">*values</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompiledTracedFn.__call__" aria-label="Link to CompiledTracedFn.__call__">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L146" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Evaluate; routes to the batch path for array inputs.</p>
+</div>
+</div></div></div></section>
+<section class="sym" id="GradTracedFn"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">GradTracedFn</span>(<span class="sig-p">traced</span><span class="sig-ann">: TracedFn</span>, <span class="sig-p">wrt</span><span class="sig-ann">: list[Expr] | None</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#GradTracedFn" aria-label="Link to GradTracedFn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_transform.py#L172" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Gradient of a <a href="/docs/api/transform/#TracedFn"><code>TracedFn</code></a>.</p>
+<p>The gradient is computed <em>symbolically</em> via the Rust <code>grad</code> or <code>diff</code>
+function and then wrapped as a new <a href="/docs/api/transform/#TracedFn"><code>TracedFn</code></a> for each output.</p>
+<div class="members"><div class="members-title">Methods</div><div class="member" id="GradTracedFn.__call__">
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">__call__</span>(<span class="sig-p">*values</span>)<span class="sig-ret"> → list</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#GradTracedFn.__call__" aria-label="Link to GradTracedFn.__call__">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L203" rel="noopener">source</a></div></div>
+  <div class="member-body"><p>Return the gradient as a list, one value per <code>wrt</code> variable.</p>
+</div>
+</div></div></div></section>
+<h2 id="pytree-utilities"><a class="hanchor" href="#pytree-utilities" aria-hidden="true" tabindex="-1">#</a>PyTree utilities</h2>
+<section class="sym" id="flatten_exprs"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">flatten_exprs</span>(<span class="sig-p">obj</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → tuple[list, TreeDef]</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#flatten_exprs" aria-label="Link to flatten_exprs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_pytree.py#L121" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Flatten a nested structure into <code>(leaves, treedef)</code>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">obj</code><span class="ptype">any nested structure of Expr, list, tuple, or dict</span></dt></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><code class="pname">leaves</code><span class="ptype">list</span></dt><dd><p>Flat list of <code>Expr</code> leaves (in pre-order).</p>
+</dd></div><div class="param"><dt><code class="pname">treedef</code><span class="ptype">TreeDef</span></dt><dd><p>Opaque structure descriptor; pass to <a href="/docs/api/transform/#unflatten_exprs"><code>unflatten_exprs()</code></a> to
+reconstruct the original container.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> leaves, td </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.flatten_exprs([x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, {</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"a"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: sin(y)}])</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> len</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(leaves)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span></span></code></pre></div></div></section>
+<section class="sym" id="unflatten_exprs"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">unflatten_exprs</span>(<span class="sig-p">leaves</span><span class="sig-ann">: list</span>, <span class="sig-p">treedef</span><span class="sig-ann">: TreeDef</span>)<span class="sig-ret"> → Any</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#unflatten_exprs" aria-label="Link to unflatten_exprs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_pytree.py#L172" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Reconstruct a nested structure from <em>leaves</em> and <em>treedef</em>.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">leaves</code><span class="ptype">list</span></dt><dd><p>Flat list of values (typically transformed <code>Expr</code> objects).</p>
+</dd></div><div class="param"><dt><code class="pname">treedef</code><span class="ptype">TreeDef</span></dt><dd><p>Structure descriptor returned by <a href="/docs/api/transform/#flatten_exprs"><code>flatten_exprs()</code></a>.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt></dt><dd><p>The original nested structure with leaves replaced by the provided values.</p>
+</dd></div></dl></div></section>
+<section class="sym" id="map_exprs"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">map_exprs</span>(<span class="sig-p">fn</span><span class="sig-ann">: Callable</span>, <span class="sig-p">obj</span><span class="sig-ann">: Any</span>)<span class="sig-ret"> → Any</span></code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#map_exprs" aria-label="Link to map_exprs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_pytree.py#L196" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Apply <em>fn</em> to every <code>Expr</code> leaf in a nested structure.</p>
+
+<div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">fn</code><span class="ptype">callable</span></dt><dd><p>Function <code>Expr → Expr</code> applied to each leaf.</p>
+</dd></div><div class="param"><dt><code class="pname">obj</code><span class="ptype">any nested structure</span></dt><dd><p>May be a single <code>Expr</code>, a list, tuple, or dict thereof — arbitrarily
+nested.</p>
+</dd></div></dl>
+<div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt></dt><dd><p>The same nested structure with every <code>Expr</code> leaf replaced by <code>fn(leaf)</code>.</p>
+</dd></div></dl>
+<div class="doc-sub">Examples</div><div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.map_exprs(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">lambda</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> e: alkahest.diff(e, x).value, [x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, alkahest.sin(x)])</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">str</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(r) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">for</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> r </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">in</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> result]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'(2 * x)'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">'cos(x)'</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">]</span></span></code></pre></div></div></section>
+<section class="sym" id="TreeDef"><div class="sym-head">
+  <span class="kind kind-class">class</span>
+  <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">TreeDef</span>(<span class="sig-p">nodes</span><span class="sig-ann">: list</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#TreeDef" aria-label="Link to TreeDef">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/_pytree.py#L63" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>Encodes the structure of a nested container so it can be reconstructed.</p>
+<p>Internal representation: a flat list of node descriptors obtained by a
+pre-order traversal of the tree.  Leaves are represented by <code>_Leaf()</code>
+instances.</p>
+</div></section>
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/numerics/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Numerics and evaluation</span></a><a class="pager-next" href="/docs/api/pari/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">PARI/GP interop</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/transform.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#tracing">Tracing</a></li><li class="d3"><a href="#trace">trace</a></li><li class="d3"><a href="#trace_fn">trace_fn</a></li><li class="d2"><a href="#gradient">Gradient</a></li><li class="d3"><a href="#grad">grad</a></li><li class="d2"><a href="#jit-compilation">JIT compilation</a></li><li class="d3"><a href="#jit">jit</a></li><li class="d2"><a href="#composing">Composing</a></li><li class="d2"><a href="#tracedfn">TracedFn</a></li><li class="d3"><a href="#CompiledTracedFn">CompiledTracedFn</a></li><li class="d3"><a href="#GradTracedFn">GradTracedFn</a></li><li class="d2"><a href="#pytree-utilities">PyTree utilities</a></li><li class="d3"><a href="#flatten_exprs">flatten_exprs</a></li><li class="d3"><a href="#unflatten_exprs">unflatten_exprs</a></li><li class="d3"><a href="#map_exprs">map_exprs</a></li><li class="d3"><a href="#TreeDef">TreeDef</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/transform.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>

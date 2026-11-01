@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claim graphs · Alkahest Docs</title>
+<meta name="description" content="DerivedResult (derivation logs) is a per-call object. A research loop that runs for days produces thousands of them and has nowhere to put them, so its…">
+<meta property="og:title" content="Claim graphs · Alkahest Docs">
+<meta property="og:description" content="DerivedResult (derivation logs) is a per-call object. A research loop that runs for days produces thousands of them and has nowhere to put them, so its…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%227%22%20fill%3D%22%23c41e3a%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2223%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-weight%3D%22700%22%20font-size%3D%2221%22%20fill%3D%22%23fff%22%3Ea%3C%2Ftext%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.12.0">
+
+<script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script defer src="/docs/assets/app.js?v=3.12.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/">alkahest</a>
+    <nav class="topnav" id="topnav" aria-label="Site">
+      <a href="/docs/" class="current" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/" class="active" aria-current="page">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <div class="theme-switch" role="radiogroup" aria-label="Theme">
+      <button type="button" data-theme-set="system" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="14" height="14"><rect x="1.5" y="2.5" width="13" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 14h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="light" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="14" height="14"><circle cx="8" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v1.6M8 13.4V15M1 8h1.6M13.4 8H15M3.05 3.05l1.13 1.13M11.82 11.82l1.13 1.13M3.05 12.95l1.13-1.13M11.82 4.18l1.13-1.13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+      <button type="button" data-theme-set="dark" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1Z" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <div class="eyebrow">Trust and verification</div>
+    <h1>Claim graphs</h1>
+    <p><code>DerivedResult</code> (<a href="/docs/guide/derivations/">derivation logs</a>) is a <strong>per-call</strong> object. A research
+loop that runs for days produces thousands of them and has nowhere to put them, so its
+output degrades into a transcript — and transcripts do not survive context compaction.</p>
+<p><code>alkahest.research</code> supplies the session-level artifact that is missing: a <strong>directed
+acyclic graph of claims</strong>, serialisable to disk, diffable, re-verifiable, and renderable
+into a document a human referee can read.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.research.session(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">title</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"Worked example"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">capture</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> s:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    integrand </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">/</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> (x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">+</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    definite </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.integrate(integrand, x, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    ak.simplify(pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> definite.value </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.log(pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)))</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">graph </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> s.graph</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">graph.save(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"claims.json"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(graph.to_markdown())</span></span></code></pre></div><h2 id="what-a-claim-carries"><a class="hanchor" href="#what-a-claim-carries" aria-hidden="true" tabindex="-1">#</a>What a claim carries</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody><tr>
+<td><code>id</code></td>
+<td>Content-addressed identifier, <code>clm_</code> + 16 hex chars</td>
+</tr>
+<tr>
+<td><code>statement</code> / <code>latex</code> / <code>kind</code></td>
+<td>Normalised statement; <code>&quot;expr&quot;</code>, <code>&quot;relation&quot;</code>, or <code>&quot;text&quot;</code></td>
+</tr>
+<tr>
+<td><code>hypotheses</code></td>
+<td>Predicates from the governing <code>Assumptions</code></td>
+</tr>
+<tr>
+<td><code>method</code></td>
+<td>Operation that produced it (<code>&quot;integrate&quot;</code>, <code>&quot;simplify&quot;</code>, <code>&quot;conjecture&quot;</code>, …)</td>
+</tr>
+<tr>
+<td><code>status</code> / <code>evidence</code> / <code>verification</code></td>
+<td>Copied <strong>verbatim</strong> from <code>DerivedResult.verification</code></td>
+</tr>
+<tr>
+<td><code>derivation</code></td>
+<td><code>DerivedResult.steps</code></td>
+</tr>
+<tr>
+<td><code>certificate</code> / <code>certificate_format</code></td>
+<td>Certificate source, when one was emitted</td>
+</tr>
+<tr>
+<td><code>depends_on</code></td>
+<td>IDs this claim was derived from</td>
+</tr>
+<tr>
+<td><code>check</code></td>
+<td>Machine-readable re-verification recipe</td>
+</tr>
+<tr>
+<td><code>provenance</code></td>
+<td>Operation, arguments, Alkahest version, build features</td>
+</tr>
+<tr>
+<td><code>recorded_at</code></td>
+<td>ISO-8601 UTC timestamp — <strong>volatile</strong>, excluded from the digest</td>
+</tr>
+<tr>
+<td><code>audit</code></td>
+<td>Re-verification outcomes appended by <code>graph.verify()</code></td>
+</tr>
+</tbody></table></div>
+<h3 id="stable-identity"><a class="hanchor" href="#stable-identity" aria-hidden="true" tabindex="-1">#</a>Stable identity</h3>
+<p>The ID is <code>sha256</code> over a canonical JSON encoding of the <strong>normalised statement</strong>, the
+<strong>sorted hypotheses</strong>, and the <strong>method</strong> — nothing else. It deliberately excludes
+timestamps, dependency edges, and the library version, so the same claim derived twice in
+different sessions receives the same ID and citing across runs is meaningful:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.research </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> claim_id</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">claim_id(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"(1/2 * log(2))"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, [</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"x > 0"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">], </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"integrate"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'clm_…', deterministic</span></span></code></pre></div><p>Expression statements are put into the kernel&#39;s normal form (via <code>simplify</code>) before
+hashing, so <code>1 + x**2</code> and <code>x**2 + 1</code> produce the same ID. Pass <code>normalize=False</code> to
+<code>session()</code> in very hot loops; IDs then depend on how the expression was built.</p>
+<p>Because IDs are content-addressed, re-deriving the same claim is not an error — the stored
+claim keeps its status and derivation and merely gains the new dependency edges.</p>
+<h3 id="hypotheses-travel-with-the-claim"><a class="hanchor" href="#hypotheses-travel-with-the-claim" aria-hidden="true" tabindex="-1">#</a>Hypotheses travel with the claim</h3>
+<p>This is the whole point of <code>Assumptions</code> being first-class. The predicates in the active
+assumption context — whether set by <code>session(assumptions=…)</code> or by an enclosing
+<code>alkahest.context(assumptions=…)</code> — are recorded on every claim and are part of its
+identity. A claim proved under <code>x &gt; 0</code> and the same claim proved unconditionally are
+different claims with different IDs.</p>
+<h2 id="recording"><a class="hanchor" href="#recording" aria-hidden="true" tabindex="-1">#</a>Recording</h2>
+<h3 id="automatic-capture"><a class="hanchor" href="#automatic-capture" aria-hidden="true" tabindex="-1">#</a>Automatic capture</h3>
+<p><code>session(capture=True)</code> wraps the <code>DerivedResult</code>-producing functions in the <code>alkahest</code>
+module namespace, so every result computed inside the block is recorded, and dependency
+edges are inferred by looking for previously-recorded values among the <em>subexpressions</em> of
+each call&#39;s arguments.</p>
+<p>Automatic capture has a boundary, and it is stated rather than hidden:</p>
+<ul>
+<li>it sees calls made <strong>through the module namespace</strong> — <code>alkahest.integrate(...)</code>;</li>
+<li>it does <strong>not</strong> see a name bound before the hooks were installed
+(<code>from alkahest import integrate</code>) or methods on objects (<code>Assumptions.simplify</code>).</li>
+</ul>
+<p><code>alkahest.research.captured_operations()</code> lists exactly what is hooked, and
+<code>session.capture_report()</code> reports the mode, the hooked operations, the claim count, and
+any error raised inside the hook. Hooks are installed once and never removed — removing
+them when one session exits would silently disable capture for a session still running on
+another thread.</p>
+<h3 id="explicit-recording"><a class="hanchor" href="#explicit-recording" aria-hidden="true" tabindex="-1">#</a>Explicit recording</h3>
+<p>For anything outside that boundary, <code>record()</code> is one line and always complete:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">with</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.research.session(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">pool</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> s:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    result </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.integrate(integrand, x)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    s.record(result, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">method</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"integrate"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">label</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"Antiderivative"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">sources</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">[integrand])</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">    # or, equivalently, letting the session make the call:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">    s.run(ak.integrate, integrand, x)</span></span></code></pre></div><h3 id="conjectures"><a class="hanchor" href="#conjectures" aria-hidden="true" tabindex="-1">#</a>Conjectures</h3>
+<p><code>conjecture()</code> records a claim that is <strong>not</strong> proved. Its status is hard-wired to
+<code>&quot;unverified&quot;</code>; there is deliberately no parameter to say otherwise.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">s.conjecture(</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">    "-2 * integral(x/(x^2+1), dx, 0, 1) + 1 * log(2) = 0"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">,</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">    evidence</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"integer relation found by guess_relation at 60 digits"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span></code></pre></div><h2 id="the-honesty-invariant"><a class="hanchor" href="#the-honesty-invariant" aria-hidden="true" tabindex="-1">#</a>The honesty invariant</h2>
+<p><strong>The recording layer never upgrades a claim&#39;s status.</strong></p>
+<ul>
+<li>A claim&#39;s status is whatever <code>DerivedResult.verification[&quot;status&quot;]</code> said.</li>
+<li><code>conjecture()</code> always produces <code>&quot;unverified&quot;</code>.</li>
+<li><code>verify()</code> may only <em>lower</em> confidence: a failed re-check sets <code>&quot;refuted&quot;</code>; a successful
+one appends an audit entry and promotes nothing.</li>
+<li><code>record(result, statement=...)</code> does not move a machine-checked status onto prose. The
+status describes <code>result</code>; <code>statement=</code> is free text, and nothing relates the two. So a
+re-worded claim is stored as <code>&quot;asserted&quot;</code> (<code>[ASSERTED, UNCHECKED]</code>, <code>machine_checked</code>
+false), with the result&#39;s own status kept under <code>verification[&quot;result_status&quot;]</code>.
+Record the result as itself, or supply the <code>check</code> recipe that re-establishes the link,
+to keep the machine-checked status.</li>
+</ul>
+<p>The renderers follow the same rule. An emitted-but-unchecked Lean certificate is marked
+<code>[CERT ONLY, UNCHECKED]</code>, never as a proof, and every document opens with the exact
+machine-checkable fraction:</p>
+<blockquote><p><strong>Machine-checkable subset: 1 of 4 claims (25%).</strong> Only claims marked <em>verified</em> were
+checked by a checker. Everything else is recorded evidence and must not be read as proved.</p>
+</blockquote>
+<p><code>Claim.machine_checked</code> is true only for <code>exactly_verified</code> and <code>lean_checked</code>.</p>
+<p>Re-recording a statement merges into the stored claim rather than replacing it: it keeps
+its original status and derivation and gains the new edges, tags and audit entries. It
+also <strong>adopts a <code>check</code> recipe</strong> when it had none, so recording a statement bare and then
+recording it again with its recipe attaches the recipe rather than dropping it. An
+existing recipe is never overwritten.</p>
+<h2 id="querying"><a class="hanchor" href="#querying" aria-hidden="true" tabindex="-1">#</a>Querying</h2>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">graph.by_status(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"unverified"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">graph.machine_checkable()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">graph.dependencies(cid)     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># direct</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">graph.ancestors(cid)        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># transitive, what it rests on</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">graph.dependents(cid)       </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># direct</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">graph.impact(cid)           </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># transitive — "what dies if this claim is false?"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">graph.roots(), graph.leaves(), graph.summary(), graph.topological_order()</span></span></code></pre></div><p><code>impact()</code> is the query a loop needs when a lemma turns out to be wrong: it returns every
+claim that transitively cited it.</p>
+<p>Edges always point at claims already in the graph, so cycles are impossible by
+construction; graphs loaded from JSON are topologically checked and raise <code>CycleError</code>.</p>
+<h2 id="serialisation"><a class="hanchor" href="#serialisation" aria-hidden="true" tabindex="-1">#</a>Serialisation</h2>
+<p><code>to_json()</code> / <code>from_json()</code> round-trip losslessly, with an explicit <code>schema_version</code>.
+Output uses sorted keys, so a byte diff is a content diff. Reading a document whose
+<code>schema_version</code> is newer than this build raises <code>ClaimGraphError</code> rather than guessing.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">graph.save(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"claims.json"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">same </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.research.ClaimGraph.load(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"claims.json"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">graph.to_json(</span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">stable</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># drops timestamps: byte-identical across runs</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">graph.digest()               </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># sha256 of the stable form</span></span></code></pre></div><p>Volatile data (<code>recorded_at</code>, <code>started_at</code>, <code>finished_at</code>, audit timestamps) is confined to
+explicitly-marked fields and never contributes to identity or to the digest, so two runs of
+the same computation produce identical <code>stable=True</code> documents and identical digests.</p>
+<h2 id="rendering"><a class="hanchor" href="#rendering" aria-hidden="true" tabindex="-1">#</a>Rendering</h2>
+<p><code>to_markdown()</code> emits a document with a verification summary table, then one section per
+claim carrying its statement (LaTeX where available), hypotheses, method, dependency
+links, derivation table, certificate status, and last re-check.</p>
+<p><code>to_latex()</code> emits an <code>article</code> (or just the body, with <code>standalone=False</code>) in which every
+claim carries <code>\label{clm:&lt;id&gt;}</code> and dependencies are <code>\hyperref</code> links — so a loop that
+ran for a week emits a writeup with every claim linked to its derivation and its
+certificate status. Both build on <code>latex()</code> and the <code>DerivedResult</code> machinery rather than
+reimplementing them.</p>
+<h2 id="re-verification"><a class="hanchor" href="#re-verification" aria-hidden="true" tabindex="-1">#</a>Re-verification</h2>
+<p><code>graph.verify()</code> walks the graph and re-checks whatever carries a recipe, re-parsing each
+claim&#39;s recorded text into a <strong>fresh pool</strong> — so a graph loaded from disk can be
+revalidated against a newer library build rather than trusted blindly.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Recipe <code>kind</code></th>
+<th>What is re-checked</th>
+</tr>
+</thead><tbody><tr>
+<td><code>antiderivative</code></td>
+<td><code>simplify(diff(F, x) - f) == 0</code></td>
+</tr>
+<tr>
+<td><code>definite_integral</code></td>
+<td><code>simplify(F(b) - F(a) - value) == 0</code></td>
+</tr>
+<tr>
+<td><code>derivative</code></td>
+<td><code>simplify(diff(e, x) - value) == 0</code></td>
+</tr>
+<tr>
+<td><code>identity</code></td>
+<td><code>simplify(lhs - rhs) == 0</code></td>
+</tr>
+<tr>
+<td><code>zero</code></td>
+<td><code>simplify(e) == 0</code></td>
+</tr>
+<tr>
+<td><code>numeric_relation</code></td>
+<td><code>abs(sum a_i c_i) &lt;= tolerance</code> — evidence only</td>
+</tr>
+</tbody></table></div>
+<p>Outcomes are <code>ok</code> (exact), <code>numeric_ok</code> (the exact check was inconclusive but a numeric
+residual passed — evidence, not a proof), <code>failed</code>, <code>inconclusive</code>, or <code>skipped</code>.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">report </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> graph.verify()</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">report.ok            </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># False if anything was refuted</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">report.summary()     </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># {'ok': 2, 'numeric_ok': 1, 'skipped': 1}</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(report.to_markdown())</span></span></code></pre></div><p><code>verify()</code> can only ever <strong>lower</strong> confidence: a <code>failed</code> re-check sets the claim
+<code>&quot;refuted&quot;</code> (unless <code>mark_refuted=False</code>), and no outcome ever raises a status.</p>
+<h3 id="what-numeric_ok-does-and-does-not-mean"><a class="hanchor" href="#what-numeric_ok-does-and-does-not-mean" aria-hidden="true" tabindex="-1">#</a>What <code>numeric_ok</code> does and does not mean</h3>
+<p>The numeric fallback evaluates the residual at the points in <code>samples</code> (default
+<code>(0.37, 1.23, 2.71)</code>). Each sample gives a <strong>point</strong>, not one value shared by every
+symbol: a free symbol is bound to the sample offset by its rank in sorted name order, so
+<code>x</code>, <code>y</code>, <code>z</code> take <code>0.37</code>, <code>0.48</code>, <code>0.59</code> and the evaluation is off the diagonal
+<code>x = y = z</code>. That is deliberate — on the diagonal, <code>sin(x)cos(y) = sin(y)cos(x)</code> and
+<code>x + y = 2x</code> are both true, so a symmetry error between two variables, the commonest bug
+class this fallback exists to catch, would come back <code>numeric_ok</code>.</p>
+<p>Two consequences worth knowing:</p>
+<ul>
+<li>Finitely many points is still evidence, not a proof. <code>numeric_ok</code> means &quot;did not
+contradict at the points sampled&quot;, which is why it never upgrades a status.</li>
+<li>An offset can push a sample out of an operation&#39;s domain. That point is skipped; the
+detail string reports how many of the samples actually evaluated, and a recipe where
+none of them do comes back <code>inconclusive</code> rather than <code>numeric_ok</code>.</li>
+</ul>
+<p>Pass your own <code>samples=</code> to move the points, and <code>tolerance=</code> to set the cutoff.</p>
+<h3 id="precision-and-numeric_relation"><a class="hanchor" href="#precision-and-numeric_relation" aria-hidden="true" tabindex="-1">#</a>Precision, and <code>numeric_relation</code></h3>
+<p><code>numeric_relation</code> does <strong>not</strong> narrow its inputs to <code>float</code>. Constants are the output of
+a high-precision search — <code>guess_relation</code>&#39;s docstring tells you to hand it 50 or more
+digits — and a <code>float</code> holds about 16, so casting them would fabricate a residual out of
+rounding. With coefficients around <code>5e9</code>, a <em>true</em> relation given at 60 digits picks up a
+<code>9.5e-7</code> double-rounding residual, eight orders of magnitude past the default <code>1e-8</code>
+tolerance, and <code>mark_refuted=True</code> is the default: the pass documented as one that can
+only lower confidence would destroy a true claim.</p>
+<p>So the residual is computed exactly, in <code>fractions.Fraction</code>, from the numerals as
+written, and each input contributes the precision its own notation implies: <code>&quot;1&quot;</code> is the
+exact integer, <code>&quot;1.15572734962273134279&quot;</code> is known to half a unit in its last decimal
+place, a <code>float</code> to half its own ulp. The true residual therefore lies in a band
+<code>|R| ± U</code>, and the outcome follows from where that band sits:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Band vs. <code>tolerance</code></th>
+<th>Outcome</th>
+</tr>
+</thead><tbody><tr>
+<td>entirely inside</td>
+<td><code>numeric_ok</code></td>
+</tr>
+<tr>
+<td>entirely outside</td>
+<td><code>failed</code></td>
+</tr>
+<tr>
+<td>straddles it</td>
+<td><code>inconclusive</code> — &quot;you did not give me the digits to decide this&quot;</td>
+</tr>
+</tbody></table></div>
+<p>The escape hatch is the recipe&#39;s own <code>&quot;tolerance&quot;</code> key, which overrides the <code>tolerance=</code>
+argument for that claim:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">check </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> {</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">    "kind"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"numeric_relation"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">,</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">    # Strings, not floats: the digits past the 17th are the evidence.</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">    "constants"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"1.33571181795176524..."</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"1.15572734962273134..."</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"1"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">],</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">    "coefficients"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: [</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5144503108</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5945642943</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">],</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">    "tolerance"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1e-40</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">}</span></span></code></pre></div><p>Supply the constants as strings (or <code>Decimal</code>, or <code>Fraction</code>). A <code>float</code> in that list has
+already lost the digits before <code>verify()</code> ever sees it, and the reported uncertainty will
+say so.</p>
+<h2 id="a-long-session-accumulates-by-design"><a class="hanchor" href="#a-long-session-accumulates-by-design" aria-hidden="true" tabindex="-1">#</a>A long session accumulates, by design</h2>
+<p>Two things grow monotonically for as long as a session is open, and neither is a leak —
+both are the feature working.</p>
+<ul>
+<li><strong>The claim graph</strong> holds one claim per captured operation, plus one string per capture
+failure. That is the point of a provenance record, but it means <code>capture=True</code> around a
+million-call sweep builds a million-entry graph in memory. Snapshot with <code>to_dict()</code> /
+<code>to_markdown()</code> and start a new session periodically rather than running one session for
+the life of the process.</li>
+<li><strong>The pool</strong> never reclaims, and a session pins one for its whole lifetime. See
+<a href="/docs/guide/budgets/#exprpool-never-reclaims"><code>ExprPool</code> never reclaims</a> — a session scoped to
+one problem, with its own pool, is the pattern that survives a multi-day run.</li>
+</ul>
+<h2 id="a-complete-loop"><a class="hanchor" href="#a-complete-loop" aria-hidden="true" tabindex="-1">#</a>A complete loop</h2>
+<p><a href="https://github.com/alkahest-cas/alkahest/blob/main/examples/pslq_research_loop.py" rel="noopener"><code>examples/pslq_research_loop.py</code></a>
+runs the full experimental-mathematics loop — high-precision quadrature, <code>guess_relation</code>
+for the integer relation, a recorded conjecture, symbolic proof, Lean certificate, JSON
+round trip, and re-verification — and prints the rendered document.</p>
+<h2 id="see-also"><a class="hanchor" href="#see-also" aria-hidden="true" tabindex="-1">#</a>See also</h2>
+<ul>
+<li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a> — how claim graphs fit next to
+budgets, batch APIs, and compact result envelopes</li>
+<li><a href="/docs/guide/budgets/">Budgets</a> — bound one candidate so a hard instance cannot stall the session</li>
+<li><a href="/docs/guide/batch/">Batch</a> — fan out many <code>DerivedResult</code> producers without aborting on one failure</li>
+<li><a href="/docs/guide/derivations/#machine-parseable-output-to_dict--to_json">Derivation logs</a> —
+<code>to_dict(mode=&quot;compact&quot;)</code> for token-efficient claim payloads</li>
+</ul>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/derivations/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Derivation logs</span></a><a class="pager-next" href="/docs/guide/lean-certs/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Lean certificates</span></a></nav>
+  <footer class="doc-foot">
+    <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/claim-graphs.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <span class="foot-meta">Alkahest 3.12.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#what-a-claim-carries">What a claim carries</a></li><li class="d3"><a href="#stable-identity">Stable identity</a></li><li class="d3"><a href="#hypotheses-travel-with-the-claim">Hypotheses travel with the claim</a></li><li class="d2"><a href="#recording">Recording</a></li><li class="d3"><a href="#automatic-capture">Automatic capture</a></li><li class="d3"><a href="#explicit-recording">Explicit recording</a></li><li class="d3"><a href="#conjectures">Conjectures</a></li><li class="d2"><a href="#the-honesty-invariant">The honesty invariant</a></li><li class="d2"><a href="#querying">Querying</a></li><li class="d2"><a href="#serialisation">Serialisation</a></li><li class="d2"><a href="#rendering">Rendering</a></li><li class="d2"><a href="#re-verification">Re-verification</a></li><li class="d3"><a href="#what-numeric_ok-does-and-does-not-mean">What numeric_ok does and does not mean</a></li><li class="d3"><a href="#precision-and-numeric_relation">Precision, and numeric_relation</a></li><li class="d2"><a href="#a-long-session-accumulates-by-design">A long session accumulates, by design</a></li><li class="d2"><a href="#a-complete-loop">A complete loop</a></li><li class="d2"><a href="#see-also">See also</a></li></ul>
+    <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/claim-graphs.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
+    <a class="toc-top" href="#top">Back to top</a>
+  </div>
+</aside>
+</div>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>
