@@ -70,7 +70,7 @@ Gröbner bases.</p>
 <h2 id="solve"><a class="hanchor" href="#solve" aria-hidden="true" tabindex="-1">#</a>solve</h2>
 <p><code>solve</code> finds the solutions of a system of polynomial equations in a list of variables. It uses the <code>groebner</code> Cargo feature, which is <strong>included in all PyPI wheels</strong> (default feature since 2.3.1) and in all source builds.</p>
 <div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
-<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool, Domain, solve, solve_side_conditions, nsolve</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool, Domain, solve, solve_proof_status, solve_side_conditions, nsolve</span></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> sqrt, exp, sin, cos, tan</span></span>
 <span class="line"></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool()</span></span>
@@ -410,11 +410,49 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">GroebnerBasis.compute_raw([p])</span></span></code></pre></div><p>A <code>GbPoly</code> stores exponent vectors, not names, so converting one back needs the variable list its slots refer to. Every basis Alkahest hands out carries that list — including the ones from <code>solve</code> (solve variables followed by the free parameters), <code>triangularize</code> and <code>rosenfeld_groebner</code> — so <code>to_expr()</code> normally takes no arguments. Naming too few variables raises <code>ValueError</code> rather than quietly misreading the exponent slots.</p>
 <h3 id="monomial-orders"><a class="hanchor" href="#monomial-orders" aria-hidden="true" tabindex="-1">#</a>Monomial orders</h3>
 <p>Supported orders: <code>Lex</code> (lexicographic), <code>GrLex</code> (graded lexicographic), <code>GRevLex</code> (graded reverse lexicographic). <code>GRevLex</code> is generally fastest for basis computation; <code>Lex</code> is required for elimination.</p>
-<h3 id="algorithm"><a class="hanchor" href="#algorithm" aria-hidden="true" tabindex="-1">#</a>Algorithm</h3>
-<p><code>GroebnerBasis.compute</code> runs sequential Buchberger over ℚ, with pair-pruning criteria and a final interreduction. A <code>Lex</code> basis of a zero-dimensional ideal is computed as a <code>GRevLex</code> basis first and converted with FGLM; <code>GroebnerBasis.compute_f5</code> is the signature-based alternative. The <code>parallel</code> feature does <strong>not</strong> parallelise Gröbner computation — it affects the sharded <code>ExprPool</code> and the <code>*_par</code> entry points (<code>simplify_par</code>, <code>numpy_eval_par</code>).</p>
+<h3 id="engines"><a class="hanchor" href="#engines" aria-hidden="true" tabindex="-1">#</a>Engines</h3>
+<p><code>GroebnerBasis.compute</code> picks the engine by order; every engine returns the same reduced (monic, interreduced) basis, which is unique.</p>
+<ul>
+<li><strong><code>&quot;grevlex&quot;</code> — multimodular.</strong> The basis is computed modulo random word-size primes (below 2³¹) by a matrix F4 (all critical pairs of minimal sugar degree at once, symbolic preprocessing, row reduction of a sparse matrix in machine words), the images are combined by Chinese remaindering and lifted by rational reconstruction, and a lift is accepted only after one more prime agrees with it <strong>and</strong> it passes verification over ℚ: every input reduces to zero and every critical pair surviving the Gebauer–Möller criteria reduces to zero, i.e. the result is a Gröbner basis of an ideal containing the input. For homogeneous input that proves it is <em>the</em> basis; for inhomogeneous input it does not, and <a href="#how-sure-is-this-answer"><code>proof_status</code></a> says so. A prime whose image has a different shape (an unlucky prime) is outvoted. If the path is not conclusive, Buchberger over ℚ is the fallback. A single generator, a constant among the generators, or a system of degree at most one goes straight to Buchberger, which is just as fast there and is a proof.</li>
+<li><strong><code>&quot;lex&quot;</code></strong> — for a zero-dimensional ideal, the grevlex basis above is converted by <strong>FGLM</strong>, itself run modulo primes, lifted, and then verified exactly: each lifted polynomial is shown to lie in the ideal of the grevlex basis through exact normal forms, and its staircase has exactly as many monomials as that ideal&#39;s quotient has dimensions, so the lex basis is as sure as the grevlex basis it came from. Positive-dimensional ideals use Buchberger over ℚ directly.</li>
+<li><strong><code>&quot;grlex&quot;</code></strong> — Buchberger over ℚ (sugar selection, Gebauer–Möller criteria, fraction-free reduction).</li>
+<li><strong><code>GroebnerBasis.compute_f5</code></strong> — a signature-based algorithm of the F5 family (incremental, position-over-term signatures, syzygy and rewrite criteria) in exact rational arithmetic. Under <code>&quot;lex&quot;</code> it goes through grevlex and FGLM like <code>compute</code>.</li>
+</ul>
+<p>With the <code>parallel</code> feature (in the default wheels) the multimodular engines compute several primes at once and spread the verification over the cores. Set <code>RAYON_NUM_THREADS=1</code> for a single-threaded run; an active <code>Budget</code> is honoured on every worker.</p>
+<h3 id="how-sure-is-this-answer"><a class="hanchor" href="#how-sure-is-this-answer" aria-hidden="true" tabindex="-1">#</a>How sure is this answer?</h3>
+<p><code>GroebnerBasis.proof_status</code> is <code>&quot;proved&quot;</code> or <code>&quot;probabilistic&quot;</code>, set from the path the computation actually took.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">gb </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> GroebnerBasis.compute([x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">y], [x, y], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">order</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"grevlex"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># homogeneous</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">gb.proof_status                                  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'proved'</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">gb </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> GroebnerBasis.compute([x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">y </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)], [x, y], </span><span style="--shiki-light:#E36209;--shiki-dark:#F69D50">order</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"grevlex"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">gb.proof_status                                  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'probabilistic'</span></span></code></pre></div><div class="table-wrap"><table><thead><tr>
+<th><code>proof_status</code></th>
+<th>when</th>
+<th>what it means</th>
+</tr>
+</thead><tbody><tr>
+<td><code>&quot;proved&quot;</code></td>
+<td>Buchberger (<code>&quot;grlex&quot;</code>, positive-dimensional <code>&quot;lex&quot;</code>, any fallback), <code>compute_f5</code>, the multimodular engine on homogeneous input, and the basis <code>{1}</code> once its separate proof succeeds</td>
+<td>The generators are the reduced Gröbner basis of exactly the input ideal <em>I</em>.</td>
+</tr>
+<tr>
+<td><code>&quot;probabilistic&quot;</code></td>
+<td>The multimodular engine on inhomogeneous input, and a <code>&quot;lex&quot;</code> basis converted from it by FGLM</td>
+<td>Proved over ℚ: the generators <em>B</em> are a reduced Gröbner basis and <em>I</em> ⊆ ⟨<em>B</em>⟩. Not proved: ⟨<em>B</em>⟩ ⊆ <em>I</em>.</td>
+</tr>
+</tbody></table></div>
+<p><strong>The failure model.</strong> Since <em>I</em> ⊆ ⟨<em>B</em>⟩, equal leading terms would give equal ideals, so a wrong answer needs a majority of the primes used, at least two and each drawn independently from the roughly 5·10⁷ primes in [2³⁰, 2³¹), to give leading terms that <em>I</em> does not have. Such primes divide a fixed non-zero integer that depends only on the input, so if <em>k</em> primes in that range are unlucky for your input, the chance is of order (<em>k</em> / 5·10⁷)². The primes are drawn after the input is fixed, so no input can arrange it in advance, though enormous coefficients do raise <em>k</em>.</p>
+<p><strong>What a probabilistic basis still proves.</strong> <code>gb.contains(p) == False</code> is a proof that <em>p</em> is not in <em>I</em>. <code>gb.contains(p) == True</code> is only as sure as the basis. Every zero of <em>B</em> is a zero of <em>I</em>, but <em>I</em> could have more.</p>
+<p><strong><code>solve</code>.</strong> A returned tuple has been substituted back into your equations whichever status applies, so it is a solution. The status is about whether the list is complete:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">sols </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> solve([x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">-</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y], [x, y])</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">solve_proof_status()                             </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'probabilistic'</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">solve([x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), x</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> y</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)], [x, y])  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># []</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">solve_proof_status()                             </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'proved'</span></span></code></pre></div><p>An empty answer from an inconsistent system is proved. <code>{1}</code> passes the verification over ℚ without testing anything, so it gets its own proof: the system is homogenised with a new variable and run through the same engine, where homogeneous input is proved, and <code>1</code> is in the ideal exactly when the result contains a pure power of that variable. On cyclic-5 and 6 and katsura-5 to 7 plus a generic quadric this took 0.02 s to 2.4 s, where Buchberger over ℚ took over 180 s. If that run is inconclusive, <code>solve</code> falls back to Buchberger, and an active <code>Budget</code> can stop it with <code>BudgetExceededError</code>. <code>GroebnerBasis.compute(..., order=&quot;grevlex&quot;)</code> does not fall back: it reports <code>&quot;probabilistic&quot;</code> for <code>{1}</code> in that rare case.</p>
+<p><strong>Needing a proof.</strong> <code>compute_f5</code> and <code>order=&quot;grlex&quot;</code> are proved, at their cost. From Rust, <code>GroebnerBasis::compute_exact</code> runs Buchberger under any order. Primary decomposition, <code>triangularize</code> and <code>rosenfeld_groebner</code> compute their bases exactly and are not affected by any of this.</p>
 <h3 id="gpu-accelerated-macaulay-matrix-groebner-cuda--rust-only-not-wired-into-the-solver"><a class="hanchor" href="#gpu-accelerated-macaulay-matrix-groebner-cuda--rust-only-not-wired-into-the-solver" aria-hidden="true" tabindex="-1">#</a>GPU-accelerated Macaulay matrix (groebner-cuda) — Rust only, not wired into the solver</h3>
 <p><code>--features &quot;groebner-cuda&quot;</code> compiles a CUDA kernel for the mod-p row reduction of the Macaulay matrix, with multi-prime CRT lifts reconstructing rational coefficients, and falls back to pure-Rust row reduction when no CUDA device is present.</p>
-<p><strong>It does not accelerate anything on this page.</strong> <code>GroebnerBasis.compute</code>, <code>solve</code> and <code>triangularize</code> run Buchberger on the CPU regardless; the GPU routine is reachable only as the Rust function <code>alkahest_cas::poly::groebner::compute_groebner_basis_gpu</code>, and production dispatch deliberately does not prefer it until the <a href="https://github.com/alkahest-cas/alkahest/blob/main/docs/symbolic-gpu-benchmarks.md" rel="noopener">benchmark harness</a> says it wins. There is correspondingly <strong>no <code>capabilities()[&quot;features&quot;][&quot;groebner_cuda&quot;]</code> bit</strong> — it used to exist and report that the kernel had been compiled in, which no Python observation could confirm or refute, so 3.8 removed it. See <a href="/docs/guide/gpu/#groebner-cuda-is-not-reachable-from-python">GPU support</a>.</p>
+<p><strong>It does not accelerate anything on this page.</strong> <code>GroebnerBasis.compute</code>, <code>solve</code> and <code>triangularize</code> run on the CPU engines above regardless; the GPU routine is reachable only as the Rust function <code>alkahest_cas::poly::groebner::compute_groebner_basis_gpu</code>, and production dispatch deliberately does not prefer it until the <a href="https://github.com/alkahest-cas/alkahest/blob/main/docs/symbolic-gpu-benchmarks.md" rel="noopener">benchmark harness</a> says it wins. There is correspondingly <strong>no <code>capabilities()[&quot;features&quot;][&quot;groebner_cuda&quot;]</code> bit</strong> — it used to exist and report that the kernel had been compiled in, which no Python observation could confirm or refute, so 3.8 removed it. See <a href="/docs/guide/gpu/#groebner-cuda-is-not-reachable-from-python">GPU support</a>.</p>
 <p>Because the Rust entry point falls back to CPU row reduction when no device is present, it returns a <code>GpuBackendReport</code> alongside the basis: <code>let (basis, backend) = compute_groebner_basis_gpu(gens, order, Some(0))?;</code> and <code>backend.ran_on_gpu()</code> is the only way to tell a real GPU run from a fallback, since the basis is identical either way.</p>
 <h2 id="elimination-ideals"><a class="hanchor" href="#elimination-ideals" aria-hidden="true" tabindex="-1">#</a>Elimination ideals</h2>
 <p><code>GroebnerBasis.eliminate</code> computes the elimination ideal <code>I ∩ k[remaining vars]</code> by dropping every generator whose support mentions one of the given variables. Under a <code>lex</code> basis with the eliminated variables ordered <strong>first</strong>, what is left is a Gröbner basis for that ideal:</p>
@@ -495,7 +533,126 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <p><strong>Hypothesis, not a guarantee.</strong> Theorem 19 requires the input–output equations to be the <em>characteristic presentation</em> of <code>I_Σ ∩ C(θ){y,u}</code>. An algebraic lex elimination at a hand-picked finite jet order — what the surface above does — is not guaranteed to produce one. So &quot;this is a multi-experiment tool&quot; holds under that standard; where it fails, the computed field can be a proper subfield of the identifiable one.</p>
 <p>This surface is experimental (<code>alkahest.experimental.ParametricGroebnerBasis</code> / <code>ParametricGbPoly</code> / <code>ParametricRosenfeldGroebnerResult</code>) and requires <code>--features groebner</code>.</p>
 <h2 id="performance"><a class="hanchor" href="#performance" aria-hidden="true" tabindex="-1">#</a>Performance</h2>
-<p><code>solve_circle_line</code> (a 2-variable quadratic system) is one of the solver tasks in the SymPy head-to-head suite (<code>benchmarks/</code>, see <code>BENCHMARKS.md</code>). Where Alkahest is faster there, the speed comes from compiled Rust and exact GMP/FLINT-backed arithmetic around a sequential Buchberger core over ℚ, not from a parallel or F4-style reduction.</p>
+<p>Wall time in seconds for the standard Gröbner benchmarks, one process per run, on an AMD Ryzen Threadripper PRO 3955WX (shared machine, 8-core CPU quota). &quot;default&quot; is <code>GroebnerBasis.compute</code> with the <code>parallel</code> feature; &quot;1 thread&quot; is the same with <code>RAYON_NUM_THREADS=1</code>; both measured 2026-11-04 with a 120 s cap, as is <code>compute_f5</code>. SymPy is 1.14 <code>groebner(..., method=&quot;buchberger&quot;)</code> / <code>method=&quot;f5b&quot;</code> with its cache cleared before each run, measured 2026-10-25 on the same machine. Basis sizes agree with SymPy&#39;s wherever SymPy finishes.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>system</th>
+<th>order</th>
+<th>default</th>
+<th>1 thread</th>
+<th><code>compute_f5</code></th>
+<th>SymPy buchberger</th>
+<th>SymPy f5b</th>
+</tr>
+</thead><tbody><tr>
+<td>cyclic-5</td>
+<td>grevlex</td>
+<td>0.009</td>
+<td>0.003</td>
+<td>0.003</td>
+<td>0.42</td>
+<td>1.77</td>
+</tr>
+<tr>
+<td>cyclic-5</td>
+<td>lex</td>
+<td>0.016</td>
+<td>0.009</td>
+<td>0.013</td>
+<td>15.4</td>
+<td>2.53</td>
+</tr>
+<tr>
+<td>cyclic-6</td>
+<td>grevlex</td>
+<td>0.046</td>
+<td>0.067</td>
+<td>0.071</td>
+<td>47.9</td>
+<td>&gt; 120</td>
+</tr>
+<tr>
+<td>cyclic-6</td>
+<td>lex</td>
+<td>0.115</td>
+<td>0.133</td>
+<td>0.137</td>
+<td>&gt; 120</td>
+<td>&gt; 120</td>
+</tr>
+<tr>
+<td>cyclic-7</td>
+<td>grevlex</td>
+<td>3.4</td>
+<td>26.4</td>
+<td>51.9</td>
+<td>&gt; 120</td>
+<td>&gt; 120</td>
+</tr>
+<tr>
+<td>katsura-5</td>
+<td>grevlex</td>
+<td>0.010</td>
+<td>0.016</td>
+<td>0.012</td>
+<td>0.96</td>
+<td>1.19</td>
+</tr>
+<tr>
+<td>katsura-5</td>
+<td>lex</td>
+<td>0.049</td>
+<td>0.089</td>
+<td>0.058</td>
+<td>&gt; 120</td>
+<td>&gt; 120</td>
+</tr>
+<tr>
+<td>katsura-6</td>
+<td>grevlex</td>
+<td>0.046</td>
+<td>0.130</td>
+<td>0.087</td>
+<td>14.2</td>
+<td>41.0</td>
+</tr>
+<tr>
+<td>katsura-6</td>
+<td>lex</td>
+<td>0.48</td>
+<td>1.32</td>
+<td>0.49</td>
+<td>&gt; 120</td>
+<td>&gt; 120</td>
+</tr>
+<tr>
+<td>katsura-7</td>
+<td>grevlex</td>
+<td>0.21</td>
+<td>1.24</td>
+<td>0.79</td>
+<td>&gt; 120</td>
+<td>&gt; 120</td>
+</tr>
+<tr>
+<td>katsura-7</td>
+<td>lex</td>
+<td>14.4</td>
+<td>48.5</td>
+<td>14.3</td>
+<td>&gt; 120</td>
+<td>&gt; 120</td>
+</tr>
+<tr>
+<td>katsura-8</td>
+<td>grevlex</td>
+<td>1.7</td>
+<td>13.9</td>
+<td>8.0</td>
+<td>&gt; 120</td>
+<td>&gt; 120</td>
+</tr>
+</tbody></table></div>
+<p>The &quot;default&quot; and &quot;1 thread&quot; columns on these systems are <code>&quot;probabilistic&quot;</code> and <code>compute_f5</code> is <code>&quot;proved&quot;</code>; see <a href="#how-sure-is-this-answer">How sure is this answer?</a>. Lex bases of these systems are large: the katsura-6 lex basis has coefficients of about 6 500 bits over 6 500-bit denominators, so lifting it takes several hundred primes, and that, not the modular arithmetic, is what the lex rows measure.</p>
 <h2 id="generalized-pell-equations-every-solution-class"><a class="hanchor" href="#generalized-pell-equations-every-solution-class" aria-hidden="true" tabindex="-1">#</a>Generalized Pell equations: every solution class</h2>
 <p><code>diophantine(x**2 - D*y**2 - N, [x, y])</code> returns one particular solution of
 <code>x² − D·y² = N</code> plus the unit. But <code>N</code> can have several inequivalent fundamental
@@ -524,7 +681,7 @@ honoured. <code>D</code> must be a positive non-square and <code>N ≠ 0</code>.
 </main>
 <aside class="toc" aria-label="On this page">
   <div class="toc-inner">
-    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#solve">solve</a></li><li class="d3"><a href="#solution-types">Solution types</a></li><li class="d3"><a href="#symbolic-parameters-generic-solutions-checked">Symbolic parameters: generic solutions, checked</a></li><li class="d3"><a href="#the-unknowns-declared-domain">The unknown's declared domain</a></li><li class="d3"><a href="#degree-three-and-above-factor-then-rootof">Degree three and above: factor, then RootOf</a></li><li class="d2"><a href="#rational-equations">Rational equations</a></li><li class="d3"><a href="#spurious-roots">Spurious roots</a></li><li class="d3"><a href="#when-the-exclusion-is-undecidable">When the exclusion is undecidable</a></li><li class="d2"><a href="#beyond-polynomials">Beyond polynomials</a></li><li class="d3"><a href="#non-polynomial-coefficients">Non-polynomial coefficients</a></li><li class="d3"><a href="#transcendental-equations-in-one-unknown">Transcendental equations in one unknown</a></li><li class="d3"><a href="#numeric-roots-with-no-closed-form-nsolve-and-interval">Numeric roots with no closed form: nsolve and interval=</a></li><li class="d2"><a href="#groebnerbasis">GroebnerBasis</a></li><li class="d3"><a href="#reading-a-basis">Reading a basis</a></li><li class="d3"><a href="#monomial-orders">Monomial orders</a></li><li class="d3"><a href="#algorithm">Algorithm</a></li><li class="d3"><a href="#gpu-accelerated-macaulay-matrix-groebner-cuda--rust-only-not-wired-into-the-solver">GPU-accelerated Macaulay matrix (groebner-cuda) — Rust only, not wired into the solver</a></li><li class="d2"><a href="#elimination-ideals">Elimination ideals</a></li><li class="d2"><a href="#coefficient-fields-qparams-instead-of-qvars-params">Coefficient fields: Q(params) instead of Q[vars, params]</a></li><li class="d3"><a href="#specializevalues-verifytrue">specialize(values, verify=True)</a></li><li class="d3"><a href="#feeding-a-parametric-basis-back-in">Feeding a parametric basis back in</a></li><li class="d3"><a href="#differential-elimination-with-the-parameters-in-qparams">Differential elimination with the parameters in Q(params)</a></li><li class="d3"><a href="#which-structural-identifiability-this-decides">Which structural identifiability this decides</a></li><li class="d2"><a href="#performance">Performance</a></li><li class="d2"><a href="#generalized-pell-equations-every-solution-class">Generalized Pell equations: every solution class</a></li></ul>
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#solve">solve</a></li><li class="d3"><a href="#solution-types">Solution types</a></li><li class="d3"><a href="#symbolic-parameters-generic-solutions-checked">Symbolic parameters: generic solutions, checked</a></li><li class="d3"><a href="#the-unknowns-declared-domain">The unknown's declared domain</a></li><li class="d3"><a href="#degree-three-and-above-factor-then-rootof">Degree three and above: factor, then RootOf</a></li><li class="d2"><a href="#rational-equations">Rational equations</a></li><li class="d3"><a href="#spurious-roots">Spurious roots</a></li><li class="d3"><a href="#when-the-exclusion-is-undecidable">When the exclusion is undecidable</a></li><li class="d2"><a href="#beyond-polynomials">Beyond polynomials</a></li><li class="d3"><a href="#non-polynomial-coefficients">Non-polynomial coefficients</a></li><li class="d3"><a href="#transcendental-equations-in-one-unknown">Transcendental equations in one unknown</a></li><li class="d3"><a href="#numeric-roots-with-no-closed-form-nsolve-and-interval">Numeric roots with no closed form: nsolve and interval=</a></li><li class="d2"><a href="#groebnerbasis">GroebnerBasis</a></li><li class="d3"><a href="#reading-a-basis">Reading a basis</a></li><li class="d3"><a href="#monomial-orders">Monomial orders</a></li><li class="d3"><a href="#engines">Engines</a></li><li class="d3"><a href="#how-sure-is-this-answer">How sure is this answer?</a></li><li class="d3"><a href="#gpu-accelerated-macaulay-matrix-groebner-cuda--rust-only-not-wired-into-the-solver">GPU-accelerated Macaulay matrix (groebner-cuda) — Rust only, not wired into the solver</a></li><li class="d2"><a href="#elimination-ideals">Elimination ideals</a></li><li class="d2"><a href="#coefficient-fields-qparams-instead-of-qvars-params">Coefficient fields: Q(params) instead of Q[vars, params]</a></li><li class="d3"><a href="#specializevalues-verifytrue">specialize(values, verify=True)</a></li><li class="d3"><a href="#feeding-a-parametric-basis-back-in">Feeding a parametric basis back in</a></li><li class="d3"><a href="#differential-elimination-with-the-parameters-in-qparams">Differential elimination with the parameters in Q(params)</a></li><li class="d3"><a href="#which-structural-identifiability-this-decides">Which structural identifiability this decides</a></li><li class="d2"><a href="#performance">Performance</a></li><li class="d2"><a href="#generalized-pell-equations-every-solution-class">Generalized Pell equations: every solution class</a></li></ul>
     <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/solving.md" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
     <a class="toc-top" href="#top">Back to top</a>
   </div>

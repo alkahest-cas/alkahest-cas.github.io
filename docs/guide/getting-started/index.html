@@ -81,8 +81,8 @@ Diophantine and homotopy work out of the box), the pure-Rust <strong>Cranelift J
 <p><code>capabilities()[&quot;features&quot;][&quot;parallel&quot;]</code> is <code>True</code> on every wheel published to PyPI, on
 Linux, macOS and Windows alike. The <code>parallel</code> Cargo feature is what powers the sharded
 <code>ExprPool</code> and every <code>*_par</code> entry point (<code>numpy_eval_par</code>, <code>simplify_par</code>), so those are
-genuinely multi-core out of the box. (It does not parallelise Gröbner bases: those are
-computed by sequential Buchberger over ℚ in every build.)</p>
+genuinely multi-core out of the box. It also runs the primes and the verification of the
+multimodular Gröbner engine in parallel.</p>
 <p>It is still the one feature worth probing rather than assuming, because its absence is
 <strong>silent</strong>. <code>parallel</code> is not a Cargo <em>default</em>: a source build that does not pass
 <code>--features parallel</code> still gets working <code>numpy_eval_par</code> and <code>simplify_par</code> — they

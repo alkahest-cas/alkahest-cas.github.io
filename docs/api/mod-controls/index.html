@@ -121,7 +121,7 @@ selected); the remediation names the numeric route.</li>
 <section class="sym" id="controls.Margins"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">controls.</span><span class="sig-name">Margins</span><span class="sig-bases">(tuple)</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#controls.Margins" aria-label="Link to controls.Margins">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L2901" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#controls.Margins" aria-label="Link to controls.Margins">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L2906" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>(gain_margin, phase_margin, phase_crossover, gain_crossover)</code>.</p>
 <p>Same order and conventions as <code>control.margin</code>: <code>gain_margin</code> is an
 absolute ratio (<code>inf</code> when the Nyquist plot never crosses the negative
@@ -130,7 +130,7 @@ crosses 1); <code>phase_crossover</code> is where the gain margin is measured
 (<code>∠G = −180°</code>) and <code>gain_crossover</code> where <code>|G(jω)| = 1</code> (<code>nan</code> when
 absent). <code>gain_margin_db</code> is <code>20·log₁₀</code> of the ratio.</p>
 <div class="members"><div class="members-title">Properties</div><div class="member" id="controls.Margins.gain_margin_db">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">gain_margin_db</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#controls.Margins.gain_margin_db" aria-label="Link to controls.Margins.gain_margin_db">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L2921" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">gain_margin_db</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#controls.Margins.gain_margin_db" aria-label="Link to controls.Margins.gain_margin_db">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L2926" rel="noopener">source</a></div></div>
   
 </div></div></div></section>
 <section class="sym" id="controls.StateSpace"><div class="sym-head">
@@ -509,7 +509,7 @@ required and missing.</p>
 <section class="sym" id="controls.bode"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">controls.</span><span class="sig-name">bode</span>(<span class="sig-p">sys</span>, <span class="sig-p">w</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#controls.bode" aria-label="Link to controls.bode">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L2866" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#controls.bode" aria-label="Link to controls.bode">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L2871" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Bode data of a SISO system: <code>(magnitude_dB, phase_deg)</code> at frequencies <code>w</code>.</p>
 <p>Matches <a href="/docs/api/controls/#bode"><code>scipy.signal.bode()</code></a>: magnitude <code>20·log₁₀|G(jω)|</code> and the
 unwrapped phase in degrees. Numeric: the system must have no free
@@ -572,7 +572,7 @@ entry point of <a href="/docs/api/mod-controls/"><code>controls</code></a> reset
 <section class="sym" id="controls.dare"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">controls.</span><span class="sig-name">dare</span>(<span class="sig-p">A</span>, <span class="sig-p">B</span>, <span class="sig-p">Q</span>, <span class="sig-p">R</span>, <span class="sig-p">method</span><span class="sig-def">='auto'</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#controls.dare" aria-label="Link to controls.dare">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L2739" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#controls.dare" aria-label="Link to controls.dare">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L2744" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Stabilising solution of the discrete algebraic Riccati equation (numeric).</p>
 <p><code>Aᵀ X A − X − (Aᵀ X B)(R + Bᵀ X B)⁻¹(Bᵀ X A) + Q = 0</code>
 (<code>scipy.linalg.solve_discrete_are()</code>&#39;s convention); the stabilising
@@ -592,7 +592,7 @@ equation (<a href="/docs/api/controls/#care"><code>care()</code></a>).</p>
 <section class="sym" id="controls.dlqr"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">controls.</span><span class="sig-name">dlqr</span>(<span class="sig-p">A</span>, <span class="sig-p">B</span>, <span class="sig-p">Q</span>, <span class="sig-p">R</span>, <span class="sig-p">method</span><span class="sig-def">='auto'</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#controls.dlqr" aria-label="Link to controls.dlqr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L2835" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#controls.dlqr" aria-label="Link to controls.dlqr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L2840" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Discrete LQR: <code>(K, X)</code> with <code>K = (R + BᵀXB)⁻¹ BᵀXA</code> and <code>X</code> from <a href="/docs/api/controls/#dare"><code>dare()</code></a>.</p>
 <p><code>u[k] = −K x[k]</code> minimises <code>Σ xᵀQx + uᵀRu</code>. Numeric (<code>numpy.ndarray</code>).</p>
 </div></section>
@@ -631,7 +631,7 @@ symbolic. Satisfies <code>vec(A X B) = (Bᵀ ⊗ A) vec(X)</code> with column-ma
 <section class="sym" id="controls.lqr"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">controls.</span><span class="sig-name">lqr</span>(<span class="sig-p">A</span>, <span class="sig-p">B</span>, <span class="sig-p">Q</span>, <span class="sig-p">R</span>, <span class="sig-p">method</span><span class="sig-def">='auto'</span>, <span class="sig-p">sample</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#controls.lqr" aria-label="Link to controls.lqr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L2717" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#controls.lqr" aria-label="Link to controls.lqr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L2722" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Continuous LQR: <code>(K, X)</code> with <code>K = R⁻¹ Bᵀ X</code> and <code>X</code> from <a href="/docs/api/controls/#care"><code>care()</code></a>.</p>
 <p><code>u = −K x</code> minimises <code>∫ xᵀQx + uᵀRu dt</code>. Exact or numeric as
 <a href="/docs/api/controls/#care"><code>care()</code></a>; side conditions as <a href="/docs/api/controls/#care"><code>care()</code></a> states them.</p>
@@ -660,7 +660,7 @@ non-rational data (radicals, <code>RootOf</code>) up to 8×8; <code>E-CTRL-005</
 <section class="sym" id="controls.margins"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">controls.</span><span class="sig-name">margins</span>(<span class="sig-p">sys</span>)<span class="sig-ret"> → Margins</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#controls.margins" aria-label="Link to controls.margins">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L2932" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#controls.margins" aria-label="Link to controls.margins">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/controls.py#L2937" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Gain and phase margins of a continuous SISO loop transfer function.</p>
 <p>The crossover frequencies are roots of real polynomials in ω:
 <code>Im[N(jω)·D(−jω)] = 0</code> (phase crossover; kept where <code>G(jω) ≤ 0</code>) and

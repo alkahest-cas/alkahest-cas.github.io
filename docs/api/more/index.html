@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Everything else API · Alkahest Docs</title>
-<meta name="description" content="Python API reference for everything else in Alkahest: 9 documented symbols with signatures, parameters and source links.">
+<meta name="description" content="Python API reference for everything else in Alkahest: 10 documented symbols with signatures, parameters and source links.">
 <meta property="og:title" content="Everything else API · Alkahest Docs">
-<meta property="og:description" content="Python API reference for everything else in Alkahest: 9 documented symbols with signatures, parameters and source links.">
+<meta property="og:description" content="Python API reference for everything else in Alkahest: 10 documented symbols with signatures, parameters and source links.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
@@ -68,7 +68,7 @@
     <section class="sym" id="binomial"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">binomial</span>(<span class="sig-p">n</span>, <span class="sig-p">k</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#binomial" aria-label="Link to binomial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1196" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#binomial" aria-label="Link to binomial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1197" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The binomial coefficient <code>C(n, k)</code>.</p>
 <p>For integer <code>k</code> and integer <code>n</code> (Python <code>int</code> or integer literals)
 this is the exact integer <code>n·(n−1)···(n−k+1)/k!</code> — <code>0</code> for <code>k &lt; 0</code>,
@@ -95,7 +95,7 @@ symbols are never moved between pools (<code>E-POOL-001</code>).</p>
 <section class="sym" id="expand"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">expand</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#expand" aria-label="Link to expand">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1096" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#expand" aria-label="Link to expand">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1097" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Distribute products and positive integer powers over sums.</p>
 <p><code>expand((x + 1)**3)</code> is <code>x**3 + 3*x**2 + 3*x + 1</code> and
 <code>expand((x + 1)**2 / x)</code> is <code>x + 2 + 1/x</code>: each term is split into its
@@ -115,7 +115,7 @@ number.</p>
 <section class="sym" id="factor"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">factor</span>(<span class="sig-p">expr</span>, <span class="sig-p">vars</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#factor" aria-label="Link to factor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1058" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#factor" aria-label="Link to factor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1059" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Factor <em>expr</em> over the integers, returning an <a href="/docs/api/core/#Expr"><code>Expr</code></a> product.</p>
 <p><em>expr</em> is put over a common denominator (as <a href="/docs/api/simplify/#cancel"><code>cancel()</code></a> does) and the
 numerator and denominator are each factored over ℤ — multivariate FLINT,
@@ -134,11 +134,29 @@ they were exact. Accepts a <a href="/docs/api/core/#DerivedResult"><code>Derived
 <section class="sym" id="factorial"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">factorial</span>(<span class="sig-p">n</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#factorial" aria-label="Link to factorial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1160" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#factorial" aria-label="Link to factorial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1161" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>n!</code> — an exact integer for a Python <code>int</code> or integer literal
 <code>n &gt;= 0</code>, otherwise <code>gamma(n + 1)</code>.</p>
 <p>A negative integer has no factorial (<code>Γ</code> has a pole there) and raises
 <a href="/docs/api/errors/#DomainError"><code>DomainError</code></a> (<code>E-DOMAIN-001</code>) rather than returning a value.</p>
+</div></section>
+<section class="sym" id="solve_proof_status"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">solve_proof_status</span>()</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#solve_proof_status" aria-label="Link to solve_proof_status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20278" rel="noopener">source</a></div>
+</div><div class="sym-body"><p><code>alkahest.solve_proof_status() -&gt; str</code></p>
+<p>How sure the most recent <a href="/docs/api/solve/#solve"><code>solve()</code></a> on this thread is that its
+answer is <strong>complete</strong>: <code>&quot;proved&quot;</code> or <code>&quot;probabilistic&quot;</code>.</p>
+<p>Every tuple <code>solve</code> returns has been substituted back into your equations,
+so the tuples are solutions whichever this says. <code>&quot;probabilistic&quot;</code> means the
+list came from a Gröbner basis with that
+<a href="/docs/api/solve/#GroebnerBasis.proof_status"><code>proof_status</code></a>: in principle a solution could be missing,
+with the chance described there. <code>&quot;proved&quot;</code> means no such basis was used,
+or that the basis was proved. An inconsistent system&#39;s <code>[]</code> is <code>&quot;proved&quot;</code>:
+the <code>{1}</code> basis behind it has its own proof, by a homogenised run of the
+engine (Buchberger if that is inconclusive), which an active <code>Budget</code> can
+stop with <code>BudgetExceededError</code>.</p>
+<p>Reset by each <code>solve</code> call, like <a href="/docs/api/solve/#solve_side_conditions"><code>solve_side_conditions()</code></a>.</p>
 </div></section>
 <section class="sym" id="E"><div class="sym-head">
   <span class="kind kind-data">constant</span>
@@ -169,7 +187,7 @@ they were exact. Accepts a <a href="/docs/api/core/#DerivedResult"><code>Derived
 </main>
 <aside class="toc" aria-label="On this page">
   <div class="toc-inner">
-    <div class="toc-title">On this page</div><ul><li class="d3"><a href="#binomial">binomial</a></li><li class="d3"><a href="#default_pool">default_pool</a></li><li class="d3"><a href="#expand">expand</a></li><li class="d3"><a href="#factor">factor</a></li><li class="d3"><a href="#factorial">factorial</a></li><li class="d3"><a href="#E">E</a></li><li class="d3"><a href="#I">I</a></li><li class="d3"><a href="#oo">oo</a></li><li class="d3"><a href="#pi">pi</a></li></ul>
+    <div class="toc-title">On this page</div><ul><li class="d3"><a href="#binomial">binomial</a></li><li class="d3"><a href="#default_pool">default_pool</a></li><li class="d3"><a href="#expand">expand</a></li><li class="d3"><a href="#factor">factor</a></li><li class="d3"><a href="#factorial">factorial</a></li><li class="d3"><a href="#solve_proof_status">solve_proof_status</a></li><li class="d3"><a href="#E">E</a></li><li class="d3"><a href="#I">I</a></li><li class="d3"><a href="#oo">oo</a></li><li class="d3"><a href="#pi">pi</a></li></ul>
     <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/blob/main/website/docs/scripts/extract_api.py" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
     <a class="toc-top" href="#top">Back to top</a>
   </div>

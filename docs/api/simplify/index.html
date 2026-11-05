@@ -72,7 +72,7 @@ e-graph (equality saturation) engine. Domain-specific rule sets are also availab
 <section class="sym" id="simplify"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">simplify</span>(<span class="sig-p">expr</span>, <span class="sig-p">assumptions</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#simplify" aria-label="Link to simplify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1461" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify" aria-label="Link to simplify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1462" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Apply the algebraic rewrite-rule simplifier.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div><div class="param"><dt><code class="pname">assumptions</code><span class="ptype">Assumptions, optional</span></dt><dd><p>Explicit assumption context to authorize condition-gated rewrites
@@ -97,7 +97,7 @@ The default arithmetic rules are NOT included; combine with
 <section class="sym" id="simplify_trig"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">simplify_trig</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#simplify_trig" aria-label="Link to simplify_trig">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1512" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_trig" aria-label="Link to simplify_trig">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1513" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Trigonometric identity simplifier.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div></dl>
@@ -105,7 +105,7 @@ The default arithmetic rules are NOT included; combine with
 <section class="sym" id="simplify_log_exp"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">simplify_log_exp</span>(<span class="sig-p">expr</span>, <span class="sig-p">assumptions</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#simplify_log_exp" aria-label="Link to simplify_log_exp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1559" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_log_exp" aria-label="Link to simplify_log_exp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1560" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Logarithm / exponential simplifier.</p>
 <p>Branch-cut identities such as <code>exp(log(x)) → x</code> and
 <code>log(x) + log(y) → log(x*y)</code> require positivity facts from
@@ -121,7 +121,7 @@ with <code>Domain.Positive</code>. Safe identities <code>log(exp(x)) → x</code
 <section class="sym" id="simplify_expanded"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">simplify_expanded</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#simplify_expanded" aria-label="Link to simplify_expanded">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1588" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_expanded" aria-label="Link to simplify_expanded">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1589" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Expand-then-simplify.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div></dl>
@@ -288,7 +288,7 @@ expression, so it can differ between machines.</p>
 <section class="sym" id="collect_like_terms"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">collect_like_terms</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#collect_like_terms" aria-label="Link to collect_like_terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1627" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#collect_like_terms" aria-label="Link to collect_like_terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1628" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Collect like terms in a sum.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div></dl>
@@ -296,13 +296,13 @@ expression, so it can differ between machines.</p>
 <section class="sym" id="poly_normal"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">poly_normal</span>(<span class="sig-p">expr</span>, <span class="sig-p">vars</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#poly_normal" aria-label="Link to poly_normal">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2701" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#poly_normal" aria-label="Link to poly_normal">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2702" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Expand and collect <em>expr</em> as a polynomial in <em>vars</em>.</p>
 </div></section>
 <section class="sym" id="subs"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">subs</span>(<span class="sig-p">expr</span>, <span class="sig-p">mapping</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#subs" aria-label="Link to subs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1432" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#subs" aria-label="Link to subs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1433" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Substitute variables in <em>expr</em> according to <em>mapping</em>.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt><dd><p>Source expression.  <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> is auto-coerced to <code>.value</code>.</p>
@@ -319,7 +319,7 @@ expression, so it can differ between machines.</p>
 <section class="sym" id="simplify_egraph"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">simplify_egraph</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#simplify_egraph" aria-label="Link to simplify_egraph">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1495" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_egraph" aria-label="Link to simplify_egraph">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1496" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>E-graph equality-saturation simplifier.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div></dl>
@@ -375,7 +375,7 @@ lower-case letter.  Set <code>wildcards=False</code> to treat every symbol as a 
 <section class="sym" id="apart"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">apart</span>(<span class="sig-p">expr</span>, <span class="sig-p">var</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#apart" aria-label="Link to apart">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1391" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#apart" aria-label="Link to apart">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1392" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Partial-fraction decomposition of <em>expr</em> as a rational function of <em>var</em>.</p>
 <p>Decomposes <code>p(x)/q(x)</code> into <code>poly_part + Σ A_ij(x) / f_i(x)**j</code> where the
 <code>f_i</code> are the distinct <strong>ℚ-irreducible</strong> factors of the denominator and
@@ -397,7 +397,7 @@ intact, not split into complex/algebraic linear factors.</p>
 <section class="sym" id="cancel"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">cancel</span>(<span class="sig-p">expr</span>, <span class="sig-p">vars</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#cancel" aria-label="Link to cancel">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2710" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#cancel" aria-label="Link to cancel">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2711" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Combine <em>expr</em> over a common denominator and cancel common polynomial factors.</p>
 <p>Non-polynomial sub-expressions (e.g. <code>sin(x)</code> or symbols not in <em>vars</em>) are
 treated as opaque generators. Accepts <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> as <em>expr</em>.</p>
@@ -406,7 +406,7 @@ treated as opaque generators. Accepts <a href="/docs/api/core/#DerivedResult"><c
 <section class="sym" id="together"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">together</span>(<span class="sig-p">expr</span>, <span class="sig-p">vars</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#together" aria-label="Link to together">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2724" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#together" aria-label="Link to together">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2725" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Combine <em>expr</em> over a single common denominator (alias of <a href="/docs/api/simplify/#cancel"><code>cancel()</code></a>).</p>
 <p>If <em>vars</em> is omitted, free symbols of <em>expr</em> are inferred.</p>
 </div></section>
@@ -414,7 +414,7 @@ treated as opaque generators. Accepts <a href="/docs/api/core/#DerivedResult"><c
 <section class="sym" id="simplify_trig_normal_form"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">simplify_trig_normal_form</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#simplify_trig_normal_form" aria-label="Link to simplify_trig_normal_form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1529" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_trig_normal_form" aria-label="Link to simplify_trig_normal_form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1530" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Trigonometric normal-form simplifier.</p>
 <p>Runs the full algebraic core <em>with bounded polynomial expansion</em> plus the
 sin/cos-polynomial trig identities (argument-sign normalization and the

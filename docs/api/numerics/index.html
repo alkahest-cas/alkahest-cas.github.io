@@ -87,7 +87,7 @@ Jacobian. <code>numpy_eval</code> on it returns an array with one row per output
 <section class="sym" id="eval_expr"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">eval_expr</span>(<span class="sig-p">expr</span>, <span class="sig-p">bindings</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#eval_expr" aria-label="Link to eval_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2738" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#eval_expr" aria-label="Link to eval_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2739" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Numerically evaluate <em>expr</em>; accepts <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> as <em>expr</em>.</p>
 <p>Raises <a href="/docs/api/errors/#DomainError"><code>DomainError</code></a> (a <code>ValueError</code>) if <em>expr</em> is
 mathematically undefined at <em>bindings</em> — e.g. a removable singularity
@@ -99,7 +99,7 @@ everywhere-defined form instead.</p>
 <section class="sym" id="numpy_eval"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">numpy_eval</span>(<span class="sig-p">compiled_fn</span>, <span class="sig-p">*arrays</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#numpy_eval" aria-label="Link to numpy_eval">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L742" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#numpy_eval" aria-label="Link to numpy_eval">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L743" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Vectorised evaluation of a <a href="/docs/api/numerics/#CompiledFn"><code>CompiledFn</code></a> over arrays.</p>
 <p>Phase 25 / PA-8 — NumPy / JAX / PyTorch / DLPack array evaluation.</p>
 <p>Evaluation runs entirely natively: input arrays are read via the buffer
@@ -146,7 +146,7 @@ including the common case of one list holding all of them.</p>
 <section class="sym" id="numpy_eval_par"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">numpy_eval_par</span>(<span class="sig-p">compiled_fn</span>, <span class="sig-p">*arrays</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#numpy_eval_par" aria-label="Link to numpy_eval_par">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L824" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#numpy_eval_par" aria-label="Link to numpy_eval_par">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L825" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Parallel vectorised evaluation of a <a href="/docs/api/numerics/#CompiledFn"><code>CompiledFn</code></a> over arrays.</p>
 <p>Identical to <a href="/docs/api/numerics/#numpy_eval"><code>numpy_eval()</code></a> but distributes the N evaluation points
 across all available CPU cores using Rayon.  The Python GIL is released
@@ -453,24 +453,24 @@ the generated PTX assembly.</p>
 <section class="sym" id="ModularEvaluation"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">ModularEvaluation</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation" aria-label="Link to ModularEvaluation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21231" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation" aria-label="Link to ModularEvaluation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21325" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The result of evaluating a <a href="/docs/api/diff/#ModularRecurrence"><code>ModularRecurrence</code></a>, with the
 evidence that makes its residues trustworthy.</p>
 <p><code>singular_indices</code> is the field to read when a residue is surprising:
 it lists the steps where the recurrence&#39;s leading coefficient was not a
 unit mod <code>p</code> and the working precision had to absorb the loss.</p>
 <div class="members"><div class="members-title">Properties</div><div class="member" id="ModularEvaluation.prime">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">prime</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.prime" aria-label="Link to ModularEvaluation.prime">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21239" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">prime</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.prime" aria-label="Link to ModularEvaluation.prime">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21333" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The prime the evaluation ran at.</p>
 </div>
 </div>
 <div class="member" id="ModularEvaluation.precision">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">precision</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.precision" aria-label="Link to ModularEvaluation.precision">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21245" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">precision</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.precision" aria-label="Link to ModularEvaluation.precision">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21339" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>k</code> — the precision that was asked for, and delivered.</p>
 </div>
 </div>
 <div class="member" id="ModularEvaluation.working_precision">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">working_precision</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.working_precision" aria-label="Link to ModularEvaluation.working_precision">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21255" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">working_precision</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.working_precision" aria-label="Link to ModularEvaluation.working_precision">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21349" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>K &gt;= k</code> — the precision the forward pass actually ran at.</p>
 <p><code>working_precision - precision</code> is the total <code>p</code>-adic precision lost
 to singular steps, and is <code>0</code> for a recurrence whose leading
@@ -478,26 +478,26 @@ coefficient is a unit throughout.</p>
 </div>
 </div>
 <div class="member" id="ModularEvaluation.modulus">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">modulus</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.modulus" aria-label="Link to ModularEvaluation.modulus">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21261" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">modulus</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.modulus" aria-label="Link to ModularEvaluation.modulus">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21355" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>p**k</code>.</p>
 </div>
 </div>
 <div class="member" id="ModularEvaluation.n_singular">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_singular</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.n_singular" aria-label="Link to ModularEvaluation.n_singular">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21267" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_singular</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.n_singular" aria-label="Link to ModularEvaluation.n_singular">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21361" rel="noopener">source</a></div></div>
   <div class="member-body"><p>How many singular steps there were, in total.</p>
 </div>
 </div>
 <div class="member" id="ModularEvaluation.steps">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">steps</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.steps" aria-label="Link to ModularEvaluation.steps">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21273" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">steps</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.steps" aria-label="Link to ModularEvaluation.steps">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21367" rel="noopener">source</a></div></div>
   <div class="member-body"><p>How many forward steps the evaluation took.</p>
 </div>
 </div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="ModularEvaluation.residues">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">residues</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.residues" aria-label="Link to ModularEvaluation.residues">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21278" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">residues</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.residues" aria-label="Link to ModularEvaluation.residues">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21372" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The residues, one per requested index, each in <code>[0, p**k)</code>.</p>
 </div>
 </div>
 <div class="member" id="ModularEvaluation.singular_indices">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">singular_indices</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.singular_indices" aria-label="Link to ModularEvaluation.singular_indices">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21285" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">singular_indices</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularEvaluation.singular_indices" aria-label="Link to ModularEvaluation.singular_indices">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21379" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Indices <code>n</code> where <code>p</code> divides the leading coefficient <code>a_J(n)</code>.</p>
 <p>Truncated to the first 64; <code>n_singular</code> is the full count.</p>
 </div>
@@ -512,7 +512,7 @@ coefficient is a unit throughout.</p>
     <span class="sig-sep">*</span>,
     <span class="sig-p">digits</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#guess_relation" aria-label="Link to guess_relation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2575" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#guess_relation" aria-label="Link to guess_relation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2576" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Search for integers <code>aᵢ</code> with <code>Σ aᵢ·constantsᵢ ≈ 0</code>.</p>
 <p>Returns the coefficients as a list of Python <code>int</code> (of any size), or
 <code>None</code> when no relation is found.</p>
@@ -563,7 +563,7 @@ values themselves (the search width is still capped at their precision).</p>
     <span class="sig-p">precision_bits</span><span class="sig-def">=None</span>,
     <span class="sig-p">margin_digits</span><span class="sig-def">=None</span>
 )<span class="sig-ret"> → dict</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#relation_confidence" aria-label="Link to relation_confidence">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2452" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#relation_confidence" aria-label="Link to relation_confidence">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2453" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Judge a found relation against the precision its inputs actually carry.</p>
 <p>Pinning down <code>n</code> coefficients bounded by <code>H</code> selects one of the
 <code>(2H+1)ⁿ</code> integer vectors in that box, so it takes about

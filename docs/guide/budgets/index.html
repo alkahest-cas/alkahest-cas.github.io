@@ -173,12 +173,15 @@ simplified so far — exactly like running out of the existing <code>max_iterati
 already does, silently. If you need a hard raise on a <code>simplify</code> call specifically,
 wrap it in <code>alkahest.run_with_wall_fallback</code> (below).</p>
 </li>
-<li><p><strong>Gröbner bases</strong> — <code>GroebnerBasis.compute</code> (Buchberger, and grevlex-then-FGLM for
-<code>&quot;lex&quot;</code>), <code>GroebnerBasis.compute_f5</code>, <code>compute_raw</code> and the parametric engine
-(<code>compute(..., params=...)</code>): once per S-pair, every 16 steps of every division
-loop, while normalising each new basis element, and once per FGLM step. Cyclic-6
-under grevlex, which ran for more than two minutes whatever the budget, stops 0.6 s
-into a 500 ms budget; <code>compute_f5</code> on cyclic-5 (&gt; 100 s) stops at 0.5 s.</p>
+<li><p><strong>Gröbner bases</strong> — <code>GroebnerBasis.compute</code> (multimodular under <code>&quot;grevlex&quot;</code>,
+Buchberger otherwise, grevlex-then-FGLM for <code>&quot;lex&quot;</code>), <code>GroebnerBasis.compute_f5</code>,
+<code>compute_raw</code> and the parametric engine (<code>compute(..., params=...)</code>): once per S-pair
+or F4 step, every 16 steps of every division loop, while normalising each new basis
+element, once per prime and per FGLM step, and inside every verification
+reduction. Work spread over threads by the <code>parallel</code> feature runs under what is
+left of the caller&#39;s budget on every worker. Cyclic-7 under grevlex (3 s across
+cores) and under <code>compute_f5</code> (about a minute) both stop 0.3 s into a 300 ms
+budget.</p>
 </li>
 <li><p><strong><code>alkahest.solve</code></strong> (<code>method=&quot;groebner&quot;</code>, and the homotopy fallback of
 <code>numeric=True</code>), <strong><code>solve_numerical</code></strong> / <code>method=&quot;homotopy&quot;</code> — the Gröbner basis,
