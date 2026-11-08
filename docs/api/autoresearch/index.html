@@ -430,7 +430,7 @@ free parameters is refused — an undetermined form is not a candidate.</p>
     <span class="sig-p">equalities</span><span class="sig-def">=None</span>,
     <span class="sig-p">level</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#prove_nonneg_on" aria-label="Link to prove_nonneg_on">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16802" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#prove_nonneg_on" aria-label="Link to prove_nonneg_on">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17031" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>alkahest.prove_nonneg_on(expr, vars, constraints=(), *, equalities=(), level=None)</code></p>
 <p>Prove <code>expr ≥ 0</code> on the semialgebraic set <code>{g_i ≥ 0, h_j = 0}</code> with a
 <strong>Putinar</strong> (quadratic-module) certificate
@@ -475,7 +475,7 @@ the certificate <code>1 - x² = y² + 1·(1 - x² - y²)</code>.</p>
     <span class="sig-p">pool</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
     <span class="sig-p">**kwargs</span><span class="sig-ann">: Any</span>
 )<span class="sig-ret"> → CrossCheck</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.check" aria-label="Link to crosscheck.check">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1679" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.check" aria-label="Link to crosscheck.check">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1726" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Run one query through Alkahest and through an oracle, and compare.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">operation</code><span class="ptype">str</span></dt><dd><p>Name of an <code>OPERATIONS</code> entry; also the <code>alkahest</code> module
@@ -523,7 +523,7 @@ exceptions; an unknown operation is a caller mistake.</p>
     <span class="sig-p">pool</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
     <span class="sig-p">points</span><span class="sig-ann">: int</span><span class="sig-def">=DEFAULT_POINTS</span>
 )<span class="sig-ret"> → SweepReport</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.sweep" aria-label="Link to crosscheck.sweep">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2670" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.sweep" aria-label="Link to crosscheck.sweep">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L2717" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Run a seeded differential sweep and report what diverged.</p>
 <p>This is the <strong>nightly</strong> tier of the two-tier arrangement described in
 <code>docs/mdbook/src/crosscheck.md</code>. It is deliberately not a per-PR gate: it
@@ -559,7 +559,7 @@ is all <code>unavailable</code> — the sweep does not pretend to have run.</p>
     <span class="sig-p">oracle</span><span class="sig-ann">: Oracle | str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">cases</span><span class="sig-ann">: Sequence[FrozenCase]</span><span class="sig-def">=FROZEN_CORPUS</span>
 )<span class="sig-ret"> → list[tuple[FrozenCase, CrossCheck | None]]</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.run_frozen_corpus" aria-label="Link to crosscheck.run_frozen_corpus">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L3034" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.run_frozen_corpus" aria-label="Link to crosscheck.run_frozen_corpus">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L3081" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Re-run <code>FROZEN_CORPUS</code> against the installed oracle.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">oracle</code><span class="ptype">Oracle or str, optional</span></dt><dd><p>Defaults to the first installed oracle.</p>
@@ -571,7 +571,7 @@ and was skipped — a skip, never a pass.</p>
 <section class="sym" id="crosscheck.to_sympy"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">to_sympy</span>(<span class="sig-p">expr</span><span class="sig-ann">: Any</span>, <span class="sig-sep">*</span>, <span class="sig-p">assumptions</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>)<span class="sig-ret"> → Any</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.to_sympy" aria-label="Link to crosscheck.to_sympy">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L706" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.to_sympy" aria-label="Link to crosscheck.to_sympy">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L737" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Translate an Alkahest expression into SymPy, or refuse.</p>
 <p>The one translator this package ships, exposed directly for callers who
 want the term rather than a comparison. Total over <code>NODE_TAGS</code>:
@@ -597,7 +597,7 @@ expression or the assumption context has no faithful mapping.</p>
 <section class="sym" id="crosscheck.register_oracle"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">register_oracle</span>(<span class="sig-p">oracle_cls</span><span class="sig-ann">: type[Oracle]</span>)<span class="sig-ret"> → None</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.register_oracle" aria-label="Link to crosscheck.register_oracle">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1168" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.register_oracle" aria-label="Link to crosscheck.register_oracle">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1209" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Register an <code>Oracle</code> implementation under its <code>name</code>.</p>
 <p>The comparator resolves oracles through this registry, so a new backend is
 a class plus one call — no change to the ladder, the outcomes, or the
@@ -609,7 +609,7 @@ frozen corpus machinery.</p>
 <section class="sym" id="crosscheck.oracles"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">crosscheck.</span><span class="sig-name">oracles</span>()<span class="sig-ret"> → dict[str, str | None]</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.oracles" aria-label="Link to crosscheck.oracles">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1184" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#crosscheck.oracles" aria-label="Link to crosscheck.oracles">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/crosscheck.py#L1225" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Which oracles are installed, and at what version.</p>
 <p>Reports every <em>known</em> oracle, including the absent ones — an agent must be
 able to tell that SymPy is missing <strong>before</strong> it plans around a check that
@@ -633,7 +633,7 @@ will only ever return <code>unavailable</code>.</p>
     <span class="sig-p">check_sat</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>,
     <span class="sig-p">get_model</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>
 )<span class="sig-ret"> → str</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#to_smtlib" aria-label="Link to to_smtlib">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L270" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#to_smtlib" aria-label="Link to to_smtlib">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L271" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Export a predicate <a href="/docs/api/core/#Expr"><code>Expr</code></a> as an SMT-LIB 2 script.</p>
 <p>The SMT counterpart of <a href="/docs/api/certificates/#to_lean"><code>to_lean()</code></a>: Alkahest emits a standard
 artifact and an independently maintained external tool consumes it.  The
@@ -671,7 +671,7 @@ formula is an error (<code>E-SMT-002</code>), not a silent downgrade.</p>
     <span class="sig-p">budget</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
     <span class="sig-p">pool</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>
 )<span class="sig-ret"> → SmtResult</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#smt.solve" aria-label="Link to smt.solve">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1094" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.solve" aria-label="Link to smt.solve">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1099" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Ask an external SMT solver about <code>formula</code>.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">formula</code><span class="ptype">Expr</span></dt><dd><p>A <strong>quantifier-free</strong> predicate expression.  Quantified formulas export
@@ -718,7 +718,7 @@ warned: it means the bridge or the solver is broken.</p>
 <section class="sym" id="smt.supported"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">smt.</span><span class="sig-name">supported</span>(<span class="sig-p">formula</span><span class="sig-ann">: Any</span>, <span class="sig-sep">*</span>, <span class="sig-p">solver</span><span class="sig-ann">: str</span><span class="sig-def">='auto'</span>)<span class="sig-ret"> → SmtSupport</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#smt.supported" aria-label="Link to smt.supported">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L547" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.supported" aria-label="Link to smt.supported">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L552" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Can this formula be handed to an SMT solver — and should it be?</p>
 <p>The plan-ahead predicate, for the same reason
 <a href="/docs/api/certificates/#certifiable"><code>certifiable()</code></a> exists: a loop must be able to choose a route
@@ -744,7 +744,7 @@ neither CAD nor <a href="/docs/api/solve/#diophantine"><code>diophantine()</code
 <section class="sym" id="smt.solvers"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">smt.</span><span class="sig-name">solvers</span>()<span class="sig-ret"> → dict[str, str | None]</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#smt.solvers" aria-label="Link to smt.solvers">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L187" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.solvers" aria-label="Link to smt.solvers">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L188" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Which SMT solvers are installed, and at what version.</p>
 <p>Returns a mapping over every name in <code>SOLVERS</code>; the value is the
 solver&#39;s self-reported version string, or <code>None</code> when the binary was not

@@ -87,7 +87,7 @@ used automatically.</p>
 <section class="sym" id="diff_forward"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">diff_forward</span>(<span class="sig-p">expr</span>, <span class="sig-p">var</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#diff_forward" aria-label="Link to diff_forward">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5221" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#diff_forward" aria-label="Link to diff_forward">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5290" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Compute the derivative using forward-mode automatic differentiation
 (dual numbers). Produces the same result as <code>diff</code> through a
 different path; useful for cross-validation.</p>
@@ -134,7 +134,7 @@ symbol table); <code>eval_expr</code> refuses it with <code>E-EVAL-005</code>.</
 <section class="sym" id="euler_lagrange"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">euler_lagrange</span>(<span class="sig-p">lagrangian</span>, <span class="sig-p">coords</span>, <span class="sig-p">t</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#euler_lagrange" aria-label="Link to euler_lagrange">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10800" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#euler_lagrange" aria-label="Link to euler_lagrange">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10869" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>alkahest.euler_lagrange(L, coords, t)</code> — the Euler–Lagrange equations.</p>
 <p><code>coords</code> are applied undefined functions <code>[q1(t), q2(t), …]</code> (built
 with <code>pool.func(&quot;q1&quot;, [t])</code>); <code>L</code> is written with them and their time
@@ -150,7 +150,7 @@ derivative rule.</p>
 <section class="sym" id="functions_to_symbols"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">functions_to_symbols</span>(<span class="sig-p">exprs</span>, <span class="sig-p">funcs</span>, <span class="sig-p">t</span>, <span class="sig-p">domain</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#functions_to_symbols" aria-label="Link to functions_to_symbols">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10841" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#functions_to_symbols" aria-label="Link to functions_to_symbols">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10910" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>alkahest.functions_to_symbols(exprs, funcs, t, domain=None)</code> — replace
 <code>q(t)</code>, <code>q&#39;(t)</code>, <code>q&#39;&#39;(t)</code>, … by plain symbols.</p>
 <p><code>exprs</code> is an <code>Expr</code> or a list of them; <code>funcs</code> the applied
@@ -167,7 +167,7 @@ by a symbol already in <code>exprs</code>), in <code>domain</code> (default real
 <section class="sym" id="replace_function"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">replace_function</span>(<span class="sig-p">expr</span>, <span class="sig-p">pattern</span>, <span class="sig-p">body</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#replace_function" aria-label="Link to replace_function">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10900" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#replace_function" aria-label="Link to replace_function">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10969" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>alkahest.replace_function(expr, pattern, body)</code> — substitute a definition
 for an undefined function everywhere, derivatives included.</p>
 <p><code>pattern</code> is <code>f(x1, …, xn)</code> with distinct variables and <code>body</code> an
@@ -271,32 +271,32 @@ They are thin wrappers that create <code>Call(primitive, args)</code> nodes.</p>
 <section class="sym" id="sin"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">sin</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#sin" aria-label="Link to sin">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4576" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#sin" aria-label="Link to sin">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4645" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="cos"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">cos</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#cos" aria-label="Link to cos">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4581" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#cos" aria-label="Link to cos">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4650" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="tan"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">tan</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#tan" aria-label="Link to tan">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4629" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#tan" aria-label="Link to tan">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4698" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="asin"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">asin</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#asin" aria-label="Link to asin">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4649" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#asin" aria-label="Link to asin">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4718" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="acos"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">acos</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#acos" aria-label="Link to acos">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4654" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#acos" aria-label="Link to acos">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4723" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="atan"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">atan</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#atan" aria-label="Link to atan">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4659" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#atan" aria-label="Link to atan">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4728" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="atan2"><div class="sym-head">
   <span class="kind kind-function">function</span>
@@ -306,52 +306,52 @@ They are thin wrappers that create <code>Call(primitive, args)</code> nodes.</p>
 <section class="sym" id="sinh"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">sinh</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#sinh" aria-label="Link to sinh">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4634" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#sinh" aria-label="Link to sinh">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4703" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="cosh"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">cosh</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#cosh" aria-label="Link to cosh">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4639" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#cosh" aria-label="Link to cosh">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4708" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="tanh"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">tanh</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#tanh" aria-label="Link to tanh">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4644" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#tanh" aria-label="Link to tanh">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4713" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="exp"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">exp</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#exp" aria-label="Link to exp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4586" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#exp" aria-label="Link to exp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4655" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="log"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">log</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#log" aria-label="Link to log">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4591" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#log" aria-label="Link to log">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4660" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="sqrt"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">sqrt</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#sqrt" aria-label="Link to sqrt">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4596" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#sqrt" aria-label="Link to sqrt">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4665" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="abs"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">abs</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#abs" aria-label="Link to abs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4736" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#abs" aria-label="Link to abs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4805" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="sign"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">sign</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#sign" aria-label="Link to sign">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4741" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#sign" aria-label="Link to sign">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4810" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="erf"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">erf</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#erf" aria-label="Link to erf">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4679" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#erf" aria-label="Link to erf">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4748" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="erfc"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">erfc</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#erfc" aria-label="Link to erfc">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4684" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#erfc" aria-label="Link to erfc">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4753" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="gamma"><div class="sym-head">
   <span class="kind kind-function">function</span>
@@ -361,17 +361,17 @@ They are thin wrappers that create <code>Call(primitive, args)</code> nodes.</p>
 <section class="sym" id="floor"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">floor</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#floor" aria-label="Link to floor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4746" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#floor" aria-label="Link to floor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4815" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="ceil"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">ceil</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#ceil" aria-label="Link to ceil">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4751" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#ceil" aria-label="Link to ceil">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4820" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="round"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">round</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#round" aria-label="Link to round">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4757" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#round" aria-label="Link to round">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4826" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="min"><div class="sym-head">
   <span class="kind kind-function">function</span>
@@ -387,7 +387,7 @@ They are thin wrappers that create <code>Call(primitive, args)</code> nodes.</p>
 <section class="sym" id="piecewise"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">piecewise</span>(<span class="sig-p">branches</span>, <span class="sig-p">default</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#piecewise" aria-label="Link to piecewise">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15807" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#piecewise" aria-label="Link to piecewise">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16036" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Build a piecewise expression from a list of <code>(condition, value)</code> pairs
 and a default value.</p>
 <p>Conditions must be <code>Predicate</code> expressions built with the pool&#39;s predicate
@@ -509,12 +509,12 @@ the <code>O(.)</code> term dropped, which is what <a href="/docs/api/numerics/#e
 <section class="sym" id="Series"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">Series</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#Series" aria-label="Link to Series">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3118" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#Series" aria-label="Link to Series">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3172" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p><div class="members"><div class="members-title">Properties</div><div class="member" id="Series.expr">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">expr</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Series.expr" aria-label="Link to Series.expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3125" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">expr</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Series.expr" aria-label="Link to Series.expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3179" rel="noopener">source</a></div></div>
   
 </div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="Series.truncated">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">truncated</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Series.truncated" aria-label="Link to Series.truncated">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3143" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">truncated</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Series.truncated" aria-label="Link to Series.truncated">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L3212" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The expansion with its trailing <code>O(·)</code> term dropped — SymPy&#39;s
 <code>removeO()</code>.</p>
 <p><code>Series.expr</code> keeps the <code>BigO</code> node, which is the honest thing for it to
@@ -532,7 +532,7 @@ wrong thing to substitute back into an identity.</p>
 <section class="sym" id="residue"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">residue</span>(<span class="sig-p">expr</span>, <span class="sig-p">var</span>, <span class="sig-p">point</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#residue" aria-label="Link to residue">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L6194" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#residue" aria-label="Link to residue">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L6263" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <h2 id="sums-products-and-recurrences"><a class="hanchor" href="#sums-products-and-recurrences" aria-hidden="true" tabindex="-1">#</a>Sums, products and recurrences</h2>
 <section class="sym" id="sum_definite"><div class="sym-head">
@@ -690,7 +690,7 @@ two-parameter and two independent initial conditions can be met.</p>
 <section class="sym" id="solve_linear_recurrence_homogeneous"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">solve_linear_recurrence_homogeneous</span>(<span class="sig-p">n</span>, <span class="sig-p">coeffs</span>, <span class="sig-p">initials</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#solve_linear_recurrence_homogeneous" aria-label="Link to solve_linear_recurrence_homogeneous">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7678" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#solve_linear_recurrence_homogeneous" aria-label="Link to solve_linear_recurrence_homogeneous">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7747" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p></div></section>
 <section class="sym" id="zeilberger"><div class="sym-head">
   <span class="kind kind-function">function</span>
@@ -704,7 +704,7 @@ two-parameter and two independent initial conditions can be met.</p>
     <span class="sig-p">max_degree</span><span class="sig-def">=16</span>,
     <span class="sig-p">minimal</span><span class="sig-def">=False</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#zeilberger" aria-label="Link to zeilberger">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8337" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#zeilberger" aria-label="Link to zeilberger">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8406" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>alkahest.zeilberger(term, n, k, *, limits=None, max_order=4, max_degree=16, minimal=False) -&gt; ZeilbergerCertificate</code></p>
 <p>Zeilberger&#39;s algorithm (creative telescoping) for a proper hypergeometric
 term <code>F(n, k)</code>.  Returns a <strong>verified</strong> certificate: the recurrence
@@ -756,7 +756,7 @@ search is exhausted (<code>E-HOLO-002</code>).</p>
 <section class="sym" id="ZeilbergerCertificate"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">ZeilbergerCertificate</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate" aria-label="Link to ZeilbergerCertificate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7868" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate" aria-label="Link to ZeilbergerCertificate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7937" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A <strong>verified</strong> Zeilberger certificate, returned by <a href="/docs/api/diff/#zeilberger"><code>zeilberger()</code></a>.</p>
 <p>Carries the recurrence coefficients <code>a_0(n), …, a_J(n)</code> and the rational
 certificate <code>R(n, k)</code> satisfying, as an exact identity in <code>Q(n)(k)</code>,</p>
@@ -787,14 +787,14 @@ finite at every integer <code>k</code> in it.  <code>boundary_valid_from</code> 
 <code>certificate_poles</code> carry those two bounds, rather than leaving a bare
 <code>b(n)</code> with an implied &quot;for every <code>n</code>&quot; attached to it.</p>
 <div class="members"><div class="members-title">Properties</div><div class="member" id="ZeilbergerCertificate.order">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">order</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.order" aria-label="Link to ZeilbergerCertificate.order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7893" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">order</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.order" aria-label="Link to ZeilbergerCertificate.order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7962" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Recurrence order <code>J</code>; <code>len(coeffs) == order + 1</code>.</p>
 <p>Minimal only when <code>order_is_minimal</code> says so — the default search
 does not establish it.</p>
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.order_is_minimal">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">order_is_minimal</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.order_is_minimal" aria-label="Link to ZeilbergerCertificate.order_is_minimal">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7919" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">order_is_minimal</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.order_is_minimal" aria-label="Link to ZeilbergerCertificate.order_is_minimal">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7988" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Whether the search <strong>established</strong> that no lower-order relation exists
 <em>at certificate degree</em> <code>&lt;= max_degree</code>.</p>
 <p><code>True</code> means every order below <code>order</code> was refused at every
@@ -816,12 +816,12 @@ order-ascending and get the claim, at the cost of the low-order sweep.</p>
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.coeffs">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coeffs</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.coeffs" aria-label="Link to ZeilbergerCertificate.coeffs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7925" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coeffs</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.coeffs" aria-label="Link to ZeilbergerCertificate.coeffs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7994" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>[a_0(n), …, a_J(n)]</code> — polynomial coefficients of the recurrence.</p>
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.n">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.n" aria-label="Link to ZeilbergerCertificate.n">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7944" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.n" aria-label="Link to ZeilbergerCertificate.n">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8013" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The index symbol <code>n</code> the coefficient polynomials are written in.</p>
 <p>The symbol <em>this</em> certificate was built with, out of <em>this</em>
 certificate&#39;s <a href="/docs/api/core/#ExprPool"><code>ExprPool</code></a> — the only <code>n</code> that can be combined
@@ -832,12 +832,12 @@ here rather than make one of its own; that is why <code>n</code> is optional on
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.certificate">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certificate</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.certificate" aria-label="Link to ZeilbergerCertificate.certificate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7953" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certificate</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.certificate" aria-label="Link to ZeilbergerCertificate.certificate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8022" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>R(n, k)</code> — the rational certificate, with <code>G(n,k) = R(n,k)·F(n,k)</code>.</p>
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.boundary_term">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">boundary_term</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.boundary_term" aria-label="Link to ZeilbergerCertificate.boundary_term">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7968" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">boundary_term</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.boundary_term" aria-label="Link to ZeilbergerCertificate.boundary_term">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8037" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>G(n, k) = R(n, k)·F(n, k)</code> — the telescoped quantity.</p>
 <p>The recurrence for a <em>sum</em> over <code>k = k_lo .. k_hi</code> is
 <code>Σ_i a_i(n)·S(n+i) = G(n, k_hi+1) − G(n, k_lo)</code>; substitute the two
@@ -846,7 +846,7 @@ hypothesis listed in <code>side_conditions</code>.</p>
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.limits">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">limits</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.limits" aria-label="Link to ZeilbergerCertificate.limits">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7984" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">limits</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.limits" aria-label="Link to ZeilbergerCertificate.limits">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8053" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The summation range the boundary verdict is about, as
 <code>(k_lo, k_hi)</code>.</p>
 <p>It defaults to <code>(0, n)</code> — the <code>Σ_{k=0}^{n}</code> convention the classical
@@ -856,7 +856,7 @@ anything else passes <code>limits=</code> and gets a verdict about <em>that</em>
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.boundary">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">boundary</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.boundary" aria-label="Link to ZeilbergerCertificate.boundary">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8003" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">boundary</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.boundary" aria-label="Link to ZeilbergerCertificate.boundary">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8072" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>&quot;vanishes&quot;</code>, <code>&quot;nonzero&quot;</code> or <code>&quot;unknown&quot;</code> — whether a recurrence for
 the <em>sum</em> over <code>limits</code> follows from this certificate, and which.</p>
 <p>See the class documentation for what each verdict licenses.  Only
@@ -864,7 +864,7 @@ the <em>sum</em> over <code>limits</code> follows from this certificate, and whi
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.boundary_valid_from">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">boundary_valid_from</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.boundary_valid_from" aria-label="Link to ZeilbergerCertificate.boundary_valid_from">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8021" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">boundary_valid_from</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.boundary_valid_from" aria-label="Link to ZeilbergerCertificate.boundary_valid_from">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8090" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The smallest <code>n</code> this verdict is claimed for, or <code>None</code>.</p>
 <p>A verdict is a statement about <code>S(n)</code>, and the range in <code>limits</code>
 is not a range at every <code>n</code>: <code>k = 3..n−3</code> runs <em>backwards</em> at
@@ -879,7 +879,7 @@ nothing is claimed at any <code>n</code> regardless of what this holds.</p>
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.certificate_poles">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certificate_poles</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.certificate_poles" aria-label="Link to ZeilbergerCertificate.certificate_poles">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8040" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certificate_poles</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.certificate_poles" aria-label="Link to ZeilbergerCertificate.certificate_poles">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8109" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Integer points <code>k</code> inside <code>limits</code> where the telescoping breaks,
 as expressions in <code>n</code>.</p>
 <p><code>G(n,k) = R(n,k)·F(n,k)</code> has to be finite at every integer <code>k</code> in the
@@ -895,7 +895,7 @@ that only enter the range for large <code>n</code>, are not searched for.</p>
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.boundary_rhs">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">boundary_rhs</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.boundary_rhs" aria-label="Link to ZeilbergerCertificate.boundary_rhs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8057" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">boundary_rhs</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.boundary_rhs" aria-label="Link to ZeilbergerCertificate.boundary_rhs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8126" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>b(n)</code> in <code>Σ_i a_i(n)·S(n+i) = b(n)</code>, or <code>None</code>.</p>
 <p>Present exactly when <code>boundary</code> is <code>&quot;nonzero&quot;</code>.  When the verdict
 is <code>&quot;vanishes&quot;</code> the right-hand side is <code>0</code> and this is <code>None</code>;
@@ -903,7 +903,7 @@ when it is <code>&quot;unknown&quot;</code> there is no recurrence for the sum t
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.boundary_reason">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">boundary_reason</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.boundary_reason" aria-label="Link to ZeilbergerCertificate.boundary_reason">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8073" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">boundary_reason</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.boundary_reason" aria-label="Link to ZeilbergerCertificate.boundary_reason">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8142" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Why the boundary verdict came out as it did, in one sentence.</p>
 <p>For <code>&quot;unknown&quot;</code> this is what stopped the proof — &quot;the limits were not
 supplied&quot;, &quot;the certificate has a pole at the endpoint&quot; — which is what
@@ -911,14 +911,14 @@ tells a caller whether to retry with a better range or close the branch.</p>
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.implies_sum_recurrence">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">implies_sum_recurrence</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.implies_sum_recurrence" aria-label="Link to ZeilbergerCertificate.implies_sum_recurrence">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8091" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">implies_sum_recurrence</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.implies_sum_recurrence" aria-label="Link to ZeilbergerCertificate.implies_sum_recurrence">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8160" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Whether a recurrence for the sum may be read off at all.</p>
 <p><code>True</code> for <code>&quot;vanishes&quot;</code> (homogeneous) and <code>&quot;nonzero&quot;</code>
 (inhomogeneous, with <code>boundary_rhs</code>), <code>False</code> for <code>&quot;unknown&quot;</code>.</p>
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.side_conditions">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">side_conditions</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.side_conditions" aria-label="Link to ZeilbergerCertificate.side_conditions">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8178" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">side_conditions</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.side_conditions" aria-label="Link to ZeilbergerCertificate.side_conditions">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8247" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Hypotheses the certificate does <strong>not</strong> establish, as plain strings.</p>
 <p>Mirrors <code>DerivedResult.verification[&quot;side_conditions&quot;]</code>.  This tracks
 <code>boundary</code>: a discharged hypothesis, a refuted one and an open one
@@ -929,11 +929,11 @@ permanent record of which range was assumed.</p>
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.derivation">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">derivation</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.derivation" aria-label="Link to ZeilbergerCertificate.derivation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8186" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">derivation</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.derivation" aria-label="Link to ZeilbergerCertificate.derivation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8255" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Human-readable derivation log for the search that produced this.</p>
 </div>
 </div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="ZeilbergerCertificate.boundary_at">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">boundary_at</span>(<span class="sig-p">k_lo</span>, <span class="sig-p">k_hi</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.boundary_at" aria-label="Link to ZeilbergerCertificate.boundary_at">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8103" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">boundary_at</span>(<span class="sig-p">k_lo</span>, <span class="sig-p">k_hi</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.boundary_at" aria-label="Link to ZeilbergerCertificate.boundary_at">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8172" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Re-decide the boundary hypothesis over a different summation range.</p>
 <p>Returns a <code>dict</code> with the same keys as the attributes above —
 <code>boundary</code>, <code>rhs</code>, <code>reason</code>, <code>valid_from</code>, <code>certificate_poles</code>,
@@ -943,7 +943,7 @@ expensive half.  Use it to ask what the <em>same</em> certificate says about
 </div>
 </div>
 <div class="member" id="ZeilbergerCertificate.to_lean">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_lean</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.to_lean" aria-label="Link to ZeilbergerCertificate.to_lean">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8213" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_lean</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ZeilbergerCertificate.to_lean" aria-label="Link to ZeilbergerCertificate.to_lean">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L8282" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Lean 4 certificate for the telescoping identity, or <code>None</code>.</p>
 <p>The emitted <code>example</code> binds <code>F : ℝ → ℝ → ℝ</code> and reals <code>n k</code>,
 assumes <code>F</code>&#39;s hypergeometric shift relations with denominators
@@ -965,7 +965,7 @@ Lean identifier); <a href="/docs/api/certificates/#to_lean"><code>to_lean()</cod
 <section class="sym" id="verify_wz_pair"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">verify_wz_pair</span>(<span class="sig-p">f</span>, <span class="sig-p">g</span>, <span class="sig-p">n</span>, <span class="sig-p">k</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#verify_wz_pair" aria-label="Link to verify_wz_pair">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7760" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#verify_wz_pair" aria-label="Link to verify_wz_pair">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L7829" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Check the WZ identity <code>F(n+1,k) - F(n,k) = G(n,k+1) - G(n,k)</code>.</p>
 <p>Returns <code>True</code> only when the identity is <em>proved</em> and <code>False</code> only when
 it is <em>refuted</em>.  The test is exact: both sides are normalised in
@@ -1421,7 +1421,7 @@ raised.</p>
 <section class="sym" id="ModularRecurrence"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">ModularRecurrence</span>(<span class="sig-p">coeffs</span>, <span class="sig-p">initial</span>, <span class="sig-sep">*</span>, <span class="sig-p">rhs</span><span class="sig-def">=None</span>, <span class="sig-p">start</span><span class="sig-def">=0</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence" aria-label="Link to ModularRecurrence">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21486" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence" aria-label="Link to ModularRecurrence">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21805" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A P-recursive recurrence prepared for evaluation modulo prime powers.</p>
 <p>Holds <code>Σ_{i=0}^{J} a_i(n)·S(n+i) = b(n)</code> with integer polynomial
 coefficients, plus the <code>J</code> initial values <code>S(start) … S(start+J-1)</code>.
@@ -1449,43 +1449,43 @@ with <a href="/docs/api/diff/#zeilberger"><code>zeilberger()</code></a>, or fit 
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> apery.value_mod(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10006</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">10007</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)        </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># …and at p = 10007, in ~5 ms</span></span>
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span></span></code></pre></div><div class="members"><div class="members-title">Properties</div><div class="member" id="ModularRecurrence.order">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">order</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.order" aria-label="Link to ModularRecurrence.order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21519" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">order</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.order" aria-label="Link to ModularRecurrence.order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21838" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Recurrence order <code>J</code>; <code>len(coeffs()) == order + 1</code>.</p>
 </div>
 </div>
 <div class="member" id="ModularRecurrence.degree">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">degree</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.degree" aria-label="Link to ModularRecurrence.degree">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21526" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">degree</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.degree" aria-label="Link to ModularRecurrence.degree">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21845" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Largest degree of any coefficient polynomial, the right-hand side
 included.</p>
 </div>
 </div>
 <div class="member" id="ModularRecurrence.start">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">start</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.start" aria-label="Link to ModularRecurrence.start">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21532" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">start</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.start" aria-label="Link to ModularRecurrence.start">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21851" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Index <code>n</code> that <code>initial[0]</code> belongs to.</p>
 </div>
 </div>
 <div class="member" id="ModularRecurrence.is_homogeneous">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_homogeneous</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.is_homogeneous" aria-label="Link to ModularRecurrence.is_homogeneous">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21538" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_homogeneous</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.is_homogeneous" aria-label="Link to ModularRecurrence.is_homogeneous">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21857" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Whether <code>b(n)</code> is identically zero.</p>
 </div>
 </div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="ModularRecurrence.coeffs">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coeffs</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.coeffs" aria-label="Link to ModularRecurrence.coeffs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21543" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coeffs</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.coeffs" aria-label="Link to ModularRecurrence.coeffs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21862" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>[a_0, …, a_J]</code>, each a list of exact ints, lowest degree first.</p>
 </div>
 </div>
 <div class="member" id="ModularRecurrence.rhs">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rhs</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.rhs" aria-label="Link to ModularRecurrence.rhs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21553" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rhs</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.rhs" aria-label="Link to ModularRecurrence.rhs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21872" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>b(n)</code> as a list of exact ints, lowest degree first; <code>[]</code> when
 homogeneous.</p>
 </div>
 </div>
 <div class="member" id="ModularRecurrence.initial">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">initial</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.initial" aria-label="Link to ModularRecurrence.initial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21558" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">initial</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.initial" aria-label="Link to ModularRecurrence.initial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21877" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>[S(start), …, S(start+J-1)]</code> as ints or <code>fractions.Fraction</code>.</p>
 </div>
 </div>
 <div class="member" id="ModularRecurrence.value_mod">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">value_mod</span>(<span class="sig-p">n</span>, <span class="sig-p">p</span>, <span class="sig-p">k</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.value_mod" aria-label="Link to ModularRecurrence.value_mod">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21579" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">value_mod</span>(<span class="sig-p">n</span>, <span class="sig-p">p</span>, <span class="sig-p">k</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.value_mod" aria-label="Link to ModularRecurrence.value_mod">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21898" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>S(n) mod p**k</code>, computed from the recurrence without ever forming
 <code>S(n)</code> over the integers.</p>
 
@@ -1493,7 +1493,7 @@ homogeneous.</p>
 </dd></div></dl></div>
 </div>
 <div class="member" id="ModularRecurrence.values_mod">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">values_mod</span>(<span class="sig-p">indices</span>, <span class="sig-p">p</span>, <span class="sig-p">k</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.values_mod" aria-label="Link to ModularRecurrence.values_mod">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21590" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">values_mod</span>(<span class="sig-p">indices</span>, <span class="sig-p">p</span>, <span class="sig-p">k</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.values_mod" aria-label="Link to ModularRecurrence.values_mod">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21909" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>[S(n) mod p**k for n in indices]</code>, in <strong>one</strong> forward pass.</p>
 <p>The indices are sorted internally and the residues come back in the
 order they were asked for, so evaluating a scattered set of indices
@@ -1501,7 +1501,7 @@ costs one run to the largest of them rather than one run each.</p>
 </div>
 </div>
 <div class="member" id="ModularRecurrence.evaluate">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">evaluate</span>(<span class="sig-p">indices</span>, <span class="sig-p">p</span>, <span class="sig-p">k</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.evaluate" aria-label="Link to ModularRecurrence.evaluate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21604" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">evaluate</span>(<span class="sig-p">indices</span>, <span class="sig-p">p</span>, <span class="sig-p">k</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.evaluate" aria-label="Link to ModularRecurrence.evaluate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L21923" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Like <code>values_mod()</code>, but returns the full
 <a href="/docs/api/numerics/#ModularEvaluation"><code>ModularEvaluation</code></a> with its precision accounting.</p>
 </div>
