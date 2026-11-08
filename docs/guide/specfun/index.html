@@ -144,9 +144,12 @@ recurrences over the rationals. Past order 200: <code>E-SPECFN-004</code>.</li>
 <code>Li′_s(z) = Li_{s−1}(z)/z</code>, <code>ζ′(s) = zeta_prime(s)</code> (exact at <code>0, −1, 2</code> and
 the negative even integers; numeric through Arb&#39;s <code>acb_dirichlet_zeta_jet</code>),
 <code>H′_ν = (H_{ν−1} − H_{ν+1})/2</code> for <code>hankel1</code>/<code>hankel2</code> (<code>J ± iY</code>, complex-valued;
-half-integer orders expand to <code>exp(±ix)</code> forms). A derivative in the order or
-in <code>s</code>, and the second derivative of <code>zeta</code>, raises <code>E-DIFF-001</code> — it has no
-closed form, and is never silently dropped.</p>
+half-integer orders expand to <code>exp(±ix)</code> forms). Higher derivatives of <code>zeta</code>
+are the node <code>zeta_deriv(n, s)</code> (<code>ζ⁽ⁿ⁾(s)</code>, <code>d/ds zeta_deriv(n, s) = zeta_deriv(n+1, s)</code>;
+<code>zeta_deriv(0, s) = zeta(s)</code>, <code>zeta_deriv(1, s) = zeta_prime(s)</code>), which evaluates in
+<code>f64</code>, balls and at complex <code>s</code> from Arb&#39;s zeta jet for a literal order up to 200.
+A derivative in the order or in <code>s</code> (of <code>bessel_j(s, x)</code> etc.) raises
+<code>E-DIFF-001</code> — it has no closed form, and is never silently dropped.</p>
 <h2 id="numerics"><a class="hanchor" href="#numerics" aria-hidden="true" tabindex="-1">#</a>Numerics</h2>
 <p><code>f64</code> values are certified to 53 bits by Arb (<code>arb_hypgeom_bessel_*</code>,
 <code>arb_hypgeom_airy</code>, <code>arb_zeta</code>, <code>arb_hurwitz_zeta</code>, <code>arb_polylog</code>); balls are

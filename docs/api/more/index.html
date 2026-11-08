@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Everything else API · Alkahest Docs</title>
-<meta name="description" content="Python API reference for everything else in Alkahest: 10 documented symbols with signatures, parameters and source links.">
+<meta name="description" content="Python API reference for everything else in Alkahest: 11 documented symbols with signatures, parameters and source links.">
 <meta property="og:title" content="Everything else API · Alkahest Docs">
-<meta property="og:description" content="Python API reference for everything else in Alkahest: 10 documented symbols with signatures, parameters and source links.">
+<meta property="og:description" content="Python API reference for everything else in Alkahest: 11 documented symbols with signatures, parameters and source links.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)">
@@ -68,7 +68,7 @@
     <section class="sym" id="binomial"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">binomial</span>(<span class="sig-p">n</span>, <span class="sig-p">k</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#binomial" aria-label="Link to binomial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1197" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#binomial" aria-label="Link to binomial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1198" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The binomial coefficient <code>C(n, k)</code>.</p>
 <p>For integer <code>k</code> and integer <code>n</code> (Python <code>int</code> or integer literals)
 this is the exact integer <code>n·(n−1)···(n−k+1)/k!</code> — <code>0</code> for <code>k &lt; 0</code>,
@@ -95,7 +95,7 @@ symbols are never moved between pools (<code>E-POOL-001</code>).</p>
 <section class="sym" id="expand"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">expand</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#expand" aria-label="Link to expand">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1097" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#expand" aria-label="Link to expand">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1098" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Distribute products and positive integer powers over sums.</p>
 <p><code>expand((x + 1)**3)</code> is <code>x**3 + 3*x**2 + 3*x + 1</code> and
 <code>expand((x + 1)**2 / x)</code> is <code>x + 2 + 1/x</code>: each term is split into its
@@ -115,7 +115,7 @@ number.</p>
 <section class="sym" id="factor"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">factor</span>(<span class="sig-p">expr</span>, <span class="sig-p">vars</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#factor" aria-label="Link to factor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1059" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#factor" aria-label="Link to factor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1060" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Factor <em>expr</em> over the integers, returning an <a href="/docs/api/core/#Expr"><code>Expr</code></a> product.</p>
 <p><em>expr</em> is put over a common denominator (as <a href="/docs/api/simplify/#cancel"><code>cancel()</code></a> does) and the
 numerator and denominator are each factored over ℤ — multivariate FLINT,
@@ -134,7 +134,7 @@ they were exact. Accepts a <a href="/docs/api/core/#DerivedResult"><code>Derived
 <section class="sym" id="factorial"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">factorial</span>(<span class="sig-p">n</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#factorial" aria-label="Link to factorial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1161" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#factorial" aria-label="Link to factorial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1162" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>n!</code> — an exact integer for a Python <code>int</code> or integer literal
 <code>n &gt;= 0</code>, otherwise <code>gamma(n + 1)</code>.</p>
 <p>A negative integer has no factorial (<code>Γ</code> has a pole there) and raises
@@ -158,6 +158,23 @@ engine (Buchberger if that is inconclusive), which an active <code>Budget</code>
 stop with <code>BudgetExceededError</code>.</p>
 <p>Reset by each <code>solve</code> call, like <a href="/docs/api/solve/#solve_side_conditions"><code>solve_side_conditions()</code></a>.</p>
 </div></section>
+<section class="sym" id="zeta_deriv"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">zeta_deriv</span>(<span class="sig-p">n</span>, <span class="sig-p">s</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#zeta_deriv" aria-label="Link to zeta_deriv">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L273" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>The <code>n</code>-th derivative <code>zeta^(n)(s)</code> of the Riemann zeta function, the
+node <code>zeta_deriv(n, s)</code> (mpmath&#39;s <code>zeta(s, 1, n)</code>).</p>
+<p><code>zeta_deriv(0, s)</code> is <code>zeta(s)</code> and <code>zeta_deriv(1, s)</code> is
+<code>zeta_prime(s)</code> (with their exact values).  <code>diff</code> produces it for the
+second and higher derivatives of <code>zeta</code>, and
+<code>d/ds zeta_deriv(n, s) = zeta_deriv(n + 1, s)</code>.  Evaluates in <code>f64</code>,
+balls and at complex <code>s</code> through Arb&#39;s zeta jet for a literal order
+<code>0 &lt;= n &lt;= 200</code>.</p>
+<p>Raises <code>SpecialFunctionError</code>: <code>E-SPECFN-*</code> for a literal order that is
+not a non-negative integer, <code>E-SPECFN-006</code> at the pole <code>s = 1</code>.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">as</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.ExprPool(); s </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> p.symbol(</span><span style="--shiki-light:#032F62;--shiki-dark:#96D0FF">"s"</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ak.diff(ak.diff(ak.zeta(s), s).value, s).value   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># zeta_deriv(2, s)</span></span></code></pre></div></div></section>
 <section class="sym" id="E"><div class="sym-head">
   <span class="kind kind-data">constant</span>
   <pre class="sig"><code><span class="sig-name">E</span></code></pre>
@@ -187,7 +204,7 @@ stop with <code>BudgetExceededError</code>.</p>
 </main>
 <aside class="toc" aria-label="On this page">
   <div class="toc-inner">
-    <div class="toc-title">On this page</div><ul><li class="d3"><a href="#binomial">binomial</a></li><li class="d3"><a href="#default_pool">default_pool</a></li><li class="d3"><a href="#expand">expand</a></li><li class="d3"><a href="#factor">factor</a></li><li class="d3"><a href="#factorial">factorial</a></li><li class="d3"><a href="#solve_proof_status">solve_proof_status</a></li><li class="d3"><a href="#E">E</a></li><li class="d3"><a href="#I">I</a></li><li class="d3"><a href="#oo">oo</a></li><li class="d3"><a href="#pi">pi</a></li></ul>
+    <div class="toc-title">On this page</div><ul><li class="d3"><a href="#binomial">binomial</a></li><li class="d3"><a href="#default_pool">default_pool</a></li><li class="d3"><a href="#expand">expand</a></li><li class="d3"><a href="#factor">factor</a></li><li class="d3"><a href="#factorial">factorial</a></li><li class="d3"><a href="#solve_proof_status">solve_proof_status</a></li><li class="d3"><a href="#zeta_deriv">zeta_deriv</a></li><li class="d3"><a href="#E">E</a></li><li class="d3"><a href="#I">I</a></li><li class="d3"><a href="#oo">oo</a></li><li class="d3"><a href="#pi">pi</a></li></ul>
     <a class="toc-edit" href="https://github.com/alkahest-cas/alkahest/blob/main/website/docs/scripts/extract_api.py" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit this page</a>
     <a class="toc-top" href="#top">Back to top</a>
   </div>

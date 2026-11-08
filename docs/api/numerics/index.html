@@ -87,7 +87,7 @@ Jacobian. <code>numpy_eval</code> on it returns an array with one row per output
 <section class="sym" id="eval_expr"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">eval_expr</span>(<span class="sig-p">expr</span>, <span class="sig-p">bindings</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#eval_expr" aria-label="Link to eval_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2739" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#eval_expr" aria-label="Link to eval_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2765" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Numerically evaluate <em>expr</em>; accepts <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> as <em>expr</em>.</p>
 <p>Raises <a href="/docs/api/errors/#DomainError"><code>DomainError</code></a> (a <code>ValueError</code>) if <em>expr</em> is
 mathematically undefined at <em>bindings</em> — e.g. a removable singularity
@@ -99,7 +99,7 @@ everywhere-defined form instead.</p>
 <section class="sym" id="numpy_eval"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">numpy_eval</span>(<span class="sig-p">compiled_fn</span>, <span class="sig-p">*arrays</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#numpy_eval" aria-label="Link to numpy_eval">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L743" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#numpy_eval" aria-label="Link to numpy_eval">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L744" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Vectorised evaluation of a <a href="/docs/api/numerics/#CompiledFn"><code>CompiledFn</code></a> over arrays.</p>
 <p>Phase 25 / PA-8 — NumPy / JAX / PyTorch / DLPack array evaluation.</p>
 <p>Evaluation runs entirely natively: input arrays are read via the buffer
@@ -146,7 +146,7 @@ including the common case of one list holding all of them.</p>
 <section class="sym" id="numpy_eval_par"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">numpy_eval_par</span>(<span class="sig-p">compiled_fn</span>, <span class="sig-p">*arrays</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#numpy_eval_par" aria-label="Link to numpy_eval_par">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L825" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#numpy_eval_par" aria-label="Link to numpy_eval_par">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L826" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Parallel vectorised evaluation of a <a href="/docs/api/numerics/#CompiledFn"><code>CompiledFn</code></a> over arrays.</p>
 <p>Identical to <a href="/docs/api/numerics/#numpy_eval"><code>numpy_eval()</code></a> but distributes the N evaluation points
 across all available CPU cores using Rayon.  The Python GIL is released
@@ -512,7 +512,7 @@ coefficient is a unit throughout.</p>
     <span class="sig-sep">*</span>,
     <span class="sig-p">digits</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#guess_relation" aria-label="Link to guess_relation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2576" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#guess_relation" aria-label="Link to guess_relation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2602" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Search for integers <code>aᵢ</code> with <code>Σ aᵢ·constantsᵢ ≈ 0</code>.</p>
 <p>Returns the coefficients as a list of Python <code>int</code> (of any size), or
 <code>None</code> when no relation is found.</p>
@@ -563,7 +563,7 @@ values themselves (the search width is still capped at their precision).</p>
     <span class="sig-p">precision_bits</span><span class="sig-def">=None</span>,
     <span class="sig-p">margin_digits</span><span class="sig-def">=None</span>
 )<span class="sig-ret"> → dict</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#relation_confidence" aria-label="Link to relation_confidence">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2453" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#relation_confidence" aria-label="Link to relation_confidence">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L2479" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Judge a found relation against the precision its inputs actually carry.</p>
 <p>Pinning down <code>n</code> coefficients bounded by <code>H</code> selects one of the
 <code>(2H+1)ⁿ</code> integer vectors in that box, so it takes about

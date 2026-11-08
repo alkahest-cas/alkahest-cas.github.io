@@ -163,7 +163,7 @@ A non-integer literal order raises <code>E-SPECFN-007</code>.</p>
 <section class="sym" id="hankel1"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">hankel1</span>(<span class="sig-p">nu</span>, <span class="sig-p">x</span>, <span class="sig-sep">*</span>, <span class="sig-p">expand</span><span class="sig-def">=True</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#hankel1" aria-label="Link to hankel1">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L351" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#hankel1" aria-label="Link to hankel1">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L377" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Hankel function of the first kind <code>H1_nu(x) = J_nu(x) + i*Y_nu(x)</code>
 (DLMF 10.4; SymPy&#39;s <code>hankel1</code>, mpmath&#39;s <code>hankel1</code>).</p>
 <p>Complex-valued.  A half-integer order with <code>expand=True</code> (the default)
@@ -184,7 +184,7 @@ order 200 (use <code>expand=False</code>).</p>
 <section class="sym" id="hankel2"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">hankel2</span>(<span class="sig-p">nu</span>, <span class="sig-p">x</span>, <span class="sig-sep">*</span>, <span class="sig-p">expand</span><span class="sig-def">=True</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#hankel2" aria-label="Link to hankel2">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L365" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#hankel2" aria-label="Link to hankel2">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L391" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Hankel function of the second kind <code>H2_nu(x) = J_nu(x) - i*Y_nu(x)</code>
 (DLMF 10.4); see <code>hankel1</code>.  For real <code>x</code> it is the complex conjugate
 of <code>hankel1</code> at the same real order.</p>
@@ -227,7 +227,7 @@ of <code>hankel1</code> at the same real order.</p>
 integers (<code>zeta(0) = -1/2</code>, <code>zeta(-1) = -1/12</code>, <code>zeta(-2n) = 0</code>);
 <code>zeta(3)</code> stays <code>zeta(3)</code> (no closed form is known).  Evaluates in
 <code>f64</code>, balls and at complex <code>s</code> through Arb.  <code>diff(zeta(s), s)</code> is
-<code>zeta_prime(s)</code>; higher derivatives raise <code>DiffError</code> (<code>E-DIFF-001</code>).</p>
+<code>zeta_prime(s)</code>; higher derivatives are <code>zeta_deriv(n, s)</code>.</p>
 <p>Raises <code>SpecialFunctionError</code> (<code>E-SPECFN-006</code>) at the pole <code>s = 1</code>.</p>
 </div></section>
 <section class="sym" id="zeta_prime"><div class="sym-head">
@@ -239,7 +239,7 @@ integers (<code>zeta(0) = -1/2</code>, <code>zeta(-1) = -1/12</code>, <code>zeta
 <code>s = 2</code> (<code>pi**2/6 (EulerGamma + log(2 pi) - 12 log(Glaisher))</code>) and the
 negative even integers (<code>zeta&#39;(-2) = -zeta(3)/(4 pi**2)</code>); the node
 <code>zeta_prime(s)</code> elsewhere.  This is what <code>diff(zeta(s), s)</code> returns;
-the second derivative has no node and is refused (<code>E-DIFF-001</code>).
+its derivative is <code>zeta_deriv(2, s)</code>.
 Evaluates in <code>f64</code>, balls (<code>interval_eval</code>) and at complex <code>s</code>
 through Arb (<code>acb_dirichlet_zeta_jet</code>).</p>
 <p>Raises <code>SpecialFunctionError</code> (<code>E-SPECFN-006</code>) at the pole <code>s = 1</code>.</p>
@@ -249,7 +249,7 @@ through Arb (<code>acb_dirichlet_zeta_jet</code>).</p>
 <section class="sym" id="hurwitz_zeta"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">hurwitz_zeta</span>(<span class="sig-p">s</span>, <span class="sig-p">a</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#hurwitz_zeta" aria-label="Link to hurwitz_zeta">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L381" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#hurwitz_zeta" aria-label="Link to hurwitz_zeta">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L407" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Hurwitz zeta function <code>zeta(s, a) = sum_{k&gt;=0} (k + a)**(-s)</code>
 (DLMF 25.11; SymPy&#39;s two-argument <code>zeta</code>).</p>
 <p><code>hurwitz_zeta(s, 1) = zeta(s)</code>, <code>hurwitz_zeta(s, 1/2) = (2**s - 1)*zeta(s)</code>,
@@ -259,7 +259,7 @@ through Arb (<code>acb_dirichlet_zeta_jet</code>).</p>
 <section class="sym" id="polylog"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">polylog</span>(<span class="sig-p">s</span>, <span class="sig-p">z</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#polylog" aria-label="Link to polylog">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L402" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#polylog" aria-label="Link to polylog">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L428" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Polylogarithm <code>Li_s(z)</code> (DLMF 25.12; SymPy&#39;s <code>polylog</code>), principal
 branch with the cut <code>[1, oo)</code>.</p>
 <p><code>polylog(2, z)</code> is <code>dilog(z)</code>; <code>polylog(1, z) = -log(1 - z)</code>;
@@ -273,7 +273,7 @@ function (<code>Li_{-1}(z) = z/(1 - z)**2</code>); <code>polylog(s, 1) = zeta(s)
 <section class="sym" id="expand_special"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">expand_special</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#expand_special" aria-label="Link to expand_special">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L417" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#expand_special" aria-label="Link to expand_special">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L443" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Rewrite every Bessel node whose order is now a half-integer literal (and
 every spherical Bessel node with an integer order) into its elementary
 form, and re-canonicalise <code>zeta</code> / <code>hurwitz_zeta</code> / <code>polylog</code> nodes —
@@ -303,7 +303,7 @@ into a float.</p>
 <section class="sym" id="euler_gamma"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">euler_gamma</span>(<span class="sig-p">pool</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#euler_gamma" aria-label="Link to euler_gamma">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L446" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#euler_gamma" aria-label="Link to euler_gamma">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L472" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The Euler–Mascheroni constant <code>gamma = 0.5772...</code> as the exact symbol
 <code>EulerGamma</code> in <code>pool</code> (SymPy&#39;s <code>EulerGamma</code>).</p>
 <p>Prints and parses as <code>EulerGamma</code> (LaTeX <code>\gamma</code>); every numeric
@@ -316,21 +316,21 @@ float: <code>simplify(digamma(1))</code> is <code>-EulerGamma</code>.</p>
 <section class="sym" id="catalan"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">catalan</span>(<span class="sig-p">pool</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#catalan" aria-label="Link to catalan">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L453" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#catalan" aria-label="Link to catalan">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L479" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Catalan&#39;s constant <code>G = sum (-1)**k/(2k+1)**2 = 0.9159...</code> as the exact
 symbol <code>Catalan</code> (LaTeX <code>G</code>); <code>trigamma(1/4) = pi**2 + 8*Catalan</code>.</p>
 </div></section>
 <section class="sym" id="glaisher"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">glaisher</span>(<span class="sig-p">pool</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#glaisher" aria-label="Link to glaisher">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L460" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#glaisher" aria-label="Link to glaisher">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L486" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The Glaisher–Kinkelin constant <code>A = 1.2824...</code> as the exact symbol
 <code>Glaisher</code> (LaTeX <code>A</code>).</p>
 </div></section>
 <section class="sym" id="stieltjes_constant"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">stieltjes_constant</span>(<span class="sig-p">pool</span>, <span class="sig-p">n</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#stieltjes_constant" aria-label="Link to stieltjes_constant">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L479" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#stieltjes_constant" aria-label="Link to stieltjes_constant">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L505" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The Stieltjes constant <code>gamma_n</code> (<code>n &gt;= 0</code>) as an exact symbol.</p>
 <p><code>gamma_0</code> is <code>EulerGamma</code>; <code>gamma_n</code> for <code>1 &lt;= n &lt;= 30</code> is the
 symbol <code>StieltjesGamma{n}</code> (LaTeX <code>\\gamma_{n}</code>). They are the
@@ -345,7 +345,7 @@ folded into floats; <code>evaluate</code> and <code>interval_eval</code> resolve
 <section class="sym" id="polygamma"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">polygamma</span>(<span class="sig-p">n</span>, <span class="sig-p">x</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#polygamma" aria-label="Link to polygamma">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L511" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#polygamma" aria-label="Link to polygamma">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L537" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The polygamma function <code>polygamma(n, x)</code> = <code>psi^(n)(x)</code>, the
 <code>(n+1)</code>-th derivative of <code>log(gamma(x))</code> (DLMF 5.15; SymPy&#39;s
 <code>polygamma</code>).</p>
@@ -372,7 +372,7 @@ expand the same way.</p>
 <section class="sym" id="loggamma"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">loggamma</span>(<span class="sig-p">x</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#loggamma" aria-label="Link to loggamma">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L276" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#loggamma" aria-label="Link to loggamma">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L302" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Log-gamma function <code>loggamma(x) = log(Gamma(x))</code> (DLMF 5.4; SymPy&#39;s and
 mpmath&#39;s <code>loggamma</code>).</p>
 <p>Real for <code>x &gt; 0</code>; for complex <code>x</code> the principal branch (the analytic
@@ -392,7 +392,7 @@ non-positive integer literal).</p>
 <section class="sym" id="gammasimp"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">gammasimp</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#gammasimp" aria-label="Link to gammasimp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L305" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#gammasimp" aria-label="Link to gammasimp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L331" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Rewrite products and quotients of <code>gamma</code> with exact identities (SymPy&#39;s
 <code>gammasimp</code>):</p>
 <ul>
@@ -424,7 +424,7 @@ user-guide chapter for the table.</p>
 <section class="sym" id="hyper"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">hyper</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>, <span class="sig-p">z</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#hyper" aria-label="Link to hyper">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L623" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#hyper" aria-label="Link to hyper">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L649" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The generalized hypergeometric function <code>pFq(a; b; z)</code> (DLMF 16.2;
 SymPy&#39;s <code>hyper(a, b, z)</code>).</p>
 <p><code>a</code> and <code>b</code> are sequences of parameters (Expr, int, Fraction).  The
@@ -447,7 +447,7 @@ that is a non-positive integer (unless the series terminates first).</p>
 <section class="sym" id="expand_hyper"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">expand_hyper</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#expand_hyper" aria-label="Link to expand_hyper">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L658" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#expand_hyper" aria-label="Link to expand_hyper">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L684" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Rewrite every <code>hyper</code> node into a polynomial (a terminating series) or a
 closed form where one is known — SymPy&#39;s <code>hyperexpand</code>:
 <code>0F0(;;z) = exp(z)</code>, <code>1F0(a;;z) = (1-z)**(-a)</code>,
@@ -467,7 +467,7 @@ series of degree above 200.</p>
 <section class="sym" id="hyper_transform"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">hyper_transform</span>(<span class="sig-p">expr</span>, <span class="sig-p">kind</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#hyper_transform" aria-label="Link to hyper_transform">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L699" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#hyper_transform" aria-label="Link to hyper_transform">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L725" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Rewrite one hypergeometric node by a classical transformation and return
 the exact right-hand side (Gamma prefactors as <code>gamma</code> nodes, the
 transformed series as new <code>hyper</code> nodes).</p>
@@ -501,7 +501,7 @@ non-positive integer, and for parameters in no quadratic family;
 <section class="sym" id="beta"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">beta</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#beta" aria-label="Link to beta">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L552" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#beta" aria-label="Link to beta">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L578" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The Euler Beta function <code>beta(a, b) = gamma(a)*gamma(b)/gamma(a + b)</code>
 (DLMF 5.12.1; SymPy&#39;s <code>beta</code>, mpmath&#39;s <code>beta</code>).</p>
 <p>Args: <code>a</code>, <code>b</code> (Expr, int or Fraction; at least one an Expr).
@@ -517,7 +517,7 @@ a non-positive integer (a pole).</p>
 <section class="sym" id="uppergamma"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">uppergamma</span>(<span class="sig-p">s</span>, <span class="sig-p">z</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#uppergamma" aria-label="Link to uppergamma">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L575" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#uppergamma" aria-label="Link to uppergamma">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L601" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The upper incomplete gamma function <code>uppergamma(s, z)</code> =
 <code>integral(t**(s-1)*exp(-t), (t, z, oo))</code> (DLMF 8.2.2; SymPy&#39;s
 <code>uppergamma</code>, mpmath&#39;s <code>gammainc(s, z)</code>).</p>
@@ -536,7 +536,7 @@ literal <code>s &lt;= 0</code>.</p>
 <section class="sym" id="lowergamma"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">lowergamma</span>(<span class="sig-p">s</span>, <span class="sig-p">z</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#lowergamma" aria-label="Link to lowergamma">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L596" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#lowergamma" aria-label="Link to lowergamma">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/specfun.rs#L622" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The lower incomplete gamma function <code>lowergamma(s, z)</code> =
 <code>integral(t**(s-1)*exp(-t), (t, 0, z))</code> (DLMF 8.2.1; SymPy&#39;s
 <code>lowergamma</code>, mpmath&#39;s <code>gammainc(s, 0, z)</code>).</p>

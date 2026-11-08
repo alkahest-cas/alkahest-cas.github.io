@@ -71,7 +71,7 @@
 <section class="sym" id="diff"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">diff</span>(<span class="sig-p">expr</span>, <span class="sig-p">var</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#diff" aria-label="Link to diff">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1248" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#diff" aria-label="Link to diff">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1249" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Differentiate <em>expr</em> with respect to <em>var</em>.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt><dd><p>Expression to differentiate.  If a <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> is passed
@@ -95,7 +95,7 @@ different path; useful for cross-validation.</p>
 <section class="sym" id="symbolic_grad"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">symbolic_grad</span>(<span class="sig-p">expr</span>, <span class="sig-p">vars</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#symbolic_grad" aria-label="Link to symbolic_grad">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L905" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#symbolic_grad" aria-label="Link to symbolic_grad">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L906" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Symbolic partial derivatives of <em>expr</em> with respect to each variable in <em>vars</em>.</p>
 <p>This is <strong>not</strong> the same as <a href="/docs/api/transform/#grad"><code>grad()</code></a> from <code>_transform</code>, which
 differentiates a <a href="/docs/api/transform/#TracedFn"><code>TracedFn</code></a> produced by <a href="/docs/api/transform/#trace"><code>trace()</code></a>
@@ -192,7 +192,7 @@ accepts an equation written with <code>y(t)</code> and its derivatives.</p>
 <section class="sym" id="integrate"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">integrate</span>(<span class="sig-p">expr</span>, <span class="sig-p">var</span>, <span class="sig-p">a</span><span class="sig-def">=None</span>, <span class="sig-p">b</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#integrate" aria-label="Link to integrate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1277" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#integrate" aria-label="Link to integrate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1278" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Indefinite or definite integral of <em>expr</em> with respect to <em>var</em>.</p>
 <p>With two arguments this returns the indefinite integral (antiderivative).
 When both bounds <em>a</em> and <em>b</em> are supplied it returns the definite integral
@@ -402,7 +402,7 @@ accepted with the value in the condition slot, which <code>diff</code> and
 <section class="sym" id="limit"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">limit</span>(<span class="sig-p">expr</span>, <span class="sig-p">var</span>, <span class="sig-p">point</span>, <span class="sig-p">dir</span><span class="sig-def">=None</span>, <span class="sig-sep">*</span>, <span class="sig-p">continuous</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#limit" aria-label="Link to limit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1733" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#limit" aria-label="Link to limit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1759" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Compute the limit of <em>expr</em> as <em>var</em> → <em>point</em>.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div><div class="param"><dt><code class="pname">var</code><span class="ptype">Expr</span></dt></div><div class="param"><dt><code class="pname">point</code><span class="ptype">Expr</span></dt></div><div class="param"><dt><code class="pname">dir</code><span class="ptype">str or None</span></dt><dd><p><code>&quot;+&quot;</code> for right limit, <code>&quot;-&quot;</code> for left limit.</p>
@@ -442,7 +442,7 @@ comparing against an <a href="/docs/api/core/#Expr"><code>Expr</code></a> direct
 <section class="sym" id="series"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">series</span>(<span class="sig-p">expr</span>, <span class="sig-p">var</span>, <span class="sig-p">point</span>, <span class="sig-p">order</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#series" aria-label="Link to series">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1645" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#series" aria-label="Link to series">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1647" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Truncated Taylor/Laurent series expansion.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code><span class="ptype">Expr or DerivedResult</span></dt></div><div class="param"><dt><code class="pname">var</code><span class="ptype">Expr</span></dt><dd><p>Expansion variable.</p>
@@ -484,7 +484,11 @@ function cannot hold: <code>sqrt(x) = x**(1/2)</code> is a Puiseux series, and
 ramification index, and only after verifying it).  <code>Series</code> carries no
 ramification and every consumer of the underlying expansion reads an
 <em>integer</em> valuation, so the fractional case lives in a sibling type rather
-than widening this one — the refusal here is deliberate, not a gap:</p>
+than widening this one — the refusal here is deliberate, not a gap. The
+refusal says so: for <code>series(sqrt(x), x, 0, 3)</code>, <code>sqrt(x)*exp(x)</code> or
+<code>x**(1/3)*sin(x)</code> its message reads &quot;not a power series at the expansion
+point: it is a branch point …&quot;, names <code>puiseux_series</code> and ends with the
+verified Puiseux expansion itself (<code>x^(1/2) + O(x^(3))</code>):</p>
 <div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067"> from</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> alkahest.experimental </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">import</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> puiseux_series</span></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> px </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> puiseux_series(sqrt(sin(x)), x, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), </span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">5</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)  </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># doctest: +SKIP</span></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">>>></span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> px.ramification, px.valuation                            </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># doctest: +SKIP</span></span>
@@ -534,7 +538,7 @@ wrong thing to substitute back into an identity.</p>
 <section class="sym" id="sum_definite"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">sum_definite</span>(<span class="sig-p">expr</span>, <span class="sig-p">k</span>, <span class="sig-p">lo</span>, <span class="sig-p">hi</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#sum_definite" aria-label="Link to sum_definite">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1812" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#sum_definite" aria-label="Link to sum_definite">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1838" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Definite symbolic sum of <em>expr</em> for <em>k</em> from <em>lo</em> to <em>hi</em> (inclusive).</p>
 <p>Uses Gosper / hypergeometric summation, which covers the standard
 first-course cases directly: Faulhaber sums (<code>Σ k</code>, <code>Σ k²</code>, <code>Σ k³</code>,
@@ -620,7 +624,7 @@ superposition <code>Σ_{k=0}^{n-1} e^{-ke·k·τ}</code>.</p>
 <section class="sym" id="sum_indefinite"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">sum_indefinite</span>(<span class="sig-p">expr</span>, <span class="sig-p">k</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#sum_indefinite" aria-label="Link to sum_indefinite">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1798" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#sum_indefinite" aria-label="Link to sum_indefinite">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1824" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Indefinite symbolic sum of <em>expr</em> with respect to index <em>k</em>.</p>
 <p>Same algorithm family as <a href="/docs/api/diff/#sum_definite"><code>sum_definite()</code></a> (Gosper / hypergeometric),
 which covers polynomial terms (Faulhaber sums, e.g. <code>Σ k</code>, <code>Σ k²</code>)
@@ -630,7 +634,7 @@ hypergeometric in <code>k</code>, so no separate handler is needed.</p>
 <section class="sym" id="product_definite"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">product_definite</span>(<span class="sig-p">expr</span>, <span class="sig-p">k</span>, <span class="sig-p">lo</span>, <span class="sig-p">hi</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#product_definite" aria-label="Link to product_definite">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1925" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#product_definite" aria-label="Link to product_definite">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1951" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Definite symbolic product of <em>expr</em> for <em>k</em> from <em>lo</em> to <em>hi</em> (inclusive).</p>
 <p>Supports <code>q ∈ ℚ(k)</code> whose numerator and denominator split into ℤ-linear
 factors; the result is emitted as a ratio of <code>gamma</code> values times integer
@@ -644,7 +648,7 @@ reversal convention for <code>hi &lt; lo</code> rather than treating it as empty
 <section class="sym" id="product_indefinite"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">product_indefinite</span>(<span class="sig-p">expr</span>, <span class="sig-p">k</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#product_indefinite" aria-label="Link to product_indefinite">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1917" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#product_indefinite" aria-label="Link to product_indefinite">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1943" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Indefinite symbolic product of <em>expr</em> with respect to index <em>k</em>.</p>
 </div></section>
 <section class="sym" id="Product"><div class="sym-head">
@@ -670,7 +674,7 @@ out = ah.simplify(prod.doit().value)</p>
 <section class="sym" id="rsolve"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">rsolve</span>(<span class="sig-p">equation</span>, <span class="sig-p">n</span>, <span class="sig-p">seq_name</span>, <span class="sig-p">initials</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#rsolve" aria-label="Link to rsolve">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1951" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#rsolve" aria-label="Link to rsolve">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1977" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Solve a linear recurrence; <em>equation</em> may be <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a>.</p>
 <p><em>equation</em> is read as <code>equation == 0</code> and may be written with either
 spelling of the shift — <code>f(n+1) - f(n) - n**2</code> and

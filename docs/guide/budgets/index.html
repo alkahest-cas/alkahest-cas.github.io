@@ -206,7 +206,7 @@ certificate up to these bounds&quot;.</p>
 <li><p><strong><code>sos_decompose</code> / <code>prove_nonneg</code></strong> — between SDP solves (already the case before).</p>
 </li>
 <li><p><strong><code>alkahest.number_theory.discrete_log</code></strong> — Pohlig–Hellman over the (budgeted)
-factorisation of <code>p − 1</code>, polling every 4096 group operations of each baby-step
+factorisation of <code>p − 1</code> (of the modulus and each <code>φ(pᵏ)</code> for a composite modulus), polling every 4096 group operations of each baby-step
 giant-step / Pollard-rho subgroup solve. It used to be a linear sweep with no
 checkpoint (<code>p = 2³¹−1</code> ran 55 s against a 2 s budget); smooth orders such as
 <code>2¹²⁷−1</code>&#39;s are now instant, and a 61-bit prime order stops at the budget.</p>
