@@ -77,6 +77,13 @@
 Diophantine and homotopy work out of the box), the pure-Rust <strong>Cranelift JIT</strong> (so
 <code>alkahest.jit_is_available()</code> is <code>True</code> without a system LLVM), and the Rayon-backed
 <strong>multi-core paths</strong>. They do <strong>not</strong> include the LLVM JIT (<code>llvm_jit</code>) or <code>cuda</code>.</p>
+<p>Wheels exist for Linux (manylinux_2_28) x86_64 and aarch64, macOS arm64 and Windows
+x86_64. Anywhere else, such as Intel macOS or musl Linux, <code>pip install alkahest</code> falls
+back to the source distribution and compiles it. That needs a Rust toolchain and
+FLINT ≥ 3.3 with GMP and MPFR; without FLINT the build stops and prints how to install
+it. A build from the source distribution has the default Cargo features, <code>egraph</code> and
+<code>groebner</code>: no JIT and no <code>parallel</code>. For those, <a href="#from-source">build from a checkout</a>
+with <code>--features</code>.</p>
 <blockquote><h3 id="parallel-is-on-in-the-default-wheel--but-still-check-it"><a class="hanchor" href="#parallel-is-on-in-the-default-wheel--but-still-check-it" aria-hidden="true" tabindex="-1">#</a><code>parallel</code> is on in the default wheel — but still check it</h3>
 <p><code>capabilities()[&quot;features&quot;][&quot;parallel&quot;]</code> is <code>True</code> on every wheel published to PyPI, on
 Linux, macOS and Windows alike. The <code>parallel</code> Cargo feature is what powers the sharded
@@ -135,9 +142,15 @@ from available Python functions:</p>
 </tr>
 </thead><tbody><tr>
 <td>Default PyPI wheel</td>
-<td>Linux x86_64, macOS arm64, Windows x86_64</td>
+<td>Linux x86_64 and aarch64, macOS arm64, Windows x86_64</td>
 <td><code>egraph</code>, <code>groebner</code>, <code>cranelift_jit</code>, <code>parallel</code></td>
 <td><code>True</code></td>
+</tr>
+<tr>
+<td>PyPI source distribution</td>
+<td>Linux x86_64 (built in CI); anywhere with Rust and FLINT ≥ 3.3</td>
+<td><code>egraph</code>, <code>groebner</code></td>
+<td><code>False</code></td>
 </tr>
 <tr>
 <td>Release <code>+jit</code></td>
