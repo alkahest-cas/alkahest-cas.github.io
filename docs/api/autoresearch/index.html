@@ -671,7 +671,7 @@ formula is an error (<code>E-SMT-002</code>), not a silent downgrade.</p>
     <span class="sig-p">budget</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>,
     <span class="sig-p">pool</span><span class="sig-ann">: Any</span><span class="sig-def">=None</span>
 )<span class="sig-ret"> → SmtResult</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#smt.solve" aria-label="Link to smt.solve">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1099" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.solve" aria-label="Link to smt.solve">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1304" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Ask an external SMT solver about <code>formula</code>.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">formula</code><span class="ptype">Expr</span></dt><dd><p>A <strong>quantifier-free</strong> predicate expression.  Quantified formulas export
@@ -718,7 +718,7 @@ warned: it means the bridge or the solver is broken.</p>
 <section class="sym" id="smt.supported"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">smt.</span><span class="sig-name">supported</span>(<span class="sig-p">formula</span><span class="sig-ann">: Any</span>, <span class="sig-sep">*</span>, <span class="sig-p">solver</span><span class="sig-ann">: str</span><span class="sig-def">='auto'</span>)<span class="sig-ret"> → SmtSupport</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#smt.supported" aria-label="Link to smt.supported">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L552" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.supported" aria-label="Link to smt.supported">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L566" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Can this formula be handed to an SMT solver — and should it be?</p>
 <p>The plan-ahead predicate, for the same reason
 <a href="/docs/api/certificates/#certifiable"><code>certifiable()</code></a> exists: a loop must be able to choose a route
@@ -732,6 +732,9 @@ whereas an SMT solver yields an answer and no artifact.  The genuinely new
 capability the bridge buys is <strong>mixed integer/real/boolean</strong> problems, which
 neither CAD nor <a href="/docs/api/solve/#diophantine"><code>diophantine()</code></a> handles — there
 <code>recommendation</code> is <code>&quot;smt&quot;</code>.</p>
+<p>A formula the emitter refuses (a transcendental function, a named constant
+with no exact term such as <code>pi</code>) cannot be handed to a solver at all, so
+it too gets <code>&quot;prefer_in_tree&quot;</code>.</p>
 
 <div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">SmtSupport</span></dt><dd><p>Truthy when <a href="/docs/api/solve/#solve"><code>solve()</code></a> would run.</p>
 </dd></div></dl>

@@ -148,7 +148,9 @@ export: a loop must be able to choose a route <em>before</em> it commits.</p>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">support.reason           </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'ok' | 'outside_fragment' | 'quantified' |</span></span>
 <span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#768390">                         # 'not_exactly_checkable' | 'no_solver'</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">support.recommendation   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># 'smt' | 'prefer_in_tree'</span></span>
-<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">support.script           </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># the emitted script, so you don't pay for it twice</span></span></code></pre></div><p><code>recommendation</code> is the part worth reading, and it cuts against the usual instinct:</p>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">support.script           </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># the emitted script, so you don't pay for it twice</span></span></code></pre></div><p>A formula the emitter refuses has no SMT route at all, so it gets <code>prefer_in_tree</code> with
+<code>reason=&#39;outside_fragment&#39;</code>. Otherwise, <code>recommendation</code> is the part worth reading, and it
+cuts against the usual instinct:</p>
 <ul>
 <li><strong><code>prefer_in_tree</code></strong> for real arithmetic with no integer variables (<code>QF_LRA</code> / <code>QF_NRA</code>).
 <a href="/docs/guide/positivity/"><code>prove_nonneg</code> / <code>sos_decompose</code></a> return a <code>PositivityCertificate</code> that
@@ -249,6 +251,10 @@ chosen theory requires — and none where they would not parse.</p>
 <td><code>(declare-fun n () Int)</code></td>
 </tr>
 <tr>
+<td><code>GoldenRatio</code></td>
+<td><code>(declare-fun GoldenRatio () Real)</code> plus <code>(assert (= (* GoldenRatio GoldenRatio) (+ GoldenRatio 1)))</code> and <code>(assert (&gt; GoldenRatio 0))</code></td>
+</tr>
+<tr>
 <td><code>Positive</code> / <code>NonNegative</code> / <code>NonZero</code> refinement</td>
 <td>an extra <code>(assert (&gt; x 0))</code> / <code>(&gt;= x 0)</code> / <code>(not (= x 0))</code></td>
 </tr>
@@ -309,8 +315,15 @@ source expression.</p>
 Write <code>pool.rational(1, 10)</code>; exporting the dyadic expansion would silently change what
 is being asked.</li>
 <li><strong>Complex-domain symbols</strong> — SMT-LIB arithmetic is ordered and real.</li>
-<li><strong>Transcendental function heads</strong> (<code>sin</code>, <code>exp</code>, <code>log</code>, …). Only <code>abs</code> has an exact
-SMT-LIB rendering.</li>
+<li><strong>Transcendental function heads</strong> (<code>sin</code>, <code>exp</code>, <code>log</code>, …, and so <code>exp(1)</code>). Only
+<code>abs</code> has an exact SMT-LIB rendering.</li>
+<li><strong>Named constants with no exact term</strong>: <code>pi</code>, <code>EulerGamma</code>, <code>Catalan</code>, <code>Glaisher</code>, the
+Stieltjes constants, and <code>∞</code>. The kernel stores these as symbols, and a symbol is what a
+solver gets to choose: declared as a free <code>Real</code>, <code>pi &gt; 4</code> comes back <code>sat</code> with <code>pi = 5</code>,
+and the model passes every check, because substituting <code>pi = 5</code> back really does satisfy
+<code>pi &gt; 4</code>. To reason about π, say what you know about it yourself: a variable <code>p</code> with
+<code>pool.rational(314, 100) &lt; p &lt; pool.rational(315, 100)</code> asks a question whose answer is
+true of that interval, not of π. (<code>I</code> was already refused: it is <code>Complex</code>.)</li>
 <li><strong>Non-integer or very large exponents.</strong> Powers become products, so the expansion is
 <em>bounded</em> (<code>MAX_POW_EXPANSION</code>, 128) — a loop must never be able to ask for a megabyte
 of <code>x</code>.</li>
@@ -424,6 +437,15 @@ assertions.</li>
 </ol>
 <p>A model missing a &quot;don&#39;t care&quot; variable is completed with <code>0</code> and then checked, so the
 witness a caller receives is always total and always substitutable.</p>
+<p><code>GoldenRatio</code> is the one named constant that goes through. It is algebraic, so the script
+declares it and pins it to its defining equation, <code>φ² = φ + 1 ∧ φ &gt; 0</code>, which has exactly one
+real solution: the solver has no freedom left and <code>unsat</code> means what it says. That equation
+is nonlinear, so a formula containing φ needs <code>QF_NRA</code> / <code>QF_NIRA</code>, and naming a linear logic
+is refused as too weak. The constant is not a variable, so it is never part of <code>model</code> or
+<code>sorts</code>, and the value the solver reports for it is ignored. Both checks above run at the true
+value of φ, with exact arithmetic in ℚ(φ) in place of the kernel&#39;s rational evaluator. A
+<em>variable</em> forced to an irrational value (<code>x = φ</code>) still has no rational witness and is refused
+with <code>E-SMT-003</code>.</p>
 <p>Because the guarantee is unconditional, <code>solve</code> refuses <strong>up front</strong> — before the solver
 runs — for a formula the kernel cannot evaluate exactly (<code>E-SMT-002</code>, reason
 <code>not_exactly_checkable</code>). <code>abs</code> is the case you will actually hit: it exports fine, so
@@ -523,7 +545,7 @@ solver is a refusal (<code>E-SMT-001</code>), not a degradation.</li>
 <tr>
 <td><code>E-SMT-002</code></td>
 <td>Rust emitter + driver</td>
-<td>Formula outside the supported fragment (or an unusable logic, a quantified formula passed to <code>solve</code>, or one the kernel cannot check exactly).</td>
+<td>Formula outside the supported fragment, including a named constant with no exact term (or an unusable logic, a quantified formula passed to <code>solve</code>, or one the kernel cannot check exactly).</td>
 </tr>
 <tr>
 <td><code>E-SMT-003</code></td>

@@ -104,7 +104,7 @@ error this subsystem exists to prevent, so <code>root-obj</code> is refused with
 <section class="sym" id="smt.SmtResult"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">smt.</span><span class="sig-name">SmtResult</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult" aria-label="Link to smt.SmtResult">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L932" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult" aria-label="Link to smt.SmtResult">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1137" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>What an external solver said, and how much of it was checked here.</p>
 <p>Quacks like a <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a> (<code>value</code> / <code>steps</code> /
 <code>verification</code> / <code>certificate</code>) so <code>ResearchSession.record</code> accepts it
@@ -140,73 +140,73 @@ rather than assume.</p>
 </dd></div><div class="param"><dt><code class="pname">reason_unknown</code><span class="ptype">str or None</span></dt><dd><p>The solver&#39;s own explanation, on <code>unknown</code>.</p>
 </dd></div><div class="param"><dt><code class="pname">elapsed_ms</code><span class="ptype">float</span></dt><dd><p>Wall-clock time spent in the solver process.</p>
 </dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="smt.SmtResult.status">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">status</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.status" aria-label="Link to smt.SmtResult.status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L983" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">status</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.status" aria-label="Link to smt.SmtResult.status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1188" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="smt.SmtResult.model">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">model</span><span class="sig-ann">: dict[str, Fraction]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.model" aria-label="Link to smt.SmtResult.model">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L984" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">model</span><span class="sig-ann">: dict[str, Fraction]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.model" aria-label="Link to smt.SmtResult.model">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1189" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="smt.SmtResult.model_exprs">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">model_exprs</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.model_exprs" aria-label="Link to smt.SmtResult.model_exprs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L985" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">model_exprs</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.model_exprs" aria-label="Link to smt.SmtResult.model_exprs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1190" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="smt.SmtResult.engine">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">engine</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.engine" aria-label="Link to smt.SmtResult.engine">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L986" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">engine</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.engine" aria-label="Link to smt.SmtResult.engine">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1191" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="smt.SmtResult.logic">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">logic</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.logic" aria-label="Link to smt.SmtResult.logic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L987" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">logic</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.logic" aria-label="Link to smt.SmtResult.logic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1192" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="smt.SmtResult.smtlib">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">smtlib</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.smtlib" aria-label="Link to smt.SmtResult.smtlib">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L988" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">smtlib</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.smtlib" aria-label="Link to smt.SmtResult.smtlib">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1193" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="smt.SmtResult.verification">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.verification" aria-label="Link to smt.SmtResult.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L989" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.verification" aria-label="Link to smt.SmtResult.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1194" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="smt.SmtResult.reason_unknown">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">reason_unknown</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.reason_unknown" aria-label="Link to smt.SmtResult.reason_unknown">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L990" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">reason_unknown</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.reason_unknown" aria-label="Link to smt.SmtResult.reason_unknown">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1195" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="smt.SmtResult.elapsed_ms">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">elapsed_ms</span><span class="sig-ann">: float</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.elapsed_ms" aria-label="Link to smt.SmtResult.elapsed_ms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L991" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">elapsed_ms</span><span class="sig-ann">: float</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.elapsed_ms" aria-label="Link to smt.SmtResult.elapsed_ms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1196" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="smt.SmtResult.raw_output">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">raw_output</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.raw_output" aria-label="Link to smt.SmtResult.raw_output">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L992" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">raw_output</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.raw_output" aria-label="Link to smt.SmtResult.raw_output">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1197" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="smt.SmtResult.steps">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">steps</span><span class="sig-ann">: tuple[dict[str, Any], ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.steps" aria-label="Link to smt.SmtResult.steps">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L993" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">steps</span><span class="sig-ann">: tuple[dict[str, Any], ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.steps" aria-label="Link to smt.SmtResult.steps">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1198" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="smt.SmtResult.value">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">value</span><span class="sig-ann">: Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.value" aria-label="Link to smt.SmtResult.value">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L996" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">value</span><span class="sig-ann">: Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.value" aria-label="Link to smt.SmtResult.value">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1201" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The formula that was asked about — <code>DerivedResult</code>-compatible.</p>
 </div>
 </div>
 <div class="member" id="smt.SmtResult.certificate">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certificate</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.certificate" aria-label="Link to smt.SmtResult.certificate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1001" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certificate</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.certificate" aria-label="Link to smt.SmtResult.certificate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1206" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The SMT-LIB script.  An artifact, explicitly <em>not</em> a checked proof.</p>
 </div>
 </div>
 <div class="member" id="smt.SmtResult.sorts">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">sorts</span><span class="sig-ann">: dict[str, str]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.sorts" aria-label="Link to smt.SmtResult.sorts">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1006" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">sorts</span><span class="sig-ann">: dict[str, str]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.sorts" aria-label="Link to smt.SmtResult.sorts">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1211" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Symbol name → declared SMT-LIB sort (<code>&quot;Int&quot;</code> / <code>&quot;Real&quot;</code>).</p>
 <p>Recovered from <code>verification</code> so it survives serialisation into a
 <code>ResearchSession</code> record, where the <code>smtlib</code> text may not.</p>
 </div>
 </div>
 <div class="member" id="smt.SmtResult.badge">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">badge</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.badge" aria-label="Link to smt.SmtResult.badge">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1015" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">badge</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.badge" aria-label="Link to smt.SmtResult.badge">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1220" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Honest one-line description of what was actually established.</p>
 </div>
 </div>
 <div class="member" id="smt.SmtResult.machine_checked">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">machine_checked</span><span class="sig-ann">: bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.machine_checked" aria-label="Link to smt.SmtResult.machine_checked">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1020" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">machine_checked</span><span class="sig-ann">: bool</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#smt.SmtResult.machine_checked" aria-label="Link to smt.SmtResult.machine_checked">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/smt.py#L1225" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>True</code> only when a checker ran <strong>in this process</strong>.</p>
 <p><code>unsat</code> is never machine-checked here, however confident the solver
 was.</p>
