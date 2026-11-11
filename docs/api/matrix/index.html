@@ -14,10 +14,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/docs/assets/style.css?v=3.13.1">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.13.2">
 
 <script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
-<script defer src="/docs/assets/app.js?v=3.13.1"></script>
+<script defer src="/docs/assets/app.js?v=3.13.2"></script>
 </head>
 <body data-base="/docs/" data-section="api">
 <a class="skip" href="#content">Skip to content</a>
@@ -71,7 +71,7 @@
 <section class="sym" id="Matrix"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">Matrix</span>(<span class="sig-p">rows</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#Matrix" aria-label="Link to Matrix">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10991" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#Matrix" aria-label="Link to Matrix">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11066" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A symbolic matrix with <a href="/docs/api/core/#Expr"><code>Expr</code></a> entries.</p>
 <p>Constructed from a list of rows:</p>
 <div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">pool </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> ExprPool()</span></span>
@@ -84,14 +84,14 @@ supported:</p>
 <div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light github-dark-dimmed" style="--shiki-light:#24292e;--shiki-dark:#adbac7;--shiki-light-bg:#fff;--shiki-dark-bg:#22272e" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">A </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> Matrix([[x, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)], [pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), y]])</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">B </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> Matrix([[pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">), x], [y, pool.integer(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">)]])</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">C </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">=</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> A </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">*</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> B   </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># matrix multiply</span></span></code></pre></div><div class="members"><div class="members-title">Properties</div><div class="member" id="Matrix.rows">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rows</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.rows" aria-label="Link to Matrix.rows">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11079" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rows</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.rows" aria-label="Link to Matrix.rows">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11154" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="Matrix.cols">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">cols</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.cols" aria-label="Link to Matrix.cols">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11084" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">cols</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.cols" aria-label="Link to Matrix.cols">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11159" rel="noopener">source</a></div></div>
   
 </div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="Matrix.from_rows">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">from_rows</span>(<span class="sig-p">rows</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#Matrix.from_rows" aria-label="Link to Matrix.from_rows">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11015" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">from_rows</span>(<span class="sig-p">rows</span>)</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#Matrix.from_rows" aria-label="Link to Matrix.from_rows">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11090" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Build a matrix from a 2D list of entries.</p>
 <p>Each entry may be an <a href="/docs/api/core/#Expr"><code>Expr</code></a>, <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a>, or a
 Python number (<code>int</code>, <code>fractions.Fraction</code>, <code>float</code>). Numbers are
@@ -104,41 +104,41 @@ uses the pool of the active <code>alkahest.context(pool=...)</code>, or
 </div>
 </div>
 <div class="member" id="Matrix.shape">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">shape</span>()<span class="sig-ret"> → tuple[int, int]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.shape" aria-label="Link to Matrix.shape">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11089" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">shape</span>()<span class="sig-ret"> → tuple[int, int]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.shape" aria-label="Link to Matrix.shape">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11164" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Shape of the matrix as a <code>(rows, cols)</code> tuple.</p>
 </div>
 </div>
 <div class="member" id="Matrix.trace">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">trace</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.trace" aria-label="Link to Matrix.trace">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11139" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">trace</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.trace" aria-label="Link to Matrix.trace">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11212" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Sum of diagonal entries (trace).</p>
 </div>
 </div>
 <div class="member" id="Matrix.get">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">get</span>(<span class="sig-p">r</span>, <span class="sig-p">c</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.get" aria-label="Link to Matrix.get">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11155" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">get</span>(<span class="sig-p">r</span>, <span class="sig-p">c</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.get" aria-label="Link to Matrix.get">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11228" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Access entry <code>(i, j)</code>. <code>Matrix</code> is <strong>not</strong> subscriptable —
 <code>M[i, j]</code> raises <code>TypeError</code>.</p>
 </div>
 </div>
 <div class="member" id="Matrix.transpose">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">transpose</span>()<span class="sig-ret"> → Matrix</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.transpose" aria-label="Link to Matrix.transpose">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11181" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">transpose</span>()<span class="sig-ret"> → Matrix</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.transpose" aria-label="Link to Matrix.transpose">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11254" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Return the transpose.</p>
 </div>
 </div>
 <div class="member" id="Matrix.multiply">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">multiply</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.multiply" aria-label="Link to Matrix.multiply">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11258" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">multiply</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.multiply" aria-label="Link to Matrix.multiply">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11331" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Matrix product <code>self @ other</code> (SymPy-style named alias).</p>
 <p>Same result as <code>self @ other</code> and <code>self * other</code>. Raises a
 <code>MatrixError</code> (E-MAT-001) if the inner dimensions do not match.</p>
 </div>
 </div>
 <div class="member" id="Matrix.scalar_mul">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">scalar_mul</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.scalar_mul" aria-label="Link to Matrix.scalar_mul">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11264" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">scalar_mul</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.scalar_mul" aria-label="Link to Matrix.scalar_mul">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11337" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Scale every entry by <code>scalar</code> (an <a href="/docs/api/core/#Expr"><code>Expr</code></a>, <a href="/docs/api/core/#DerivedResult"><code>DerivedResult</code></a>,
 Python <code>int</code>, or <code>float</code>). Same as <code>self * scalar</code>.</p>
 </div>
 </div>
 <div class="member" id="Matrix.hadamard">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">hadamard</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.hadamard" aria-label="Link to Matrix.hadamard">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11279" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">hadamard</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.hadamard" aria-label="Link to Matrix.hadamard">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11352" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Elementwise (Hadamard) product — multiply corresponding entries.</p>
 <p>Requires both matrices to have the same shape. This is <em>not</em> the
 matrix product; use <code>@</code> / <code>*</code> / <code>multiply()</code> for that. Exposed
@@ -147,17 +147,17 @@ means the matrix product, per the CAS convention.</p>
 </div>
 </div>
 <div class="member" id="Matrix.det">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">det</span>()<span class="sig-ret"> → Expr</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.det" aria-label="Link to Matrix.det">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11363" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">det</span>()<span class="sig-ret"> → Expr</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.det" aria-label="Link to Matrix.det">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11436" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Compute the determinant symbolically.</p>
 </div>
 </div>
 <div class="member" id="Matrix.characteristic_polynomial_lambda_minus_m">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">characteristic_polynomial_lambda_minus_m</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.characteristic_polynomial_lambda_minus_m" aria-label="Link to Matrix.characteristic_polynomial_lambda_minus_m">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11378" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">characteristic_polynomial_lambda_minus_m</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.characteristic_polynomial_lambda_minus_m" aria-label="Link to Matrix.characteristic_polynomial_lambda_minus_m">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11451" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>det(λI − M)</code> and the fresh λ symbol (<code>Expr</code>) used in that polynomial.</p>
 </div>
 </div>
 <div class="member" id="Matrix.eigenvals">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">eigenvals</span>(<span class="sig-p">real_form</span><span class="sig-def">=True</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.eigenvals" aria-label="Link to Matrix.eigenvals">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11410" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">eigenvals</span>(<span class="sig-p">real_form</span><span class="sig-def">=True</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.eigenvals" aria-label="Link to Matrix.eigenvals">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11483" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Dictionary mapping each eigenvalue expression to its algebraic multiplicity.</p>
 <p>With <code>real_form=True</code> (the default) each eigenvalue is rewritten by
 <a href="/docs/api/simplify/#to_real_form"><code>to_real_form()</code></a> — <code>sqrt(4*a**2)</code> becomes <code>2*abs(a)</code>, a root
@@ -169,21 +169,21 @@ added.  <code>real_form=False</code> returns the raw spectrum.</p>
 </div>
 </div>
 <div class="member" id="Matrix.eigenvects">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">eigenvects</span>()<span class="sig-ret"> → list</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.eigenvects" aria-label="Link to Matrix.eigenvects">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11451" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">eigenvects</span>()<span class="sig-ret"> → list</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.eigenvects" aria-label="Link to Matrix.eigenvects">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11524" rel="noopener">source</a></div></div>
   <div class="member-body"><p>SymPy-style triples <code>(eigenvalue, multiplicity, [column eigenvectors …])</code>.</p>
 </div>
 </div>
 <div class="member" id="Matrix.diagonalize">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">diagonalize</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.diagonalize" aria-label="Link to Matrix.diagonalize">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11481" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">diagonalize</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.diagonalize" aria-label="Link to Matrix.diagonalize">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11554" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>(P, D)</code> with <code>M @ P == P @ D</code> when the matrix is diagonalizable.</p>
 </div>
 </div>
 <div class="member" id="Matrix.nullspace">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">nullspace</span>()<span class="sig-ret"> → list[Matrix]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.nullspace" aria-label="Link to Matrix.nullspace">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11500" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">nullspace</span>()<span class="sig-ret"> → list[Matrix]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.nullspace" aria-label="Link to Matrix.nullspace">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11573" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="Matrix.rank">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rank</span>()<span class="sig-ret"> → int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.rank" aria-label="Link to Matrix.rank">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11525" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rank</span>()<span class="sig-ret"> → int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.rank" aria-label="Link to Matrix.rank">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11598" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Rank of the matrix.</p>
 <p>For symbolic entries this is the <strong>generic</strong> rank (over the field of
 rational functions in the parameters): <code>Matrix([[a]]).rank()</code> is <code>1</code>
@@ -193,31 +193,31 @@ they all hold and an upper bound everywhere.</p>
 </div>
 </div>
 <div class="member" id="Matrix.rref">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rref</span>()<span class="sig-ret"> → list[list[Expr]]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.rref" aria-label="Link to Matrix.rref">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11537" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rref</span>()<span class="sig-ret"> → list[list[Expr]]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.rref" aria-label="Link to Matrix.rref">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11610" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="Matrix.column_space">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">column_space</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.column_space" aria-label="Link to Matrix.column_space">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11554" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">column_space</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.column_space" aria-label="Link to Matrix.column_space">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11627" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="Matrix.row_space">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">row_space</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.row_space" aria-label="Link to Matrix.row_space">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11572" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">row_space</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.row_space" aria-label="Link to Matrix.row_space">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11645" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="Matrix.lu">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">lu</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.lu" aria-label="Link to Matrix.lu">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11590" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">lu</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.lu" aria-label="Link to Matrix.lu">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11663" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="Matrix.qr">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">qr</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.qr" aria-label="Link to Matrix.qr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11613" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">qr</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.qr" aria-label="Link to Matrix.qr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11686" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="Matrix.cholesky">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">cholesky</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.cholesky" aria-label="Link to Matrix.cholesky">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11635" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">cholesky</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.cholesky" aria-label="Link to Matrix.cholesky">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11708" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="Matrix.jordan_form">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">jordan_form</span>()<span class="sig-ret"> → Matrix</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.jordan_form" aria-label="Link to Matrix.jordan_form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11650" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">jordan_form</span>()<span class="sig-ret"> → Matrix</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.jordan_form" aria-label="Link to Matrix.jordan_form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11723" rel="noopener">source</a></div></div>
   <div class="member-body"><p>All five run the same elimination, which uses a <strong>three-valued</strong> zero
 test. An entry whose vanishing can be proven neither zero nor non-zero
 raises <code>E-LINALG-010</code> (as <a href="/docs/api/errors/#LinearAlgebraError"><code>LinearAlgebraError</code></a>, or
@@ -232,15 +232,15 @@ upper bound everywhere.</p>
 </div>
 </div>
 <div class="member" id="Matrix.rational_canonical_form">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rational_canonical_form</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.rational_canonical_form" aria-label="Link to Matrix.rational_canonical_form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11669" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rational_canonical_form</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.rational_canonical_form" aria-label="Link to Matrix.rational_canonical_form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11742" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="Matrix.minimal_polynomial">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">minimal_polynomial</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.minimal_polynomial" aria-label="Link to Matrix.minimal_polynomial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11688" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">minimal_polynomial</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.minimal_polynomial" aria-label="Link to Matrix.minimal_polynomial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11761" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="Matrix.matrix_exp">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">matrix_exp</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.matrix_exp" aria-label="Link to Matrix.matrix_exp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11715" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">matrix_exp</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.matrix_exp" aria-label="Link to Matrix.matrix_exp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11788" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>e^M</code>.</p>
 <p>Correct for a <strong>defective</strong> (non-diagonalizable) <code>M</code> as well as a
 diagonalizable one: <code>Matrix([[0,1],[0,0]]).matrix_exp()</code> is
@@ -254,7 +254,7 @@ on is listed by <a href="/docs/api/matrix/#matrix_exp_side_conditions"><code>mat
 </div>
 </div>
 <div class="member" id="Matrix.inverse">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">inverse</span>()<span class="sig-ret"> → Matrix</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.inverse" aria-label="Link to Matrix.inverse">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11738" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">inverse</span>()<span class="sig-ret"> → Matrix</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.inverse" aria-label="Link to Matrix.inverse">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11811" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>M⁻¹</code>.</p>
 <p>For a symbolic <code>M</code> the adjugate form <code>adj(M)/det(M)</code> is returned
 whenever <code>det(M)</code> is proven not to be the zero <em>function</em>; the
@@ -263,24 +263,24 @@ genericity hypothesis that licenses it is listed by
 </div>
 </div>
 <div class="member" id="Matrix.simplify">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">simplify</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.simplify" aria-label="Link to Matrix.simplify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11759" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">simplify</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.simplify" aria-label="Link to Matrix.simplify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11832" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="Matrix.to_list">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_list</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.to_list" aria-label="Link to Matrix.to_list">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11771" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_list</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#Matrix.to_list" aria-label="Link to Matrix.to_list">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11844" rel="noopener">source</a></div></div>
   
 </div></div></div></section>
 <section class="sym" id="jacobian"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">jacobian</span>(<span class="sig-p">f_vec</span>, <span class="sig-p">x_vec</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#jacobian" aria-label="Link to jacobian">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11850" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#jacobian" aria-label="Link to jacobian">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L11923" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>alkahest.jacobian(f_vec, x_vec)</code> — compute the Jacobian matrix.</p>
 </div></section>
 <h2 id="side-conditions"><a class="hanchor" href="#side-conditions" aria-hidden="true" tabindex="-1">#</a>Side conditions</h2>
 <section class="sym" id="matrix_exp_side_conditions"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">matrix_exp_side_conditions</span>()</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#matrix_exp_side_conditions" aria-label="Link to matrix_exp_side_conditions">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2119" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#matrix_exp_side_conditions" aria-label="Link to matrix_exp_side_conditions">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2180" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>alkahest.matrix_exp_side_conditions() -&gt; list[str]</code></p>
 <p>The hypotheses the most recent <a href="/docs/api/matrix/#Matrix.matrix_exp"><code>Matrix.matrix_exp()</code></a> on this
 thread <strong>assumed</strong> in order to return the matrix it did — one string per
@@ -302,7 +302,7 @@ the next one; repeated reads of the same call agree.</p>
 <section class="sym" id="matrix_inverse_side_conditions"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">matrix_inverse_side_conditions</span>()</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#matrix_inverse_side_conditions" aria-label="Link to matrix_inverse_side_conditions">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2186" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#matrix_inverse_side_conditions" aria-label="Link to matrix_inverse_side_conditions">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L2247" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The hypotheses the most recent <a href="/docs/api/matrix/#Matrix.inverse"><code>Matrix.inverse()</code></a> on this
 thread <strong>assumed</strong> in order to return the matrix it did — one string per
 condition, e.g. <code>&quot;((a · d) + (b · c · -1)) ≠ 0&quot;</code>.</p>
@@ -323,7 +323,7 @@ than the thing standing between the caller and a wrong answer.</p>
   <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/specfun/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Special functions</span></a><a class="pager-next" href="/docs/api/ode/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">ODE and DAE</span></a></nav>
   <footer class="doc-foot">
     <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/matrix.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
-    <span class="foot-meta">Alkahest 3.13.1 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+    <span class="foot-meta">Alkahest 3.13.2 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
   </footer>
 </main>
 <aside class="toc" aria-label="On this page">

@@ -14,10 +14,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/docs/assets/style.css?v=3.13.1">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.13.2">
 
 <script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
-<script defer src="/docs/assets/app.js?v=3.13.1"></script>
+<script defer src="/docs/assets/app.js?v=3.13.2"></script>
 </head>
 <body data-base="/docs/" data-section="api">
 <a class="skip" href="#content">Skip to content</a>
@@ -83,7 +83,7 @@ programming</em> for the certificate conventions.</p>
     <span class="sig-p">method</span><span class="sig-def">=&quot;auto&quot;</span>,
     <span class="sig-p">basis</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#linprog" aria-label="Link to linprog">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L817" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#linprog" aria-label="Link to linprog">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L820" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Solve a linear programme exactly over the rationals, with a certificate.</p>
 <p><code>minimise</code> (or, with <code>sense=&quot;max&quot;</code>, maximise) <code>c @ x</code> subject to
 <code>A_ub @ x &lt;= b_ub</code>, <code>A_eq @ x == b_eq</code> and <code>bounds</code> — the same
@@ -132,7 +132,7 @@ its own check (a bug; the result is withheld).</p>
     <span class="sig-p">max_cuts</span><span class="sig-def">=...</span>,
     <span class="sig-p">warm_start</span><span class="sig-def">=True</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#milp" aria-label="Link to milp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L897" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#milp" aria-label="Link to milp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L900" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Solve a mixed-integer linear programme exactly by branch and bound.</p>
 <p>Arguments as for <a href="/docs/api/linprog/#linprog"><code>linprog()</code></a>, plus <code>integrality</code> — one flag per
 variable (<code>1</code>/<code>True</code> integer, <code>0</code>/<code>False</code> continuous, SciPy&#39;s
@@ -175,7 +175,7 @@ the codes of <a href="/docs/api/linprog/#linprog"><code>linprog()</code></a>.</p
     <span class="sig-p">parameter</span><span class="sig-def">=None</span>,
     <span class="sig-p">parameter_range</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#linprog_expr" aria-label="Link to linprog_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L975" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#linprog_expr" aria-label="Link to linprog_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L978" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Solve a linear (or mixed-integer) programme stated with expressions.</p>
 <p><code>objective</code> is an affine <code>Expr</code> in <code>vars</code>; <code>constraints</code> is a list
 of relations built with <code>pool.le</code>, <code>pool.ge</code> or <code>pool.pred_eq</code> (or an
@@ -262,7 +262,7 @@ stated here; <a href="/docs/api/linprog/#linprog_expr"><code>linprog_expr()</cod
 <section class="sym" id="LPResult"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">LPResult</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#LPResult" aria-label="Link to LPResult">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L297" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#LPResult" aria-label="Link to LPResult">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L299" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Certified result of <a href="/docs/api/linprog/#linprog"><code>linprog()</code></a> / <a href="/docs/api/linprog/#linprog_expr"><code>linprog_expr()</code></a>.</p>
 <p><code>status</code> is <code>&quot;optimal&quot;</code>, <code>&quot;infeasible&quot;</code> or <code>&quot;unbounded&quot;</code>; every
 number is an <code>int</code> or <code>fractions.Fraction</code>. The certificate for the
@@ -278,65 +278,65 @@ constraints into <code>0 &lt;= negative</code>;</li>
 <li>unbounded — <code>x</code> a feasible point and <code>ray</code> an improving direction.</li>
 </ul>
 <div class="members"><div class="members-title">Properties</div><div class="member" id="LPResult.status">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">status</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.status" aria-label="Link to LPResult.status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L390" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">status</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.status" aria-label="Link to LPResult.status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L393" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>&quot;optimal&quot;</code>, <code>&quot;infeasible&quot;</code> or <code>&quot;unbounded&quot;</code>.</p>
 </div>
 </div>
 <div class="member" id="LPResult.success">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">success</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.success" aria-label="Link to LPResult.success">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L396" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">success</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.success" aria-label="Link to LPResult.success">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L399" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>True</code> iff an optimum was found.</p>
 </div>
 </div>
 <div class="member" id="LPResult.x">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">x</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.x" aria-label="Link to LPResult.x">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L403" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">x</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.x" aria-label="Link to LPResult.x">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L406" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The optimal point, or the feasible base point of the ray when
 unbounded; <code>None</code> when infeasible.</p>
 </div>
 </div>
 <div class="member" id="LPResult.fun">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">fun</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.fun" aria-label="Link to LPResult.fun">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L413" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">fun</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.fun" aria-label="Link to LPResult.fun">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L416" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The optimal objective value, or <code>None</code>.</p>
 </div>
 </div>
 <div class="member" id="LPResult.ineqlin">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ineqlin</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.ineqlin" aria-label="Link to LPResult.ineqlin">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L422" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ineqlin</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.ineqlin" aria-label="Link to LPResult.ineqlin">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L425" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Multipliers of the <code>A_ub</code> rows (optimal only).</p>
 </div>
 </div>
 <div class="member" id="LPResult.eqlin">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">eqlin</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.eqlin" aria-label="Link to LPResult.eqlin">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L431" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">eqlin</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.eqlin" aria-label="Link to LPResult.eqlin">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L434" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Multipliers of the <code>A_eq</code> rows (optimal only).</p>
 </div>
 </div>
 <div class="member" id="LPResult.lower">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">lower</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.lower" aria-label="Link to LPResult.lower">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L440" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">lower</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.lower" aria-label="Link to LPResult.lower">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L443" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Multipliers of the lower bounds (optimal only).</p>
 </div>
 </div>
 <div class="member" id="LPResult.upper">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">upper</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.upper" aria-label="Link to LPResult.upper">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L449" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">upper</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.upper" aria-label="Link to LPResult.upper">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L452" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Multipliers of the upper bounds (optimal only).</p>
 </div>
 </div>
 <div class="member" id="LPResult.farkas">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">farkas</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.farkas" aria-label="Link to LPResult.farkas">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L459" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">farkas</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.farkas" aria-label="Link to LPResult.farkas">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L462" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The Farkas certificate (infeasible only): a dict with keys
 <code>ineqlin</code>, <code>eqlin</code>, <code>lower</code>, <code>upper</code>.</p>
 </div>
 </div>
 <div class="member" id="LPResult.ray">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ray</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.ray" aria-label="Link to LPResult.ray">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L473" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ray</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.ray" aria-label="Link to LPResult.ray">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L476" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The improving direction (unbounded only).</p>
 </div>
 </div>
 <div class="member" id="LPResult.solution">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">solution</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.solution" aria-label="Link to LPResult.solution">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L483" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">solution</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.solution" aria-label="Link to LPResult.solution">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L486" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>{variable: value}</code> for <a href="/docs/api/linprog/#linprog_expr"><code>linprog_expr()</code></a> results (<code>None</code>
 otherwise, or when there is no point).</p>
 </div>
 </div>
 <div class="member" id="LPResult.basis">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">basis</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.basis" aria-label="Link to LPResult.basis">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L512" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">basis</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.basis" aria-label="Link to LPResult.basis">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L515" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The final simplex basis, a list of <code>(kind, index)</code> pairs — <code>(&quot;x&quot;, j)</code>
 variable <code>j</code> (measured from its finite bound, or the positive part of
 a free variable), <code>(&quot;x-&quot;, j)</code> the negative part of free variable
@@ -346,28 +346,28 @@ the slack of variable <code>j</code>&#39;s upper bound. Pass it (or this result)
 </div>
 </div>
 <div class="member" id="LPResult.iterations">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">iterations</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.iterations" aria-label="Link to LPResult.iterations">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L518" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">iterations</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.iterations" aria-label="Link to LPResult.iterations">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L521" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Simplex pivots performed.</p>
 </div>
 </div>
 <div class="member" id="LPResult.method">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">method</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.method" aria-label="Link to LPResult.method">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L524" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">method</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.method" aria-label="Link to LPResult.method">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L527" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The method that ran: <code>&quot;dense&quot;</code> or <code>&quot;revised&quot;</code>.</p>
 </div>
 </div>
 <div class="member" id="LPResult.warm_started">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">warm_started</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.warm_started" aria-label="Link to LPResult.warm_started">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L530" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">warm_started</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.warm_started" aria-label="Link to LPResult.warm_started">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L533" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>True</code> when the supplied warm-start basis was used.</p>
 </div>
 </div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="LPResult.program">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">program</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.program" aria-label="Link to LPResult.program">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L495" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">program</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.program" aria-label="Link to LPResult.program">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L498" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The programme in matrix form, as a dict (<code>c</code>, <code>A_ub</code>, <code>b_ub</code>,
 <code>A_eq</code>, <code>b_eq</code>, <code>bounds</code>, <code>sense</code>) — for <a href="/docs/api/linprog/#linprog_expr"><code>linprog_expr()</code></a>
 this shows how the relations were laid out as rows.</p>
 </div>
 </div>
 <div class="member" id="LPResult.verify">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verify</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.verify" aria-label="Link to LPResult.verify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L501" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verify</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#LPResult.verify" aria-label="Link to LPResult.verify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L504" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Re-check the certificate exactly against the programme; <code>True</code> when
 it holds. (It was already checked before this result was returned.)</p>
 </div>
@@ -375,7 +375,7 @@ it holds. (It was already checked before this result was returned.)</p>
 <section class="sym" id="MILPResult"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">MILPResult</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#MILPResult" aria-label="Link to MILPResult">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L610" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#MILPResult" aria-label="Link to MILPResult">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L613" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Result of <a href="/docs/api/linprog/#milp"><code>milp()</code></a>.</p>
 <p><code>status</code> is <code>&quot;optimal&quot;</code> (the branch-and-bound tree closed: <code>gap</code> is
 exactly 0 and <code>bound == fun</code>), <code>&quot;infeasible&quot;</code> (every leaf was
@@ -385,64 +385,64 @@ variables, along which the objective improves without bound). A search that
 hit <code>max_nodes</code> or the active budget raises instead, carrying the
 incumbent.</p>
 <div class="members"><div class="members-title">Properties</div><div class="member" id="MILPResult.status">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">status</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.status" aria-label="Link to MILPResult.status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L622" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">status</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.status" aria-label="Link to MILPResult.status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L625" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>&quot;optimal&quot;</code>, <code>&quot;infeasible&quot;</code> or <code>&quot;unbounded&quot;</code>.</p>
 </div>
 </div>
 <div class="member" id="MILPResult.success">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">success</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.success" aria-label="Link to MILPResult.success">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L632" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">success</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.success" aria-label="Link to MILPResult.success">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L635" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>True</code> iff an optimum was found.</p>
 </div>
 </div>
 <div class="member" id="MILPResult.x">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">x</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.x" aria-label="Link to MILPResult.x">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L638" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">x</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.x" aria-label="Link to MILPResult.x">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L641" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The optimal point (or the integer base point when unbounded).</p>
 </div>
 </div>
 <div class="member" id="MILPResult.fun">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">fun</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.fun" aria-label="Link to MILPResult.fun">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L648" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">fun</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.fun" aria-label="Link to MILPResult.fun">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L651" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The optimal objective value, or <code>None</code>.</p>
 </div>
 </div>
 <div class="member" id="MILPResult.bound">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">bound</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.bound" aria-label="Link to MILPResult.bound">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L657" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">bound</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.bound" aria-label="Link to MILPResult.bound">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L660" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The proven bound; equal to <code>fun</code> for an optimal result.</p>
 </div>
 </div>
 <div class="member" id="MILPResult.gap">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">gap</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.gap" aria-label="Link to MILPResult.gap">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L663" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">gap</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.gap" aria-label="Link to MILPResult.gap">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L666" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>bound − fun</code>: exactly <code>0</code> for an optimal result, else <code>None</code>.</p>
 </div>
 </div>
 <div class="member" id="MILPResult.nodes">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">nodes</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.nodes" aria-label="Link to MILPResult.nodes">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L672" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">nodes</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.nodes" aria-label="Link to MILPResult.nodes">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L675" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Branch-and-bound nodes whose LP was solved.</p>
 </div>
 </div>
 <div class="member" id="MILPResult.ray">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ray</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.ray" aria-label="Link to MILPResult.ray">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L682" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ray</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.ray" aria-label="Link to MILPResult.ray">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L685" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The integral improving direction (unbounded only).</p>
 </div>
 </div>
 <div class="member" id="MILPResult.cuts">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">cuts</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.cuts" aria-label="Link to MILPResult.cuts">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L693" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">cuts</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.cuts" aria-label="Link to MILPResult.cuts">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L696" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The Gomory mixed-integer cuts added at the root, as <code>(row, rhs)</code>
 pairs meaning <code>row @ x &lt;= rhs</code>; each holds at every integer-feasible
 point (optimal results only; <code>[]</code> when none were added).</p>
 </div>
 </div>
 <div class="member" id="MILPResult.solution">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">solution</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.solution" aria-label="Link to MILPResult.solution">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L709" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">solution</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.solution" aria-label="Link to MILPResult.solution">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L712" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>{variable: value}</code> for <a href="/docs/api/linprog/#linprog_expr"><code>linprog_expr()</code></a> results.</p>
 </div>
 </div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="MILPResult.program">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">program</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.program" aria-label="Link to MILPResult.program">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L720" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">program</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.program" aria-label="Link to MILPResult.program">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L723" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The programme in matrix form, as a dict (see <a href="/docs/api/linprog/#LPResult.program"><code>LPResult.program()</code></a>),
 plus <code>integrality</code>.</p>
 </div>
 </div>
 <div class="member" id="MILPResult.verify">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verify</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.verify" aria-label="Link to MILPResult.verify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L732" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verify</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#MILPResult.verify" aria-label="Link to MILPResult.verify">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/linprog.rs#L735" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Exact re-check of what can be checked locally: the point is feasible
 and integral where required (and, when unbounded, the ray is a valid
 integral improving direction). Optimality itself rests on the closed
@@ -518,7 +518,7 @@ it; <code>True</code> when they all hold.</p>
   <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/solve/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Solver</span></a><a class="pager-next" href="/docs/api/logic/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Propositional logic</span></a></nav>
   <footer class="doc-foot">
     <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/linprog.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
-    <span class="foot-meta">Alkahest 3.13.1 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+    <span class="foot-meta">Alkahest 3.13.2 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
   </footer>
 </main>
 <aside class="toc" aria-label="On this page">

@@ -14,10 +14,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/docs/assets/style.css?v=3.13.1">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.13.2">
 
 <script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
-<script defer src="/docs/assets/app.js?v=3.13.1"></script>
+<script defer src="/docs/assets/app.js?v=3.13.2"></script>
 </head>
 <body data-base="/docs/" data-section="api">
 <a class="skip" href="#content">Skip to content</a>
@@ -78,7 +78,7 @@ everywhere (<a href="/docs/api/errors/#BudgetExceededError"><code>BudgetExceeded
 <section class="sym" id="And"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">And</span>(<span class="sig-p">*args</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#And" aria-label="Link to And">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L110" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#And" aria-label="Link to And">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L111" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Logical conjunction of any number of predicates.</p>
 <p><code>And(a, b, c)</code> is flattened (nested <code>And</code> arguments are spliced in),
 <code>True</code> arguments are dropped, a <code>False</code> argument or a complementary
@@ -94,7 +94,7 @@ argument is returned unchanged.</p>
 <section class="sym" id="Or"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">Or</span>(<span class="sig-p">*args</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#Or" aria-label="Link to Or">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L120" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#Or" aria-label="Link to Or">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L121" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Logical disjunction of any number of predicates (dual of <a href="/docs/api/logic/#And"><code>And()</code></a>:
 flattened, <code>False</code> dropped, <code>True</code> or <code>x, Not(x)</code> gives <code>True</code>,
 deduplicated and canonically ordered).</p>
@@ -102,13 +102,13 @@ deduplicated and canonically ordered).</p>
 <section class="sym" id="Not"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">Not</span>(<span class="sig-p">a</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#Not" aria-label="Link to Not">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L128" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#Not" aria-label="Link to Not">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L129" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Logical negation; <code>Not(Not(x))</code> is <code>x</code> and <code>Not(True)</code> is <code>False</code>.</p>
 </div></section>
 <section class="sym" id="Xor"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">Xor</span>(<span class="sig-p">*args</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#Xor" aria-label="Link to Xor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L145" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#Xor" aria-label="Link to Xor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L146" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Exclusive or (odd parity) of any number of predicates.</p>
 <p>The kernel has no <code>Xor</code> node, so the result is the parity chain written
 with <code>And</code>/<code>Or</code>/<code>Not</code>; consecutive stages share their sub-formula, so
@@ -118,27 +118,27 @@ is <code>False</code>; <code>Xor()</code> of bools only is refused (no pool).</p
 <section class="sym" id="Implies"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">Implies</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#Implies" aria-label="Link to Implies">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L153" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#Implies" aria-label="Link to Implies">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L154" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Material implication <code>a → b</code>, built as <code>Or(Not(a), b)</code>.</p>
 </div></section>
 <section class="sym" id="Equivalent"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">Equivalent</span>(<span class="sig-p">*args</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#Equivalent" aria-label="Link to Equivalent">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L163" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#Equivalent" aria-label="Link to Equivalent">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L164" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Equivalence of any number of predicates: true when all have the same
 value, built as <code>Or(And(a₁…aₙ), And(¬a₁…¬aₙ))</code>.</p>
 </div></section>
 <section class="sym" id="ITE"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">ITE</span>(<span class="sig-p">c</span>, <span class="sig-p">t</span>, <span class="sig-p">e</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#ITE" aria-label="Link to ITE">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L171" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#ITE" aria-label="Link to ITE">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L172" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>If-then-else <code>(c ∧ t) ∨ (¬c ∧ e)</code> (the multiplexer).</p>
 </div></section>
 <h2 id="normal-forms-and-minimisation"><a class="hanchor" href="#normal-forms-and-minimisation" aria-hidden="true" tabindex="-1">#</a>Normal forms and minimisation</h2>
 <section class="sym" id="to_nnf"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">to_nnf</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#to_nnf" aria-label="Link to to_nnf">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L204" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#to_nnf" aria-label="Link to to_nnf">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L205" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Negation normal form: negations pushed onto atoms, only <code>And</code>/<code>Or</code>
 above them.  Arithmetic relations are opaque atoms (<code>Not(x &lt; 0)</code> is kept,
 not rewritten to <code>x &gt;= 0</code>).</p>
@@ -148,7 +148,7 @@ non-Boolean terms.</p>
 <section class="sym" id="to_cnf"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">to_cnf</span>(<span class="sig-p">expr</span>, <span class="sig-p">simplify</span><span class="sig-def">=False</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#to_cnf" aria-label="Link to to_cnf">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L221" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#to_cnf" aria-label="Link to to_cnf">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L222" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Conjunctive normal form (product of sums).</p>
 <p>With <code>simplify=False</code> (default) the form is obtained by distribution, with
 tautological, duplicate and subsumed clauses dropped; it can be
@@ -162,14 +162,14 @@ CNF of <a href="/docs/api/logic/#simplify_logic"><code>simplify_logic()</code></
 <section class="sym" id="to_dnf"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">to_dnf</span>(<span class="sig-p">expr</span>, <span class="sig-p">simplify</span><span class="sig-def">=False</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#to_dnf" aria-label="Link to to_dnf">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L233" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#to_dnf" aria-label="Link to to_dnf">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L234" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Disjunctive normal form (sum of products); the dual of <a href="/docs/api/logic/#to_cnf"><code>to_cnf()</code></a>,
 with the same <code>simplify</code> switch and size ceiling.</p>
 </div></section>
 <section class="sym" id="simplify_logic"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">simplify_logic</span>(<span class="sig-p">expr</span>, <span class="sig-p">form</span><span class="sig-def">=&quot;auto&quot;</span>, <span class="sig-p">dontcare</span><span class="sig-def">=None</span>, <span class="sig-p">exact</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#simplify_logic" aria-label="Link to simplify_logic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L340" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_logic" aria-label="Link to simplify_logic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L341" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Minimise a propositional formula to a two-level form.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code></dt><dd><p>formula over Boolean symbols (relations such as <code>x &gt; 0</code> are
@@ -202,7 +202,7 @@ size ceiling, <code>E-LOGIC-004</code> exactness unavailable, <code>E-LOGIC-005<
 <section class="sym" id="minimize_logic"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">minimize_logic</span>(<span class="sig-p">expr</span>, <span class="sig-p">form</span><span class="sig-def">=&quot;dnf&quot;</span>, <span class="sig-p">dontcare</span><span class="sig-def">=None</span>, <span class="sig-p">exact</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#minimize_logic" aria-label="Link to minimize_logic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L489" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#minimize_logic" aria-label="Link to minimize_logic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L490" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><a href="/docs/api/logic/#simplify_logic"><code>simplify_logic()</code></a> returning a <a href="/docs/api/logic/#MinimizedLogic"><code>MinimizedLogic</code></a> record
 (<code>expr</code>, <code>form</code>, <code>exact</code>, <code>terms</code>, <code>literals</code>) so a caller can see
 whether minimality was proven.  Default <code>form</code> is <code>&quot;dnf&quot;</code>.</p>
@@ -226,44 +226,44 @@ result is returned.  At most 64 outputs (<code>LogicError</code>, <code>E-LOGIC-
 <section class="sym" id="MultiMinimizedLogic"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">MultiMinimizedLogic</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic" aria-label="Link to MultiMinimizedLogic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L355" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic" aria-label="Link to MultiMinimizedLogic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L356" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Result of <a href="/docs/api/logic/#minimize_logic"><code>minimize_logic()</code></a> on a list of formulas: one two-level
 formula per output, built from product terms (or clauses) shared between
 outputs.</p>
 <div class="members"><div class="members-title">Properties</div><div class="member" id="MultiMinimizedLogic.exprs">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exprs</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.exprs" aria-label="Link to MultiMinimizedLogic.exprs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L358" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exprs</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.exprs" aria-label="Link to MultiMinimizedLogic.exprs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L359" rel="noopener">source</a></div></div>
   <div class="member-body"><p>One formula per input, in order.</p>
 </div>
 </div>
 <div class="member" id="MultiMinimizedLogic.form">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">form</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.form" aria-label="Link to MultiMinimizedLogic.form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L361" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">form</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.form" aria-label="Link to MultiMinimizedLogic.form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L362" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>&quot;dnf&quot;</code> or <code>&quot;cnf&quot;</code>.</p>
 </div>
 </div>
 <div class="member" id="MultiMinimizedLogic.exact">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exact</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.exact" aria-label="Link to MultiMinimizedLogic.exact">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L365" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exact</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.exact" aria-label="Link to MultiMinimizedLogic.exact">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L366" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>True</code> when the shared cover is proven minimum (fewest distinct
 terms, then fewest literals); <code>False</code> for the heuristic cover.</p>
 </div>
 </div>
 <div class="member" id="MultiMinimizedLogic.terms">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">terms</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.terms" aria-label="Link to MultiMinimizedLogic.terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L369" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">terms</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.terms" aria-label="Link to MultiMinimizedLogic.terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L370" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Distinct product terms (DNF) or clauses (CNF) over all outputs; a term
 feeding several outputs counts once.</p>
 </div>
 </div>
 <div class="member" id="MultiMinimizedLogic.literals">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">literals</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.literals" aria-label="Link to MultiMinimizedLogic.literals">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L372" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">literals</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.literals" aria-label="Link to MultiMinimizedLogic.literals">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L373" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Literal occurrences over the distinct terms.</p>
 </div>
 </div>
 <div class="member" id="MultiMinimizedLogic.per_output_terms">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">per_output_terms</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.per_output_terms" aria-label="Link to MultiMinimizedLogic.per_output_terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L375" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">per_output_terms</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.per_output_terms" aria-label="Link to MultiMinimizedLogic.per_output_terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L376" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Terms in each output&#39;s own formula.</p>
 </div>
 </div>
 <div class="member" id="MultiMinimizedLogic.shared_terms">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">shared_terms</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.shared_terms" aria-label="Link to MultiMinimizedLogic.shared_terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L378" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">shared_terms</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MultiMinimizedLogic.shared_terms" aria-label="Link to MultiMinimizedLogic.shared_terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L379" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Distinct terms used by more than one output.</p>
 </div>
 </div></div></div></section>
@@ -271,7 +271,7 @@ feeding several outputs counts once.</p>
 <section class="sym" id="bdd"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">bdd</span>(<span class="sig-p">expr</span>, <span class="sig-p">order</span><span class="sig-def">=None</span>, <span class="sig-p">max_nodes</span><span class="sig-def">=None</span>, <span class="sig-p">auto_reorder</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#bdd" aria-label="Link to bdd">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1125" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#bdd" aria-label="Link to bdd">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1126" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Build the reduced ordered BDD of a formula over Boolean symbols.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code></dt><dd><p>formula (<code>And</code>/<code>Or</code>/<code>Not</code>/<code>Xor</code>/… over symbols).</p>
@@ -295,7 +295,7 @@ sift on demand.</p>
 <section class="sym" id="BDD"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">BDD</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#BDD" aria-label="Link to BDD">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L645" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#BDD" aria-label="Link to BDD">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L646" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A reduced ordered binary decision diagram, returned by <a href="/docs/api/logic/#bdd"><code>bdd()</code></a>.</p>
 <p>Canonical for its variable order: two BDDs of the same manager are
 equivalent exactly when <a href="/docs/api/logic/#equivalent"><code>equivalent()</code></a> says so, in time independent of
@@ -303,47 +303,47 @@ the formulas.  <code>&amp;</code>, <code>|</code>, <code>^</code> and <code>~</c
 <code>Expr</code>); operands built by separate <a href="/docs/api/logic/#bdd"><code>bdd()</code></a> calls are merged by
 variable name.</p>
 <div class="members"><div class="members-title">Properties</div><div class="member" id="BDD.auto_reorder">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">auto_reorder</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.auto_reorder" aria-label="Link to BDD.auto_reorder">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1013" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">auto_reorder</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.auto_reorder" aria-label="Link to BDD.auto_reorder">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1014" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The automatic-reordering threshold in nodes, or <code>None</code> when off.</p>
 </div>
 </div>
 <div class="member" id="BDD.order">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">order</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.order" aria-label="Link to BDD.order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1024" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">order</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.order" aria-label="Link to BDD.order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1025" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Variable names in the manager&#39;s order (root first).</p>
 </div>
 </div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="BDD.implies">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">implies</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.implies" aria-label="Link to BDD.implies">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L827" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">implies</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.implies" aria-label="Link to BDD.implies">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L828" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>self → other</code>.</p>
 </div>
 </div>
 <div class="member" id="BDD.iff">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">iff</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.iff" aria-label="Link to BDD.iff">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L832" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">iff</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.iff" aria-label="Link to BDD.iff">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L833" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>self ↔ other</code>.</p>
 </div>
 </div>
 <div class="member" id="BDD.ite">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ite</span>(<span class="sig-p">g</span>, <span class="sig-p">h</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.ite" aria-label="Link to BDD.ite">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L837" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ite</span>(<span class="sig-p">g</span>, <span class="sig-p">h</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.ite" aria-label="Link to BDD.ite">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L838" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>if self then g else h</code> (the ITE operator every BDD operation reduces to).</p>
 </div>
 </div>
 <div class="member" id="BDD.restrict">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">restrict</span>(<span class="sig-p">assignment</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.restrict" aria-label="Link to BDD.restrict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L854" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">restrict</span>(<span class="sig-p">assignment</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.restrict" aria-label="Link to BDD.restrict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L855" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Cofactor: fix variables to constants.  <code>assignment</code> maps symbols (or
 names) to bools.</p>
 </div>
 </div>
 <div class="member" id="BDD.exists">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exists</span>(<span class="sig-p">variables</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.exists" aria-label="Link to BDD.exists">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L875" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exists</span>(<span class="sig-p">variables</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.exists" aria-label="Link to BDD.exists">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L876" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Existential quantification <code>∃ vars . self</code>.</p>
 </div>
 </div>
 <div class="member" id="BDD.forall">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">forall</span>(<span class="sig-p">variables</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.forall" aria-label="Link to BDD.forall">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L885" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">forall</span>(<span class="sig-p">variables</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.forall" aria-label="Link to BDD.forall">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L886" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Universal quantification <code>∀ vars . self</code>.</p>
 </div>
 </div>
 <div class="member" id="BDD.sat_count">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">sat_count</span>(<span class="sig-p">variables</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.sat_count" aria-label="Link to BDD.sat_count">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L901" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">sat_count</span>(<span class="sig-p">variables</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.sat_count" aria-label="Link to BDD.sat_count">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L902" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Number of satisfying assignments (a Python <code>int</code>, exact).</p>
 <p>With <code>variables=None</code> the count is over every variable of the BDD&#39;s
 manager — the formula&#39;s symbols plus any brought in by combining it
@@ -352,7 +352,7 @@ with other BDDs.  Pass <code>variables</code> (symbols or names, a superset of
 </div>
 </div>
 <div class="member" id="BDD.reorder">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">reorder</span>(<span class="sig-p">max_growth</span><span class="sig-def">=1.2</span>, <span class="sig-p">max_swaps</span><span class="sig-def">=...</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.reorder" aria-label="Link to BDD.reorder">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L981" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">reorder</span>(<span class="sig-p">max_growth</span><span class="sig-def">=1.2</span>, <span class="sig-p">max_swaps</span><span class="sig-def">=...</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.reorder" aria-label="Link to BDD.reorder">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L982" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Re-sort the manager&#39;s variable order by Rudell sifting to shrink the
 diagrams.</p>
 <p>Every function of the manager (this BDD and any combined with it)
@@ -371,46 +371,46 @@ the manager exceeds this multiple of the best size seen for it
 </dd></div></dl></div>
 </div>
 <div class="member" id="BDD.set_auto_reorder">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">set_auto_reorder</span>(<span class="sig-p">threshold</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.set_auto_reorder" aria-label="Link to BDD.set_auto_reorder">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1005" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">set_auto_reorder</span>(<span class="sig-p">threshold</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.set_auto_reorder" aria-label="Link to BDD.set_auto_reorder">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1006" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Turn automatic reordering of this BDD&#39;s manager on or off: <code>False</code>
 (off), <code>True</code> (sift once the manager holds 50 000 live nodes) or an
 <code>int</code> threshold.  Checked after every operation that produces a BDD.</p>
 </div>
 </div>
 <div class="member" id="BDD.node_count">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">node_count</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.node_count" aria-label="Link to BDD.node_count">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1018" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">node_count</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.node_count" aria-label="Link to BDD.node_count">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1019" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Non-terminal nodes reachable from this function.</p>
 </div>
 </div>
 <div class="member" id="BDD.support">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">support</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.support" aria-label="Link to BDD.support">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1029" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">support</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.support" aria-label="Link to BDD.support">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1030" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Names of the variables the function depends on, in BDD order.</p>
 </div>
 </div>
 <div class="member" id="BDD.satisfy_one">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">satisfy_one</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.satisfy_one" aria-label="Link to BDD.satisfy_one">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1040" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">satisfy_one</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.satisfy_one" aria-label="Link to BDD.satisfy_one">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1041" rel="noopener">source</a></div></div>
   <div class="member-body"><p>One satisfying assignment <code>{name: bool}</code> (variables left out are
 free), or <code>None</code> if unsatisfiable.</p>
 </div>
 </div>
 <div class="member" id="BDD.is_true">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_true</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.is_true" aria-label="Link to BDD.is_true">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1055" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_true</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.is_true" aria-label="Link to BDD.is_true">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1056" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>True</code> when the function is the constant true.</p>
 </div>
 </div>
 <div class="member" id="BDD.is_false">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_false</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.is_false" aria-label="Link to BDD.is_false">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1060" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_false</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.is_false" aria-label="Link to BDD.is_false">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1061" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>True</code> when the function is the constant false.</p>
 </div>
 </div>
 <div class="member" id="BDD.equivalent">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">equivalent</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.equivalent" aria-label="Link to BDD.equivalent">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1066" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">equivalent</span>(<span class="sig-p">other</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.equivalent" aria-label="Link to BDD.equivalent">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1067" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Canonical equivalence: same node after merging the operand into this
 manager.</p>
 </div>
 </div>
 <div class="member" id="BDD.to_expr">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_expr</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.to_expr" aria-label="Link to BDD.to_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1072" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_expr</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#BDD.to_expr" aria-label="Link to BDD.to_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L1073" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The function as a formula (Shannon expansion at every node).</p>
 </div>
 </div></div></div></section>
@@ -418,7 +418,7 @@ manager.</p>
 <section class="sym" id="equivalent"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">equivalent</span>(<span class="sig-p">f</span>, <span class="sig-p">g</span>, <span class="sig-p">method</span><span class="sig-def">=&quot;auto&quot;</span>, <span class="sig-p">counterexample</span><span class="sig-def">=False</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#equivalent" aria-label="Link to equivalent">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L545" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#equivalent" aria-label="Link to equivalent">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L546" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Decide whether two propositional formulas are equivalent.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt></dt><dd><p>f, g: formulas (same pool).</p>
@@ -442,7 +442,7 @@ guessed verdict.</p>
 <section class="sym" id="truth_table"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">truth_table</span>(<span class="sig-p">expr</span>, <span class="sig-p">variables</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#truth_table" aria-label="Link to truth_table">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L595" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#truth_table" aria-label="Link to truth_table">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L596" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Truth table of a formula over Boolean symbols.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">expr</code></dt><dd><p>formula.</p>
@@ -462,7 +462,7 @@ carry chains), on the formula&#39;s DAG.</p>
 <section class="sym" id="satisfiable"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">satisfiable</span>(<span class="sig-p">formula</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#satisfiable" aria-label="Link to satisfiable">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16141" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#satisfiable" aria-label="Link to satisfiable">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L16228" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Decide satisfiability of a predicate <code>Expr</code>.</p>
 <p>Returns <code>False</code> if unsatisfiable, <code>True</code> if satisfiable with no witness
 variables, a <code>dict</code> of symbol → value string if a witness is found, or
@@ -510,31 +510,31 @@ literal such as <code>&quot;1/2&quot;</code>.  The two never appear in the same 
 <section class="sym" id="MinimizedLogic"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">MinimizedLogic</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic" aria-label="Link to MinimizedLogic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L245" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic" aria-label="Link to MinimizedLogic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L246" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Result of <a href="/docs/api/logic/#minimize_logic"><code>minimize_logic()</code></a>: the two-level formula and how it was
 obtained.</p>
 <div class="members"><div class="members-title">Properties</div><div class="member" id="MinimizedLogic.expr">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">expr</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.expr" aria-label="Link to MinimizedLogic.expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L247" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">expr</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.expr" aria-label="Link to MinimizedLogic.expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L248" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="MinimizedLogic.form">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">form</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.form" aria-label="Link to MinimizedLogic.form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L250" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">form</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.form" aria-label="Link to MinimizedLogic.form">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L251" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>&quot;dnf&quot;</code> or <code>&quot;cnf&quot;</code>.</p>
 </div>
 </div>
 <div class="member" id="MinimizedLogic.exact">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exact</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.exact" aria-label="Link to MinimizedLogic.exact">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L254" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">exact</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.exact" aria-label="Link to MinimizedLogic.exact">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L255" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>True</code> when the cover is proven minimum (fewest terms, then fewest
 literals); <code>False</code> for the heuristic cover.</p>
 </div>
 </div>
 <div class="member" id="MinimizedLogic.terms">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">terms</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.terms" aria-label="Link to MinimizedLogic.terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L257" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">terms</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.terms" aria-label="Link to MinimizedLogic.terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L258" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Product terms (DNF) or clauses (CNF).</p>
 </div>
 </div>
 <div class="member" id="MinimizedLogic.literals">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">literals</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.literals" aria-label="Link to MinimizedLogic.literals">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L260" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">literals</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#MinimizedLogic.literals" aria-label="Link to MinimizedLogic.literals">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/boolean.rs#L261" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Literal occurrences.</p>
 </div>
 </div></div></div></section>
@@ -542,7 +542,7 @@ literals); <code>False</code> for the heuristic cover.</p>
   <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/linprog/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Linear and integer programming</span></a><a class="pager-next" href="/docs/api/codegen/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Code generation</span></a></nav>
   <footer class="doc-foot">
     <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/logic.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
-    <span class="foot-meta">Alkahest 3.13.1 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+    <span class="foot-meta">Alkahest 3.13.2 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
   </footer>
 </main>
 <aside class="toc" aria-label="On this page">

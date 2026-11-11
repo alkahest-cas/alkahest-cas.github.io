@@ -14,10 +14,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/docs/assets/style.css?v=3.13.1">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.13.2">
 
 <script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
-<script defer src="/docs/assets/app.js?v=3.13.1"></script>
+<script defer src="/docs/assets/app.js?v=3.13.2"></script>
 </head>
 <body data-base="/docs/" data-section="api">
 <a class="skip" href="#content">Skip to content</a>
@@ -71,7 +71,7 @@ normal forms. See the <em>Noncommutative algebra</em> chapter of the user guide.
 <section class="sym" id="nc_expand"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">nc_expand</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#nc_expand" aria-label="Link to nc_expand">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L71" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#nc_expand" aria-label="Link to nc_expand">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L72" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>nc_expand(expr) -&gt; Expr</code></p>
 <p>Expand <code>expr</code> as a polynomial in noncommutative symbols: products
 distribute <em>keeping factor order</em>, non-negative integer powers of
@@ -84,7 +84,7 @@ coefficients are simplified.</p>
 <section class="sym" id="nc_terms"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">nc_terms</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#nc_terms" aria-label="Link to nc_terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L86" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#nc_terms" aria-label="Link to nc_terms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L87" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>nc_terms(expr) -&gt; list[tuple[Expr, list[Expr]]]</code></p>
 <p>The terms <code>(coefficient, word)</code> of <code>expr</code> read as a noncommutative
 polynomial (see <a href="/docs/api/noncommutative/#nc_expand"><code>nc_expand()</code></a>): <code>coefficient</code> is commutative and
@@ -94,7 +94,7 @@ scalar part).</p>
 <section class="sym" id="nc_rewrite"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">nc_rewrite</span>(<span class="sig-p">expr</span>, <span class="sig-p">rules</span>, <span class="sig-sep">*</span>, <span class="sig-p">max_steps</span><span class="sig-def">=...</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#nc_rewrite" aria-label="Link to nc_rewrite">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L120" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#nc_rewrite" aria-label="Link to nc_rewrite">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L127" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>nc_rewrite(expr, rules, *, max_steps=200000) -&gt; Expr</code></p>
 <p>Rewrite <code>expr</code> to a normal form with literal word rules made by
 <a href="/docs/api/simplify/#make_rule"><code>make_rule()</code></a>: every occurrence of a rule&#39;s left-hand word <em>inside</em> a
@@ -110,7 +110,7 @@ with coefficient 1; symbols in these rules are literal (no wildcards).</p>
 <section class="sym" id="commutator"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">commutator</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>, <span class="sig-p">rules</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#commutator" aria-label="Link to commutator">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L182" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#commutator" aria-label="Link to commutator">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L189" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>commutator(a, b, rules=None) -&gt; Expr</code></p>
 <p><code>[a, b] = a*b - b*a</code>, expanded as a noncommutative polynomial. With
 <code>rules</code> (from <a href="/docs/api/simplify/#make_rule"><code>make_rule()</code></a>) the result is rewritten to normal form
@@ -119,14 +119,14 @@ with <a href="/docs/api/noncommutative/#nc_rewrite"><code>nc_rewrite()</code></a
 <section class="sym" id="anticommutator"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">anticommutator</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>, <span class="sig-p">rules</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#anticommutator" aria-label="Link to anticommutator">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L196" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#anticommutator" aria-label="Link to anticommutator">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L203" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>anticommutator(a, b, rules=None) -&gt; Expr</code></p>
 <p><code>{a, b} = a*b + b*a</code>, expanded; <code>rules</code> as for <a href="/docs/api/noncommutative/#commutator"><code>commutator()</code></a>.</p>
 </div></section>
 <section class="sym" id="normal_order"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">normal_order</span>(<span class="sig-p">expr</span>, <span class="sig-p">bosons</span><span class="sig-def">=None</span>, <span class="sig-p">fermions</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#normal_order" aria-label="Link to normal_order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L274" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#normal_order" aria-label="Link to normal_order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L281" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>normal_order(expr, bosons=None, fermions=None) -&gt; Expr</code></p>
 <p>Normal-order <code>expr</code> with the canonical commutation relations: every
 creation operator moves left of every annihilation operator using
@@ -149,7 +149,7 @@ Other noncommutative factors stay in place and block reordering.</p>
 <section class="sym" id="vacuum_expectation"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">vacuum_expectation</span>(<span class="sig-p">expr</span>, <span class="sig-p">bosons</span><span class="sig-def">=None</span>, <span class="sig-p">fermions</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#vacuum_expectation" aria-label="Link to vacuum_expectation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L296" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#vacuum_expectation" aria-label="Link to vacuum_expectation">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L303" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>vacuum_expectation(expr, bosons=None, fermions=None) -&gt; Expr</code></p>
 <p><code>&lt;0| expr |0&gt;</code>: the scalar part of <a href="/docs/api/noncommutative/#normal_order"><code>normal_order()</code></a> <code>(expr)</code>.
 E.g. <code>vacuum_expectation(a*a*ad*ad, bosons=(a, ad)) == 2</code>.</p>
@@ -159,7 +159,7 @@ factor that is not one of the listed ladder operators.</p>
 <section class="sym" id="gamma_trace"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">gamma_trace</span>(<span class="sig-p">slots</span>, <span class="sig-p">pool</span><span class="sig-def">=None</span>, <span class="sig-sep">*</span>, <span class="sig-p">dim</span><span class="sig-def">=None</span>, <span class="sig-p">indices</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#gamma_trace" aria-label="Link to gamma_trace">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L351" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#gamma_trace" aria-label="Link to gamma_trace">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L358" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>gamma_trace(slots, pool=None) -&gt; Expr</code></p>
 <p>Trace of a product of Dirac matrices in four dimensions, metric
 <code>diag(+1, -1, -1, -1)</code>, <code>{γ^μ, γ^ν} = 2 g^{μν}</code>, <code>tr 1 = 4</code>,
@@ -193,7 +193,7 @@ to expand.</p>
 <section class="sym" id="lorentz_contract"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">lorentz_contract</span>(<span class="sig-p">expr</span>, <span class="sig-p">indices</span>, <span class="sig-p">dim</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#lorentz_contract" aria-label="Link to lorentz_contract">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L495" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#lorentz_contract" aria-label="Link to lorentz_contract">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L505" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>lorentz_contract(expr, indices, dim) -&gt; Expr</code></p>
 <p>Contract the dummy Lorentz indices <code>indices</code> of a polynomial in
 <code>dot(a, b)</code> factors (<code>dot(μ, μ) -&gt; d</code>; <code>dot(μ, a)*dot(μ, b) -&gt; dot(a, b)</code>). An index occurring once is free and kept. Use it on products
@@ -205,7 +205,7 @@ inside a factor that is not a <code>dot</code> (e.g. <code>levi_civita</code>).<
 <section class="sym" id="gamma_contract"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">gamma_contract</span>(<span class="sig-p">slots</span>, <span class="sig-p">indices</span>, <span class="sig-p">dim</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#gamma_contract" aria-label="Link to gamma_contract">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L456" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#gamma_contract" aria-label="Link to gamma_contract">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L463" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>gamma_contract(slots, indices, dim) -&gt; list[tuple[Expr, list[Expr]]]</code></p>
 <p>Contract the dummy Lorentz indices of a <em>product</em> of gamma matrices in
 <code>dim</code> dimensions using only <code>{γ^μ, γ^ν} = 2 g^{μν}</code>. <code>slots</code> are
@@ -228,7 +228,7 @@ repeated more than twice, <code>E-NC-006</code> past 14 slots.</p>
     <span class="sig-sep">*</span>,
     <span class="sig-p">check_jacobi</span><span class="sig-def">=True</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#lie_algebra" aria-label="Link to lie_algebra">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L737" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#lie_algebra" aria-label="Link to lie_algebra">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L747" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>lie_algebra(generators, structure_constants, *, check_jacobi=True) -&gt; LieAlgebra</code></p>
 <p>A Lie algebra on noncommutative <code>generators</code> with
 <code>[T_a, T_b] = i Σ_c f_{abc} T_c</code>. <code>structure_constants</code> maps 1-based
@@ -249,7 +249,7 @@ distinct noncommutative symbols, bad or inconsistent entries, or a failed
 <section class="sym" id="lie_su2"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">lie_su2</span>(<span class="sig-p">pool</span>, <span class="sig-p">generators</span><span class="sig-def">=None</span>, <span class="sig-sep">*</span>, <span class="sig-p">prefix</span><span class="sig-def">=&quot;J&quot;</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#lie_su2" aria-label="Link to lie_su2">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L824" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#lie_su2" aria-label="Link to lie_su2">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L834" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>lie_su2(pool, generators=None, *, prefix=&quot;J&quot;) -&gt; LieAlgebra</code></p>
 <p>su(2): <code>[J_a, J_b] = i ε_{abc} J_c</code> (<code>J = σ/2</code>, spin matrices). With
 no <code>generators</code> it creates noncommutative symbols <code>J1, J2, J3</code>. The
@@ -258,7 +258,7 @@ Casimir <code>J1² + J2² + J3²</code> commutes with every generator.</p>
 <section class="sym" id="lie_su3"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">lie_su3</span>(<span class="sig-p">pool</span>, <span class="sig-p">generators</span><span class="sig-def">=None</span>, <span class="sig-sep">*</span>, <span class="sig-p">prefix</span><span class="sig-def">=&quot;T&quot;</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#lie_su3" aria-label="Link to lie_su3">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L843" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#lie_su3" aria-label="Link to lie_su3">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L853" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>lie_su3(pool, generators=None, *, prefix=&quot;T&quot;) -&gt; LieAlgebra</code></p>
 <p>su(3) in the Gell-Mann basis: <code>[T_a, T_b] = i f_{abc} T_c</code> with
 <code>T = λ/2</code> (<code>f_{123} = 1</code>, <code>f_{458} = f_{678} = √3/2</code>, …; see
@@ -268,7 +268,7 @@ Casimir <code>Σ T_a²</code> equals <code>4/3</code> in the fundamental represe
 <section class="sym" id="su3_f"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">su3_f</span>(<span class="sig-p">pool</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#su3_f" aria-label="Link to su3_f">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L860" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#su3_f" aria-label="Link to su3_f">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L870" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>su3_f(pool) -&gt; dict[tuple[int, int, int], Expr]</code></p>
 <p>The Gell-Mann structure constants <code>f_{abc}</code> (1-based, all nonzero
 entries in all six index orders): <code>[λ_a/2, λ_b/2] = i f_{abc} λ_c/2</code>.</p>
@@ -276,7 +276,7 @@ entries in all six index orders): <code>[λ_a/2, λ_b/2] = i f_{abc} λ_c/2</cod
 <section class="sym" id="su3_d"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">su3_d</span>(<span class="sig-p">pool</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#su3_d" aria-label="Link to su3_d">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L880" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#su3_d" aria-label="Link to su3_d">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L890" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>su3_d(pool) -&gt; dict[tuple[int, int, int], Expr]</code></p>
 <p>The Gell-Mann symmetric constants <code>d_{abc}</code> (1-based, all nonzero
 entries in every index order): <code>{λ_a, λ_b} = (4/3) δ_{ab} + 2 d_{abc} λ_c</code>.</p>
@@ -295,39 +295,39 @@ commutative ones).</p>
 <section class="sym" id="LieAlgebra"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">LieAlgebra</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra" aria-label="Link to LieAlgebra">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L521" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra" aria-label="Link to LieAlgebra">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L531" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A Lie algebra given by <code>[T_a, T_b] = i Σ_c f_{abc} T_c</code> on noncommutative
 generators (see <a href="/docs/api/noncommutative/#lie_algebra"><code>lie_algebra()</code></a>).</p>
 <div class="members"><div class="members-title">Properties</div><div class="member" id="LieAlgebra.generators">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">generators</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra.generators" aria-label="Link to LieAlgebra.generators">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L536" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">generators</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra.generators" aria-label="Link to LieAlgebra.generators">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L546" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The generators, in table order.</p>
 </div>
 </div>
 <div class="member" id="LieAlgebra.rules">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rules</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra.rules" aria-label="Link to LieAlgebra.rules">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L547" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rules</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra.rules" aria-label="Link to LieAlgebra.rules">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L557" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The ordering rules <code>T_a T_b -&gt; T_b T_a + [T_a, T_b]</code> (<code>a &gt; b</code>) as
 <code>RewriteRule</code> objects, usable with <a href="/docs/api/noncommutative/#nc_rewrite"><code>nc_rewrite()</code></a>.</p>
 </div>
 </div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="LieAlgebra.commutator">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">commutator</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra.commutator" aria-label="Link to LieAlgebra.commutator">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L561" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">commutator</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra.commutator" aria-label="Link to LieAlgebra.commutator">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L571" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>[a, b]</code> reduced with the table: <code>commutator(T_a, T_b)</code> is
 <code>i Σ f_abc T_c</code>; for polynomials the result is in normal order
 (generators in increasing index order).</p>
 </div>
 </div>
 <div class="member" id="LieAlgebra.anticommutator">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">anticommutator</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra.anticommutator" aria-label="Link to LieAlgebra.anticommutator">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L580" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">anticommutator</span>(<span class="sig-p">a</span>, <span class="sig-p">b</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra.anticommutator" aria-label="Link to LieAlgebra.anticommutator">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L590" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>{a, b} = a b + b a</code> reduced with the table.</p>
 </div>
 </div>
 <div class="member" id="LieAlgebra.normal_order">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">normal_order</span>(<span class="sig-p">expr</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra.normal_order" aria-label="Link to LieAlgebra.normal_order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L600" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">normal_order</span>(<span class="sig-p">expr</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra.normal_order" aria-label="Link to LieAlgebra.normal_order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L610" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Rewrite <code>expr</code> to normal order: generators in increasing table order
 (Poincaré–Birkhoff–Witt basis), commutator terms added.</p>
 </div>
 </div>
 <div class="member" id="LieAlgebra.casimir">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">casimir</span>(<span class="sig-p">inverse_metric</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra.casimir" aria-label="Link to LieAlgebra.casimir">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L616" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">casimir</span>(<span class="sig-p">inverse_metric</span><span class="sig-def">=None</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra.casimir" aria-label="Link to LieAlgebra.casimir">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L626" rel="noopener">source</a></div></div>
   <div class="member-body"><p>The quadratic Casimir <code>Σ g^{ab} T_a T_b</code>. <code>inverse_metric</code> is an
 <code>n × n</code> nested list <code>g^{ab}</code> (ints or <code>Expr</code>); the default is the
 identity, i.e. <code>Σ T_a²</code>, correct for the su(n) tables of this module
@@ -335,7 +335,7 @@ identity, i.e. <code>Σ T_a²</code>, correct for the su(n) tables of this modul
 </div>
 </div>
 <div class="member" id="LieAlgebra.verify_jacobi">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verify_jacobi</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra.verify_jacobi" aria-label="Link to LieAlgebra.verify_jacobi">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L645" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verify_jacobi</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#LieAlgebra.verify_jacobi" aria-label="Link to LieAlgebra.verify_jacobi">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/noncommutative.rs#L655" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Check the Jacobi identity for every triple; raises <code>NcError</code>
 <code>E-NC-008</code> if it fails or cannot be verified symbolically.</p>
 </div>
@@ -344,7 +344,7 @@ identity, i.e. <code>Σ T_a²</code>, correct for the su(n) tables of this modul
   <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/orthopoly/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Orthogonal polynomials and angular momentum</span></a><a class="pager-next" href="/docs/api/specfun/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Special functions</span></a></nav>
   <footer class="doc-foot">
     <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/noncommutative.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
-    <span class="foot-meta">Alkahest 3.13.1 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+    <span class="foot-meta">Alkahest 3.13.2 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
   </footer>
 </main>
 <aside class="toc" aria-label="On this page">

@@ -14,10 +14,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/docs/assets/style.css?v=3.13.1">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.13.2">
 
 <script>try{var t=localStorage.getItem("alkahest-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
-<script defer src="/docs/assets/app.js?v=3.13.1"></script>
+<script defer src="/docs/assets/app.js?v=3.13.2"></script>
 </head>
 <body data-base="/docs/" data-section="api">
 <a class="skip" href="#content">Skip to content</a>
@@ -71,7 +71,7 @@
 <section class="sym" id="to_stablehlo"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">to_stablehlo</span>(<span class="sig-p">expr</span>, <span class="sig-p">inputs</span>, <span class="sig-p">fn_name</span><span class="sig-def">=&quot;alkahest_fn&quot;</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#to_stablehlo" aria-label="Link to to_stablehlo">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17352" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#to_stablehlo" aria-label="Link to to_stablehlo">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17443" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>alkahest.to_stablehlo(expr, inputs) -&gt; str</code></p>
 <p>Lower a symbolic expression to a StableHLO MLIR text module.</p>
 
@@ -93,7 +93,7 @@ No module is ever returned partially or with a stand-in.</p>
 <section class="sym" id="emit_c_expr"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">emit_c_expr</span>(<span class="sig-p">expr</span>, <span class="sig-p">vars</span>, <span class="sig-p">var_names</span><span class="sig-def">=None</span>, <span class="sig-p">fn_name</span><span class="sig-def">=&quot;f&quot;</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#emit_c_expr" aria-label="Link to emit_c_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15015" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#emit_c_expr" aria-label="Link to emit_c_expr">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15106" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Emit a C function that evaluates a symbolic expression including
 transcendental functions.</p>
 <p>Unlike <a href="/docs/api/numerics/#emit_c"><code>emit_c()</code></a> (which is restricted to univariate polynomials and
@@ -154,7 +154,7 @@ symbol not listed in <em>vars</em>.</p>
 <section class="sym" id="emit_c_vec"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">emit_c_vec</span>(<span class="sig-p">exprs</span>, <span class="sig-p">vars</span>, <span class="sig-p">var_names</span><span class="sig-def">=None</span>, <span class="sig-p">fn_name</span><span class="sig-def">=&quot;eval_vec&quot;</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#emit_c_vec" aria-label="Link to emit_c_vec">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15117" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#emit_c_vec" aria-label="Link to emit_c_vec">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15208" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Emit a C function that writes multiple symbolic expressions into an output
 array.</p>
 <p>Computes <code>len(exprs)</code> values and writes them to <code>double *out</code>:</p>
@@ -188,30 +188,30 @@ made valid, collision-free C identifiers as for <a href="/docs/api/codegen/#emit
 <section class="sym" id="PrimitiveRegistry"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">PrimitiveRegistry</span>()</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry" aria-label="Link to PrimitiveRegistry">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17204" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry" aria-label="Link to PrimitiveRegistry">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17295" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Python-visible wrapper around [<code>PrimitiveRegistry</code>].</p>
 <div class="members"><div class="members-title">Methods</div><div class="member" id="PrimitiveRegistry.default_registry">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">default_registry</span>()</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.default_registry" aria-label="Link to PrimitiveRegistry.default_registry">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17220" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">default_registry</span>()</code></pre><span class="kind kind-small">staticmethod</span><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.default_registry" aria-label="Link to PrimitiveRegistry.default_registry">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17311" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Return a registry pre-populated with Alkahest&#39;s built-in primitives.</p>
 </div>
 </div>
 <div class="member" id="PrimitiveRegistry.capabilities">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">capabilities</span>(<span class="sig-p">name</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.capabilities" aria-label="Link to PrimitiveRegistry.capabilities">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17227" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">capabilities</span>(<span class="sig-p">name</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.capabilities" aria-label="Link to PrimitiveRegistry.capabilities">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17318" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Return the capability bitfield for a named primitive as a dict.</p>
 </div>
 </div>
 <div class="member" id="PrimitiveRegistry.is_registered">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_registered</span>(<span class="sig-p">name</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.is_registered" aria-label="Link to PrimitiveRegistry.is_registered">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17245" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_registered</span>(<span class="sig-p">name</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.is_registered" aria-label="Link to PrimitiveRegistry.is_registered">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17336" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Return True if a primitive with this name is registered.</p>
 </div>
 </div>
 <div class="member" id="PrimitiveRegistry.coverage_report_markdown">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coverage_report_markdown</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.coverage_report_markdown" aria-label="Link to PrimitiveRegistry.coverage_report_markdown">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17250" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coverage_report_markdown</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.coverage_report_markdown" aria-label="Link to PrimitiveRegistry.coverage_report_markdown">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17341" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Return the coverage report as a Markdown string.</p>
 </div>
 </div>
 <div class="member" id="PrimitiveRegistry.coverage_report">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coverage_report</span>()<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.coverage_report" aria-label="Link to PrimitiveRegistry.coverage_report">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17255" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coverage_report</span>()<span class="sig-ret"> → str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#PrimitiveRegistry.coverage_report" aria-label="Link to PrimitiveRegistry.coverage_report">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17346" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Return the coverage report as a list of dicts.</p>
 </div>
 </div></div></div></section>
@@ -219,7 +219,7 @@ made valid, collision-free C identifiers as for <a href="/docs/api/codegen/#emit
 <section class="sym" id="CompileCache"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">CompileCache</span>()</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#CompileCache" aria-label="Link to CompileCache">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13844" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#CompileCache" aria-label="Link to CompileCache">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13936" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Content-addressed cache of JIT-compiled functions.</p>
 <p>Because Alkahest hash-conses expressions, the same expression tree always
 produces the same <code>ExprId</code>.  <code>CompileCache</code> exploits this to skip
@@ -236,16 +236,16 @@ result in O(1) time.</p>
 <span class="line"></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">assert</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7"> f(</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">3.0</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F47067">==</span><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF"> 9.0</span></span>
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#6CB6FF">print</span><span style="--shiki-light:#24292E;--shiki-dark:#ADBAC7">(cache.stats())           </span><span style="--shiki-light:#6A737D;--shiki-dark:#768390"># {'len': 1, 'compiles': 1, 'hits': 1, 'hit_rate': 0.5}</span></span></code></pre></div><div class="members"><div class="members-title">Properties</div><div class="member" id="CompileCache.len">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">len</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.len" aria-label="Link to CompileCache.len">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13923" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">len</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.len" aria-label="Link to CompileCache.len">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14015" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Number of <code>(expr, inputs)</code> pairs currently cached.</p>
 </div>
 </div>
 <div class="member" id="CompileCache.is_empty">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_empty</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.is_empty" aria-label="Link to CompileCache.is_empty">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13929" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_empty</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.is_empty" aria-label="Link to CompileCache.is_empty">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14021" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>True</code> if the cache contains no entries.</p>
 </div>
 </div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="CompileCache.compile">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">compile</span>(<span class="sig-p">expr</span>, <span class="sig-p">inputs</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.compile" aria-label="Link to CompileCache.compile">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13881" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">compile</span>(<span class="sig-p">expr</span>, <span class="sig-p">inputs</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.compile" aria-label="Link to CompileCache.compile">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13973" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Compile <code>expr</code> with the given <code>inputs</code>, returning a cached <a href="/docs/api/numerics/#CompiledFn"><code>CompiledFn</code></a>.</p>
 <p>The first call for a given <code>(expr, inputs)</code> pair JIT-compiles the
 expression.  Subsequent calls return the same <a href="/docs/api/numerics/#CompiledFn"><code>CompiledFn</code></a>
@@ -257,19 +257,19 @@ without recompilation.</p>
 <div class="doc-sub">Returns</div><dl class="params"><div class="param"><dt><span class="ptype">CompiledFn</span></dt></div></dl></div>
 </div>
 <div class="member" id="CompileCache.clear">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">clear</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.clear" aria-label="Link to CompileCache.clear">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13937" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">clear</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.clear" aria-label="Link to CompileCache.clear">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14029" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Remove all cached entries.</p>
 <p>Live <a href="/docs/api/numerics/#CompiledFn"><code>CompiledFn</code></a> objects already returned to Python callers
 remain valid — they hold an independent reference to the compiled code.</p>
 </div>
 </div>
 <div class="member" id="CompileCache.contains">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">contains</span>(<span class="sig-p">expr</span>, <span class="sig-p">inputs</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.contains" aria-label="Link to CompileCache.contains">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13943" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">contains</span>(<span class="sig-p">expr</span>, <span class="sig-p">inputs</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.contains" aria-label="Link to CompileCache.contains">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14035" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>True</code> if a compiled function for <code>(expr, inputs)</code> is in the cache.</p>
 </div>
 </div>
 <div class="member" id="CompileCache.stats">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">stats</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.stats" aria-label="Link to CompileCache.stats">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13965" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">stats</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CompileCache.stats" aria-label="Link to CompileCache.stats">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14057" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Return a dict with cache statistics.</p>
 <p>Keys: <code>len</code>, <code>compiles</code>, <code>hits</code>, <code>hit_rate</code>.</p>
 </div>
@@ -293,16 +293,16 @@ partial derivative.</p>
 <section class="sym" id="CudaCompiledFn"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">CudaCompiledFn</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn" aria-label="Link to CudaCompiledFn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17378" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn" aria-label="Link to CudaCompiledFn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17469" rel="noopener">source</a></div>
 </div><div class="sym-body"><p class="muted nodoc">No docstring.</p><div class="members"><div class="members-title">Properties</div><div class="member" id="CudaCompiledFn.ptx">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ptx</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn.ptx" aria-label="Link to CudaCompiledFn.ptx">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17386" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ptx</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn.ptx" aria-label="Link to CudaCompiledFn.ptx">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17477" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="CudaCompiledFn.n_inputs">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_inputs</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn.n_inputs" aria-label="Link to CudaCompiledFn.n_inputs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17391" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">n_inputs</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn.n_inputs" aria-label="Link to CudaCompiledFn.n_inputs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17482" rel="noopener">source</a></div></div>
   
 </div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="CudaCompiledFn.call_batch">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">call_batch</span>(<span class="sig-p">inputs</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn.call_batch" aria-label="Link to CudaCompiledFn.call_batch">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17411" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">call_batch</span>(<span class="sig-p">inputs</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn.call_batch" aria-label="Link to CudaCompiledFn.call_batch">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17502" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Evaluate the compiled kernel on CUDA device 0 for <code>N</code> independent points.</p>
 <p><code>inputs</code> is a list of length <code>n_inputs</code>.  Each entry is a 1-D sequence
 of <code>N</code> values for that variable (column-major / SoA: one array per
@@ -311,7 +311,7 @@ symbolic input).  Returns a Python <code>list</code> of <code>N</code> outputs.<
 </div>
 </div>
 <div class="member" id="CudaCompiledFn.call_batch_on">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">call_batch_on</span>(<span class="sig-p">device</span>, <span class="sig-p">inputs</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn.call_batch_on" aria-label="Link to CudaCompiledFn.call_batch_on">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17431" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">call_batch_on</span>(<span class="sig-p">device</span>, <span class="sig-p">inputs</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#CudaCompiledFn.call_batch_on" aria-label="Link to CudaCompiledFn.call_batch_on">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17522" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Evaluate the compiled kernel on a specific CUDA device ordinal.</p>
 <p>Same contract as <code>call_batch()</code>, which is this method with
 <code>device = 0</code>. The PTX is device-independent — it is generated once and
@@ -329,7 +329,7 @@ host.</p>
 <section class="sym" id="cuda_device_count"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">cuda_device_count</span>()</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#cuda_device_count" aria-label="Link to cuda_device_count">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17521" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#cuda_device_count" aria-label="Link to cuda_device_count">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L17612" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>alkahest.cuda_device_count() -&gt; int</code></p>
 <p>Number of CUDA devices visible to this process; <code>0</code> when none are.</p>
 <p>The valid arguments to <a href="/docs/api/codegen/#CudaCompiledFn.call_batch_on"><code>CudaCompiledFn.call_batch_on()</code></a> are exactly
@@ -344,7 +344,7 @@ old) reports <code>0</code>, which is the single answer a caller acts on.</p>
   <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/logic/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Propositional logic</span></a><a class="pager-next" href="/docs/api/workload/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Search / workload</span></a></nav>
   <footer class="doc-foot">
     <a href="https://github.com/alkahest-cas/alkahest/edit/main/docs/sphinx/api/codegen.rst" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
-    <span class="foot-meta">Alkahest 3.13.1 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+    <span class="foot-meta">Alkahest 3.13.2 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
   </footer>
 </main>
 <aside class="toc" aria-label="On this page">
