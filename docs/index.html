@@ -8,12 +8,12 @@
 <meta property="og:title" content="alkahest – docs">
 <meta property="og:description" content="Documentation for alkahest, a computer algebra system with a Rust core and Python API: install, quickstart, guides on calculus, solving, codegen and Lean certificates, and the API reference.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#f8f7f3">
+<meta name="theme-color" content="#f6f6f6">
 <meta name="color-scheme" content="light">
 <link rel="icon" type="image/svg+xml" href="/docs/assets/logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/docs/assets/style.css?v=3.14.0">
 
 <script defer src="/docs/assets/app.js?v=3.14.0"></script>
@@ -59,9 +59,7 @@
   <article class="doc doc-home">
     
     
-    
 <section class="hero">
-  <div class="eyebrow">Documentation</div>
   <h1>alkahest documentation</h1>
   <p class="lead">alkahest is a computer algebra system with a Rust core and a Python API, built for both humans and agents. Every computation produces a derivation log, a growing subset exports Lean 4 proofs, and when it cannot answer it refuses with a coded error.</p>
   <div class="hero-links">
@@ -164,32 +162,32 @@
 
 <h2 id="guides">Guides</h2>
 <div class="cards">
-  <a class="card" href="/docs/guide/calculus/"><span class="card-title">Calculus</span><span class="card-text">Differentiation, integration with verification, limits, series and asymptotics of sums.</span></a>
-  <a class="card" href="/docs/guide/solving/"><span class="card-title">Solving</span><span class="card-text">Polynomial and rational systems by Gröbner bases, with numeric and certified roots.</span></a>
-  <a class="card" href="/docs/guide/simplification/"><span class="card-title">Simplification</span><span class="card-text">A rule-based rewriter and an e-graph saturation engine over the same expression pool.</span></a>
-  <a class="card" href="/docs/guide/specfun/"><span class="card-title">Special functions</span><span class="card-text">Bessel, Airy, zeta and polylogarithm functions, with DLMF conventions.</span></a>
-  <a class="card" href="/docs/guide/codegen/"><span class="card-title">Codegen and JIT</span><span class="card-text">Compile expressions to native code, C, StableHLO or CUDA; evaluate over NumPy arrays.</span></a>
-  <a class="card" href="/docs/guide/lean-certs/"><span class="card-title">Lean certificates</span><span class="card-text">Emit Lean 4 source for derivations, and see which operations can be certified.</span></a>
-  <a class="card" href="/docs/guide/budgets/"><span class="card-title">Budgets and cancellation</span><span class="card-text">Bound every call by time, steps or memory, cancel it from outside, and keep runs deterministic.</span></a>
-  <a class="card" href="/docs/guide/errors/"><span class="card-title">Error handling</span><span class="card-text">A structured exception hierarchy where every error carries a stable code and a remediation hint.</span></a>
-  <a class="card" href="/docs/guide/ball-arithmetic/"><span class="card-title">Ball arithmetic</span><span class="card-text">Rigorous interval evaluation with Arb, and global bounds on boxes.</span></a>
-  <a class="card" href="/docs/guide/ode-dae/"><span class="card-title">ODEs and DAEs</span><span class="card-text">Symbolic ODE and DAE modelling, structural analysis and automatic index reduction.</span></a>
-  <a class="card" href="/docs/guide/positivity/"><span class="card-title">Positivity certificates</span><span class="card-text">Sum-of-squares and Putinar certificates that are re-verified exactly.</span></a>
-  <a class="card" href="/docs/guide/search-plumbing/"><span class="card-title">Agent loops</span><span class="card-text">Batch fan-out, compact result envelopes, claim graphs and cross-CAS testing for search loops.</span></a>
+  <a class="card" href="/docs/guide/calculus/"><span class="card-title">Calculus</span></a>
+  <a class="card" href="/docs/guide/solving/"><span class="card-title">Solving</span></a>
+  <a class="card" href="/docs/guide/simplification/"><span class="card-title">Simplification</span></a>
+  <a class="card" href="/docs/guide/specfun/"><span class="card-title">Special functions</span></a>
+  <a class="card" href="/docs/guide/codegen/"><span class="card-title">Codegen and JIT</span></a>
+  <a class="card" href="/docs/guide/lean-certs/"><span class="card-title">Lean certificates</span></a>
+  <a class="card" href="/docs/guide/budgets/"><span class="card-title">Budgets and cancellation</span></a>
+  <a class="card" href="/docs/guide/errors/"><span class="card-title">Error handling</span></a>
+  <a class="card" href="/docs/guide/ball-arithmetic/"><span class="card-title">Ball arithmetic</span></a>
+  <a class="card" href="/docs/guide/ode-dae/"><span class="card-title">ODEs and DAEs</span></a>
+  <a class="card" href="/docs/guide/positivity/"><span class="card-title">Positivity certificates</span></a>
+  <a class="card" href="/docs/guide/search-plumbing/"><span class="card-title">Agent loops</span></a>
 </div>
 
 <h2 id="reference">Reference</h2>
 <div class="ref-grid">
-  <a class="ref-card" href="/docs/api/"><span class="ref-title">Python API</span><span class="ref-count">457 public names</span></a>
-  <a class="ref-card" href="/docs/guide/errors/"><span class="ref-title">Error codes</span><span class="ref-count">E-SUBSYSTEM-NNN</span></a>
-  <a class="ref-card" href="/docs/guide/stability/"><span class="ref-title">Stability policy</span><span class="ref-count">What may change</span></a>
-  <a class="ref-card" href="https://docs.rs/alkahest-cas" rel="noopener"><span class="ref-title">Rust API ↗</span><span class="ref-count">docs.rs/alkahest-cas</span></a>
+  <a class="ref-card" href="/docs/api/"><span class="ref-title">Python API</span></a>
+  <a class="ref-card" href="/docs/guide/errors/"><span class="ref-title">Error codes</span></a>
+  <a class="ref-card" href="/docs/guide/stability/"><span class="ref-title">Stability policy</span></a>
+  <a class="ref-card" href="https://docs.rs/alkahest-cas" rel="noopener"><span class="ref-title">Rust API ↗</span></a>
 </div>
 
   </article>
   <nav class="pager" aria-label="Pagination"><span></span><a class="pager-next" href="/docs/guide/intro/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Introduction</span></a></nav>
   <footer class="doc-foot">
-    <a href="https://github.com/alkahest-cas/alkahest/blob/main/website/docs/build.ts" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
+    <a href="https://github.com/alkahest-cas/alkahest/blob/main/website/docs/build.ts" rel="noopener"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
     <span class="foot-meta">alkahest 3.14.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
   </footer>
 </main>
