@@ -14,9 +14,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/docs/assets/style.css?v=3.13.2">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.14.0">
 
-<script defer src="/docs/assets/app.js?v=3.13.2"></script>
+<script defer src="/docs/assets/app.js?v=3.14.0"></script>
 </head>
 <body data-base="/docs/" data-section="api">
 <a class="skip" href="#content">Skip to content</a>
@@ -94,7 +94,12 @@ combination; Alkahest itself is unaffected.</p>
     outright.
 <code>grh_conditional</code>
     PARI&#39;s class group / units are correct only under the Generalised Riemann
-    Hypothesis (<code>bnfinit</code> without <code>bnfcertify</code>).
+    Hypothesis for the Hecke <code>L</code>-functions of the field (<code>bnfinit</code> without
+    <code>bnfcertify</code>).  This is <em>not</em> discharged by the November 2026 Lean
+    proof of RH, which covers <code>zeta</code> and Dirichlet <code>L</code>-functions only:
+    the class-group bound (Bach; Belabas--Diaz y Diaz--Friedman) needs GRH for
+    the <code>L</code>-functions of the class-group characters, which are Dirichlet
+    <code>L</code>-functions only in special cases (e.g. genus characters).
 <code>proven</code> / <code>numerical</code> / <code>bounds_only</code>
     For elliptic-curve ranks and <code>L</code>-values; see
     <a href="/docs/api/pari/#elliptic_curve_invariants"><code>elliptic_curve_invariants()</code></a>.</p>
@@ -106,32 +111,32 @@ PARI itself raised.</p>
 <section class="sym" id="pari.EigenformOrbit"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">pari.</span><span class="sig-name">EigenformOrbit</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#pari.EigenformOrbit" aria-label="Link to pari.EigenformOrbit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1013" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#pari.EigenformOrbit" aria-label="Link to pari.EigenformOrbit">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1018" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A Galois orbit of normalised Hecke eigenforms of the new subspace.</p>
 <p><code>field</code> is <code>None</code> for rational eigenvalues, otherwise the
 <code>NumberField</code> <code>Q[y]/(polynomial)</code> containing them.  <code>coefficients</code>
 is <code>[a_1, ..., a_nmax]</code> with <code>a_n</code> an <code>int</code> / <code>Fraction</code> (rational
 orbit) or a <code>NumberFieldElement</code>.</p>
 <div class="members"><div class="members-title">Properties</div><div class="member" id="pari.EigenformOrbit.degree">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">degree</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EigenformOrbit.degree" aria-label="Link to pari.EigenformOrbit.degree">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1022" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">degree</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EigenformOrbit.degree" aria-label="Link to pari.EigenformOrbit.degree">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1027" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EigenformOrbit.polynomial">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">polynomial</span><span class="sig-ann">: list[int]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EigenformOrbit.polynomial" aria-label="Link to pari.EigenformOrbit.polynomial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1023" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">polynomial</span><span class="sig-ann">: list[int]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EigenformOrbit.polynomial" aria-label="Link to pari.EigenformOrbit.polynomial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1028" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EigenformOrbit.field">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">field</span><span class="sig-ann">: Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EigenformOrbit.field" aria-label="Link to pari.EigenformOrbit.field">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1024" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">field</span><span class="sig-ann">: Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EigenformOrbit.field" aria-label="Link to pari.EigenformOrbit.field">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1029" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EigenformOrbit.coefficients">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coefficients</span><span class="sig-ann">: list[Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EigenformOrbit.coefficients" aria-label="Link to pari.EigenformOrbit.coefficients">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1025" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coefficients</span><span class="sig-ann">: list[Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EigenformOrbit.coefficients" aria-label="Link to pari.EigenformOrbit.coefficients">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1030" rel="noopener">source</a></div></div>
   
 </div></div></div></section>
 <section class="sym" id="pari.EllipticCurveData"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">pari.</span><span class="sig-name">EllipticCurveData</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData" aria-label="Link to pari.EllipticCurveData">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L655" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData" aria-label="Link to pari.EllipticCurveData">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L660" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>What <a href="/docs/api/pari/#elliptic_curve_invariants"><code>elliptic_curve_invariants()</code></a> returns.</p>
 <p><code>ainvs</code>
     <code>(a1, a2, a3, a4, a6)</code> as <code>Fraction</code> s.
@@ -163,61 +168,61 @@ orbit) or a <code>NumberFieldElement</code>.</p>
     Independent points of infinite order found by <code>ellrank</code>.  They
     need <em>not</em> generate the Mordell–Weil group (no saturation).</p>
 <div class="members"><div class="members-title">Properties</div><div class="member" id="pari.EllipticCurveData.ainvs">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ainvs</span><span class="sig-ann">: tuple[Fraction, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.ainvs" aria-label="Link to pari.EllipticCurveData.ainvs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L689" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ainvs</span><span class="sig-ann">: tuple[Fraction, ...]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.ainvs" aria-label="Link to pari.EllipticCurveData.ainvs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L694" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EllipticCurveData.discriminant">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">discriminant</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.discriminant" aria-label="Link to pari.EllipticCurveData.discriminant">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L690" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">discriminant</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.discriminant" aria-label="Link to pari.EllipticCurveData.discriminant">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L695" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EllipticCurveData.conductor">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">conductor</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.conductor" aria-label="Link to pari.EllipticCurveData.conductor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L691" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">conductor</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.conductor" aria-label="Link to pari.EllipticCurveData.conductor">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L696" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EllipticCurveData.ap">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ap</span><span class="sig-ann">: dict[int, int]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.ap" aria-label="Link to pari.EllipticCurveData.ap">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L692" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">ap</span><span class="sig-ann">: dict[int, int]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.ap" aria-label="Link to pari.EllipticCurveData.ap">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L697" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EllipticCurveData.torsion">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">torsion</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.torsion" aria-label="Link to pari.EllipticCurveData.torsion">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L693" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">torsion</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.torsion" aria-label="Link to pari.EllipticCurveData.torsion">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L698" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EllipticCurveData.root_number">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">root_number</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.root_number" aria-label="Link to pari.EllipticCurveData.root_number">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L694" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">root_number</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.root_number" aria-label="Link to pari.EllipticCurveData.root_number">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L699" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EllipticCurveData.analytic_rank">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">analytic_rank</span><span class="sig-ann">: int | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.analytic_rank" aria-label="Link to pari.EllipticCurveData.analytic_rank">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L695" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">analytic_rank</span><span class="sig-ann">: int | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.analytic_rank" aria-label="Link to pari.EllipticCurveData.analytic_rank">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L700" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EllipticCurveData.analytic_rank_status">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">analytic_rank_status</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.analytic_rank_status" aria-label="Link to pari.EllipticCurveData.analytic_rank_status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L696" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">analytic_rank_status</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.analytic_rank_status" aria-label="Link to pari.EllipticCurveData.analytic_rank_status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L701" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EllipticCurveData.l_value">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">l_value</span><span class="sig-ann">: Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.l_value" aria-label="Link to pari.EllipticCurveData.l_value">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L697" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">l_value</span><span class="sig-ann">: Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.l_value" aria-label="Link to pari.EllipticCurveData.l_value">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L702" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EllipticCurveData.mw_rank_bounds">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">mw_rank_bounds</span><span class="sig-ann">: tuple[int, int] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.mw_rank_bounds" aria-label="Link to pari.EllipticCurveData.mw_rank_bounds">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L698" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">mw_rank_bounds</span><span class="sig-ann">: tuple[int, int] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.mw_rank_bounds" aria-label="Link to pari.EllipticCurveData.mw_rank_bounds">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L703" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EllipticCurveData.mw_rank_status">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">mw_rank_status</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.mw_rank_status" aria-label="Link to pari.EllipticCurveData.mw_rank_status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L699" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">mw_rank_status</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.mw_rank_status" aria-label="Link to pari.EllipticCurveData.mw_rank_status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L704" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EllipticCurveData.mw_points">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">mw_points</span><span class="sig-ann">: list[tuple[Fraction, Fraction]]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.mw_points" aria-label="Link to pari.EllipticCurveData.mw_points">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L700" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">mw_points</span><span class="sig-ann">: list[tuple[Fraction, Fraction]]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.mw_points" aria-label="Link to pari.EllipticCurveData.mw_points">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L705" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.EllipticCurveData.verification">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.verification" aria-label="Link to pari.EllipticCurveData.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L701" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.EllipticCurveData.verification" aria-label="Link to pari.EllipticCurveData.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L706" rel="noopener">source</a></div></div>
   
 </div></div></div></section>
 <section class="sym" id="pari.ModularFormsData"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">pari.</span><span class="sig-name">ModularFormsData</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData" aria-label="Link to pari.ModularFormsData">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1029" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData" aria-label="Link to pari.ModularFormsData">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1034" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Cusp forms <code>S_k(Gamma_0(N))</code> with trivial character.</p>
 <p><code>dimension</code>
     <code>dim S_k(Gamma_0(N))</code> (full space, old forms included).
@@ -227,41 +232,41 @@ orbit) or a <code>NumberFieldElement</code>.</p>
 <code>new_dimension</code> / <code>orbits</code>
     New-subspace dimension and its Hecke eigenform orbits.</p>
 <div class="members"><div class="members-title">Properties</div><div class="member" id="pari.ModularFormsData.level">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">level</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.level" aria-label="Link to pari.ModularFormsData.level">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1041" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">level</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.level" aria-label="Link to pari.ModularFormsData.level">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1046" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.ModularFormsData.weight">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">weight</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.weight" aria-label="Link to pari.ModularFormsData.weight">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1042" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">weight</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.weight" aria-label="Link to pari.ModularFormsData.weight">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1047" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.ModularFormsData.nmax">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">nmax</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.nmax" aria-label="Link to pari.ModularFormsData.nmax">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1043" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">nmax</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.nmax" aria-label="Link to pari.ModularFormsData.nmax">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1048" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.ModularFormsData.dimension">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dimension</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.dimension" aria-label="Link to pari.ModularFormsData.dimension">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1044" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">dimension</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.dimension" aria-label="Link to pari.ModularFormsData.dimension">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1049" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.ModularFormsData.basis">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">basis</span><span class="sig-ann">: list[list[Any]]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.basis" aria-label="Link to pari.ModularFormsData.basis">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1045" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">basis</span><span class="sig-ann">: list[list[Any]]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.basis" aria-label="Link to pari.ModularFormsData.basis">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1050" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.ModularFormsData.new_dimension">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">new_dimension</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.new_dimension" aria-label="Link to pari.ModularFormsData.new_dimension">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1046" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">new_dimension</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.new_dimension" aria-label="Link to pari.ModularFormsData.new_dimension">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1051" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.ModularFormsData.orbits">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">orbits</span><span class="sig-ann">: list[EigenformOrbit]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.orbits" aria-label="Link to pari.ModularFormsData.orbits">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1047" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">orbits</span><span class="sig-ann">: list[EigenformOrbit]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.orbits" aria-label="Link to pari.ModularFormsData.orbits">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1052" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.ModularFormsData.verification">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.verification" aria-label="Link to pari.ModularFormsData.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1048" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.ModularFormsData.verification" aria-label="Link to pari.ModularFormsData.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1053" rel="noopener">source</a></div></div>
   
 </div></div></div></section>
 <section class="sym" id="pari.NumberFieldData"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">pari.</span><span class="sig-name">NumberFieldData</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData" aria-label="Link to pari.NumberFieldData">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L252" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData" aria-label="Link to pari.NumberFieldData">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L257" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>What <a href="/docs/api/pari/#number_field_invariants"><code>number_field_invariants()</code></a> returns.</p>
 
 <div class="doc-sub">Attributes</div><dl class="params"><div class="param"><dt><code class="pname">field</code></dt><dd><p>The <code>NumberField</code> the data is expressed in.</p>
@@ -281,107 +286,107 @@ proven), <code>&quot;grh_conditional&quot;</code> (not run, too expensive, or fa
 </dd></div><div class="param"><dt><code class="pname">verification</code></dt><dd><p><code>{check name: True}</code> for every check Alkahest ran, and a
 <code>&quot;not_checked&quot;</code> list naming what rests on PARI alone.</p>
 </dd></div></dl><div class="members"><div class="members-title">Properties</div><div class="member" id="pari.NumberFieldData.field">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">field</span><span class="sig-ann">: Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.field" aria-label="Link to pari.NumberFieldData.field">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L287" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">field</span><span class="sig-ann">: Any</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.field" aria-label="Link to pari.NumberFieldData.field">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L292" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.NumberFieldData.discriminant">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">discriminant</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.discriminant" aria-label="Link to pari.NumberFieldData.discriminant">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L288" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">discriminant</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.discriminant" aria-label="Link to pari.NumberFieldData.discriminant">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L293" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.NumberFieldData.signature">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">signature</span><span class="sig-ann">: tuple[int, int]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.signature" aria-label="Link to pari.NumberFieldData.signature">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L289" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">signature</span><span class="sig-ann">: tuple[int, int]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.signature" aria-label="Link to pari.NumberFieldData.signature">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L294" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.NumberFieldData.integral_basis">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">integral_basis</span><span class="sig-ann">: list[Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.integral_basis" aria-label="Link to pari.NumberFieldData.integral_basis">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L290" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">integral_basis</span><span class="sig-ann">: list[Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.integral_basis" aria-label="Link to pari.NumberFieldData.integral_basis">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L295" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.NumberFieldData.class_number">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">class_number</span><span class="sig-ann">: int | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.class_number" aria-label="Link to pari.NumberFieldData.class_number">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L291" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">class_number</span><span class="sig-ann">: int | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.class_number" aria-label="Link to pari.NumberFieldData.class_number">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L296" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.NumberFieldData.class_group">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">class_group</span><span class="sig-ann">: list[int] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.class_group" aria-label="Link to pari.NumberFieldData.class_group">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L292" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">class_group</span><span class="sig-ann">: list[int] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.class_group" aria-label="Link to pari.NumberFieldData.class_group">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L297" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.NumberFieldData.torsion_units">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">torsion_units</span><span class="sig-ann">: tuple[int, Any] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.torsion_units" aria-label="Link to pari.NumberFieldData.torsion_units">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L293" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">torsion_units</span><span class="sig-ann">: tuple[int, Any] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.torsion_units" aria-label="Link to pari.NumberFieldData.torsion_units">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L298" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.NumberFieldData.fundamental_units">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">fundamental_units</span><span class="sig-ann">: list[Any] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.fundamental_units" aria-label="Link to pari.NumberFieldData.fundamental_units">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L294" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">fundamental_units</span><span class="sig-ann">: list[Any] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.fundamental_units" aria-label="Link to pari.NumberFieldData.fundamental_units">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L299" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.NumberFieldData.regulator">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">regulator</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.regulator" aria-label="Link to pari.NumberFieldData.regulator">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L295" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">regulator</span><span class="sig-ann">: str | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.regulator" aria-label="Link to pari.NumberFieldData.regulator">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L300" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.NumberFieldData.primes">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">primes</span><span class="sig-ann">: dict[int, list[PrimeIdeal]]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.primes" aria-label="Link to pari.NumberFieldData.primes">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L296" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">primes</span><span class="sig-ann">: dict[int, list[PrimeIdeal]]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.primes" aria-label="Link to pari.NumberFieldData.primes">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L301" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.NumberFieldData.galois">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">galois</span><span class="sig-ann">: dict[str, Any] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.galois" aria-label="Link to pari.NumberFieldData.galois">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L297" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">galois</span><span class="sig-ann">: dict[str, Any] | None</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.galois" aria-label="Link to pari.NumberFieldData.galois">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L302" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.NumberFieldData.certification">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certification</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.certification" aria-label="Link to pari.NumberFieldData.certification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L298" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certification</span><span class="sig-ann">: str</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.certification" aria-label="Link to pari.NumberFieldData.certification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L303" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.NumberFieldData.verification">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.verification" aria-label="Link to pari.NumberFieldData.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L299" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span><span class="sig-ann">: dict[str, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.NumberFieldData.verification" aria-label="Link to pari.NumberFieldData.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L304" rel="noopener">source</a></div></div>
   
 </div></div></div></section>
 <section class="sym" id="pari.PrimeIdeal"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-prefix">pari.</span><span class="sig-name">PrimeIdeal</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#pari.PrimeIdeal" aria-label="Link to pari.PrimeIdeal">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L236" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#pari.PrimeIdeal" aria-label="Link to pari.PrimeIdeal">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L241" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A prime ideal <code>P = (p, alpha)</code> above a rational prime <code>p</code>.</p>
 <p><code>e</code> is the ramification index, <code>f</code> the residue degree, <code>norm = p**f</code>
 and <code>generators = (p, alpha)</code> a two-element presentation with <code>alpha</code> a
 <code>NumberFieldElement</code> of the field passed in.</p>
 <div class="members"><div class="members-title">Properties</div><div class="member" id="pari.PrimeIdeal.p">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">p</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.PrimeIdeal.p" aria-label="Link to pari.PrimeIdeal.p">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L244" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">p</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.PrimeIdeal.p" aria-label="Link to pari.PrimeIdeal.p">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L249" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.PrimeIdeal.e">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">e</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.PrimeIdeal.e" aria-label="Link to pari.PrimeIdeal.e">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L245" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">e</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.PrimeIdeal.e" aria-label="Link to pari.PrimeIdeal.e">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L250" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.PrimeIdeal.f">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">f</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.PrimeIdeal.f" aria-label="Link to pari.PrimeIdeal.f">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L246" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">f</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.PrimeIdeal.f" aria-label="Link to pari.PrimeIdeal.f">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L251" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.PrimeIdeal.norm">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">norm</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.PrimeIdeal.norm" aria-label="Link to pari.PrimeIdeal.norm">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L247" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">norm</span><span class="sig-ann">: int</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.PrimeIdeal.norm" aria-label="Link to pari.PrimeIdeal.norm">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L252" rel="noopener">source</a></div></div>
   
 </div>
 <div class="member" id="pari.PrimeIdeal.generators">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">generators</span><span class="sig-ann">: tuple[Any, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.PrimeIdeal.generators" aria-label="Link to pari.PrimeIdeal.generators">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L248" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">generators</span><span class="sig-ann">: tuple[Any, Any]</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#pari.PrimeIdeal.generators" aria-label="Link to pari.PrimeIdeal.generators">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L253" rel="noopener">source</a></div></div>
   
 </div></div></div></section>
 <section class="sym" id="pari.PariError"><div class="sym-head">
   <span class="kind kind-exception">exception</span>
   <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-prefix">pari.</span><span class="sig-name">PariError</span>(<span class="sig-p">message</span><span class="sig-ann">: str</span>, <span class="sig-p">code</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#pari.PariError" aria-label="Link to pari.PariError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L88" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#pari.PariError" aria-label="Link to pari.PariError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L93" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Base error of <a href="/docs/api/mod-pari/"><code>pari</code></a>; <code>.code</code> is the stable <code>E-PARI-NNN</code>.</p>
 </div></section>
 <section class="sym" id="pari.PariUnavailable"><div class="sym-head">
   <span class="kind kind-exception">exception</span>
   <pre class="sig"><code><span class="sig-kw">exception </span><span class="sig-prefix">pari.</span><span class="sig-name">PariUnavailable</span><span class="sig-bases">(PariError, ImportError)</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#pari.PariUnavailable" aria-label="Link to pari.PariUnavailable">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L99" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#pari.PariUnavailable" aria-label="Link to pari.PariUnavailable">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L104" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>No PARI binding (<code>cypari2</code> / <code>cypari</code>) is installed (<code>E-PARI-001</code>).</p>
 </div></section>
 <section class="sym" id="pari.available"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">pari.</span><span class="sig-name">available</span>()<span class="sig-ret"> → bool</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#pari.available" aria-label="Link to pari.available">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L129" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#pari.available" aria-label="Link to pari.available">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L134" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>True</code> when a PARI binding (<code>cypari2</code> or <code>cypari</code>) can be loaded.</p>
 </div></section>
 <section class="sym" id="pari.backend"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">pari.</span><span class="sig-name">backend</span>()<span class="sig-ret"> → str | None</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#pari.backend" aria-label="Link to pari.backend">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L134" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#pari.backend" aria-label="Link to pari.backend">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L139" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Name of the binding in use (<code>&quot;cypari2&quot;</code> / <code>&quot;cypari&quot;</code>) or <code>None</code>.</p>
 </div></section>
 <section class="sym" id="pari.elliptic_curve_invariants"><div class="sym-head">
@@ -393,7 +398,7 @@ and <code>generators = (p, alpha)</code> a two-element presentation with <code>a
     <span class="sig-p">rank</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>,
     <span class="sig-p">l_value</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>
 )<span class="sig-ret"> → EllipticCurveData</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#pari.elliptic_curve_invariants" aria-label="Link to pari.elliptic_curve_invariants">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L813" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#pari.elliptic_curve_invariants" aria-label="Link to pari.elliptic_curve_invariants">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L818" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Conductor, <code>a_p</code>, torsion, rank and <code>L</code>-value of an elliptic curve over Q.</p>
 <p>The curve is <code>y^2 + a1 xy + a3 y = x^3 + a2 x^2 + a4 x + a6</code>.</p>
 
@@ -427,7 +432,7 @@ the functional equation used above) is assumed.</p>
 <section class="sym" id="pari.modular_forms"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">pari.</span><span class="sig-name">modular_forms</span>(<span class="sig-p">N</span><span class="sig-ann">: int</span>, <span class="sig-p">k</span><span class="sig-ann">: int</span>, <span class="sig-sep">*</span>, <span class="sig-p">nmax</span><span class="sig-ann">: int</span><span class="sig-def">=20</span>)<span class="sig-ret"> → ModularFormsData</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#pari.modular_forms" aria-label="Link to pari.modular_forms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1103" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#pari.modular_forms" aria-label="Link to pari.modular_forms">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1108" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>q-expansions and Hecke eigenvalues of <code>S_k(Gamma_0(N))</code> via PARI&#39;s <code>mf*</code> suite.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">N, k</code></dt><dd><p>Level <code>N &gt;= 1</code> and <strong>integer</strong> weight <code>k &gt;= 1</code> (trivial character).</p>
@@ -458,7 +463,7 @@ orbits being complete</em> is PARI&#39;s claim (not re-derived).</p>
     <span class="sig-p">galois</span><span class="sig-ann">: bool</span><span class="sig-def">=True</span>,
     <span class="sig-p">certify</span><span class="sig-ann">: bool | str</span><span class="sig-def">='auto'</span>
 )<span class="sig-ret"> → NumberFieldData</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#pari.number_field_invariants" aria-label="Link to pari.number_field_invariants">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L406" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#pari.number_field_invariants" aria-label="Link to pari.number_field_invariants">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L411" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Ring of integers, class group, units, prime splitting and Galois group of a number field.</p>
 
 <div class="doc-sub">Parameters</div><dl class="params"><div class="param"><dt><code class="pname">field_or_poly</code></dt><dd><p>An <code>experimental.NumberField</code>, or an ascending integer
@@ -499,13 +504,13 @@ failed check, <code>E-PARI-004</code> when PARI itself fails.</p>
 <section class="sym" id="pari.pari_version"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">pari.</span><span class="sig-name">pari_version</span>()<span class="sig-ret"> → str | None</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#pari.pari_version" aria-label="Link to pari.pari_version">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L150" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#pari.pari_version" aria-label="Link to pari.pari_version">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L155" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The PARI library version string, or <code>None</code> when unavailable.</p>
 </div></section>
 <section class="sym" id="pari.ramanujan_tau"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-prefix">pari.</span><span class="sig-name">ramanujan_tau</span>(<span class="sig-p">n</span><span class="sig-ann">: int</span>)<span class="sig-ret"> → int</span></code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#pari.ramanujan_tau" aria-label="Link to pari.ramanujan_tau">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1051" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#pari.ramanujan_tau" aria-label="Link to pari.ramanujan_tau">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/pari.py#L1056" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Ramanujan&#39;s <code>tau(n)</code> from the product <code>q prod (1 - q^m)^24</code>, exactly.</p>
 <p>Pure Python (no PARI); the independent oracle used to check <code>Delta</code>.</p>
 </div></section>
@@ -513,7 +518,7 @@ failed check, <code>E-PARI-004</code> when PARI itself fails.</p>
   <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/api/mod-number-theory/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">alkahest.number_theory</span></a><a class="pager-next" href="/docs/api/mod-research/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">alkahest.research</span></a></nav>
   <footer class="doc-foot">
     <a href="https://github.com/alkahest-cas/alkahest/blob/main/website/docs/scripts/extract_api.py" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064Zm1.238-3.763a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354Z"/></svg>Edit on GitHub</a>
-    <span class="foot-meta">alkahest 3.13.2 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
+    <span class="foot-meta">alkahest 3.14.0 · <a href="https://areggevorgyan.github.io/" rel="noopener">Built by Areg</a></span>
   </footer>
 </main>
 <aside class="toc" aria-label="On this page">
