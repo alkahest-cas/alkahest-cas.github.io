@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Everything else API · alkahest docs</title>
-<meta name="description" content="Python API reference for everything else in alkahest: 11 documented symbols with signatures, parameters and source links.">
+<meta name="description" content="Python API reference for everything else in alkahest: 12 documented symbols with signatures, parameters and source links.">
 <meta property="og:title" content="Everything else API · alkahest docs">
-<meta property="og:description" content="Python API reference for everything else in alkahest: 11 documented symbols with signatures, parameters and source links.">
+<meta property="og:description" content="Python API reference for everything else in alkahest: 12 documented symbols with signatures, parameters and source links.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#f6f6f6">
 <meta name="color-scheme" content="light">
@@ -133,6 +133,20 @@ they were exact. Accepts a <a href="/docs/api/core/#DerivedResult"><code>Derived
 <p>A negative integer has no factorial (<code>Γ</code> has a pole there) and raises
 <a href="/docs/api/errors/#DomainError"><code>DomainError</code></a> (<code>E-DOMAIN-001</code>) rather than returning a value.</p>
 </div></section>
+<section class="sym" id="harmonic"><div class="sym-head">
+  <span class="kind kind-function">function</span>
+  <pre class="sig"><code><span class="sig-name">harmonic</span>(<span class="sig-p">n</span>, <span class="sig-p">m</span><span class="sig-def">=1</span>)</code></pre>
+  <div class="sym-links"><a class="hanchor-inline" href="#harmonic" aria-label="Link to harmonic">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1226" rel="noopener">source</a></div>
+</div><div class="sym-body"><p>The harmonic number <code>H_n = Σ_{j=1}^{n} 1/j</code> (order <em>m</em>: <code>Σ 1/j^m</code>).</p>
+<p>For a non-negative integer <code>n</code> (Python <code>int</code> or integer literal) and
+integer <code>m &gt;= 0</code> this is the exact rational. Otherwise it is built from
+its analytic continuation: <code>digamma(n + 1) + EulerGamma</code> for <code>m = 1</code>
+and <code>zeta(m) - hurwitz_zeta(m, n + 1)</code> for an integer <code>m &gt;= 2</code> —
+the form <a href="/docs/api/diff/#sum_definite"><code>sum_definite()</code></a> returns for <code>Σ_{k=1}^{n} 1/k</code>. There is no
+<code>harmonic</code> node: like <a href="/docs/api/more/#factorial"><code>factorial()</code></a> and <a href="/docs/api/more/#binomial"><code>binomial()</code></a>, the
+result is an ordinary expression that differentiates, evaluates and
+simplifies through the functions it is made of.</p>
+</div></section>
 <section class="sym" id="solve_proof_status"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">solve_proof_status</span>()</code></pre>
@@ -197,7 +211,7 @@ not a non-negative integer, <code>E-SPECFN-006</code> at the pole <code>s = 1</c
 </main>
 <aside class="toc" aria-label="On this page">
   <div class="toc-inner">
-    <div class="toc-title">On this page</div><ul><li class="d3"><a href="#binomial">binomial</a></li><li class="d3"><a href="#default_pool">default_pool</a></li><li class="d3"><a href="#expand">expand</a></li><li class="d3"><a href="#factor">factor</a></li><li class="d3"><a href="#factorial">factorial</a></li><li class="d3"><a href="#solve_proof_status">solve_proof_status</a></li><li class="d3"><a href="#zeta_deriv">zeta_deriv</a></li><li class="d3"><a href="#E">E</a></li><li class="d3"><a href="#I">I</a></li><li class="d3"><a href="#oo">oo</a></li><li class="d3"><a href="#pi">pi</a></li></ul>
+    <div class="toc-title">On this page</div><ul><li class="d3"><a href="#binomial">binomial</a></li><li class="d3"><a href="#default_pool">default_pool</a></li><li class="d3"><a href="#expand">expand</a></li><li class="d3"><a href="#factor">factor</a></li><li class="d3"><a href="#factorial">factorial</a></li><li class="d3"><a href="#harmonic">harmonic</a></li><li class="d3"><a href="#solve_proof_status">solve_proof_status</a></li><li class="d3"><a href="#zeta_deriv">zeta_deriv</a></li><li class="d3"><a href="#E">E</a></li><li class="d3"><a href="#I">I</a></li><li class="d3"><a href="#oo">oo</a></li><li class="d3"><a href="#pi">pi</a></li></ul>
   </div>
 </aside>
 </div>
