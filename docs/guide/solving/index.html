@@ -434,7 +434,7 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <td>Proved over ℚ: the generators <em>B</em> are a reduced Gröbner basis and <em>I</em> ⊆ ⟨<em>B</em>⟩. Not proved: ⟨<em>B</em>⟩ ⊆ <em>I</em>.</td>
 </tr>
 </tbody></table></div>
-<p><strong>The failure model.</strong> Since <em>I</em> ⊆ ⟨<em>B</em>⟩, equal leading terms would give equal ideals, so a wrong answer needs a majority of the primes used, at least two and each drawn independently from the roughly 5·10⁷ primes in [2³⁰, 2³¹), to give leading terms that <em>I</em> does not have. Such primes divide a fixed non-zero integer that depends only on the input, so if <em>k</em> primes in that range are unlucky for your input, the chance is of order (<em>k</em> / 5·10⁷)². The primes are drawn after the input is fixed, so no input can arrange it in advance, though enormous coefficients do raise <em>k</em>.</p>
+<p><strong>The failure model.</strong> Since <em>I</em> ⊆ ⟨<em>B</em>⟩, equal leading terms would give equal ideals, so a wrong answer needs the two primes whose full F4 runs fixed the shape of <em>B</em>, each drawn independently from the roughly 5·10⁷ primes in [2³⁰, 2³¹), to give the same leading terms, ones that <em>I</em> does not have. (The other primes replay the computation one of those runs recorded, and a replay that diverges from it is discarded.) Such primes divide a fixed non-zero integer that depends only on the input, so if <em>k</em> primes in that range are unlucky for your input, the chance is of order (<em>k</em> / 5·10⁷)². The primes are drawn after the input is fixed, so no input can arrange it in advance, though enormous coefficients do raise <em>k</em>.</p>
 <p><strong>What a probabilistic basis still proves.</strong> <code>gb.contains(p) == False</code> is a proof that <em>p</em> is not in <em>I</em>. <code>gb.contains(p) == True</code> is only as sure as the basis. Every zero of <em>B</em> is a zero of <em>I</em>, but <em>I</em> could have more.</p>
 <p><strong><code>solve</code>.</strong> A returned tuple has been substituted back into your equations whichever status applies, so it is a solution. The status is about whether the list is complete:</p>
 <div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E">sols </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> solve([x</span><span style="--shiki-light:#D73A49">**</span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#D73A49"> +</span><span style="--shiki-light:#24292E"> y</span><span style="--shiki-light:#D73A49">**</span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#D73A49"> -</span><span style="--shiki-light:#24292E"> pool.integer(</span><span style="--shiki-light:#005CC5">1</span><span style="--shiki-light:#24292E">), x </span><span style="--shiki-light:#D73A49">-</span><span style="--shiki-light:#24292E"> y], [x, y])</span></span>
@@ -442,7 +442,9 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <span class="line"></span>
 <span class="line"><span style="--shiki-light:#24292E">solve([x</span><span style="--shiki-light:#D73A49">**</span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#D73A49"> +</span><span style="--shiki-light:#24292E"> y</span><span style="--shiki-light:#D73A49">**</span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#D73A49"> -</span><span style="--shiki-light:#24292E"> pool.integer(</span><span style="--shiki-light:#005CC5">1</span><span style="--shiki-light:#24292E">), x</span><span style="--shiki-light:#D73A49">**</span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#D73A49"> +</span><span style="--shiki-light:#24292E"> y</span><span style="--shiki-light:#D73A49">**</span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#D73A49"> -</span><span style="--shiki-light:#24292E"> pool.integer(</span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#24292E">)], [x, y])  </span><span style="--shiki-light:#6A737D"># []</span></span>
 <span class="line"><span style="--shiki-light:#24292E">solve_proof_status()                             </span><span style="--shiki-light:#6A737D"># 'proved'</span></span></code></pre></div><p>An empty answer from an inconsistent system is proved. <code>{1}</code> passes the verification over ℚ without testing anything, so it gets its own proof: the system is homogenised with a new variable and run through the same engine, where homogeneous input is proved, and <code>1</code> is in the ideal exactly when the result contains a pure power of that variable. On cyclic-5 and 6 and katsura-5 to 7 plus a generic quadric this took 0.02 s to 2.4 s, where Buchberger over ℚ took over 180 s. If that run is inconclusive, <code>solve</code> falls back to Buchberger, and an active <code>Budget</code> can stop it with <code>BudgetExceededError</code>. <code>GroebnerBasis.compute(..., order=&quot;grevlex&quot;)</code> does not fall back: it reports <code>&quot;probabilistic&quot;</code> for <code>{1}</code> in that rare case.</p>
-<p><strong>Needing a proof.</strong> <code>compute_f5</code> and <code>order=&quot;grlex&quot;</code> are proved, at their cost. From Rust, <code>GroebnerBasis::compute_exact</code> runs Buchberger under any order. Primary decomposition, <code>triangularize</code> and <code>rosenfeld_groebner</code> compute their bases exactly and are not affected by any of this.</p>
+<p><strong>Needing a proof.</strong> <code>GroebnerBasis.compute(..., certify=True)</code> (Rust: <code>GroebnerBasis::compute_certified</code>, <code>try_compute_lex_certified</code>) turns a <code>&quot;probabilistic&quot;</code> grevlex or lex basis into a <code>&quot;proved&quot;</code> one, for the price of one more multimodular run on the homogenised system, whose result is proved. The dehomogenised leading monomials of that basis generate the leading ideal of <em>I</em>. <em>I</em> ⊆ ⟨<em>B</em>⟩ is already proved, so <em>B</em> is the basis of <em>I</em> exactly when each of its leading monomials is divisible by one of them. A basis that fails this test was wrong and is recomputed exactly. If the homogenised run is inconclusive, the basis stays <code>&quot;probabilistic&quot;</code>.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E">gb </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> GroebnerBasis.compute([x</span><span style="--shiki-light:#D73A49">**</span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#D73A49"> +</span><span style="--shiki-light:#24292E"> y</span><span style="--shiki-light:#D73A49">**</span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#D73A49"> -</span><span style="--shiki-light:#24292E"> pool.integer(</span><span style="--shiki-light:#005CC5">1</span><span style="--shiki-light:#24292E">), x</span><span style="--shiki-light:#D73A49">*</span><span style="--shiki-light:#24292E">y </span><span style="--shiki-light:#D73A49">-</span><span style="--shiki-light:#24292E"> pool.integer(</span><span style="--shiki-light:#005CC5">1</span><span style="--shiki-light:#24292E">)], [x, y], </span><span style="--shiki-light:#E36209">order</span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#032F62">"grevlex"</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#E36209">certify</span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#005CC5">True</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">gb.proof_status                                  </span><span style="--shiki-light:#6A737D"># 'proved'</span></span></code></pre></div><p><code>compute_f5</code> and <code>order=&quot;grlex&quot;</code> are proved too, at their own cost. From Rust, <code>GroebnerBasis::compute_exact</code> runs Buchberger under any order. Primary decomposition, <code>triangularize</code> and <code>rosenfeld_groebner</code> compute their bases exactly and are not affected by any of this.</p>
 <h3 id="gpu-accelerated-macaulay-matrix-groebner-cuda--rust-only-not-wired-into-the-solver"><a class="hanchor" href="#gpu-accelerated-macaulay-matrix-groebner-cuda--rust-only-not-wired-into-the-solver" aria-hidden="true" tabindex="-1">#</a>GPU-accelerated Macaulay matrix (groebner-cuda) — Rust only, not wired into the solver</h3>
 <p><code>--features &quot;groebner-cuda&quot;</code> compiles a CUDA kernel for the mod-p row reduction of the Macaulay matrix, with multi-prime CRT lifts reconstructing rational coefficients, and falls back to pure-Rust row reduction when no CUDA device is present.</p>
 <p><strong>It does not accelerate anything on this page.</strong> <code>GroebnerBasis.compute</code>, <code>solve</code> and <code>triangularize</code> run on the CPU engines above regardless; the GPU routine is reachable only as the Rust function <code>alkahest_cas::poly::groebner::compute_groebner_basis_gpu</code>, and production dispatch deliberately does not prefer it until the <a href="https://github.com/alkahest-cas/alkahest/blob/main/docs/symbolic-gpu-benchmarks.md" rel="noopener">benchmark harness</a> says it wins. There is correspondingly <strong>no <code>capabilities()[&quot;features&quot;][&quot;groebner_cuda&quot;]</code> bit</strong> — it used to exist and report that the kernel had been compiled in, which no Python observation could confirm or refute, so 3.8 removed it. See <a href="/docs/guide/gpu/#groebner-cuda-is-not-reachable-from-python">GPU support</a>.</p>
@@ -526,7 +528,7 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <p><strong>Hypothesis, not a guarantee.</strong> Theorem 19 requires the input–output equations to be the <em>characteristic presentation</em> of <code>I_Σ ∩ C(θ){y,u}</code>. An algebraic lex elimination at a hand-picked finite jet order — what the surface above does — is not guaranteed to produce one. So &quot;this is a multi-experiment tool&quot; holds under that standard; where it fails, the computed field can be a proper subfield of the identifiable one.</p>
 <p>This surface is experimental (<code>alkahest.experimental.ParametricGroebnerBasis</code> / <code>ParametricGbPoly</code> / <code>ParametricRosenfeldGroebnerResult</code>) and requires <code>--features groebner</code>.</p>
 <h2 id="performance"><a class="hanchor" href="#performance" aria-hidden="true" tabindex="-1">#</a>Performance</h2>
-<p>Wall time in seconds for the standard Gröbner benchmarks, one process per run, on an AMD Ryzen Threadripper PRO 3955WX (shared machine, 8-core CPU quota). &quot;default&quot; is <code>GroebnerBasis.compute</code> with the <code>parallel</code> feature; &quot;1 thread&quot; is the same with <code>RAYON_NUM_THREADS=1</code>; both measured 2026-11-04 with a 120 s cap, as is <code>compute_f5</code>. SymPy is 1.14 <code>groebner(..., method=&quot;buchberger&quot;)</code> / <code>method=&quot;f5b&quot;</code> with its cache cleared before each run, measured 2026-10-25 on the same machine. Basis sizes agree with SymPy&#39;s wherever SymPy finishes.</p>
+<p>Wall time in seconds for the standard Gröbner benchmarks, one process per run, on an AMD Ryzen Threadripper PRO 3955WX (shared machine, 8-core CPU quota). &quot;default&quot; is <code>GroebnerBasis.compute</code> with the <code>parallel</code> feature; &quot;1 thread&quot; is the same with <code>RAYON_NUM_THREADS=1</code>; both measured 2026-11-22, best of 2. <code>compute_f5</code> was measured 2026-11-04 with a 120 s cap. SymPy is 1.14 <code>groebner(..., method=&quot;buchberger&quot;)</code> / <code>method=&quot;f5b&quot;</code> with its cache cleared before each run, measured 2026-10-25 on the same machine. Basis sizes agree with SymPy&#39;s wherever SymPy finishes.</p>
 <div class="table-wrap"><table><thead><tr>
 <th>system</th>
 <th>order</th>
@@ -539,8 +541,8 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 </thead><tbody><tr>
 <td>cyclic-5</td>
 <td>grevlex</td>
-<td>0.009</td>
-<td>0.003</td>
+<td>0.002</td>
+<td>0.002</td>
 <td>0.003</td>
 <td>0.42</td>
 <td>1.77</td>
@@ -548,8 +550,8 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <tr>
 <td>cyclic-5</td>
 <td>lex</td>
-<td>0.016</td>
 <td>0.009</td>
+<td>0.007</td>
 <td>0.013</td>
 <td>15.4</td>
 <td>2.53</td>
@@ -557,8 +559,8 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <tr>
 <td>cyclic-6</td>
 <td>grevlex</td>
-<td>0.046</td>
-<td>0.067</td>
+<td>0.017</td>
+<td>0.016</td>
 <td>0.071</td>
 <td>47.9</td>
 <td>&gt; 120</td>
@@ -566,8 +568,8 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <tr>
 <td>cyclic-6</td>
 <td>lex</td>
-<td>0.115</td>
-<td>0.133</td>
+<td>0.065</td>
+<td>0.068</td>
 <td>0.137</td>
 <td>&gt; 120</td>
 <td>&gt; 120</td>
@@ -575,8 +577,8 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <tr>
 <td>cyclic-7</td>
 <td>grevlex</td>
-<td>3.4</td>
-<td>26.4</td>
+<td>0.94</td>
+<td>2.3</td>
 <td>51.9</td>
 <td>&gt; 120</td>
 <td>&gt; 120</td>
@@ -584,8 +586,8 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <tr>
 <td>katsura-5</td>
 <td>grevlex</td>
-<td>0.010</td>
-<td>0.016</td>
+<td>0.004</td>
+<td>0.004</td>
 <td>0.012</td>
 <td>0.96</td>
 <td>1.19</td>
@@ -593,8 +595,8 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <tr>
 <td>katsura-5</td>
 <td>lex</td>
-<td>0.049</td>
-<td>0.089</td>
+<td>0.036</td>
+<td>0.062</td>
 <td>0.058</td>
 <td>&gt; 120</td>
 <td>&gt; 120</td>
@@ -602,8 +604,8 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <tr>
 <td>katsura-6</td>
 <td>grevlex</td>
-<td>0.046</td>
-<td>0.130</td>
+<td>0.027</td>
+<td>0.030</td>
 <td>0.087</td>
 <td>14.2</td>
 <td>41.0</td>
@@ -611,8 +613,8 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <tr>
 <td>katsura-6</td>
 <td>lex</td>
-<td>0.48</td>
-<td>1.32</td>
+<td>0.44</td>
+<td>1.20</td>
 <td>0.49</td>
 <td>&gt; 120</td>
 <td>&gt; 120</td>
@@ -620,8 +622,8 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <tr>
 <td>katsura-7</td>
 <td>grevlex</td>
+<td>0.097</td>
 <td>0.21</td>
-<td>1.24</td>
 <td>0.79</td>
 <td>&gt; 120</td>
 <td>&gt; 120</td>
@@ -629,8 +631,8 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <tr>
 <td>katsura-7</td>
 <td>lex</td>
-<td>14.4</td>
-<td>48.5</td>
+<td>9.6</td>
+<td>31.0</td>
 <td>14.3</td>
 <td>&gt; 120</td>
 <td>&gt; 120</td>
@@ -638,8 +640,8 @@ have a value (<code>E-SOLVE-009</code> otherwise), and the loops honour an activ
 <tr>
 <td>katsura-8</td>
 <td>grevlex</td>
-<td>1.7</td>
-<td>13.9</td>
+<td>0.68</td>
+<td>2.0</td>
 <td>8.0</td>
 <td>&gt; 120</td>
 <td>&gt; 120</td>
