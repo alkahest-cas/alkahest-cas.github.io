@@ -61,7 +61,7 @@
     <section class="sym" id="binomial"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">binomial</span>(<span class="sig-p">n</span>, <span class="sig-p">k</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#binomial" aria-label="Link to binomial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1198" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#binomial" aria-label="Link to binomial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1204" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>The binomial coefficient <code>C(n, k)</code>.</p>
 <p>For integer <code>k</code> and integer <code>n</code> (Python <code>int</code> or integer literals)
 this is the exact integer <code>n·(n−1)···(n−k+1)/k!</code> — <code>0</code> for <code>k &lt; 0</code>,
@@ -71,7 +71,7 @@ and the generalised value for negative <code>n</code> (<code>binomial(-1, k) = (
 <section class="sym" id="default_pool"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">default_pool</span>()</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#default_pool" aria-label="Link to default_pool">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L599" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#default_pool" aria-label="Link to default_pool">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L600" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>alkahest.default_pool()</code> — the process-wide pool that pool-free calls use.</p>
 <p><code>alkahest.sin(2)</code>, <code>alkahest.Matrix([[1, 2], [3, 4]])</code> and the module
 constants <code>alkahest.pi</code> / <code>E</code> / <code>I</code> / <code>oo</code> have no <code>Expr</code> argument
@@ -127,7 +127,7 @@ they were exact. Accepts a <a href="/docs/api/core/#DerivedResult"><code>Derived
 <section class="sym" id="factorial"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">factorial</span>(<span class="sig-p">n</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#factorial" aria-label="Link to factorial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1162" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#factorial" aria-label="Link to factorial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/__init__.py#L1168" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>n!</code> — an exact integer for a Python <code>int</code> or integer literal
 <code>n &gt;= 0</code>, otherwise <code>gamma(n + 1)</code>.</p>
 <p>A negative integer has no factorial (<code>Γ</code> has a pole there) and raises
@@ -136,7 +136,7 @@ they were exact. Accepts a <a href="/docs/api/core/#DerivedResult"><code>Derived
 <section class="sym" id="solve_proof_status"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">solve_proof_status</span>()</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#solve_proof_status" aria-label="Link to solve_proof_status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20665" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#solve_proof_status" aria-label="Link to solve_proof_status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20675" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>alkahest.solve_proof_status() -&gt; str</code></p>
 <p>How sure the most recent <a href="/docs/api/solve/#solve"><code>solve()</code></a> on this thread is that its
 answer is <strong>complete</strong>: <code>&quot;proved&quot;</code> or <code>&quot;probabilistic&quot;</code>.</p>
