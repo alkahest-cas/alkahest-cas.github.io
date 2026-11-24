@@ -326,7 +326,7 @@ recognise the limit pattern, or the proof would require an admission
 </div>
 </div>
 <div class="member" id="DerivedResult.certificate_status">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certificate_status</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.certificate_status" aria-label="Link to DerivedResult.certificate_status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4141" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">certificate_status</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.certificate_status" aria-label="Link to DerivedResult.certificate_status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4160" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Why this result does (or does not) carry a Lean certificate.</p>
 <p>Returns a dict with:</p>
 <ul>
@@ -342,6 +342,12 @@ telescope fragment), <code>&quot;withheld_product_shape&quot;</code> (the produc
 not the <code>∏ k = n!</code> identity), <code>&quot;withheld_resultant_shape&quot;</code> (the
 Sylvester matrix is larger than 7×7 or a coefficient is too large), or
 <code>&quot;withheld_uncertifiable_step&quot;</code>.</li>
+<li><code>detail</code> — for a withheld indefinite integral, the specific code
+from the <code>HasDerivAt</code> emitter (<code>&quot;withheld_special_function&quot;</code>,
+<code>&quot;withheld_rootsum&quot;</code>, <code>&quot;withheld_unsupported_function&quot;</code>,
+<code>&quot;withheld_unsupported_node&quot;</code>, <code>&quot;withheld_constant_sign&quot;</code>,
+<code>&quot;withheld_identity_not_reduced&quot;</code>, <code>&quot;withheld_empty_domain&quot;</code>,
+<code>&quot;withheld_certificate_too_large&quot;</code>); <code>None</code> otherwise.</li>
 <li><code>blocking_steps</code> — for <code>withheld_uncertifiable_step</code>, the list of
 <code>{&quot;index&quot;, &quot;rule&quot;, &quot;before&quot;, &quot;after&quot;}</code> records whose rewrite rule has
 no sound Lean encoding today. This is a <em>diagnostic</em>: an empty list
@@ -353,14 +359,14 @@ for a reason not attributable to a single step.</li>
 </div>
 </div>
 <div class="member" id="DerivedResult.verification">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.verification" aria-label="Link to DerivedResult.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4195" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">verification</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.verification" aria-label="Link to DerivedResult.verification">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4232" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Machine-readable evidence metadata for this derived result.</p>
 <p>A generated Lean source artifact is not a statement that Lean has
 checked it. An indefinite integration result is <code>exactly_verified</code>
 only when its symbolic derivative residual simplifies to zero.</p>
 </div>
 </div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="DerivedResult.to_dict">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_dict</span>(<span class="sig-p">mode</span><span class="sig-def">=&quot;full&quot;</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.to_dict" aria-label="Link to DerivedResult.to_dict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4342" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_dict</span>(<span class="sig-p">mode</span><span class="sig-def">=&quot;full&quot;</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.to_dict" aria-label="Link to DerivedResult.to_dict">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4379" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Stable, versioned dict envelope for machine/agent consumers.</p>
 <p><code>mode=&quot;full&quot;</code> (default) carries the same information as
 <code>.steps</code> / <code>.verification</code> / <code>.certificate_status</code> combined
@@ -391,7 +397,7 @@ certificate exists and why not, without paying for the source.</p>
 </div>
 </div>
 <div class="member" id="DerivedResult.to_json">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_json</span>(<span class="sig-p">mode</span><span class="sig-def">=&quot;full&quot;</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.to_json" aria-label="Link to DerivedResult.to_json">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4399" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">to_json</span>(<span class="sig-p">mode</span><span class="sig-def">=&quot;full&quot;</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#DerivedResult.to_json" aria-label="Link to DerivedResult.to_json">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4436" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>json.dumps(self.to_dict(mode=mode))</code>, via Python&#39;s own <code>json</code>
 module so the output matches what an agent&#39;s own <code>json.dumps</code>
 would produce. See <code>to_dict()</code> for the schema.</p>
@@ -628,7 +634,7 @@ context when they&#39;re invoked without their own <code>assumptions</code> argu
 <section class="sym" id="version"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">version</span>()</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#version" aria-label="Link to version">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10951" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#version" aria-label="Link to version">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L10988" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Returns the alkahest-core version string.</p>
 </div></section>
 <section class="sym" id="__version__"><div class="sym-head">
@@ -729,7 +735,7 @@ two states are distinguishable by observation rather than by trust. Check
 <section class="sym" id="jit_is_available"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">jit_is_available</span>()</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#jit_is_available" aria-label="Link to jit_is_available">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13214" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#jit_is_available" aria-label="Link to jit_is_available">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L13251" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Return True if any native JIT backend is available in this build.</p>
 <p>When False, <code>compile_expr</code> falls back to the tree-walking interpreter and
 emits a RuntimeWarning.</p>
