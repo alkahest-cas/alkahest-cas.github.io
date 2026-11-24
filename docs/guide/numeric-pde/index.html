@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Numerical PDE analysis: stencils, spectral matrices, von Neumann · alkahest docs</title>
+<meta name="description" content="alkahest.experimental.numeric_pde covers the symbolic side of discretising a PDE: exact finite-difference weights and their truncation errors…">
+<meta property="og:title" content="Numerical PDE analysis: stencils, spectral matrices, von Neumann · alkahest docs">
+<meta property="og:description" content="alkahest.experimental.numeric_pde covers the symbolic side of discretising a PDE: exact finite-difference weights and their truncation errors…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f6f6f6">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/svg+xml" href="/docs/assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.14.0">
+
+<script defer src="/docs/assets/app.js?v=3.14.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/"><img src="/docs/assets/logo.svg" alt="" width="26" height="26"><span>alkahest</span></a>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+    <nav class="topnav" id="topnav" aria-label="Primary">
+      <a href="/docs/" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="alkahest on GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/quickstart/">Quickstart</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li class="open"><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/numeric-pde/" class="active" aria-current="page">Numerical PDE analysis: stencils, spectral matrices, von Neumann</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <h1>Numerical PDE analysis: stencils, spectral matrices, von Neumann</h1>
+    <p><code>alkahest.experimental.numeric_pde</code> covers the symbolic side of discretising a
+PDE: exact finite-difference weights and their truncation errors,
+multi-dimensional stencils, spectral differentiation matrices, and the
+analysis of linear constant-coefficient schemes (von Neumann stability,
+modified equation, consistency order). It is pure Python on exact rationals,
+and the API is experimental (it may change between minor versions).</p>
+<p><strong>Every stability verdict is either proved or reported as <code>&quot;unknown&quot;</code>.</strong> No
+floating-point sample ever decides a sign. A condition that could not be
+decided exactly comes back with <code>proof_status=&quot;unknown&quot;</code>, and only the part
+that was proved stable is stated.</p>
+<h2 id="finite-difference-weights"><a class="hanchor" href="#finite-difference-weights" aria-hidden="true" tabindex="-1">#</a>Finite-difference weights</h2>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49">import</span><span style="--shiki-light:#24292E"> alkahest </span><span style="--shiki-light:#D73A49">as</span><span style="--shiki-light:#24292E"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">from</span><span style="--shiki-light:#24292E"> alkahest.experimental </span><span style="--shiki-light:#D73A49">import</span><span style="--shiki-light:#24292E"> numeric_pde </span><span style="--shiki-light:#D73A49">as</span><span style="--shiki-light:#24292E"> N</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E">st </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> N.fd_weights(</span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#24292E">, [</span><span style="--shiki-light:#D73A49">-</span><span style="--shiki-light:#005CC5">1</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#005CC5">1</span><span style="--shiki-light:#24292E">])      </span><span style="--shiki-light:#6A737D"># u'' ≈ (u₋₁ − 2u₀ + u₁)/h²</span></span>
+<span class="line"><span style="--shiki-light:#24292E">st.weights                           </span><span style="--shiki-light:#6A737D"># (1, -2, 1)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">st.error_order, st.error_constant    </span><span style="--shiki-light:#6A737D"># (2, Fraction(-1, 12))</span></span>
+<span class="line"><span style="--shiki-light:#24292E">st.truncation_error()                </span><span style="--shiki-light:#6A737D"># -1/12 · h² · Derivative(u(x), x, x, x, x)</span></span></code></pre></div><p><code>fd_weights(order, offsets, h=None, x0=0)</code> runs Fornberg&#39;s algorithm over
+exact rationals for any derivative order and any offsets:</p>
+<ul>
+<li>uniform offsets, such as <code>[-2, -1, 0, 1, 2]</code>;</li>
+<li>staggered offsets, such as <code>[-1/2, 1/2]</code> (pass <code>Fraction</code> or strings);</li>
+<li>one-sided offsets, such as <code>[0, 1, 2]</code>;</li>
+<li>symbolic offsets, for a non-uniform grid. For example, <code>[-1, 0, s]</code> with a
+symbol <code>s</code> gives weights that are rational functions of <code>s</code>, and the error
+<code>(1 − s)/3 · h · u&#39;&#39;&#39;</code>.</li>
+</ul>
+<p>The truncation error is stated as <strong><code>τ = exact − approximation</code></strong>:
+<code>τ = C h^p u^{(m+p)} + O(h^{p+1})</code>. For the central second difference
+<code>C = −1/12</code>. Floating-point offsets are refused (<code>E-PDE-351</code>), because the
+weights would no longer be exact.</p>
+<p><code>stencil(m, accuracy=p, kind=&quot;central&quot; | &quot;forward&quot; | &quot;backward&quot;)</code> picks the
+smallest stencil of that kind with order of accuracy <code>p</code>.</p>
+<h2 id="multi-dimensional-stencils"><a class="hanchor" href="#multi-dimensional-stencils" aria-hidden="true" tabindex="-1">#</a>Multi-dimensional stencils</h2>
+<p><code>stencil((a1, a2, …))</code> builds the tensor-product stencil for the mixed
+partial <code>∂^α</code>. <code>laplacian_stencil(dim, points)</code> provides:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>stencil</th>
+<th>leading error (<code>exact − approx</code>)</th>
+</tr>
+</thead><tbody><tr>
+<td>2-D 5-point, 3-D 7-point</td>
+<td><code>−h²/12 Σ ∂⁴u/∂xᵢ⁴</code></td>
+</tr>
+<tr>
+<td>2-D 9-point, 3-D 19-point (Mehrstellen), 3-D 27-point</td>
+<td><code>−h²/12 Δ²u</code></td>
+</tr>
+</tbody></table></div>
+<p>The compact stencils are second order for <code>Δu</code>, but their error is a
+multiple of <code>Δ²u</code>. With the right-hand side corrected to <code>f + h²/12 Δf</code>, they
+therefore solve Poisson&#39;s equation to fourth order.</p>
+<p>Each stencil object has <code>.error_terms</code> (a map from multi-indices to exact
+coefficients) and <code>.truncation_error(u, vars)</code>, which returns the error as an
+expression in <code>Derivative</code> nodes.</p>
+<h3 id="kernels"><a class="hanchor" href="#kernels" aria-hidden="true" tabindex="-1">#</a>Kernels</h3>
+<p><code>st.apply(&quot;u&quot;, j)</code> returns the stencil applied to grid values as an
+expression, for example <code>(u(j − 1) − 2u(j) + u(j + 1))/h²</code>.
+<code>st.kernel()</code> compiles the stencil through <code>compile_expr</code> and applies it to
+every interior point of a NumPy array. <code>st.emit_c(&quot;name&quot;)</code> returns C99 source
+through <code>emit_c_expr</code>. Assembling a method-of-lines system is milestone M7b.</p>
+<h2 id="spectral-differentiation-matrices"><a class="hanchor" href="#spectral-differentiation-matrices" aria-hidden="true" tabindex="-1">#</a>Spectral differentiation matrices</h2>
+<p><code>cheb_diff_matrix(N)</code> returns the matrix on the Chebyshev–Gauss–Lobatto points
+<code>cos(jπ/N)</code>. <code>fourier_diff_matrix(N, order=1|2)</code> returns the periodic matrix
+on <code>2πj/N</code>. Both return <code>(D, x)</code>.</p>
+<ul>
+<li><strong>Exact mode</strong> (the default) returns an <code>alkahest.Matrix</code>. Entries are
+rational or lie in ℚ(√2), ℚ(√3) or ℚ(√5) when the nodes do (<code>N ≤ 6</code> for
+Chebyshev). Otherwise they are exact expressions in <code>cos(kπ/N)</code>.</li>
+<li><strong>Numeric mode</strong> (<code>numeric=True</code>) uses Trefethen&#39;s formulas and returns
+NumPy arrays. The Chebyshev diagonal is computed by the negative-sum trick.</li>
+</ul>
+<h2 id="scheme-analysis"><a class="hanchor" href="#scheme-analysis" aria-hidden="true" tabindex="-1">#</a>Scheme analysis</h2>
+<p>A scheme is <code>Σ a_{l,k} u_{j+k}^{n+l} = 0</code>. You can build it from a
+coefficient map, or read it from an expression in applied grid functions:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E">p </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E">n, j, dt, dx, nu </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> (p.symbol(s) </span><span style="--shiki-light:#D73A49">for</span><span style="--shiki-light:#24292E"> s </span><span style="--shiki-light:#D73A49">in</span><span style="--shiki-light:#24292E"> (</span><span style="--shiki-light:#032F62">"n"</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#032F62">"j"</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#032F62">"dt"</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#032F62">"dx"</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#032F62">"nu"</span><span style="--shiki-light:#24292E">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E">u </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#D73A49"> lambda</span><span style="--shiki-light:#24292E"> l, k: p.func(</span><span style="--shiki-light:#032F62">"u"</span><span style="--shiki-light:#24292E">, [n </span><span style="--shiki-light:#D73A49">+</span><span style="--shiki-light:#24292E"> l, j </span><span style="--shiki-light:#D73A49">+</span><span style="--shiki-light:#24292E"> k])</span></span>
+<span class="line"><span style="--shiki-light:#24292E">ftcs </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> N.Scheme.from_expr((u(</span><span style="--shiki-light:#005CC5">1</span><span style="--shiki-light:#24292E">,</span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">) </span><span style="--shiki-light:#D73A49">-</span><span style="--shiki-light:#24292E"> u(</span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">,</span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">))</span><span style="--shiki-light:#D73A49">/</span><span style="--shiki-light:#24292E">dt </span><span style="--shiki-light:#D73A49">-</span><span style="--shiki-light:#24292E"> nu</span><span style="--shiki-light:#D73A49">*</span><span style="--shiki-light:#24292E">(u(</span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">,</span><span style="--shiki-light:#005CC5">1</span><span style="--shiki-light:#24292E">) </span><span style="--shiki-light:#D73A49">-</span><span style="--shiki-light:#005CC5"> 2</span><span style="--shiki-light:#D73A49">*</span><span style="--shiki-light:#24292E">u(</span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">,</span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">) </span><span style="--shiki-light:#D73A49">+</span><span style="--shiki-light:#24292E"> u(</span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">,</span><span style="--shiki-light:#D73A49">-</span><span style="--shiki-light:#005CC5">1</span><span style="--shiki-light:#24292E">))</span><span style="--shiki-light:#D73A49">/</span><span style="--shiki-light:#24292E">dx</span><span style="--shiki-light:#D73A49">**</span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#24292E">,</span></span>
+<span class="line"><span style="--shiki-light:#032F62">                          "u"</span><span style="--shiki-light:#24292E">, n, j, </span><span style="--shiki-light:#E36209">dt</span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E">dt, </span><span style="--shiki-light:#E36209">dx</span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E">dx)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">res </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> N.von_neumann(ftcs)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">assert</span><span style="--shiki-light:#24292E"> res[</span><span style="--shiki-light:#032F62">"proof_status"</span><span style="--shiki-light:#24292E">] </span><span style="--shiki-light:#D73A49">==</span><span style="--shiki-light:#032F62"> "proved"</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">print</span><span style="--shiki-light:#24292E">(res[</span><span style="--shiki-light:#032F62">"stability_condition"</span><span style="--shiki-light:#24292E">])   </span><span style="--shiki-light:#6A737D"># 0 ≤ dt·nu/dx² ≤ 1/2</span></span></code></pre></div><h3 id="von-neumann"><a class="hanchor" href="#von-neumann" aria-hidden="true" tabindex="-1">#</a>Von Neumann</h3>
+<p><code>von_neumann(scheme, subs=None)</code> returns a mapping-like result with these
+keys:</p>
+<ul>
+<li><code>G</code>: the amplification factor, for two-level schemes;</li>
+<li><code>amplification_polynomial</code>: <code>Φ(g, θ)</code>;</li>
+<li><code>abs_G_squared</code>: <code>|G(θ)|²</code>;</li>
+<li><code>stability_condition</code>: a predicate expression;</li>
+<li><code>proof_status</code>: <code>&quot;proved&quot;</code> or <code>&quot;unknown&quot;</code>;</li>
+<li><code>intervals</code>: the stable parameter intervals, with exact endpoints.</li>
+</ul>
+<p>For the scheme above it returns <code>0 ≤ ν·dt/dx² ≤ 1/2</code>. Here the parameters
+<code>dt</code>, <code>dx</code> and <code>ν</code> enter only through the monomial <code>ν dt/dx²</code>, so the
+analysis merges them into one parameter automatically.</p>
+<p>The criterion is the von Neumann condition: for every θ, <code>Φ(·, θ)</code> keeps its
+degree and is a <em>simple von Neumann polynomial</em>. That means all roots lie in
+the closed unit disc, and roots on the unit circle are simple. For a
+two-level scheme this is <code>|G| ≤ 1</code>. Schemes for equations of second order in
+time, such as leapfrog for <code>u_tt = c²u_xx</code>, are detected by a double root
+<code>g = 1</code> at θ = 0. For those the criterion of Strikwerda&#39;s Theorem 8.2.1
+applies instead: roots on the unit circle may be double.</p>
+<p>How the condition is decided:</p>
+<ol>
+<li><strong>Miller&#39;s recursion</strong> turns the root condition into a Boolean formula of
+polynomial sign conditions.</li>
+<li><strong>The half-angle substitution</strong> <code>t = tan(θ/2)</code> makes those conditions
+polynomial in <code>t</code>. The point θ = π is checked separately.</li>
+<li><strong>The sentence <code>∀θ</code> is decided exactly</strong> for one free parameter. A
+one-parameter CAD cuts the parameter line at the real roots of the
+leading coefficients and subresultant coefficients. The condition is then
+decided at a rational sample in every cell, and at every boundary point.
+An irrational boundary is decided with exact arithmetic in ℚ(α), so
+<code>c² ≤ 1/2</code> comes back with closed endpoints <code>±RootOf(2x² − 1)</code>.</li>
+</ol>
+<p>If two or more independent parameters remain, the result is <code>&quot;unknown&quot;</code>. Fix
+all but one of them with <code>subs=</code>.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>scheme</th>
+<th>proved condition</th>
+</tr>
+</thead><tbody><tr>
+<td>FTCS heat</td>
+<td><code>0 ≤ r ≤ 1/2</code></td>
+</tr>
+<tr>
+<td>BTCS, Crank–Nicolson, DuFort–Frankel</td>
+<td><code>r ≥ 0</code></td>
+</tr>
+<tr>
+<td>upwind</td>
+<td><code>0 ≤ c ≤ 1</code></td>
+</tr>
+<tr>
+<td>Lax–Friedrichs, Lax–Wendroff</td>
+<td><code>−1 ≤ c ≤ 1</code></td>
+</tr>
+<tr>
+<td>Beam–Warming</td>
+<td><code>0 ≤ c ≤ 2</code></td>
+</tr>
+<tr>
+<td>leapfrog (advection)</td>
+<td><code>−1 &lt; c &lt; 1</code></td>
+</tr>
+<tr>
+<td>leapfrog (wave equation)</td>
+<td><code>−1 ≤ c ≤ 1</code></td>
+</tr>
+<tr>
+<td>FTCS advection, Richardson</td>
+<td>parameter <code>= 0</code> only</td>
+</tr>
+</tbody></table></div>
+<h3 id="modified-equation-and-consistency"><a class="hanchor" href="#modified-equation-and-consistency" aria-hidden="true" tabindex="-1">#</a>Modified equation and consistency</h3>
+<p><code>modified_equation(scheme, order, dt, dx, subs)</code> expands the principal root
+<code>g(θ)</code> exactly and takes <code>log g = Σ γ_q (iθ)^q</code>. This gives
+<code>u_t = Σ_q γ_q (Δx^q/Δt) ∂_x^q u</code>, the Warming–Hyett modified equation,
+without eliminating time derivatives by hand. The result reports:</p>
+<ul>
+<li>the physical and numerical terms, split apart;</li>
+<li><code>leading_dissipation</code>, the first even numerical term;</li>
+<li><code>leading_dispersion</code>, the first odd numerical term.</li>
+</ul>
+<p>For example, upwind has numerical diffusion <code>aΔx/2 (1 − c)</code>, and Lax–Wendroff
+has dispersion <code>−aΔx²/6 (1 − c²)</code>.</p>
+<p><code>consistency(scheme, pde, dt, dx, subs)</code> returns three things:</p>
+<ul>
+<li>the local truncation error: the scheme&#39;s residual on an exact solution of
+<code>u_t = Σ c_q ∂_x^q u</code>, normalised to approximate <code>u_t − Lu</code>;</li>
+<li>the orders <code>p, q</code> in <code>O(Δt^p + Δx^q)</code>;</li>
+<li>whether the scheme is consistent.</li>
+</ul>
+<p>For example, FTCS is <code>O(Δt + Δx²)</code> and Crank–Nicolson is <code>O(Δt² + Δx²)</code>.
+Lax–Friedrichs comes back as <code>consistent=None</code>, because its error term
+<code>Δx²/Δt</code> vanishes only on some refinement paths.</p>
+<h2 id="errors"><a class="hanchor" href="#errors" aria-hidden="true" tabindex="-1">#</a>Errors</h2>
+<p><code>NumericPdeError</code>, with codes <code>E-PDE-350</code> to <code>E-PDE-358</code> (see
+<a href="/docs/guide/errors/">Error codes</a>). The rest of the block up to <code>E-PDE-399</code> is
+reserved for this layer.</p>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/ansatz/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Ansatz families and conjecture generation</span></a><a class="pager-next" href="/docs/guide/crosscheck/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Cross-CAS differential testing</span></a></nav>
+  <footer class="doc-foot">
+    <a class="foot-gh" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/numeric-pde.md" rel="noopener" aria-label="View source on GitHub" title="View source on GitHub"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+    <span class="foot-meta">alkahest 3.14.0</span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#finite-difference-weights">Finite-difference weights</a></li><li class="d2"><a href="#multi-dimensional-stencils">Multi-dimensional stencils</a></li><li class="d3"><a href="#kernels">Kernels</a></li><li class="d2"><a href="#spectral-differentiation-matrices">Spectral differentiation matrices</a></li><li class="d2"><a href="#scheme-analysis">Scheme analysis</a></li><li class="d3"><a href="#von-neumann">Von Neumann</a></li><li class="d3"><a href="#modified-equation-and-consistency">Modified equation and consistency</a></li><li class="d2"><a href="#errors">Errors</a></li></ul>
+  </div>
+</aside>
+</div>
+<a class="to-top" href="#top" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/></svg></a>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>
