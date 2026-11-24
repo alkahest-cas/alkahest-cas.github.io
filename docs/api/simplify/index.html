@@ -225,7 +225,7 @@ without it, so the calls are always available. Check
 <section class="sym" id="simplify_par"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">simplify_par</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#simplify_par" aria-label="Link to simplify_par">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14917" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_par" aria-label="Link to simplify_par">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14921" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Simplify an expression using a recursive fork-join traversal.</p>
 <p>Requires the <code>parallel</code> feature at build time; without it this falls back
 to sequential <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a>, so the call is always available. Check
@@ -240,7 +240,7 @@ concurrently; <a href="/docs/api/simplify/#simplify_redex"><code>simplify_redex(
 <section class="sym" id="simplify_redex"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">simplify_redex</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#simplify_redex" aria-label="Link to simplify_redex">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14953" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_redex" aria-label="Link to simplify_redex">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14957" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Simplify an expression by scheduling independent rewrites level by level.</p>
 <p>Requires the <code>parallel</code> feature at build time; without it this falls back
 to sequential <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a>, so the call is always available.</p>
@@ -255,7 +255,7 @@ across runs and across CPU counts.</p>
 <section class="sym" id="simplify_auto"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">simplify_auto</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#simplify_auto" aria-label="Link to simplify_auto">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14987" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_auto" aria-label="Link to simplify_auto">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L14991" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Simplify in parallel, choosing the strategy from the expression&#39;s shape.</p>
 <p>Requires the <code>parallel</code> feature at build time; without it this falls back
 to sequential <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a>, so the call is always available.</p>
@@ -268,7 +268,7 @@ result matches <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a
 <section class="sym" id="simplify_strategy"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">simplify_strategy</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#simplify_strategy" aria-label="Link to simplify_strategy">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15022" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_strategy" aria-label="Link to simplify_strategy">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15026" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Report which strategy <a href="/docs/api/simplify/#simplify_auto"><code>simplify_auto()</code></a> would use for <code>expr</code>.</p>
 <p>Returns <code>&quot;fork_join&quot;</code> (<a href="/docs/api/simplify/#simplify_par"><code>simplify_par()</code></a>), <code>&quot;level_scheduled&quot;</code>
 (<a href="/docs/api/simplify/#simplify_redex"><code>simplify_redex()</code></a>), or <code>&quot;sequential&quot;</code> when the extension was built
@@ -426,13 +426,13 @@ than <a href="/docs/api/simplify/#simplify"><code>simplify()</code></a> and is o
 <section class="sym" id="simplify_clifford_orthogonal"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">simplify_clifford_orthogonal</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#simplify_clifford_orthogonal" aria-label="Link to simplify_clifford_orthogonal">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15477" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_clifford_orthogonal" aria-label="Link to simplify_clifford_orthogonal">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15481" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Simplify with default rules plus orthogonal Clifford anticommutation on <code>cliff_e1</code>, <code>cliff_e2</code>.</p>
 </div></section>
 <section class="sym" id="simplify_pauli"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">simplify_pauli</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#simplify_pauli" aria-label="Link to simplify_pauli">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15446" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#simplify_pauli" aria-label="Link to simplify_pauli">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L15450" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Simplify with default arithmetic rules plus the Pauli product table on <code>sx</code>, <code>sy</code>, <code>sz</code>.</p>
 </div></section>
 <section class="sym" id="EgraphConfig"><div class="sym-head">

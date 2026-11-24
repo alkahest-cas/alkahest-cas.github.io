@@ -117,6 +117,19 @@ they must, but not the same ones. Opt out per call with
 <code>compile_expr(expr, inputs, optimize=False)</code> (every value is then bit for bit
 <code>eval_expr</code>&#39;s), or for the whole process with the environment variable
 <code>ALKAHEST_JIT_HORNER=0</code>. From Rust: <code>compile_with_options(…, CodegenOptions::exact())</code>.</p>
+<p>After the Horner pass, <strong>common-pair elimination</strong> (as in Symbolica&#39;s evaluator
+optimiser) shares operand pairs that recur in several sums or products: in
+<code>x·y·sin(x) + x·y·cos(x)</code>, or across the entries of a Jacobian where the same
+<code>a·b</code> sits next to different factors, <code>a·b</code> is computed once. The most frequent
+pair is hoisted into a temporary, the counts are redone, and so on until no
+pair occurs twice. It is tried on each Horner candidate and on the whole
+compiled DAG, and kept only when it lowers the operation count. Sums and
+products it rewrites are reassociated, with the same last-bits caveat as
+above; an expression with no repeated pair (such as <code>Σ sin(kx)·cos(ky)/k</code>) is
+untouched. On a dense polynomial it finds nothing to add to the Horner scheme:
+231 distinct coefficients need about 230 multiply-adds either way. Switch it off
+alone with <code>ALKAHEST_JIT_CPE=0</code> (or <code>CodegenOptions::with_cpe(false)</code>);
+<code>optimize=False</code> and <code>ALKAHEST_JIT_HORNER=0</code> switch off both passes.</p>
 <h3 id="real-values-through-complex-intermediates"><a class="hanchor" href="#real-values-through-complex-intermediates" aria-hidden="true" tabindex="-1">#</a>Real values through complex intermediates</h3>
 <p>A real-valued closed form can pass through complex numbers on the way:
 <code>cos(t·√ω²)</code> at a point where <code>ω² &lt; 0</code> is <code>cosh(t·√−ω²)</code>; Cardano&#39;s formula for
