@@ -1417,7 +1417,7 @@ raised.</p>
 <section class="sym" id="ModularRecurrence"><div class="sym-head">
   <span class="kind kind-class">class</span>
   <pre class="sig"><code><span class="sig-kw">class </span><span class="sig-name">ModularRecurrence</span>(<span class="sig-p">coeffs</span>, <span class="sig-p">initial</span>, <span class="sig-sep">*</span>, <span class="sig-p">rhs</span><span class="sig-def">=None</span>, <span class="sig-p">start</span><span class="sig-def">=0</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence" aria-label="Link to ModularRecurrence">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22073" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence" aria-label="Link to ModularRecurrence">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22126" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A P-recursive recurrence prepared for evaluation modulo prime powers.</p>
 <p>Holds <code>Σ_{i=0}^{J} a_i(n)·S(n+i) = b(n)</code> with integer polynomial
 coefficients, plus the <code>J</code> initial values <code>S(start) … S(start+J-1)</code>.
@@ -1445,43 +1445,43 @@ with <a href="/docs/api/diff/#zeilberger"><code>zeilberger()</code></a>, or fit 
 <span class="line"><span style="--shiki-light:#005CC5">1</span></span>
 <span class="line"><span style="--shiki-light:#D73A49">>>></span><span style="--shiki-light:#24292E"> apery.value_mod(</span><span style="--shiki-light:#005CC5">10006</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#005CC5">10007</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#005CC5">3</span><span style="--shiki-light:#24292E">)        </span><span style="--shiki-light:#6A737D"># …and at p = 10007, in ~5 ms</span></span>
 <span class="line"><span style="--shiki-light:#005CC5">1</span></span></code></pre></div><div class="members"><div class="members-title">Properties</div><div class="member" id="ModularRecurrence.order">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">order</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.order" aria-label="Link to ModularRecurrence.order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22106" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">order</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.order" aria-label="Link to ModularRecurrence.order">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22159" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Recurrence order <code>J</code>; <code>len(coeffs()) == order + 1</code>.</p>
 </div>
 </div>
 <div class="member" id="ModularRecurrence.degree">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">degree</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.degree" aria-label="Link to ModularRecurrence.degree">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22113" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">degree</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.degree" aria-label="Link to ModularRecurrence.degree">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22166" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Largest degree of any coefficient polynomial, the right-hand side
 included.</p>
 </div>
 </div>
 <div class="member" id="ModularRecurrence.start">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">start</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.start" aria-label="Link to ModularRecurrence.start">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22119" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">start</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.start" aria-label="Link to ModularRecurrence.start">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22172" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Index <code>n</code> that <code>initial[0]</code> belongs to.</p>
 </div>
 </div>
 <div class="member" id="ModularRecurrence.is_homogeneous">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_homogeneous</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.is_homogeneous" aria-label="Link to ModularRecurrence.is_homogeneous">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22125" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">is_homogeneous</span></code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.is_homogeneous" aria-label="Link to ModularRecurrence.is_homogeneous">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22178" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Whether <code>b(n)</code> is identically zero.</p>
 </div>
 </div></div><div class="members"><div class="members-title">Methods</div><div class="member" id="ModularRecurrence.coeffs">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coeffs</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.coeffs" aria-label="Link to ModularRecurrence.coeffs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22130" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">coeffs</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.coeffs" aria-label="Link to ModularRecurrence.coeffs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22183" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>[a_0, …, a_J]</code>, each a list of exact ints, lowest degree first.</p>
 </div>
 </div>
 <div class="member" id="ModularRecurrence.rhs">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rhs</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.rhs" aria-label="Link to ModularRecurrence.rhs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22140" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">rhs</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.rhs" aria-label="Link to ModularRecurrence.rhs">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22193" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>b(n)</code> as a list of exact ints, lowest degree first; <code>[]</code> when
 homogeneous.</p>
 </div>
 </div>
 <div class="member" id="ModularRecurrence.initial">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">initial</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.initial" aria-label="Link to ModularRecurrence.initial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22145" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">initial</span>()</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.initial" aria-label="Link to ModularRecurrence.initial">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22198" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>[S(start), …, S(start+J-1)]</code> as ints or <code>fractions.Fraction</code>.</p>
 </div>
 </div>
 <div class="member" id="ModularRecurrence.value_mod">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">value_mod</span>(<span class="sig-p">n</span>, <span class="sig-p">p</span>, <span class="sig-p">k</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.value_mod" aria-label="Link to ModularRecurrence.value_mod">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22166" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">value_mod</span>(<span class="sig-p">n</span>, <span class="sig-p">p</span>, <span class="sig-p">k</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.value_mod" aria-label="Link to ModularRecurrence.value_mod">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22219" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>S(n) mod p**k</code>, computed from the recurrence without ever forming
 <code>S(n)</code> over the integers.</p>
 
@@ -1489,7 +1489,7 @@ homogeneous.</p>
 </dd></div></dl></div>
 </div>
 <div class="member" id="ModularRecurrence.values_mod">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">values_mod</span>(<span class="sig-p">indices</span>, <span class="sig-p">p</span>, <span class="sig-p">k</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.values_mod" aria-label="Link to ModularRecurrence.values_mod">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22177" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">values_mod</span>(<span class="sig-p">indices</span>, <span class="sig-p">p</span>, <span class="sig-p">k</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.values_mod" aria-label="Link to ModularRecurrence.values_mod">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22230" rel="noopener">source</a></div></div>
   <div class="member-body"><p><code>[S(n) mod p**k for n in indices]</code>, in <strong>one</strong> forward pass.</p>
 <p>The indices are sorted internally and the residues come back in the
 order they were asked for, so evaluating a scattered set of indices
@@ -1497,7 +1497,7 @@ costs one run to the largest of them rather than one run each.</p>
 </div>
 </div>
 <div class="member" id="ModularRecurrence.evaluate">
-  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">evaluate</span>(<span class="sig-p">indices</span>, <span class="sig-p">p</span>, <span class="sig-p">k</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.evaluate" aria-label="Link to ModularRecurrence.evaluate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22191" rel="noopener">source</a></div></div>
+  <div class="member-head"><pre class="sig sig-member"><code><span class="sig-name">evaluate</span>(<span class="sig-p">indices</span>, <span class="sig-p">p</span>, <span class="sig-p">k</span>)</code></pre><div class="sym-links"><a class="hanchor-inline" href="#ModularRecurrence.evaluate" aria-label="Link to ModularRecurrence.evaluate">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L22244" rel="noopener">source</a></div></div>
   <div class="member-body"><p>Like <code>values_mod()</code>, but returns the full
 <a href="/docs/api/numerics/#ModularEvaluation"><code>ModularEvaluation</code></a> with its precision accounting.</p>
 </div>
