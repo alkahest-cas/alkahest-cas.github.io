@@ -474,6 +474,19 @@ out. A refusal, never a guess.</li>
 <li><code>E-PDE-040</code> — a transform cannot act on an unknown because the transform
 variable is not a single bare argument (<code>u(x, 2t)</code>, <code>u(t²)</code>); the
 transform raises its own <code>TransformError</code> carrying this message.</li>
+<li><code>E-PDE-050</code> — <code>pdsolve</code> has no method for the problem: a system, an
+equation of order other than one (milestone M1 covers first order), a
+single independent variable (use <code>dsolve</code>), or an unknown <code>hint</code>.</li>
+<li><code>E-PDE-051</code> — every applicable method ran and <strong>no candidate verified</strong>;
+the message names each discarded candidate and why. Never an unverified
+answer.</li>
+<li><code>E-PDE-052</code> — Cauchy data on a <strong>characteristic</strong> curve: the Jacobian of
+the data curve against the characteristic direction vanishes identically.</li>
+<li><code>E-PDE-053</code> — side conditions <code>pdsolve</code> cannot impose on a first-order
+problem: data on a derivative, several conditions, a data manifold of the
+wrong dimension, or parameters that could not be eliminated.</li>
+<li><code>E-PDE-054</code> — a malformed <code>Integral(f, t, lo, hi)</code> / <code>Integral(f, x)</code>
+(the integration variable is not a symbol, or a bound mentions it).</li>
 </ul>
 </div></section>
 <section class="sym" id="ProbabilityError"><div class="sym-head">
