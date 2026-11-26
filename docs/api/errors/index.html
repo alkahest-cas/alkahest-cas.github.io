@@ -488,6 +488,30 @@ wrong dimension, or parameters that could not be eliminated.</li>
 <li><code>E-PDE-054</code> — a malformed <code>Integral(f, t, lo, hi)</code> / <code>Integral(f, x)</code>
 (the integration variable is not a symbol, or a bound mentions it).</li>
 </ul>
+<p>Second-order linear equations in two variables (milestone M2,
+<code>canonical_form</code> / <code>solve_second_order</code> / <code>laplace_cascade</code>):</p>
+<ul>
+<li><code>E-PDE-100</code> — not a linear equation of order two in an unknown of
+exactly two variables.</li>
+<li><code>E-PDE-101</code> — a characteristic ODE <code>dy/dx = λ(x, y)</code> has no
+first integral found in closed form, or the coordinates did not reduce
+the principal part.</li>
+<li><code>E-PDE-102</code> — the type is not the same on the whole plane; use
+<code>canonical_forms</code> for one form per region.</li>
+<li><code>E-PDE-103</code> — the Laplace cascade spent its step budget (or its
+coefficients swelled) with no invariant vanishing. The chain may be
+infinite: <code>u_xy = u</code> never terminates.</li>
+<li><code>E-PDE-104</code> — no implemented method gives a closed form.</li>
+<li><code>E-PDE-105</code> — a candidate was produced but not proved by substitution,
+so it is withheld.</li>
+<li><code>E-PDE-106</code> — the solution needs <code>∫ W(x, y) G(y) dy</code> of an
+arbitrary <code>G</code> with no integral-free form, or a quadrature that does
+not close.</li>
+<li><code>E-PDE-107</code> — conditions other than Cauchy data on a line, a
+characteristic data line, or <code>∫ g</code> not in closed form.</li>
+<li><code>E-PDE-108</code> — <code>laplace_cascade</code> needs the principal part to be a
+multiple of <code>u_xy</code>.</li>
+</ul>
 <p>Milestone M3 (the Sturm–Liouville solver and the transform methods) owns
 <code>150</code>–<code>199</code>:</p>
 <ul>

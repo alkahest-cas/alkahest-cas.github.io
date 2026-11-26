@@ -71,7 +71,7 @@ and the generalised value for negative <code>n</code> (<code>binomial(-1, k) = (
 <section class="sym" id="default_pool"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">default_pool</span>()</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#default_pool" aria-label="Link to default_pool">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L604" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#default_pool" aria-label="Link to default_pool">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L605" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>alkahest.default_pool()</code> — the process-wide pool that pool-free calls use.</p>
 <p><code>alkahest.sin(2)</code>, <code>alkahest.Matrix([[1, 2], [3, 4]])</code> and the module
 constants <code>alkahest.pi</code> / <code>E</code> / <code>I</code> / <code>oo</code> have no <code>Expr</code> argument
@@ -88,7 +88,7 @@ symbols are never moved between pools (<code>E-POOL-001</code>).</p>
 <section class="sym" id="erfi"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">erfi</span>(<span class="sig-p">expr</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#erfi" aria-label="Link to erfi">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4837" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#erfi" aria-label="Link to erfi">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L4838" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>erfi(x) = -i·erf(i·x)</code>, the imaginary error function (DLMF 7.2.3).
 <code>d/dx erfi(x) = (2/√π)·exp(x²)</code>; the closed form of <code>∫exp(x²) dx</code>.</p>
 </div></section>
@@ -157,31 +157,31 @@ simplifies through the functions it is made of.</p>
 <section class="sym" id="jacobi_am"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">jacobi_am</span>(<span class="sig-p">u</span>, <span class="sig-p">m</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#jacobi_am" aria-label="Link to jacobi_am">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5152" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#jacobi_am" aria-label="Link to jacobi_am">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5153" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Jacobi amplitude <code>JacobiAmplitude(u, m)</code>, the inverse of <code>EllipticF(phi, m)</code>.</p>
 </div></section>
 <section class="sym" id="jacobi_cn"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">jacobi_cn</span>(<span class="sig-p">u</span>, <span class="sig-p">m</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#jacobi_cn" aria-label="Link to jacobi_cn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5140" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#jacobi_cn" aria-label="Link to jacobi_cn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5141" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Jacobi elliptic cosine <code>JacobiCN(u, m)</code> (parameter <code>m = k²</code>).</p>
 </div></section>
 <section class="sym" id="jacobi_dn"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">jacobi_dn</span>(<span class="sig-p">u</span>, <span class="sig-p">m</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#jacobi_dn" aria-label="Link to jacobi_dn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5146" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#jacobi_dn" aria-label="Link to jacobi_dn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5147" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Jacobi delta amplitude <code>JacobiDN(u, m)</code> (parameter <code>m = k²</code>).</p>
 </div></section>
 <section class="sym" id="jacobi_sn"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">jacobi_sn</span>(<span class="sig-p">u</span>, <span class="sig-p">m</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#jacobi_sn" aria-label="Link to jacobi_sn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5134" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#jacobi_sn" aria-label="Link to jacobi_sn">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5135" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Jacobi elliptic sine <code>JacobiSN(u, m)</code> (parameter <code>m = k²</code>).</p>
 </div></section>
 <section class="sym" id="solve_proof_status"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">solve_proof_status</span>()</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#solve_proof_status" aria-label="Link to solve_proof_status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20985" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#solve_proof_status" aria-label="Link to solve_proof_status">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L20986" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>alkahest.solve_proof_status() -&gt; str</code></p>
 <p>How sure the most recent <a href="/docs/api/solve/#solve"><code>solve()</code></a> on this thread is that its
 answer is <strong>complete</strong>: <code>&quot;proved&quot;</code> or <code>&quot;probabilistic&quot;</code>.</p>
@@ -199,7 +199,7 @@ stop with <code>BudgetExceededError</code>.</p>
 <section class="sym" id="weierstrass_wp"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">weierstrass_wp</span>(<span class="sig-p">z</span>, <span class="sig-p">g2</span>, <span class="sig-p">g3</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#weierstrass_wp" aria-label="Link to weierstrass_wp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5161" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#weierstrass_wp" aria-label="Link to weierstrass_wp">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5162" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Weierstrass <code>℘(z; g2, g3)</code> as a symbolic node <code>WeierstrassP(z, g2, g3)</code>,
 parametrised by its invariants (<code>℘&#39;² = 4℘³ − g2·℘ − g3</code>). Not to be
 confused with <code>experimental.weierstrass_p(z, tau)</code>, a numeric evaluator
@@ -208,7 +208,7 @@ parametrised by the period ratio.</p>
 <section class="sym" id="weierstrass_wp_prime"><div class="sym-head">
   <span class="kind kind-function">function</span>
   <pre class="sig"><code><span class="sig-name">weierstrass_wp_prime</span>(<span class="sig-p">z</span>, <span class="sig-p">g2</span>, <span class="sig-p">g3</span>)</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#weierstrass_wp_prime" aria-label="Link to weierstrass_wp_prime">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5172" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#weierstrass_wp_prime" aria-label="Link to weierstrass_wp_prime">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/alkahest-py/src/lib.rs#L5173" rel="noopener">source</a></div>
 </div><div class="sym-body"><p><code>℘&#39;(z; g2, g3)</code> as a symbolic node <code>WeierstrassPPrime(z, g2, g3)</code>.</p>
 </div></section>
 <section class="sym" id="zeta_deriv"><div class="sym-head">
