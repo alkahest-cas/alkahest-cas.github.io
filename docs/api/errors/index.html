@@ -488,6 +488,32 @@ wrong dimension, or parameters that could not be eliminated.</li>
 <li><code>E-PDE-054</code> — a malformed <code>Integral(f, t, lo, hi)</code> / <code>Integral(f, x)</code>
 (the integration variable is not a symbol, or a bound mentions it).</li>
 </ul>
+<p>Milestone M3 (the Sturm–Liouville solver and the transform methods) owns
+<code>150</code>–<code>199</code>:</p>
+<ul>
+<li><code>E-PDE-150</code> — an eigenproblem outside the implemented classes
+(variable coefficients that <code>dsolve</code> does not solve, periodic
+conditions with variable coefficients, an unrecognised singular problem).</li>
+<li><code>E-PDE-151</code> — a malformed end condition: <code>αX + βX&#39; = 0</code> with
+<code>α = β = 0</code>, a regular condition at an infinite end, or <code>bounded</code> /
+<code>decay</code> at an end of a problem that is not one of the classical
+singular ones.</li>
+<li><code>E-PDE-152</code> — the eigenvalue condition vanishes identically (every
+<code>λ</code> would be an eigenvalue).</li>
+<li><code>E-PDE-153</code> — an eigenpair was <strong>refuted</strong> by its exact check and
+withheld; a bug to report, never an answer.</li>
+<li><code>E-PDE-160</code> — the transform method does not apply: not one linear
+homogeneous constant-coefficient equation in two variables, or a domain
+other than <code>Line × HalfLine</code> (Fourier) or <code>HalfLine × HalfLine</code>
+(Laplace / sine / cosine).</li>
+<li><code>E-PDE-161</code> — initial or boundary data missing, duplicated or of the
+wrong shape (the Laplace method needs zero initial data; the image method
+a homogeneous Dirichlet or Neumann end).</li>
+<li><code>E-PDE-162</code> — <code>dsolve</code> did not solve the transformed ODE, or the
+bounded solution could not be selected.</li>
+<li><code>E-PDE-163</code> — the candidate built by a transform method was <strong>refuted</strong>
+by substitution and withheld.</li>
+</ul>
 </div></section>
 <section class="sym" id="ProbabilityError"><div class="sym-head">
   <span class="kind kind-exception">exception</span>
