@@ -140,8 +140,45 @@ verified witness.</p>
 strict corpus of basic arithmetic rewrites and <code>d/dx x³</code>. Every corpus entry
 must have the expected non-empty derivation log, must contain no <code>sorry</code>,
 <code>admit</code>, or <code>axiom</code>, and must typecheck with warnings treated as errors. The
-pinned Lean 4.9 compiler does not provide a <code>--no-sorries</code> command-line flag,
-so the source admission check is explicit in both the generator and CI.</p>
+Lean compiler has no <code>--no-sorries</code> command-line flag, so the source admission
+check is explicit in both the generator and CI.</p>
+<h3 id="toolchain-and-porting-notes"><a class="hanchor" href="#toolchain-and-porting-notes" aria-hidden="true" tabindex="-1">#</a>Toolchain and porting notes</h3>
+<p>The checker is pinned in <code>lean/</code>: <code>lean-toolchain</code> (Lean 4 <strong>v4.36.0</strong>), the
+Mathlib tag in <code>lakefile.lean</code> (<strong>v4.36.0</strong>) and the exact dependency revisions
+in the committed <code>lake-manifest.json</code>. CI downloads Mathlib&#39;s prebuilt oleans
+with <code>lake exe cache get</code>, so Mathlib is never built from source. To check a
+certificate locally:</p>
+<div class="code" data-lang="bash"><span class="code-lang">Shell</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#005CC5">cd</span><span style="--shiki-light:#032F62"> lean</span><span style="--shiki-light:#24292E"> &#x26;&#x26; </span><span style="--shiki-light:#6F42C1">lake</span><span style="--shiki-light:#032F62"> exe</span><span style="--shiki-light:#032F62"> cache</span><span style="--shiki-light:#032F62"> get</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1">lake</span><span style="--shiki-light:#032F62"> env</span><span style="--shiki-light:#032F62"> lean</span><span style="--shiki-light:#005CC5"> -DwarningAsError=true</span><span style="--shiki-light:#005CC5"> -DautoImplicit=false</span><span style="--shiki-light:#032F62"> path/to/cert.lean</span></span></code></pre></div><p>The pin moved from v4.9.0 (mid-2024) to v4.36.0. What changed in the emitted
+Lean:</p>
+<ul>
+<li><strong>Linters.</strong> Every certificate switches off <code>linter.unusedSimpArgs</code>,
+<code>linter.unusedTactic</code> and <code>linter.unreachableTactic</code>. These are style
+linters; under <code>-DwarningAsError=true</code> they would reject a proof whose
+<code>simp</code> set names a lemma it did not need. <code>sorry</code> is still a warning and
+still fails the check.</li>
+<li><strong>Lemma renames.</strong> <code>mul_inv_cancel</code> → <code>mul_inv_cancel₀</code> (fields),
+<code>Nat.Ico_succ_right</code> → <code>Finset.Ico_add_one_right_eq_Icc</code>,
+<code>Set.not_mem_uIcc_of_lt</code> → <code>Set.notMem_uIcc_of_lt</code>,
+<code>tendsto_one_plus_div_rpow_exp</code> → <code>Real.tendsto_one_add_div_rpow_exp</code>,
+<code>differentiableAt_id&#39;</code> → <code>differentiableAt_id</code>, <code>differentiableAt_inv.mpr h</code>
+→ <code>differentiableAt_inv h</code>, <code>deriv_pow&#39;&#39;</code> → <code>deriv_fun_pow</code>, and
+<code>if_pos</code>/<code>if_neg</code> → <code>ite_eq_left</code>/<code>ite_eq_right</code>.</li>
+<li><strong>Pointwise vs. lambda forms.</strong> <code>HasDerivAt.add</code>/<code>.mul</code>/<code>.neg</code>/<code>.pow</code>/…
+and <code>deriv_add</code>/<code>deriv_mul</code>/… now state the derivative of <code>f + g</code> (a
+function-level sum), while their <code>fun_</code>-prefixed twins (<code>HasDerivAt.fun_add</code>,
+<code>deriv_fun_mul</code>, …) state it for <code>fun x =&gt; f x + g x</code>. Certificates that
+<code>rw</code> or <code>simpa</code> against a lambda use the <code>fun_</code> forms; <code>simp</code> sets carry both.</li>
+<li><strong>Moved modules.</strong> The <code>sinh</code>/<code>cosh</code> derivative lemmas live in
+<code>Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp</code>; the interval-FTC
+lemmas in <code>Mathlib.MeasureTheory.Integral.IntervalIntegral.{Basic,FundThmCalculus}</code>;
+<code>Finset</code> big operators in <code>Mathlib.Algebra.BigOperators.Group.Finset.Basic</code>.</li>
+<li><strong>New coverage.</strong> Mathlib v4.36 has <code>HasDerivAt.arsinh</code> and
+<code>Real.hasDerivAt_arcosh</code>, so integration certificates now cover <code>asinh</code> and
+<code>acosh</code> (on <code>1 &lt; u</code>), and <code>tanh</code> through <code>Real.tanh_eq_sinh_div_cosh</code>. It still
+has no <code>erf</code>, <code>Si</code>, <code>Ei</code> or <code>li</code>; answers using them stay withheld with
+<code>withheld_special_function</code>.</li>
+</ul>
 <ol>
 <li>Generates proof files via <code>tests/lean_corpus.py</code></li>
 <li>Compiles them with the pinned Lean/Mathlib toolchain (with Mathlib cached)</li>
@@ -232,7 +269,7 @@ rational-telescope, and geometric terms, certified as a <code>Finset.sum</code>
 identity via <code>sum_range_sub</code> / <code>sum_Ico_eq_sum_range</code> — never as the false
 rewrite <code>F = G</code>. Infinite Basel sums and <code>gamma</code> encodings stay withheld.</li>
 <li>The discrete product <code>∏_{k=1}^{n} k = n!</code>, via Mathlib
-<code>Finset.prod_Ico_id_eq_factorial</code> (v4.9.0 has no <code>prod_Icc_id</code>).</li>
+<code>Finset.prod_Ico_id_eq_factorial</code>.</li>
 <li>Resultants, stated as <code>Matrix.det</code> of the Sylvester matrix of <code>p</code> and <code>q</code>
 equal to the result, for Sylvester matrices up to 7×7. The determinant is
 expanded by a controlled <code>simp only</code> lemma set (the full simp set rewrites
@@ -287,7 +324,7 @@ exporter, so conditional rewrites are excluded from the strict corpus.</p>
 </main>
 <aside class="toc" aria-label="On this page">
   <div class="toc-inner">
-    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#three-levels-of-evidence">Three levels of evidence</a></li><li class="d2"><a href="#theorem-mapping">Theorem mapping</a></li><li class="d2"><a href="#exporting-a-certificate">Exporting a certificate</a></li><li class="d2"><a href="#strict-lean-ci">Strict Lean CI</a></li><li class="d2"><a href="#knowing-where-the-line-is-before-you-compute">Knowing where the line is, before you compute</a></li><li class="d2"><a href="#coverage">Coverage</a></li><li class="d2"><a href="#side-conditions-in-proofs">Side conditions in proofs</a></li></ul>
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#three-levels-of-evidence">Three levels of evidence</a></li><li class="d2"><a href="#theorem-mapping">Theorem mapping</a></li><li class="d2"><a href="#exporting-a-certificate">Exporting a certificate</a></li><li class="d2"><a href="#strict-lean-ci">Strict Lean CI</a></li><li class="d3"><a href="#toolchain-and-porting-notes">Toolchain and porting notes</a></li><li class="d2"><a href="#knowing-where-the-line-is-before-you-compute">Knowing where the line is, before you compute</a></li><li class="d2"><a href="#coverage">Coverage</a></li><li class="d2"><a href="#side-conditions-in-proofs">Side conditions in proofs</a></li></ul>
   </div>
 </aside>
 </div>
