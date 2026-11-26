@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The reflective certificate kernel · alkahest docs</title>
+<meta name="description" content="Indefinite-integration certificates are, by default, checked by a small verified checker in the repository's Lean library Alkahest.Kernel instead of by a…">
+<meta property="og:title" content="The reflective certificate kernel · alkahest docs">
+<meta property="og:description" content="Indefinite-integration certificates are, by default, checked by a small verified checker in the repository's Lean library Alkahest.Kernel instead of by a…">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f6f6f6">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/svg+xml" href="/docs/assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.14.0">
+
+<script defer src="/docs/assets/app.js?v=3.14.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/"><img src="/docs/assets/logo.svg" alt="" width="26" height="26"><span>alkahest</span></a>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+    <nav class="topnav" id="topnav" aria-label="Primary">
+      <a href="/docs/" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="alkahest on GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/quickstart/">Quickstart</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li class="open"><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li><li><a href="/docs/guide/lean-kernel/" class="active" aria-current="page">The reflective certificate kernel</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/numeric-pde/">Numerical PDE analysis: stencils, spectral matrices, von Neumann</a></li><li><a href="/docs/guide/method-of-lines/">Method of lines: symbolic PDE to compiled ODE/DAE</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <h1>The reflective certificate kernel</h1>
+    <p>Indefinite-integration certificates are, by default, checked by a small
+verified checker in the repository&#39;s Lean library
+<a href="https://github.com/alkahest-cas/alkahest/tree/main/lean/Alkahest" rel="noopener"><code>Alkahest.Kernel</code></a>
+instead of by a tree of Mathlib tactics. The certificate is <em>data</em>: an
+expression AST for the claim plus a witness. A Boolean checker decides it, and
+one soundness theorem, proved once in the library, turns
+<code>check data = true</code> into the mathematical statement.</p>
+<div class="code" data-lang="lean"><span class="code-lang">Lean</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49">import</span><span style="--shiki-light:#24292E"> Alkahest.Kernel</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#D73A49">open</span><span style="--shiki-light:#24292E"> Alkahest.Kernel </span><span style="--shiki-light:#D73A49">in</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">theorem</span><span style="--shiki-light:#6F42C1"> alkahest_integral</span><span style="--shiki-light:#24292E"> (x : ℝ) (h1 : x ≠ </span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">) :</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    HasDerivAt (</span><span style="--shiki-light:#D73A49">fun</span><span style="--shiki-light:#24292E"> (x : ℝ) => Real.log x) ((x)⁻¹) x :=</span></span>
+<span class="line"><span style="--shiki-light:#24292E">  integral_sound (H := [(.ne (.var </span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">))])</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    (F := (.app .log (.var </span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">)))</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    (f := (.inv (.var </span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">)))</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    (w := ⟨[⟨(.var </span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">), .zero⟩, ⟨(.fn .log), (.var </span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">)⟩, ⟨.inv, (.var </span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">)⟩], [], []⟩)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    (</span><span style="--shiki-light:#D73A49">by</span><span style="--shiki-light:#24292E"> decide +kernel) [] x ⟨h1, trivial⟩</span></span></code></pre></div><p>The statement is written in ordinary notation. <code>AExpr.eval</code> unfolds to exactly
+that term, so Lean matches it against the soundness theorem&#39;s conclusion by
+definitional unfolding. A reader checks the statement, not the data.</p>
+<h2 id="what-the-checker-does"><a class="hanchor" href="#what-the-checker-does" aria-hidden="true" tabindex="-1">#</a>What the checker does</h2>
+<p><code>checkIntegral H F f w</code> (in <code>Alkahest/Kernel/Check.lean</code>):</p>
+<ol>
+<li>computes the symbolic derivative <code>D 0 F</code> itself (<code>Deriv.lean</code>). The soundness
+theorem <code>D_hasDerivAt</code> says that on the domain <code>dconds F</code> (denominators,
+<code>log</code> arguments <code>≠ 0</code>, <code>sqrt</code> radicands <code>&gt; 0</code>, <code>arcsin</code> arguments in
+<code>(-1, 1)</code>, <code>cos ≠ 0</code> under <code>tan</code>), <code>y ↦ F</code> has derivative <code>D 0 F</code>;</li>
+<li>decides each of those side conditions from the hypotheses <code>H</code> with a
+structural sign checker (<code>Sign.lean</code>, the reflective analogue of
+<code>positivity</code>): <code>exp</code>, <code>cosh</code>, <code>π</code>, even powers, positive literals, sums and
+products of positive terms, <code>b &lt; a ⟹ a - b &gt; 0</code>;</li>
+<li>checks <code>D 0 F - f = Σ cᵢ·(Lᵢ - Rᵢ)</code> as an identity of polynomials over ℚ in
+<em>atoms</em> (<code>Norm.lean</code>, <code>Poly.lean</code>). Each <code>Lᵢ = Rᵢ</code> is a relation proved in
+<code>Rel.lean</code>: <code>u·u⁻¹ = 1</code> (needs <code>u ≠ 0</code>), <code>√u² = u</code> (needs <code>0 ≤ u</code>),
+<code>sin² + cos² = 1</code>, <code>cosh² - sinh² = 1</code>, the addition formulas for <code>sin</code>,
+<code>cos</code>, <code>sinh</code>, <code>cosh</code> and <code>exp</code>, <code>tan = sin/cos</code>, <code>tanh = sinh/cosh</code>,
+<code>log (exp a) = a</code>, and a few more. Their side conditions are also decided
+from <code>H</code>.</li>
+</ol>
+<p>Atoms are given by a table in the witness, but the kernel normalises each
+atom&#39;s argument against the earlier entries. So <code>sin (x + 1)</code> and
+<code>sin (1 + x)</code>, or <code>(1 + x²)⁻¹</code> from <code>D (atan x)</code> and <code>(x² + 1)⁻¹</code> in the
+integrand, are the same atom without any trusted matching. Inverses distribute
+over monomials unconditionally (<code>(c·a²)⁻¹ = c⁻¹·(a⁻¹)²</code> holds in Lean&#39;s ℝ,
+where <code>0⁻¹ = 0</code>). Facts that need a nonzero denominator enter only through the
+relation <code>u·u⁻¹ = 1</code>, whose condition the checker decides.</p>
+<h2 id="kernel-reducibility"><a class="hanchor" href="#kernel-reducibility" aria-hidden="true" tabindex="-1">#</a>Kernel reducibility</h2>
+<p>Every checker is structural recursion over lists and the AST, using <code>Nat</code>,
+<code>Int</code> and <code>ℚ</code> arithmetic, which the Lean kernel evaluates with GMP-backed
+literals. Merges such as polynomial addition use an inner/outer recursion
+instead of well-founded recursion, which the kernel cannot unfold efficiently.
+Certificates are closed by <code>decide +kernel</code>, which sends the Boolean straight
+to the kernel without elaborator-level reduction.</p>
+<p><code>native_decide</code> is opt-in: <code>alkahest.set_lean_certificate_mode(&quot;kernel_native&quot;)</code>.
+It compiles the checker and adds Lean&#39;s compiler and <code>Lean.ofReduceBool</code> to the
+trusted base. The certificate says so in its header, and
+<code>certificate_status[&quot;path&quot;]</code> reports <code>&quot;kernel_native&quot;</code>. CI rejects any default
+certificate that uses it.</p>
+<h3 id="measured-cost"><a class="hanchor" href="#measured-cost" aria-hidden="true" tabindex="-1">#</a>Measured cost</h3>
+<p>Per-certificate check time, from Lean&#39;s profiler: every category except
+<code>import</code>, so loading Mathlib is excluded. Shared corpus: the calculus suites&#39;
+163 integrals that both paths certify.</p>
+<div class="table-wrap"><table><thead><tr>
+<th></th>
+<th>kernel</th>
+<th>tactic</th>
+</tr>
+</thead><tbody><tr>
+<td>median</td>
+<td>0.32 s</td>
+<td>0.58 s</td>
+</tr>
+<tr>
+<td>90th percentile</td>
+<td>3.3 s</td>
+<td>29.5 s</td>
+</tr>
+<tr>
+<td>max</td>
+<td>13.1 s</td>
+<td>107.9 s</td>
+</tr>
+<tr>
+<td>import (median)</td>
+<td>5.5 s</td>
+<td>7.2 s</td>
+</tr>
+</tbody></table></div>
+<p>The kernel is faster on every certificate, with a worst-case ratio of 0.82.
+What made the difference:</p>
+<ul>
+<li>Witness numbers are raw literals (<code>nat_lit</code>, <code>Int.ofNat</code>, <code>Int.negSucc</code>), so
+the elaborator runs no <code>OfNat</code> instance search per number.</li>
+<li>Comparisons are <code>Nat.blt</code> matched as <code>Bool</code>, not <code>Decidable</code> instances.</li>
+<li>The atom lookup uses a structural Boolean equality: the derived <code>DecidableEq</code>
+on lists of <code>ℚ</code> was the slowest step.</li>
+<li>Products put the shorter operand outermost, and cofactor terms arrive in
+the kernel&#39;s own order.</li>
+</ul>
+<h2 id="fallback-and-reporting"><a class="hanchor" href="#fallback-and-reporting" aria-hidden="true" tabindex="-1">#</a>Fallback and reporting</h2>
+<p>The Rust emitter (<code>alkahest-core/src/lean/kernel.rs</code>) mirrors the Lean checker
+exactly: the same <code>D</code>, the same normal form and the same sign rules. It
+computes the atom table, relations and cofactors the checker will accept, and
+re-verifies the identity before emitting. When it cannot encode an answer
+(special functions, <code>RootSum</code>, roots other than <code>√</code>, constants of unproved
+sign), <code>integrate</code>&#39;s certificate falls back to the <code>HasDerivAt</code> tactic emitter.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49">import</span><span style="--shiki-light:#24292E"> alkahest</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E">x </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> alkahest.symbol(</span><span style="--shiki-light:#032F62">"x"</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">r </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> alkahest.integrate(alkahest.parse(</span><span style="--shiki-light:#032F62">"x*exp(x)"</span><span style="--shiki-light:#24292E">), x)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">src </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> r.certificate                       </span><span style="--shiki-light:#6A737D"># kernel certificate, else tactic, else None</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">assert</span><span style="--shiki-light:#24292E"> r.certificate_status[</span><span style="--shiki-light:#032F62">"path"</span><span style="--shiki-light:#24292E">] </span><span style="--shiki-light:#D73A49">==</span><span style="--shiki-light:#032F62"> "kernel"</span><span style="--shiki-light:#6A737D">   # "kernel" | "kernel_native" | "tactic" | None</span></span>
+<span class="line"><span style="--shiki-light:#24292E">r.certificate_status[</span><span style="--shiki-light:#032F62">"kernel_detail"</span><span style="--shiki-light:#24292E">]     </span><span style="--shiki-light:#6A737D"># why the kernel path withheld, if it did</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E">alkahest.set_lean_certificate_mode(</span><span style="--shiki-light:#032F62">"tactic"</span><span style="--shiki-light:#24292E">)      </span><span style="--shiki-light:#6A737D"># tactic emitter only</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">assert</span><span style="--shiki-light:#24292E"> r.certificate_status[</span><span style="--shiki-light:#032F62">"path"</span><span style="--shiki-light:#24292E">] </span><span style="--shiki-light:#D73A49">==</span><span style="--shiki-light:#032F62"> "tactic"</span></span>
+<span class="line"><span style="--shiki-light:#24292E">alkahest.set_lean_certificate_mode(</span><span style="--shiki-light:#032F62">"auto"</span><span style="--shiki-light:#24292E">)        </span><span style="--shiki-light:#6A737D"># back to the default</span></span></code></pre></div><p>Certificates are built lazily, only when <code>.certificate</code> or
+<code>.certificate_status</code> is read. <code>integrate</code> itself does no extra work.</p>
+<h2 id="checking-a-kernel-certificate-yourself"><a class="hanchor" href="#checking-a-kernel-certificate-yourself" aria-hidden="true" tabindex="-1">#</a>Checking a kernel certificate yourself</h2>
+<p>Kernel certificates <code>import Alkahest.Kernel</code>, so build the library once:</p>
+<div class="code" data-lang="bash"><span class="code-lang">Shell</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#005CC5">cd</span><span style="--shiki-light:#032F62"> lean</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1">lake</span><span style="--shiki-light:#032F62"> exe</span><span style="--shiki-light:#032F62"> cache</span><span style="--shiki-light:#032F62"> get</span><span style="--shiki-light:#6A737D">        # Mathlib's prebuilt oleans</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1">lake</span><span style="--shiki-light:#032F62"> build</span><span style="--shiki-light:#032F62"> Alkahest</span><span style="--shiki-light:#6A737D">       # the kernel (about a minute)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1">lake</span><span style="--shiki-light:#032F62"> env</span><span style="--shiki-light:#032F62"> lean</span><span style="--shiki-light:#032F62"> my_certificate.lean</span></span></code></pre></div><h2 id="next-steps"><a class="hanchor" href="#next-steps" aria-hidden="true" tabindex="-1">#</a>Next steps</h2>
+<ul>
+<li>ODE solutions: <code>deriv_sound</code> already states <code>(d/dx) F = G</code> from the same
+checker. A residual certificate for <code>dsolve</code> composes it with <code>checkEq</code> on
+the ODE&#39;s left-hand side.</li>
+<li>PDE (<code>verify_pde_solution</code>) via the partial derivative <code>D i</code> and
+<code>D_hasDerivAt</code>, and FEX symbolic sums.</li>
+<li>Polynomial-algebra witnesses (factorisation, Bézout cofactors, Gröbner
+membership) through <code>checkEq</code>, and SOS witnesses for domain conditions the
+structural sign checker cannot decide.</li>
+</ul>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/certificate-coverage/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">Certificate coverage</span></a><a class="pager-next" href="/docs/guide/errors/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Error handling</span></a></nav>
+  <footer class="doc-foot">
+    <a class="foot-gh" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/lean-kernel.md" rel="noopener" aria-label="View source on GitHub" title="View source on GitHub"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+    <span class="foot-meta">alkahest 3.14.0</span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#what-the-checker-does">What the checker does</a></li><li class="d2"><a href="#kernel-reducibility">Kernel reducibility</a></li><li class="d3"><a href="#measured-cost">Measured cost</a></li><li class="d2"><a href="#fallback-and-reporting">Fallback and reporting</a></li><li class="d2"><a href="#checking-a-kernel-certificate-yourself">Checking a kernel certificate yourself</a></li><li class="d2"><a href="#next-steps">Next steps</a></li></ul>
+  </div>
+</aside>
+</div>
+<a class="to-top" href="#top" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/></svg></a>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>
