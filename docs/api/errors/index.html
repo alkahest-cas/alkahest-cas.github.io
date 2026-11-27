@@ -69,7 +69,7 @@
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#AlkahestError" aria-label="Link to AlkahestError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L205" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#AlkahestError" aria-label="Link to AlkahestError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L206" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Base class for all alkahest errors.</p>
 <p>Inherits the <strong>native</strong> base class registered by the extension. That is
 load-bearing rather than cosmetic: the Rust engines raise the native
@@ -128,7 +128,7 @@ series).</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#ConversionError" aria-label="Link to ConversionError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L243" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#ConversionError" aria-label="Link to ConversionError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L244" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Expression could not be converted to the requested type (e.g. not polynomial).</p>
 </div></section>
 <section class="sym" id="DomainError"><div class="sym-head">
@@ -138,7 +138,7 @@ series).</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#DomainError" aria-label="Link to DomainError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L267" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#DomainError" aria-label="Link to DomainError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L268" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A side condition was violated (e.g. division by a known-zero expression).</p>
 </div></section>
 <section class="sym" id="LogicError"><div class="sym-head">
@@ -148,7 +148,7 @@ series).</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#LogicError" aria-label="Link to LogicError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L403" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#LogicError" aria-label="Link to LogicError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L404" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A propositional-logic operation refused (<code>E-LOGIC-*</code>).</p>
 <p>Raised by <a href="/docs/api/logic/#simplify_logic"><code>simplify_logic()</code></a>, <a href="/docs/api/logic/#to_cnf"><code>to_cnf()</code></a>,
 <a href="/docs/api/logic/#bdd"><code>bdd()</code></a>, <a href="/docs/api/logic/#equivalent"><code>equivalent()</code></a> and friends:</p>
@@ -171,7 +171,7 @@ certified.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#DiffError" aria-label="Link to DiffError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L331" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#DiffError" aria-label="Link to DiffError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L332" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Differentiation failed (e.g. unknown function).</p>
 </div></section>
 <section class="sym" id="IntegrationError"><div class="sym-head">
@@ -181,7 +181,7 @@ certified.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#IntegrationError" aria-label="Link to IntegrationError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L355" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#IntegrationError" aria-label="Link to IntegrationError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L356" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Symbolic integration failed.</p>
 </div></section>
 <section class="sym" id="MatrixError"><div class="sym-head">
@@ -191,7 +191,7 @@ certified.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#MatrixError" aria-label="Link to MatrixError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L562" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#MatrixError" aria-label="Link to MatrixError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L563" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Matrix operation failed (dimension mismatch, singular, etc.).</p>
 </div></section>
 <section class="sym" id="LinearAlgebraError"><div class="sym-head">
@@ -201,7 +201,7 @@ certified.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#LinearAlgebraError" aria-label="Link to LinearAlgebraError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L586" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#LinearAlgebraError" aria-label="Link to LinearAlgebraError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L587" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Symbolic linear algebra operation failed (nullspace, decompositions, normal forms).</p>
 </div></section>
 <section class="sym" id="EigenError"><div class="sym-head">
@@ -211,7 +211,7 @@ certified.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#EigenError" aria-label="Link to EigenError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L574" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#EigenError" aria-label="Link to EigenError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L575" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Eigen-decomposition failed (unsplit characteristic polynomial, defective matrix, etc.).</p>
 </div></section>
 <section class="sym" id="CadError"><div class="sym-head">
@@ -221,7 +221,7 @@ certified.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#CadError" aria-label="Link to CadError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L629" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#CadError" aria-label="Link to CadError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L630" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Cylindrical algebraic decomposition / real QE failed.</p>
 </div></section>
 <section class="sym" id="AnsatzError"><div class="sym-head">
@@ -232,7 +232,7 @@ certified.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#AnsatzError" aria-label="Link to AnsatzError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1007" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#AnsatzError" aria-label="Link to AnsatzError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1008" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>An ansatz family could not be built, or could not be fitted.</p>
 <p>Raised by <a href="/docs/api/mod-ansatz/"><code>ansatz</code></a> (P2 item 1 — conjecture generation).
 <code>.code</code> distinguishes the causes, and note that only the first two are
@@ -259,7 +259,7 @@ which this one is not.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#CrossCheckError" aria-label="Link to CrossCheckError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1037" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#CrossCheckError" aria-label="Link to CrossCheckError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1038" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A cross-CAS differential check could not be <em>posed</em>, so it was refused.</p>
 <p>Raised by <a href="/docs/api/mod-crosscheck/"><code>crosscheck</code></a> (P2 item 2). A refusal here always
 beats a guess: a divergence is only informative if both systems were asked
@@ -286,7 +286,7 @@ divergence — comparing against a refusal would fabricate one.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#SmtError" aria-label="Link to SmtError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1132" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#SmtError" aria-label="Link to SmtError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1133" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>An SMT-LIB export, solver invocation, or model lift failed.</p>
 <p>Raised by <a href="/docs/api/mod-smt/"><code>smt</code></a> (P2 item 3).</p>
 <ul>
@@ -312,7 +312,7 @@ the solver is broken; this must never be downgraded to a warning.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#OdeError" aria-label="Link to OdeError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L689" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#OdeError" aria-label="Link to OdeError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L690" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>An ODE routine did not return a solution (<code>E-ODE-*</code>).</p>
 <p>One class for the whole prefix, because the prefix is the subsystem: the
 number says which engine declined and why.</p>
@@ -347,7 +347,7 @@ all, so the renumbering broke nothing.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#TransformError" aria-label="Link to TransformError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L727" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#TransformError" aria-label="Link to TransformError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L728" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>An integral or sequence transform did not return a value (<code>E-TRANSFORM-*</code>).</p>
 <p>Raised by <code>laplace_transform()</code>,
 <code>fourier_transform()</code>,
@@ -388,7 +388,7 @@ carried as a side condition instead.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#AsymptoticError" aria-label="Link to AsymptoticError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L773" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#AsymptoticError" aria-label="Link to AsymptoticError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L774" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>An asymptotic expansion at infinity was not produced (<code>E-ASYMPT-*</code>).</p>
 <p>Raised by <code>asymptotic_expand()</code>.</p>
 <ul>
@@ -411,7 +411,7 @@ peel are what this covers.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#FpsError" aria-label="Link to FpsError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L799" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#FpsError" aria-label="Link to FpsError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L800" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A formal-power-series operation refused (<code>E-FPS-*</code>).</p>
 <p>Raised by <code>Fps</code>.</p>
 <p><code>E-FPS-001</code> and <code>002</code> are the same mathematical fact reached two ways:
@@ -567,7 +567,7 @@ Green&#39;s function of the eigenfunction series applies.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#ProbabilityError" aria-label="Link to ProbabilityError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1333" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#ProbabilityError" aria-label="Link to ProbabilityError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1334" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A probability query did not return a value (<code>E-PROB-*</code>).</p>
 <p>Raised by the <code>experimental</code> distribution surface. The six
 codes are kept apart because they call for four different next steps, and
@@ -705,7 +705,7 @@ symbol.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#DaeError" aria-label="Link to DaeError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L825" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#DaeError" aria-label="Link to DaeError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L826" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>DAE structural analysis failed.</p>
 </div></section>
 <section class="sym" id="SolverError"><div class="sym-head">
@@ -715,7 +715,7 @@ symbol.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#SolverError" aria-label="Link to SolverError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L849" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#SolverError" aria-label="Link to SolverError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L850" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Polynomial system solver failed.</p>
 </div></section>
 <div class="prose-block"><blockquote><p><strong>Note</strong> 
@@ -790,8 +790,14 @@ inhomogeneous problem, a dropped coordinate the operator still reads)</li>
 outside the template&#39;s tables in <code>slot_ops</code>, a slot with nothing
 allowed, an unknown baseline)</li>
 <li><code>E-FEX-014</code> — <code>fex.TorchEvaluator</code> is unavailable
-(no PyTorch or no CUDA) or does not cover the problem (operators given
-as expressions, the centred loss)</li>
+(no PyTorch or no CUDA) or does not cover the problem (an expression
+operator outside <code>F₀(u, Δu, x) + Σ aᵢ(x) ∂ᵢu + b·|∇u|²</code>, a
+non-diagonal second-order form)</li>
+<li><code>E-FEX-015</code> — a malformed partial integro-differential problem
+(<code>fex.Problem.pide()</code>): a nonlocal term or second-order
+form of the wrong size or with non-finite entries, a jump law with a
+negative variance, or nonlocal terms with a loss that has no residual
+vector</li>
 </ul>
 </div></section>
 <section class="sym" id="JitError"><div class="sym-head">
@@ -801,7 +807,7 @@ as expressions, the centred loss)</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#JitError" aria-label="Link to JitError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L837" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#JitError" aria-label="Link to JitError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L838" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>JIT compilation failed.</p>
 </div></section>
 <div class="prose-block"><blockquote><p><strong>Note</strong> 
@@ -819,7 +825,7 @@ free symbol not in the input list), <code>-004</code> (an infinite/NaN constant)
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#CudaError" aria-label="Link to CudaError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L861" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#CudaError" aria-label="Link to CudaError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L862" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>NVPTX / CUDA compilation or launch failed.</p>
 </div></section>
 <section class="sym" id="SparseInterpError"><div class="sym-head">
@@ -829,7 +835,7 @@ free symbol not in the input list), <code>-004</code> (an infinite/NaN constant)
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#SparseInterpError" aria-label="Link to SparseInterpError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L665" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#SparseInterpError" aria-label="Link to SparseInterpError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L666" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Sparse modular polynomial interpolation failed.</p>
 </div></section>
 <section class="sym" id="SparseGcdError"><div class="sym-head">
@@ -839,7 +845,7 @@ free symbol not in the input list), <code>-004</code> (an infinite/NaN constant)
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#SparseGcdError" aria-label="Link to SparseGcdError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L677" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#SparseGcdError" aria-label="Link to SparseGcdError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L678" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Sparse modular GCD computation failed.</p>
 </div></section>
 <section class="sym" id="ParseError"><div class="sym-head">
@@ -850,7 +856,7 @@ free symbol not in the input list), <code>-004</code> (an infinite/NaN constant)
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">code</span><span class="sig-ann">: str</span><span class="sig-def">='E-PARSE-001'</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#ParseError" aria-label="Link to ParseError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1161" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#ParseError" aria-label="Link to ParseError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L1162" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Malformed expression text, with the source span (<code>.span</code>) of the fault.</p>
 <p><code>E-PARSE-001</code> lexical (an unexpected character, a malformed or
 out-of-range number literal), <code>E-PARSE-002</code> syntactic (including
@@ -866,7 +872,7 @@ this — never <code>RecursionError</code>, <code>ValueError</code> or <code>Zer
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#PoolError" aria-label="Link to PoolError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L343" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#PoolError" aria-label="Link to PoolError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L344" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Pool was closed, mismatched, or otherwise invalid.</p>
 </div></section>
 <section class="sym" id="CertificateUnavailableError"><div class="sym-head">
@@ -876,7 +882,7 @@ this — never <code>RecursionError</code>, <code>ValueError</code> or <code>Zer
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#CertificateUnavailableError" aria-label="Link to CertificateUnavailableError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L897" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#CertificateUnavailableError" aria-label="Link to CertificateUnavailableError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L898" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A Lean certificate was required but the emitter withheld one.</p>
 <p>Raised by <a href="/docs/api/certificates/#require_certificate"><code>require_certificate()</code></a> and by any derivation-producing
 call made under <code>with alkahest.context(require_certificate=True)</code>. The
@@ -893,7 +899,7 @@ certify.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#BudgetExceededError" aria-label="Link to BudgetExceededError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L919" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#BudgetExceededError" aria-label="Link to BudgetExceededError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L920" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A <a href="/docs/api/workload/#Budget"><code>Budget</code></a> was exceeded, or cancellation was requested.</p>
 <p>Raised by heavy engines (<a href="/docs/api/diff/#integrate"><code>integrate()</code></a> today) at a
 cooperative checkpoint inside the Rust kernel — see
@@ -930,7 +936,7 @@ guide, whose source is <code>docs/mdbook/src/errors.md</code>.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#AssumptionError" aria-label="Link to AssumptionError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L279" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#AssumptionError" aria-label="Link to AssumptionError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L280" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>An explicit simplification assumption contradicted the current context.</p>
 </div></section>
 <section class="sym" id="DepthLimitError"><div class="sym-head">
@@ -940,7 +946,7 @@ guide, whose source is <code>docs/mdbook/src/errors.md</code>.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#DepthLimitError" aria-label="Link to DepthLimitError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L291" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#DepthLimitError" aria-label="Link to DepthLimitError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L292" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>An expression was too deeply nested to walk by recursion.</p>
 <p>Alkahest processes most expressions by structural recursion, and a native
 stack overflow is a <code>SIGSEGV</code> rather than an exception — it would kill the
@@ -973,7 +979,7 @@ subexpressions, is the fix.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#DiophantineError" aria-label="Link to DiophantineError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L550" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#DiophantineError" aria-label="Link to DiophantineError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L551" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Integer Diophantine solving failed (linear / quadratic patterns).</p>
 </div></section>
 <section class="sym" id="DivisionByZeroError"><div class="sym-head">
@@ -993,7 +999,7 @@ It is a <a href="/docs/api/errors/#DomainError"><code>DomainError</code></a> <em
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#FactorError" aria-label="Link to FactorError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L255" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#FactorError" aria-label="Link to FactorError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L256" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Polynomial factorization failed.</p>
 </div></section>
 <section class="sym" id="HolonomicError"><div class="sym-head">
@@ -1003,7 +1009,7 @@ It is a <a href="/docs/api/errors/#DomainError"><code>DomainError</code></a> <em
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#HolonomicError" aria-label="Link to HolonomicError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L479" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#HolonomicError" aria-label="Link to HolonomicError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L480" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Creative telescoping refused: input outside the proper hypergeometric
 class (<code>E-HOLO-001</code>), bounded search exhausted (<code>E-HOLO-002</code>), a
 candidate certificate failed exact verification (<code>E-HOLO-003</code>), the call
@@ -1032,7 +1038,7 @@ a resource ceiling, not a mathematical verdict.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#HomotopyError" aria-label="Link to HomotopyError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L943" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#HomotopyError" aria-label="Link to HomotopyError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L944" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Numerical polynomial continuation failed (V2-14 homotopy solver).</p>
 <p>The native class is registered by the extension as <code>PyHomotopyError</code>;
 this is the Python-side wrapper used for <code>isinstance</code> checks, and its
@@ -1050,7 +1056,7 @@ absence is what <code>scripts/check_error_codes.py</code> was reporting.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#IoError" aria-label="Link to IoError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L873" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#IoError" aria-label="Link to IoError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L874" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Checkpoint / restore I/O error (formerly PoolPersistError, E-POOL-* codes).</p>
 </div></section>
 <section class="sym" id="LatticeError"><div class="sym-head">
@@ -1060,7 +1066,7 @@ absence is what <code>scripts/check_error_codes.py</code> was reporting.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#LatticeError" aria-label="Link to LatticeError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L598" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#LatticeError" aria-label="Link to LatticeError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L599" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>LLL lattice reduction failed (structure, Lovász parameter, or iteration limit).</p>
 </div></section>
 <section class="sym" id="LimitError"><div class="sym-head">
@@ -1070,7 +1076,7 @@ absence is what <code>scripts/check_error_codes.py</code> was reporting.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#LimitError" aria-label="Link to LimitError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L379" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#LimitError" aria-label="Link to LimitError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L380" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Symbolic limit computation failed.</p>
 </div></section>
 <section class="sym" id="LinearRecurrenceError"><div class="sym-head">
@@ -1080,7 +1086,7 @@ absence is what <code>scripts/check_error_codes.py</code> was reporting.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#LinearRecurrenceError" aria-label="Link to LinearRecurrenceError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L526" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#LinearRecurrenceError" aria-label="Link to LinearRecurrenceError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L527" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Linear recurrence solving failed.</p>
 </div></section>
 <section class="sym" id="ModularError"><div class="sym-head">
@@ -1090,7 +1096,7 @@ absence is what <code>scripts/check_error_codes.py</code> was reporting.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#ModularError" aria-label="Link to ModularError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L964" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#ModularError" aria-label="Link to ModularError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L965" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A modular / CRT reconstruction step failed (<code>E-MOD-001</code> … <code>E-MOD-004</code>).</p>
 <p>As with <a href="/docs/api/errors/#HomotopyError"><code>HomotopyError</code></a>, the native class exists as <code>PyModularError</code>
 and this wrapper is what makes it catchable by name from Python.</p>
@@ -1102,7 +1108,7 @@ and this wrapper is what makes it catchable by name from Python.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#NumberTheoryError" aria-label="Link to NumberTheoryError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L885" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#NumberTheoryError" aria-label="Link to NumberTheoryError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L886" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Integer number-theory primitive failed (parity, modulus, or unsolvable congruence).</p>
 </div></section>
 <section class="sym" id="ParamGroebnerError"><div class="sym-head">
@@ -1112,7 +1118,7 @@ and this wrapper is what makes it catchable by name from Python.</p>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#ParamGroebnerError" aria-label="Link to ParamGroebnerError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L980" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#ParamGroebnerError" aria-label="Link to ParamGroebnerError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L981" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A Gröbner basis over <code>Q(params)</code> refused or was called wrongly (M9).</p>
 <p>Raised by <code>ParametricGroebnerBasis</code> and by
 <code>GroebnerBasis.compute(..., params=[...])</code>.  The native class exists as
@@ -1136,7 +1142,7 @@ those are, or compute over ℚ directly at that point.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#ProductError" aria-label="Link to ProductError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L514" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#ProductError" aria-label="Link to ProductError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L515" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Symbolic discrete product failed (unsupported term or factorisation).</p>
 </div></section>
 <section class="sym" id="PslqError"><div class="sym-head">
@@ -1147,7 +1153,7 @@ those are, or compute over ℚ directly at that point.</li>
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">code</span><span class="sig-ann">: str</span><span class="sig-def">='E-PSLQ-001'</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#PslqError" aria-label="Link to PslqError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L610" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#PslqError" aria-label="Link to PslqError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L611" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Integer-relation heuristic failed (input, coefficient bound, or lattice step).</p>
 <p><code>E-PSLQ-004</code> is raised when the supplied constants carry less precision
 than the relation found needs, and <code>E-PSLQ-005</code> when the constants are
@@ -1161,7 +1167,7 @@ exact rationals and the relation is simply false for them — see
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#RealRootError" aria-label="Link to RealRootError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L641" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#RealRootError" aria-label="Link to RealRootError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L642" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Real root isolation failed (conversion to univariate polynomial, etc.).</p>
 </div></section>
 <section class="sym" id="ResultantError"><div class="sym-head">
@@ -1171,7 +1177,7 @@ exact rationals and the relation is simply false for them — see
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#ResultantError" aria-label="Link to ResultantError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L653" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#ResultantError" aria-label="Link to ResultantError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L654" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Polynomial resultant or subresultant PRS computation failed.</p>
 </div></section>
 <section class="sym" id="RsolveError"><div class="sym-head">
@@ -1181,7 +1187,7 @@ exact rationals and the relation is simply false for them — see
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#RsolveError" aria-label="Link to RsolveError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L538" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#RsolveError" aria-label="Link to RsolveError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L539" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Difference equation / rsolve failed.</p>
 </div></section>
 <section class="sym" id="SeriesError"><div class="sym-head">
@@ -1191,7 +1197,7 @@ exact rationals and the relation is simply false for them — see
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#SeriesError" aria-label="Link to SeriesError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L367" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#SeriesError" aria-label="Link to SeriesError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L368" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Symbolic series expansion failed.</p>
 </div></section>
 <section class="sym" id="SosError"><div class="sym-head">
@@ -1201,7 +1207,7 @@ exact rationals and the relation is simply false for them — see
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#SosError" aria-label="Link to SosError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L455" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#SosError" aria-label="Link to SosError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L456" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A positivity question was not answered with a certificate.</p>
 <p>The three outcomes are deliberately distinct, because conflating them
 loses information a search loop needs:</p>
@@ -1222,7 +1228,7 @@ given variables, or the call was malformed.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#SumError" aria-label="Link to SumError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L391" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#SumError" aria-label="Link to SumError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L392" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>Symbolic summation failed (not hypergeometric or not Gosper-summable).</p>
 </div></section>
 <section class="sym" id="ValidatedError"><div class="sym-head">
@@ -1232,7 +1238,7 @@ given variables, or the call was malformed.</li>
     <span class="sig-p">remediation</span><span class="sig-ann">: str | None</span><span class="sig-def">=None</span>,
     <span class="sig-p">span</span><span class="sig-ann">: tuple[int, int] | None</span><span class="sig-def">=None</span>
 )</code></pre>
-  <div class="sym-links"><a class="hanchor-inline" href="#ValidatedError" aria-label="Link to ValidatedError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L429" rel="noopener">source</a></div>
+  <div class="sym-links"><a class="hanchor-inline" href="#ValidatedError" aria-label="Link to ValidatedError">#</a><a class="src" href="https://github.com/alkahest-cas/alkahest/blob/main/python/alkahest/exceptions.py#L430" rel="noopener">source</a></div>
 </div><div class="sym-body"><p>A rigorous bound could not be established, so none is returned.</p>
 <p>Every variant is a refusal, never a guess: an unsupported primitive
 (<code>E-VALIDATED-001</code>), a free symbol with no interval (<code>E-VALIDATED-002</code>),

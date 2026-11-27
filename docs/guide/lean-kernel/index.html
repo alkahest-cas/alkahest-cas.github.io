@@ -180,13 +180,42 @@ sign), <code>integrate</code>&#39;s certificate falls back to the <code>HasDeriv
 <div class="code" data-lang="bash"><span class="code-lang">Shell</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#005CC5">cd</span><span style="--shiki-light:#032F62"> lean</span></span>
 <span class="line"><span style="--shiki-light:#6F42C1">lake</span><span style="--shiki-light:#032F62"> exe</span><span style="--shiki-light:#032F62"> cache</span><span style="--shiki-light:#032F62"> get</span><span style="--shiki-light:#6A737D">        # Mathlib's prebuilt oleans</span></span>
 <span class="line"><span style="--shiki-light:#6F42C1">lake</span><span style="--shiki-light:#032F62"> build</span><span style="--shiki-light:#032F62"> Alkahest</span><span style="--shiki-light:#6A737D">       # the kernel (about a minute)</span></span>
-<span class="line"><span style="--shiki-light:#6F42C1">lake</span><span style="--shiki-light:#032F62"> env</span><span style="--shiki-light:#032F62"> lean</span><span style="--shiki-light:#032F62"> my_certificate.lean</span></span></code></pre></div><h2 id="next-steps"><a class="hanchor" href="#next-steps" aria-hidden="true" tabindex="-1">#</a>Next steps</h2>
+<span class="line"><span style="--shiki-light:#6F42C1">lake</span><span style="--shiki-light:#032F62"> env</span><span style="--shiki-light:#032F62"> lean</span><span style="--shiki-light:#032F62"> my_certificate.lean</span></span></code></pre></div><h2 id="pde-residuals-fex-solutions"><a class="hanchor" href="#pde-residuals-fex-solutions" aria-hidden="true" tabindex="-1">#</a>PDE residuals (FEX solutions)</h2>
+<p><code>Alkahest.Kernel.Pde</code> adds one more checker. <code>checkPde u op n w</code> takes an
+explicit function <code>u</code> of <code>n</code> coordinates and an operator <code>op</code> written over
+the variables <code>0 … n-1</code> (the coordinates), <code>n</code> (<code>u</code>), <code>n+1</code> (<code>Δu</code>) and
+<code>n+2+i</code> (<code>∂u/∂xᵢ</code>). It builds the jet itself with the kernel&#39;s derivative
+<code>D</code> (<code>Σᵢ D i (D i u)</code> and <code>D i u</code>), substitutes it into <code>op</code>
+(<code>AExpr.bind</code>), and decides that the result is zero with <code>checkEq</code>. The
+differentiability conditions of <code>u</code> and of every first partial must follow
+from no hypotheses at all, so they hold on the whole of <code>ℝⁿ</code> and in
+particular along every coordinate line. <code>pde_sound</code> turns acceptance into a
+statement about Mathlib&#39;s <code>deriv</code>:</p>
+<div class="code" data-lang="lean"><span class="code-lang">Lean</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49">theorem</span><span style="--shiki-light:#6F42C1"> pde_sound</span><span style="--shiki-light:#24292E"> {u op : AExpr} {n : Nat} {w : Witness} (h : checkPde u op n w = </span><span style="--shiki-light:#005CC5">true</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    (ρ : List ℝ) (hn : ρ.length = n) : op.eval (jetR u ρ n) = </span><span style="--shiki-light:#005CC5">0</span></span></code></pre></div><p>where <code>jetR u ρ n</code> is <code>ρ ++ u(ρ) :: Σᵢ deriv (deriv (y ↦ u(ρ[i ↦ y]))) ρᵢ :: [deriv (y ↦ u(ρ[i ↦ y])) ρᵢ, …]</code>. A certificate states the theorem in
+ordinary notation about a definition <code>fexU</code> of the solution, for example
+(cubic Schrödinger, <code>d = 2</code>)</p>
+<div class="code" data-lang="text"><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki"><code>theorem fex_pde (x0 x1 : ℝ) :
+    ((-((0 : ℝ) + deriv (deriv (fun (y : ℝ) =&gt; fexU y x1)) x0
+         + deriv (deriv (fun (y : ℝ) =&gt; fexU x0 y)) x1)) + (fexU x0 x1) ^ 3 + V * fexU x0 x1) = 0</code></pre></div><p>and proves it with <code>pde_sound _ (by decide +kernel) [x0, x1] rfl</code>. The
+statement matches the kernel&#39;s conclusion by definitional unfolding, so the
+reader never has to trust Alkahest&#39;s derivatives.</p>
+<p><code>alkahest.fex.finalize</code> emits these certificates for Poisson, the cubic
+Schrödinger equation, the eigenproblem and linear transport whenever the
+fitted closed form is exact and its interior PDE is proved, falling back to
+the <code>HasDerivAt</code> tactic proof for Poisson and transport. The exponential
+relations the NLS solutions need (<code>exp(2a) = exp(a)²</code>) are the kernel&#39;s
+<code>expAdd</code> family; a constant <code>exp(−log 3 + a)</code> is first written <code>⅓·exp(a)</code>
+(the certificate&#39;s <code>solution_form</code>). The theorem covers the PDE residual
+at every point of <code>ℝ^d</code>; boundary conditions are not part of it.</p>
+<h2 id="next-steps"><a class="hanchor" href="#next-steps" aria-hidden="true" tabindex="-1">#</a>Next steps</h2>
 <ul>
 <li>ODE solutions: <code>deriv_sound</code> already states <code>(d/dx) F = G</code> from the same
 checker. A residual certificate for <code>dsolve</code> composes it with <code>checkEq</code> on
 the ODE&#39;s left-hand side.</li>
-<li>PDE (<code>verify_pde_solution</code>) via the partial derivative <code>D i</code> and
-<code>D_hasDerivAt</code>, and FEX symbolic sums.</li>
+<li>PDE certificates for <code>verify_pde_solution</code> through <code>checkPde</code>, and for
+symbolic <code>d</code> (FEX&#39;s <code>Sum</code> forms), which needs a kernel notion of an
+<code>n</code>-fold sum.</li>
 <li>Polynomial-algebra witnesses (factorisation, Bézout cofactors, Gröbner
 membership) through <code>checkEq</code>, and SOS witnesses for domain conditions the
 structural sign checker cannot decide.</li>
@@ -201,7 +230,7 @@ structural sign checker cannot decide.</li>
 </main>
 <aside class="toc" aria-label="On this page">
   <div class="toc-inner">
-    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#what-the-checker-does">What the checker does</a></li><li class="d2"><a href="#kernel-reducibility">Kernel reducibility</a></li><li class="d3"><a href="#measured-cost">Measured cost</a></li><li class="d2"><a href="#fallback-and-reporting">Fallback and reporting</a></li><li class="d2"><a href="#checking-a-kernel-certificate-yourself">Checking a kernel certificate yourself</a></li><li class="d2"><a href="#next-steps">Next steps</a></li></ul>
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#what-the-checker-does">What the checker does</a></li><li class="d2"><a href="#kernel-reducibility">Kernel reducibility</a></li><li class="d3"><a href="#measured-cost">Measured cost</a></li><li class="d2"><a href="#fallback-and-reporting">Fallback and reporting</a></li><li class="d2"><a href="#checking-a-kernel-certificate-yourself">Checking a kernel certificate yourself</a></li><li class="d2"><a href="#pde-residuals-fex-solutions">PDE residuals (FEX solutions)</a></li><li class="d2"><a href="#next-steps">Next steps</a></li></ul>
   </div>
 </aside>
 </div>
