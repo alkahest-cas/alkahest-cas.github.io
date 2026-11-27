@@ -538,6 +538,36 @@ bounded solution could not be selected.</li>
 <li><code>E-PDE-163</code> — the candidate built by a transform method was <strong>refuted</strong>
 by substitution and withheld.</li>
 </ul>
+<p>Milestone M4 (separation of variables and eigenfunction series) owns
+<code>200</code>–<code>249</code>:</p>
+<ul>
+<li><code>E-PDE-200</code> — the equation does not separate in the given variables
+(no variable splits off with the multipliers tried).</li>
+<li><code>E-PDE-201</code> — a problem outside the method: nonlinear, a system, a
+domain that is not a product of intervals or a curvilinear region (with
+at most one half-line in time), or a separated eigenproblem with
+eigenvalues below its threshold.</li>
+<li><code>E-PDE-202</code> — a condition the method cannot use: not linear on one face
+with constant coefficients, a condition at a singular end (<code>r = 0</code>,
+the poles), an incomplete periodicity condition.</li>
+<li><code>E-PDE-203</code> — missing or duplicated data (one condition is needed at
+each regular end; <code>u</code> and <code>u_t</code> at <code>t = 0</code> for a second-order
+equation in time).</li>
+<li><code>E-PDE-204</code> — the amplitude equation in the data direction is not of
+constant-coefficient, Euler or Bessel type.</li>
+<li><code>E-PDE-205</code> — the boundary data could not be homogenised (lifting /
+steady state).</li>
+<li><code>E-PDE-206</code> — a mode, amplitude or lifting was <strong>refuted</strong> by its exact
+check; nothing is returned.</li>
+<li><code>E-PDE-207</code> — the data violate a solvability condition (a Neumann
+problem whose flux does not balance, a source with a component on a zero
+mode).</li>
+<li><code>E-PDE-208</code> — the closed-form coefficients disagree with a numerical
+projection of the data; nothing is returned.</li>
+<li><code>E-PDE-209</code> — a numeric truncation was asked for while a
+<code>RootOfFamily</code> or an unevaluated coefficient integral still has
+symbolic parameters.</li>
+</ul>
 <p>Milestone M5 (Green&#39;s functions) owns <code>250</code>–<code>299</code>:</p>
 <ul>
 <li><code>E-PDE-250</code> — no fundamental solution / Green&#39;s function here: a
