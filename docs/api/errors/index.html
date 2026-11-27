@@ -455,8 +455,10 @@ for a jet space with several independent variables.</li>
 <li><code>E-PDE-010</code> — a malformed domain (empty interval, non-positive radius,
 a coordinate that is not an independent variable).</li>
 <li><code>E-PDE-011</code> — a boundary or initial condition that mentions no unknown.</li>
-<li><code>E-PDE-012</code> — classification of a system (only scalar equations are
-classified).</li>
+<li><code>E-PDE-012</code> — the scalar classifier (<code>PdeProblem::classify</code> in Rust)
+was asked to classify a system; use <code>classify_pde_system</code>
+(<code>PdeProblem::classify_system</code>). In Python, <code>classify_pde</code> and
+<code>PDE.classify()</code> dispatch systems to it.</li>
 <li><code>E-PDE-013</code> — a candidate solution with the wrong number of components.</li>
 <li><code>E-PDE-020</code> — a malformed <code>Sum</code> (the bound variable is not a symbol,
 or a bound mentions it).</li>
@@ -474,6 +476,11 @@ out. A refusal, never a guess.</li>
 <li><code>E-PDE-040</code> — a transform cannot act on an unknown because the transform
 variable is not a single bare argument (<code>u(x, 2t)</code>, <code>u(t²)</code>); the
 transform raises its own <code>TransformError</code> carrying this message.</li>
+<li><code>E-PDE-041</code> — a malformed n-D coordinate chart (<code>CoordinatesN</code>):
+coordinates that are not distinct symbols, an embedding with the wrong
+number of components, a chart that is not orthogonal, or a scale factor
+that vanishes or cannot be shown non-zero; also a vector field whose
+length is not the dimension.</li>
 <li><code>E-PDE-050</code> — <code>pdsolve</code> has no method for the problem: a system, an
 equation of order other than one (milestone M1 covers first order), a
 single independent variable (use <code>dsolve</code>), or an unknown <code>hint</code>.</li>
