@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Green's functions and fundamental solutions · alkahest docs</title>
+<meta name="description" content="A Green's function turns a linear boundary-value problem into an integral: u = ∫ G f + boundary terms. Alkahest builds them four ways:">
+<meta property="og:title" content="Green's functions and fundamental solutions · alkahest docs">
+<meta property="og:description" content="A Green's function turns a linear boundary-value problem into an integral: u = ∫ G f + boundary terms. Alkahest builds them four ways:">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f6f6f6">
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/svg+xml" href="/docs/assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/docs/assets/style.css?v=3.14.0">
+
+<script defer src="/docs/assets/app.js?v=3.14.0"></script>
+</head>
+<body data-base="/docs/" data-section="guide">
+<a class="skip" href="#content">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="/"><img src="/docs/assets/logo.svg" alt="" width="26" height="26"><span>alkahest</span></a>
+    <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="topnav"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3 6h14M3 10h14M3 14h14"/></svg></button>
+    <nav class="topnav" id="topnav" aria-label="Primary">
+      <a href="/docs/" aria-current="page">Docs</a>
+      <a href="/playground/">Playground</a>
+      <a href="/agent/">Agent</a>
+      <a class="gh" href="https://github.com/alkahest-cas/alkahest" aria-label="alkahest on GitHub"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a>
+    </nav>
+  </div>
+</header>
+<div class="subbar">
+  <button class="subbar-btn" type="button" data-drawer-open aria-controls="sidebar"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><rect x="3" y="4" width="14" height="12" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 4v12" stroke="currentColor" stroke-width="1.5"/></svg><span>Guide</span></button>
+  <button class="subbar-btn" type="button" data-search-open aria-label="Search"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search</span></button>
+</div>
+<div class="layout" id="top">
+<aside class="sidebar" id="sidebar" aria-label="Documentation">
+  <div class="sidebar-top">
+    <button class="search-btn" type="button" data-search-open><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Search docs</span><kbd class="kbd-hint">⌘K</kbd></button>
+    <div class="side-tabs" role="tablist">
+      <a href="/docs/" role="tab" data-tab="guide" class="selected" aria-selected="true">Guide</a>
+      <a href="/docs/api/" role="tab" data-tab="api" class="" aria-selected="false">API reference</a>
+    </div>
+  </div>
+  <div class="sidebar-scroll">
+    <nav class="side-nav" data-panel="guide"><div class="nav-group"><div class="nav-title">Get started</div><ul class="nav-list"><li><a href="/docs/guide/intro/">Introduction</a></li><li><a href="/docs/guide/quickstart/">Quickstart</a></li><li><a href="/docs/guide/getting-started/">Getting started</a></li><li><a href="/docs/api/">Python API reference</a></li></ul></div><div class="nav-group"><div class="nav-title">Core concepts</div><ul class="nav-list"><li><a href="/docs/guide/kernel/">Kernel design</a></li><li><a href="/docs/guide/representations/">Expression representations</a></li><li><a href="/docs/guide/parsing/">Parsing from strings</a></li></ul></div><div class="nav-group"><div class="nav-title">Simplification</div><ul class="nav-list"><li><a href="/docs/guide/simplification/">Simplification</a><ul class="nav-list nested"><li><a href="/docs/guide/rules/">Rule engine</a></li><li><a href="/docs/guide/egraph/">E-graph saturation</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Mathematics</div><ul class="nav-list"><li><a href="/docs/guide/calculus/">Calculus</a><ul class="nav-list nested"><li><a href="/docs/guide/asymptotics/">Asymptotics of sums</a></li></ul></li><li><a href="/docs/guide/transformations/">Transformations</a></li><li><a href="/docs/guide/probability/">Probability and information theory</a></li><li><a href="/docs/guide/vector-quaternion/">Vector calculus and quaternions</a></li><li><a href="/docs/guide/units/">Units and dimensional analysis</a></li><li><a href="/docs/guide/tensor/">Tensor calculus</a></li><li><a href="/docs/guide/controls/">Controls: LTI systems, Lyapunov and Riccati</a></li><li><a href="/docs/guide/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/guide/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/guide/specfun/">Bessel, Airy, zeta and polylogarithm functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Numerics and codegen</div><ul class="nav-list"><li><a href="/docs/guide/codegen/">Code generation</a><ul class="nav-list nested"><li><a href="/docs/guide/gpu/">GPU support (CUDA)</a></li></ul></li><li><a href="/docs/guide/ball-arithmetic/">Ball arithmetic</a><ul class="nav-list nested"><li><a href="/docs/guide/validated-bounds/">Rigorous global bounds</a></li></ul></li><li class="open"><a href="/docs/guide/ode-dae/">ODE and DAE modeling</a><ul class="nav-list nested"><li><a href="/docs/guide/green-functions/" class="active" aria-current="page">Green's functions (PDE)</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Solving and optimisation</div><ul class="nav-list"><li><a href="/docs/guide/solving/">Polynomial system solving</a></li><li><a href="/docs/guide/positivity/">Positivity certificates (SOS)</a></li><li><a href="/docs/guide/linear-programming/">Exact linear and integer programming</a></li></ul></div><div class="nav-group"><div class="nav-title">Ecosystem</div><ul class="nav-list"><li><a href="/docs/guide/interop/">Interoperability</a></li><li><a href="/docs/guide/rl/">Reinforcement learning</a></li></ul></div><div class="nav-group"><div class="nav-title">Trust and verification</div><ul class="nav-list"><li><a href="/docs/guide/derivations/">Derivation logs</a></li><li><a href="/docs/guide/claim-graphs/">Claim graphs</a></li><li><a href="/docs/guide/lean-certs/">Lean certificates</a><ul class="nav-list nested"><li><a href="/docs/guide/certificate-coverage/">Certificate coverage</a></li><li><a href="/docs/guide/lean-kernel/">The reflective certificate kernel</a></li></ul></li><li><a href="/docs/guide/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Agent loops</div><ul class="nav-list"><li><a href="/docs/guide/search-plumbing/">Autoresearch / agent loops</a><ul class="nav-list nested"><li><a href="/docs/guide/budgets/">Budgets, cancellation, and determinism</a></li><li><a href="/docs/guide/batch/">Batch and streaming evaluation</a></li><li><a href="/docs/guide/telescoping/">Creative telescoping (Zeilberger)</a></li><li><a href="/docs/guide/guessing/">Guessing recurrences</a></li><li><a href="/docs/guide/supercongruences/">Supercongruences: sequences modulo p^k</a></li><li><a href="/docs/guide/novelty/">Novelty filtering against OEIS</a></li><li><a href="/docs/guide/ansatz/">Ansatz families and conjecture generation</a></li><li><a href="/docs/guide/numeric-pde/">Numerical PDE analysis: stencils, spectral matrices, von Neumann</a></li><li><a href="/docs/guide/method-of-lines/">Method of lines: symbolic PDE to compiled ODE/DAE</a></li><li><a href="/docs/guide/crosscheck/">Cross-CAS differential testing</a></li><li><a href="/docs/guide/smt/">SMT/SAT bridge</a></li><li><a href="/docs/guide/pari/">PARI/GP interop (optional)</a></li><li><a href="/docs/guide/logic/">Propositional logic, minimisation and BDDs</a></li></ul></li></ul></div><div class="nav-group"><div class="nav-title">Project</div><ul class="nav-list"><li><a href="/docs/guide/stability/">Stability policy</a></li></ul></div></nav>
+    <nav class="side-nav" data-panel="api" hidden><div class="nav-group"><div class="nav-title">Overview</div><ul class="nav-list"><li><a href="/docs/api/">Python API</a></li></ul></div><div class="nav-group"><div class="nav-title">Core</div><ul class="nav-list"><li><a href="/docs/api/core/">Core</a></li><li><a href="/docs/api/simplify/">Simplification</a></li><li><a href="/docs/api/diff/">Calculus</a></li><li><a href="/docs/api/poly/">Polynomial</a></li><li><a href="/docs/api/numerics/">Numerics and evaluation</a></li><li><a href="/docs/api/transform/">Transformation</a></li><li><a href="/docs/api/pari/">PARI/GP interop</a></li><li><a href="/docs/api/units/">Units</a></li><li><a href="/docs/api/tensor/">Tensor calculus</a></li><li><a href="/docs/api/controls/">Controls</a></li><li><a href="/docs/api/orthopoly/">Orthogonal polynomials and angular momentum</a></li><li><a href="/docs/api/noncommutative/">Noncommutative algebra</a></li><li><a href="/docs/api/specfun/">Special functions</a></li></ul></div><div class="nav-group"><div class="nav-title">Advanced</div><ul class="nav-list"><li><a href="/docs/api/matrix/">Matrix</a></li><li><a href="/docs/api/ode/">ODE and DAE</a></li><li><a href="/docs/api/solve/">Solver</a></li><li><a href="/docs/api/linprog/">Linear and integer programming</a></li><li><a href="/docs/api/logic/">Propositional logic</a></li><li><a href="/docs/api/codegen/">Code generation</a></li><li><a href="/docs/api/workload/">Search / workload</a></li><li><a href="/docs/api/autoresearch/">Autoresearch modules</a></li><li><a href="/docs/api/certificates/">Certificates</a></li><li><a href="/docs/api/errors/">Error handling</a></li></ul></div><div class="nav-group"><div class="nav-title">Submodules</div><ul class="nav-list"><li><a href="/docs/api/mod-ansatz/">alkahest.ansatz</a></li><li><a href="/docs/api/mod-controls/">alkahest.controls</a></li><li><a href="/docs/api/mod-crosscheck/">alkahest.crosscheck</a></li><li><a href="/docs/api/mod-lattice/">alkahest.lattice</a></li><li><a href="/docs/api/mod-number-theory/">alkahest.number_theory</a></li><li><a href="/docs/api/mod-pari/">alkahest.pari</a></li><li><a href="/docs/api/mod-research/">alkahest.research</a></li><li><a href="/docs/api/mod-smt/">alkahest.smt</a></li><li><a href="/docs/api/mod-units/">alkahest.units</a></li></ul></div><div class="nav-group"><div class="nav-title">More</div><ul class="nav-list"><li><a href="/docs/api/plotting/">Plotting, printing and parsing</a></li><li><a href="/docs/api/more/">Everything else</a></li></ul></div><div class="nav-group"><div class="nav-title">Elsewhere</div><ul class="nav-list"><li><a href="/docs/guide/errors/">Error codes</a></li><li><a href="https://docs.rs/alkahest-cas" rel="noopener">Rust API on docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a></li></ul></div></nav>
+  </div>
+  <div class="sidebar-foot">
+    <a class="side-foot-link" href="https://pypi.org/project/alkahest/" rel="noopener">PyPI<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+    <a class="side-foot-link" href="https://docs.rs/alkahest-cas" rel="noopener">docs.rs<svg class="ext" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M4 2h6v6M10 2 3 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a>
+  </div>
+</aside>
+<div class="scrim" data-drawer-close></div>
+<main class="main" id="content">
+  <article class="doc">
+    <h1>Green's functions and fundamental solutions</h1>
+    <blockquote><p><strong>Experimental.</strong> Everything on this page lives in <code>alkahest.experimental</code>
+(Rust: <code>alkahest_cas::pde::green</code>) and may change between minor releases.</p>
+</blockquote>
+<p>A Green&#39;s function turns a linear boundary-value problem into an integral:
+<code>u = ∫ G f + boundary terms</code>. Alkahest builds them four ways:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>function</th>
+<th>what it builds</th>
+<th>result</th>
+</tr>
+</thead><tbody><tr>
+<td><code>fundamental_solution</code></td>
+<td>the whole-space kernel of a constant-coefficient operator</td>
+<td><code>FundamentalSolution</code></td>
+</tr>
+<tr>
+<td><code>image_green_function</code></td>
+<td>half- and quarter-spaces, strips and slabs, the disk and ball, by images</td>
+<td><code>GreenFunction</code></td>
+</tr>
+<tr>
+<td><code>green_function</code></td>
+<td>a <code>SturmLiouville</code> problem: the closed form by variation of parameters, or the eigenfunction series (static, heat, wave)</td>
+<td><code>GreenFunction</code></td>
+</tr>
+<tr>
+<td><code>green_solve</code></td>
+<td>the solution of a <code>PDE</code> as <code>∫ G f + boundary terms</code></td>
+<td><code>GreenSolution</code></td>
+</tr>
+</tbody></table></div>
+<p><strong>Convention.</strong> <code>G</code> solves <code>L G = δ</code> for the operator <strong>exactly as written</strong>,
+which is Mathematica&#39;s <code>GreenFunction</code> convention: <code>Δ G = δ</code> gives
+<code>G = log(r)/(2π)</code> in the plane, with no minus sign. Evolution kernels are
+causal (<code>L G = δ(x) δ(t)</code>, zero for <code>t &lt; 0</code>), and Helmholtz kernels are
+outgoing (<code>e^{+ikr}</code>). The Sturm–Liouville Green&#39;s functions are for
+<code>𝓛u = −[(p u&#39;)&#39; + q u]</code>, the sign convention of <code>SturmLiouville</code>
+(<code>𝓛φₙ = λₙ w φₙ</code>).</p>
+<h2 id="how-an-answer-is-checked"><a class="hanchor" href="#how-an-answer-is-checked" aria-hidden="true" tabindex="-1">#</a>How an answer is checked</h2>
+<p><code>verified</code> is <code>True</code> only when <strong>every</strong> check is an exact proof. A numeric
+check can make Alkahest refuse an answer, but it never certifies one. Each
+result carries its <code>checks</code> (dicts with <code>what</code>, <code>status</code>, <code>method</code> and
+<code>detail</code>) and the theorem that turns them into a proof of <code>L G = δ</code>:</p>
+<ul>
+<li><code>L G = 0</code> off the singular set, by substitution. Residuals with Bessel
+functions are reduced by the three-term recurrences.</li>
+<li>For 1-D operators, the jump formula: continuity of <code>G</code> and a jump of
+<code>1/a₂</code> in <code>∂G</code> at the source prove <code>L G = δ</code> distributionally.</li>
+<li>For elliptic kernels in 2 and 3 dimensions, unit flux through a small
+sphere around the source. For <code>K₁</code> and <code>H₁⁽¹⁾</code> this uses the DLMF
+leading terms.</li>
+<li>For the heat kernel, unit mass and the transfer function.</li>
+<li>For wave kernels, <code>∫ G dx = t</code>, and for Klein–Gordon and telegraph,
+the value 1 of the Riemann function on the characteristics.</li>
+<li>For images, the wall conditions by substitution. An image series is
+checked term by term with the pairs that cancel (<code>j ↔ −j</code>, <code>j ↔ 1 − j</code>).</li>
+<li>For variation of parameters, continuity, the jump <code>−1/p(ξ)</code>, both end
+conditions, symmetry and Abel&#39;s identity.</li>
+</ul>
+<p>A construction that fails its own check is withheld with <code>E-PDE-255</code>.</p>
+<h2 id="fundamental-solutions"><a class="hanchor" href="#fundamental-solutions" aria-hidden="true" tabindex="-1">#</a>Fundamental solutions</h2>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49">import</span><span style="--shiki-light:#24292E"> alkahest </span><span style="--shiki-light:#D73A49">as</span><span style="--shiki-light:#24292E"> ak</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">import</span><span style="--shiki-light:#24292E"> alkahest.experimental </span><span style="--shiki-light:#D73A49">as</span><span style="--shiki-light:#24292E"> akx</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E">p </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> ak.ExprPool()</span></span>
+<span class="line"><span style="--shiki-light:#24292E">x, y </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> p.symbol(</span><span style="--shiki-light:#032F62">"x"</span><span style="--shiki-light:#24292E">), p.symbol(</span><span style="--shiki-light:#032F62">"y"</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E">fs </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> akx.fundamental_solution(</span><span style="--shiki-light:#032F62">"laplace"</span><span style="--shiki-light:#24292E">, [x, y])</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">assert</span><span style="--shiki-light:#24292E"> fs.verified</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">print</span><span style="--shiki-light:#24292E">(fs.kernel)        </span><span style="--shiki-light:#6A737D"># log(sqrt(x^2 + y^2)) / (2 pi)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">print</span><span style="--shiki-light:#24292E">(fs.identity)      </span><span style="--shiki-light:#6A737D"># Δ G = δ(x)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">print</span><span style="--shiki-light:#24292E">(</span><span style="--shiki-light:#005CC5">sorted</span><span style="--shiki-light:#24292E">({c[</span><span style="--shiki-light:#032F62">"what"</span><span style="--shiki-light:#24292E">] </span><span style="--shiki-light:#D73A49">for</span><span style="--shiki-light:#24292E"> c </span><span style="--shiki-light:#D73A49">in</span><span style="--shiki-light:#24292E"> fs.checks}))</span></span></code></pre></div><p>The space variables stand for <code>x − ξ</code>. The operators are <code>&quot;laplace&quot;</code>,
+<code>&quot;biharmonic&quot;</code>, <code>&quot;helmholtz&quot;</code> and <code>&quot;modified_helmholtz&quot;</code> (<code>k=</code>), <code>&quot;heat&quot;</code>
+(<code>diffusivity=</code>), <code>&quot;wave&quot;</code> (<code>speed=</code>), <code>&quot;klein_gordon&quot;</code> (<code>speed=</code>, <code>mass=</code>)
+and <code>&quot;telegraph&quot;</code> (<code>speed=</code>, <code>damping=</code>, for <code>u_tt + 2a u_t − c² u_xx</code>). All
+of them are available in 1 to 3 space dimensions, except Klein–Gordon and
+telegraph, which are 1-D only. For Laplace and heat, <code>dimension=n, radius=r</code> gives the radial kernel in <code>n</code> dimensions with a symbolic <code>n</code>. A 1-D
+kernel is proved by the jump formula:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E">k </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> p.symbol(</span><span style="--shiki-light:#032F62">"k"</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#032F62">"positive"</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">fs1 </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> akx.fundamental_solution(</span><span style="--shiki-light:#032F62">"helmholtz"</span><span style="--shiki-light:#24292E">, [x], </span><span style="--shiki-light:#E36209">k</span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E">k)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">assert</span><span style="--shiki-light:#24292E"> fs1.verified</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">print</span><span style="--shiki-light:#24292E">(fs1.kernel)       </span><span style="--shiki-light:#6A737D"># −i e^{ik|x|} / (2k)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">print</span><span style="--shiki-light:#24292E">(fs1.identity_proof)</span></span></code></pre></div><p>Each record also has <code>derivation</code>, <code>references</code>, <code>support</code>, <code>radial</code> (as a
+function of <code>r</code>, and <code>t</code> for evolution kernels) and <code>side_conditions</code>.</p>
+<h2 id="the-method-of-images"><a class="hanchor" href="#the-method-of-images" aria-hidden="true" tabindex="-1">#</a>The method of images</h2>
+<p><code>region</code> is <code>(&quot;half_space&quot;, axis)</code>, <code>(&quot;quarter_space&quot;, a, b)</code>,
+<code>(&quot;strip&quot;, axis, width)</code>, <code>(&quot;disk&quot;, R)</code> or <code>(&quot;ball&quot;, R)</code>, where the axes index
+<code>space</code>. <code>walls</code> gives one <code>&quot;dirichlet&quot;</code> or <code>&quot;neumann&quot;</code> per wall. For a strip,
+the wall at 0 comes first. Strips and slabs come back as an infinite image
+<code>Sum</code>. The disk and ball come from Kelvin inversion, and their result includes
+the Poisson kernel <code>∂G/∂n_ξ</code>:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E">xi, eta </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> p.symbol(</span><span style="--shiki-light:#032F62">"xi"</span><span style="--shiki-light:#24292E">), p.symbol(</span><span style="--shiki-light:#032F62">"eta"</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">R </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> p.symbol(</span><span style="--shiki-light:#032F62">"R"</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#032F62">"positive"</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">g </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> akx.image_green_function(</span><span style="--shiki-light:#032F62">"laplace"</span><span style="--shiki-light:#24292E">, [x, y], [xi, eta], (</span><span style="--shiki-light:#032F62">"disk"</span><span style="--shiki-light:#24292E">, R), </span><span style="--shiki-light:#032F62">"dirichlet"</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">assert</span><span style="--shiki-light:#24292E"> g.verified</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">print</span><span style="--shiki-light:#24292E">(g.method)          </span><span style="--shiki-light:#6A737D"># kelvin</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">print</span><span style="--shiki-light:#24292E">(g.poisson_kernel)</span></span></code></pre></div><p>When images do not apply, Alkahest refuses with <code>E-PDE-252</code>. Examples are the
+Neumann disk (the Neumann function of the disk is not an image sum) and a
+Helmholtz strip:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#D73A49">try</span><span style="--shiki-light:#24292E">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    akx.image_green_function(</span><span style="--shiki-light:#032F62">"laplace"</span><span style="--shiki-light:#24292E">, [x, y], [xi, eta], (</span><span style="--shiki-light:#032F62">"disk"</span><span style="--shiki-light:#24292E">, p.integer(</span><span style="--shiki-light:#005CC5">1</span><span style="--shiki-light:#24292E">)), </span><span style="--shiki-light:#032F62">"neumann"</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">except</span><span style="--shiki-light:#005CC5"> Exception</span><span style="--shiki-light:#D73A49"> as</span><span style="--shiki-light:#24292E"> e:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">    print</span><span style="--shiki-light:#24292E">(e)             </span><span style="--shiki-light:#6A737D"># E-PDE-252 …</span></span></code></pre></div><h2 id="two-point-problems-and-eigenfunction-series"><a class="hanchor" href="#two-point-problems-and-eigenfunction-series" aria-hidden="true" tabindex="-1">#</a>Two-point problems and eigenfunction series</h2>
+<p><code>green_function</code> takes a <code>SturmLiouville</code> problem (see <code>sturm_liouville</code>). With
+<code>kind=&quot;closed&quot;</code> it builds the closed form by variation of parameters. With
+<code>&quot;static&quot;</code>, <code>&quot;heat&quot;</code> or <code>&quot;wave&quot;</code> it builds the eigenfunction series from the
+problem&#39;s <code>Eigensystem</code>. Transcendental eigenvalues stay as <code>RootOfFamily</code>.
+When the family is in closed form, the series is proved to be the expansion of
+the closed form: <code>∫ G φₙ w dx = φₙ(ξ)/λₙ</code> for symbolic <code>n</code>.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E">L, h </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> p.symbol(</span><span style="--shiki-light:#032F62">"L"</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#032F62">"positive"</span><span style="--shiki-light:#24292E">), p.symbol(</span><span style="--shiki-light:#032F62">"h"</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#032F62">"positive"</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">sl </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> akx.SturmLiouville(x, (</span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">, L), (</span><span style="--shiki-light:#032F62">"dirichlet"</span><span style="--shiki-light:#24292E">, (</span><span style="--shiki-light:#032F62">"robin"</span><span style="--shiki-light:#24292E">, h, </span><span style="--shiki-light:#005CC5">1</span><span style="--shiki-light:#24292E">)))</span></span>
+<span class="line"><span style="--shiki-light:#24292E">closed </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> akx.green_function(sl, xi, </span><span style="--shiki-light:#032F62">"closed"</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">series </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> akx.green_function(sl, xi, </span><span style="--shiki-light:#032F62">"static"</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">assert</span><span style="--shiki-light:#24292E"> closed.verified </span><span style="--shiki-light:#D73A49">and</span><span style="--shiki-light:#24292E"> series.verified</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">print</span><span style="--shiki-light:#24292E">(closed.branches)   </span><span style="--shiki-light:#6A737D"># (G for x &#x3C; ξ, G for x > ξ)</span></span></code></pre></div><p>If <code>λ = 0</code> is an eigenvalue, no Green&#39;s function exists and <code>&quot;closed&quot;</code> refuses
+with <code>E-PDE-254</code>. In that case the static series is the <strong>modified</strong> Green&#39;s
+function, which is orthogonal to the zero mode:</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E">nn </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> akx.SturmLiouville(x, (</span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">, L), (</span><span style="--shiki-light:#032F62">"neumann"</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#032F62">"neumann"</span><span style="--shiki-light:#24292E">))</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">try</span><span style="--shiki-light:#24292E">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    akx.green_function(nn, xi, </span><span style="--shiki-light:#032F62">"closed"</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">except</span><span style="--shiki-light:#005CC5"> Exception</span><span style="--shiki-light:#D73A49"> as</span><span style="--shiki-light:#24292E"> e:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">    print</span><span style="--shiki-light:#24292E">(e)             </span><span style="--shiki-light:#6A737D"># E-PDE-254 …</span></span>
+<span class="line"><span style="--shiki-light:#24292E">g </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> akx.green_function(nn, xi, </span><span style="--shiki-light:#032F62">"static"</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">print</span><span style="--shiki-light:#24292E">(g.method)          </span><span style="--shiki-light:#6A737D"># modified_eigenfunction_series</span></span></code></pre></div><h2 id="solving-with-a-greens-function"><a class="hanchor" href="#solving-with-a-greens-function" aria-hidden="true" tabindex="-1">#</a>Solving with a Green&#39;s function</h2>
+<p><code>green_solve(pde)</code> returns <code>u = ∫ G f + boundary terms</code> for three classes of
+problem:</p>
+<ul>
+<li>two-point problems <code>a₂u&#39;&#39; + a₁u&#39; + a₀u = F</code> with Robin data at both ends,
+reduced to Sturm–Liouville form by an integrating factor;</li>
+<li>the heat and wave equations on the line with sources, by Duhamel&#39;s
+principle;</li>
+<li>Poisson&#39;s equation in the upper half-plane, by the Poisson kernel.</li>
+</ul>
+<p>The integrals are closed wherever <code>integrate</code> closes them, and the result is
+verified by substitution. A <code>GreenSolution</code> has the shape of <code>pdsolve</code>&#39;s
+<code>PdeSolution</code>: <code>kind</code> (<code>&quot;closed_form&quot;</code> or <code>&quot;integral_representation&quot;</code>),
+<code>value</code>, <code>closed_part</code>, <code>terms</code>, the <code>green</code> function it used, <code>checks</code> and
+<code>steps</code>.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E">U </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> akx.Function(</span><span style="--shiki-light:#032F62">"u"</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">u </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> U(x)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">pde </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> (</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    akx.PDE(</span><span style="--shiki-light:#D73A49">-</span><span style="--shiki-light:#24292E">akx.D(u, x, </span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#24292E">) </span><span style="--shiki-light:#D73A49">-</span><span style="--shiki-light:#24292E"> p.integer(</span><span style="--shiki-light:#005CC5">1</span><span style="--shiki-light:#24292E">), u)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    .on(akx.Interval(x, p.integer(</span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">), p.integer(</span><span style="--shiki-light:#005CC5">1</span><span style="--shiki-light:#24292E">)))</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    .bc(ak.subs(u, {x: p.integer(</span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">)}), </span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    .bc(ak.subs(u, {x: p.integer(</span><span style="--shiki-light:#005CC5">1</span><span style="--shiki-light:#24292E">)}), </span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">sol </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> akx.green_solve(pde)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">assert</span><span style="--shiki-light:#24292E"> sol.verified</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">print</span><span style="--shiki-light:#24292E">(sol.kind, sol.value)</span></span></code></pre></div><p>A problem outside these classes is refused with <code>E-PDE-256</code>.</p>
+<h2 id="kleingordon-and-the-telegraph-equation"><a class="hanchor" href="#kleingordon-and-the-telegraph-equation" aria-hidden="true" tabindex="-1">#</a>Klein–Gordon and the telegraph equation</h2>
+<p><code>transform_solve</code> returns Klein–Gordon and telegraph problems on the line as
+light-cone integrals with Bessel kernels, not as Fourier integrals:</p>
+<p><code>u = e^{−Dt/2}(f(x − ct) + f(x + ct))/2 + ∫_{x−ct}^{x+ct} K_f f + ∫ K_g g</code>.</p>
+<p>For Klein–Gordon the kernels are built from <code>J₀((m/c)√(c²t² − x²))</code>, and for
+the telegraph equation from <code>e^{−at} I₀(…)</code>. Each kernel is verified to solve
+the equation, and its Riemann function is verified to equal 1 on the
+characteristics.</p>
+<div class="code" data-lang="python"><span class="code-lang">Python</span><button class="copy" type="button" aria-label="Copy code"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25ZM1.75 5H3v1.5H1.75a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25V13H10v1.25A1.75 1.75 0 0 1 8.25 16h-7.5A1.75 1.75 0 0 1 0 14.25v-7.5C0 5.784.784 5 1.75 5Z"/></svg><span>Copy</span></button><pre class="shiki shiki-themes github-light" style="--shiki-light:#24292e;--shiki-light-bg:#fff" tabindex="0"><code><span class="line"><span style="--shiki-light:#24292E">t </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> p.symbol(</span><span style="--shiki-light:#032F62">"t"</span><span style="--shiki-light:#24292E">, </span><span style="--shiki-light:#032F62">"positive"</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">v </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> U(x, t)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">kg </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> (</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    akx.PDE(akx.D(v, t, </span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#24292E">) </span><span style="--shiki-light:#D73A49">-</span><span style="--shiki-light:#24292E"> akx.D(v, x, </span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#24292E">) </span><span style="--shiki-light:#D73A49">+</span><span style="--shiki-light:#24292E"> v, v)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    .on(akx.Line(x) </span><span style="--shiki-light:#D73A49">*</span><span style="--shiki-light:#24292E"> akx.HalfLine(t, </span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    .ic(ak.subs(v, {t: p.integer(</span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">)}), ak.exp(</span><span style="--shiki-light:#D73A49">-</span><span style="--shiki-light:#24292E">(x</span><span style="--shiki-light:#D73A49">**</span><span style="--shiki-light:#005CC5">2</span><span style="--shiki-light:#24292E">)))</span></span>
+<span class="line"><span style="--shiki-light:#24292E">    .ic(ak.subs(akx.D(v, t), {t: p.integer(</span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">)}), </span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E">sol </span><span style="--shiki-light:#D73A49">=</span><span style="--shiki-light:#24292E"> akx.transform_solve(kg)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49">assert</span><span style="--shiki-light:#24292E"> sol.verified</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">print</span><span style="--shiki-light:#24292E">(sol.kind)          </span><span style="--shiki-light:#6A737D"># integral_representation</span></span>
+<span class="line"><span style="--shiki-light:#005CC5">print</span><span style="--shiki-light:#24292E">(sol.terms[</span><span style="--shiki-light:#005CC5">0</span><span style="--shiki-light:#24292E">][</span><span style="--shiki-light:#032F62">"kernel"</span><span style="--shiki-light:#24292E">])</span></span></code></pre></div><h2 id="comparison-with-mathematica"><a class="hanchor" href="#comparison-with-mathematica" aria-hidden="true" tabindex="-1">#</a>Comparison with Mathematica</h2>
+<p>The corpus <code>tests/pde_corpus/green_problems.json</code> has 59 problems from
+Strauss (ch. 3 and 7), Evans (§2.2–2.4), Haberman (ch. 9 and 11) and Duffy.
+<code>tests/pde_corpus/mathematica/green_ref.txt</code> holds the Mathematica 14.3
+references (<code>GreenFunction</code> / <code>DSolveValue</code>, 120 s per problem), and
+<code>tests/pde_corpus/score_m5.py</code> prints the table.</p>
+<div class="table-wrap"><table><thead><tr>
+<th>category</th>
+<th>problems</th>
+<th>Alkahest, exactly verified</th>
+<th>Mathematica, correct closed form</th>
+</tr>
+</thead><tbody><tr>
+<td>fundamental solutions</td>
+<td>20</td>
+<td>20</td>
+<td>9 (+1 wrong)</td>
+</tr>
+<tr>
+<td>symbolic dimension <code>n</code></td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>images</td>
+<td>14</td>
+<td>14</td>
+<td>0</td>
+</tr>
+<tr>
+<td>two-point closed forms</td>
+<td>7</td>
+<td>7 (one is the expected <code>E-PDE-254</code>)</td>
+<td>6</td>
+</tr>
+<tr>
+<td>eigenfunction series</td>
+<td>6</td>
+<td>6</td>
+<td>2 (2 not queried)</td>
+</tr>
+<tr>
+<td><code>green_solve</code></td>
+<td>10</td>
+<td>10</td>
+<td>9 (+1 left as an integral)</td>
+</tr>
+<tr>
+<td><strong>total</strong></td>
+<td><strong>59</strong></td>
+<td><strong>59</strong></td>
+<td><strong>26</strong></td>
+</tr>
+</tbody></table></div>
+<p>Where both systems return a closed form, the values agree at the sample
+points. The one disagreement is the 3-D heat kernel. Mathematica returns
+<code>e^{−r²/(4κt)} / (4πκ t^{3/2})</code>, which is missing a factor <code>(4π)^{−1/2}</code>, so its
+mass is <code>√(4π)</code> rather than 1. <code>tests/test_pde_m5.py</code> documents this.</p>
+<h2 id="errors"><a class="hanchor" href="#errors" aria-hidden="true" tabindex="-1">#</a>Errors</h2>
+<p><code>E-PDE-250</code> (no kernel here: Klein–Gordon or telegraph above 1-D, a symbolic
+dimension for another operator), <code>251</code> (malformed input), <code>252</code> (images do not
+apply), <code>253</code> (the series cannot be assembled), <code>254</code> (no Green&#39;s function
+exists: <code>λ = 0</code> is an eigenvalue), <code>255</code> (a construction refuted by its own
+check, withheld), <code>256</code> (<code>green_solve</code> does not recognise the problem). See
+<a href="/docs/guide/errors/">Error handling</a>.</p>
+
+  </article>
+  <nav class="pager" aria-label="Pagination"><a class="pager-prev" href="/docs/guide/ode-dae/" rel="prev"><span class="pager-dir">Previous</span><span class="pager-title">ODE and DAE modeling</span></a><a class="pager-next" href="/docs/guide/solving/" rel="next"><span class="pager-dir">Next</span><span class="pager-title">Polynomial system solving</span></a></nav>
+  <footer class="doc-foot">
+    <a class="foot-gh" href="https://github.com/alkahest-cas/alkahest/edit/main/docs/mdbook/src/green-functions.md" rel="noopener" aria-label="View source on GitHub" title="View source on GitHub"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+    <span class="foot-meta">alkahest 3.14.0</span>
+  </footer>
+</main>
+<aside class="toc" aria-label="On this page">
+  <div class="toc-inner">
+    <div class="toc-title">On this page</div><ul><li class="d2"><a href="#how-an-answer-is-checked">How an answer is checked</a></li><li class="d2"><a href="#fundamental-solutions">Fundamental solutions</a></li><li class="d2"><a href="#the-method-of-images">The method of images</a></li><li class="d2"><a href="#two-point-problems-and-eigenfunction-series">Two-point problems and eigenfunction series</a></li><li class="d2"><a href="#solving-with-a-greens-function">Solving with a Green's function</a></li><li class="d2"><a href="#kleingordon-and-the-telegraph-equation">Klein–Gordon and the telegraph equation</a></li><li class="d2"><a href="#comparison-with-mathematica">Comparison with Mathematica</a></li><li class="d2"><a href="#errors">Errors</a></li></ul>
+  </div>
+</aside>
+</div>
+<a class="to-top" href="#top" aria-label="Back to top" title="Back to top"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/></svg></a>
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="search-backdrop" data-search-close></div>
+  <div class="search-panel">
+    <div class="search-field"><svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m13.2 13.2 3.8 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="search-input" type="search" placeholder="Search guides and API" autocomplete="off" spellcheck="false" aria-label="Search"><button type="button" class="search-close" data-search-close aria-label="Close search"><kbd class="hide-sm">Esc</kbd><span class="show-sm">Cancel</span></button></div>
+    <ul class="search-results" id="search-results" role="listbox"></ul>
+    <div class="search-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to navigate</span><span><kbd>↵</kbd> to open</span></div>
+  </div>
+</div>
+</body>
+</html>
